@@ -1,12 +1,12 @@
 import requests
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 # INSERISCI I TUOI DATI TRA LE VIRGOLETTE
 TELEGRAM_TOKEN = "8981487141:AAFvKmVGm62wnENn-6uJZPedv0WMbp8ewr0"
 CHAT_ID = "-1004229932372" 
 ODDS_API_KEY = "8c17009a702111adb9f70dff1242a7c7"
 
-# traduciamo esclusivamente i nomi di tutte le nazioni europee
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
     "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
@@ -50,7 +50,7 @@ def scarica_partite():
     tutte_le_partite = []
     
     for campionato in campionati:
-        url = f"https://api.the-odds-api.com/v4/sports/{campionato}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals"
+        url = f"https://api.the-odds-api.com/v4/sports/{campionato}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
         risposta = requests.get(url)
         if risposta.status_code == 200:
             tutte_le_partite.extend(risposta.json())
@@ -59,88 +59,99 @@ def scarica_partite():
 
 def analizza_e_invia():
     partite = scarica_partite()
-    oggi = datetime.now().date()
+    fuso_italia = ZoneInfo("Europe/Rome")
+    oggi = datetime.now(fuso_italia).date()
     domani = oggi + timedelta(days=1)
+    fine_turno = oggi + timedelta(days=3)
     
-    partite_utili = []
+    partite_turno = []
     data_prima_partita = None
 
     for partita in partite:
-        data_stringa = partita['commence_time'][:10]
-        data_partita = datetime.strptime(data_stringa, "%Y-%m-%d").date()
+        data_partita_utc = datetime.strptime(partita['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC"))
+        data_partita_ita = data_partita_utc.astimezone(fuso_italia)
         
-        if oggi <= data_partita <= oggi + timedelta(days=3):
-            partite_utili.append(partita)
-            if data_prima_partita is None or data_partita < data_prima_partita:
-                data_prima_partita = data_partita
-
-    if not partite_utili:
-        print("nessuna partita utile trovata.")
-        return
+        # raccoglie tutte le partite da oggi ai prossimi 3 giorni
+        if oggi <= data_partita_ita.date() <= fine_turno:
+            partite_turno.append({'dati': partita, 'data_ita': data_partita_ita})
+            if data_prima_partita is None or data_partita_ita.date() < data_prima_partita:
+                data_prima_partita = data_partita_ita.date()
 
     messaggio = ""
     siti_italiani = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Lottomatica', 'Betfair', 'William Hill']
     
     if data_prima_partita == domani:
-        messaggio = "⏳ **IL MODELLO STA CALCOLANDO LE PROSSIME SFIDE**\n\n"
-        messaggio += "**i nostri algoritmi stanno analizzando le quote dei prossimi match. Domani alla stessa ora usciranno i pronostici ufficiali con il miglior rapporto rischio/rendimento.**\n\n"
-        messaggio += "**#PronosticiCalcio #QuoteValore #BettingTips #ScommesseSportive**"
+        messaggio = "⏳ **IL MODELLO STA CALCOLANDO IL PROSSIMO TURNO**\n\n"
+        messaggio += "**i nostri algoritmi stanno elaborando l'intero palinsesto dei prossimi giorni.** **Domani alla stessa ora uscirà la selezione delle giocate con il miglior rapporto rischio/rendimento.**\n\n"
+        messaggio += "**#PronosticiCalcio #QuoteValore #ValueBetting #MatchLab**"
         
-    elif data_prima_partita == oggi:
-        messaggio = "🔥 **LE GIOCATE UFFICIALI DEL MATCH LAB**\n\n"
-        partite_trovate = 0
+    elif data_prima_partita == oggi and partite_turno:
+        giocate_selezionate = []
         
-        for partita in partite_utili:
+        for item in partite_turno:
+            partita = item['dati']
+            data_match = item['data_ita']
+            # formatta la data per far capire in che giorno si gioca all'interno del turno
+            data_formattata = data_match.strftime("%d/%m ore %H:%M")
+            
             squadra_casa_originale = partita['home_team']
             squadra_casa = traduci_squadra(squadra_casa_originale)
             squadra_trasferta = traduci_squadra(partita['away_team'])
             
             if partita.get('bookmakers'):
-                bookmaker_valido = None
-                
                 for bookmaker in partita['bookmakers']:
                     if bookmaker['title'] in siti_italiani:
-                        bookmaker_valido = bookmaker
-                        break
+                        nome_bookmaker = bookmaker['title']
+                        mercati = bookmaker['markets']
                         
-                if bookmaker_valido:
-                    nome_bookmaker = bookmaker_valido['title']
-                    mercati = bookmaker_valido['markets']
-                    quota_1 = 0
-                    quota_over = 0
-                    
-                    for mercato in mercati:
-                        if mercato['key'] == 'h2h':
-                            quota_1 = next((q['price'] for q in mercato['outcomes'] if q['name'] == squadra_casa_originale), 0)
-                        if mercato['key'] == 'totals':
-                            quota_over = next((q['price'] for q in mercato['outcomes'] if q['name'] == 'Over' and q.get('point') == 2.5), 0)
-                    
-                    giocata_scelta = ""
-                    quota_scelta = 0
-                    
-                    if 1.50 <= quota_1 <= 1.90:
-                        giocata_scelta = f"vittoria {squadra_casa}"
-                        quota_scelta = quota_1
-                    elif 1.50 <= quota_over <= 1.85:
-                        giocata_scelta = "over 2.5 gol"
-                        quota_scelta = quota_over
+                        miglior_giocata = ""
+                        quota_massima = 0
                         
-                    if giocata_scelta:
-                        livello_rischio = calcola_rischio(quota_scelta)
-                        messaggio += f"⚽ **{squadra_casa} - {squadra_trasferta}**\n"
-                        messaggio += f"🎯 **analisi: {giocata_scelta}**\n"
-                        messaggio += f"📈 **quota di valore: {quota_scelta} su {nome_bookmaker}**\n"
-                        messaggio += f"📊 **livello di rischio: {livello_rischio}**\n\n"
-                        partite_trovate += 1
+                        for mercato in mercati:
+                            if mercato['key'] == 'h2h':
+                                quota = next((q['price'] for q in mercato['outcomes'] if q['name'] == squadra_casa_originale), 0)
+                                if 1.45 <= quota <= 1.95 and quota > quota_massima:
+                                    quota_massima = quota
+                                    miglior_giocata = f"vittoria {squadra_casa}"
+                            elif mercato['key'] == 'totals':
+                                quota = next((q['price'] for q in mercato['outcomes'] if q['name'] == 'Over' and q.get('point') == 2.5), 0)
+                                if 1.45 <= quota <= 1.95 and quota > quota_massima:
+                                    quota_massima = quota
+                                    miglior_giocata = "over 2.5 gol"
+                            elif mercato['key'] == 'btts':
+                                quota = next((q['price'] for q in mercato['outcomes'] if q['name'] == 'Yes'), 0)
+                                if 1.45 <= quota <= 1.95 and quota > quota_massima:
+                                    quota_massima = quota
+                                    miglior_giocata = "gol (entrambe segnano)"
                         
-        if partite_trovate > 0:
-            messaggio += "**#PronosticiCalcio #QuoteValore #ValueBetting #ScommesseSportive**"
+                        if miglior_giocata:
+                            giocate_selezionate.append({
+                                'testo_partita': f"⚽ **{data_formattata} | {squadra_casa} - {squadra_trasferta}**",
+                                'testo_analisi': f"🎯 **analisi: {miglior_giocata}**",
+                                'testo_quota': f"📈 **quota di valore: {quota_massima} su {nome_bookmaker}**",
+                                'testo_rischio': f"📊 **livello di rischio: {calcola_rischio(quota_massima)}**",
+                                'valore_numerico': quota_massima
+                            })
+                        break 
+                        
+        if giocate_selezionate:
+            # ordina tutte le giocate del turno per quota migliore e prende solo la top 4
+            giocate_selezionate.sort(key=lambda x: x['valore_numerico'], reverse=True)
+            top_selezioni = giocate_selezionate[:4]
+            
+            messaggio = "🔥 **LE GIOCATE UFFICIALI DELL'INTERO TURNO**\n\n"
+            for giocata in top_selezioni:
+                messaggio += f"{giocata['testo_partita']}\n{giocata['testo_analisi']}\n{giocata['testo_quota']}\n{giocata['testo_rischio']}\n\n"
+            messaggio += "**#PronosticiCalcio #QuoteValore #ValueBetting #MatchLab**"
         else:
-            messaggio = "**oggi nessuna quota ha superato il filtro matematico di sicurezza.**"
+            messaggio = "**nessuna quota del turno ha superato il filtro matematico di sicurezza**"
+    else:
+        print("nessuna partita utile in programma a breve.")
+        return
 
     if messaggio:
         url_telegram = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
         requests.post(url_telegram, json={"chat_id": CHAT_ID, "text": messaggio, "parse_mode": "Markdown"})
-        print("messaggio inviato con il dizionario aggiornato!")
+        print("messaggio del turno completo inviato con successo!")
 
 analizza_e_invia()
