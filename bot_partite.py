@@ -7,8 +7,13 @@ CHAT_ID = "-1004229932372"
 ODDS_API_KEY = "8c17009a702111adb9f70dff1242a7c7"
 
 def scarica_partite():
-    # Lista delle competizioni da scansionare (Serie A e Nations League)
-    campionati = ['soccer_italy_serie_a', 'soccer_uefa_nations_league']
+    # lista delle competizioni da scansionare
+    campionati = [
+        'soccer_italy_serie_a', 
+        'soccer_uefa_nations_league',
+        'soccer_uefa_champs_league',
+        'soccer_uefa_europa_league'
+    ]
     tutte_le_partite = []
     
     for campionato in campionati:
@@ -37,15 +42,15 @@ def analizza_e_invia():
                 data_prima_partita = data_partita
 
     if not partite_utili:
-        print("Nessuna partita utile trovata.")
+        print("nessuna partita utile trovata.")
         return
 
     messaggio = ""
     
     if data_prima_partita == domani:
         messaggio = "⏳ **IL MODELLO STA CALCOLANDO LE PROSSIME SFIDE**\n\n"
-        messaggio += "I nostri algoritmi stanno analizzando le quote dei prossimi match. Domani alla stessa ora usciranno i pronostici ufficiali con il miglior rapporto rischio/rendimento.\n\n"
-        messaggio += "#PronosticiCalcio #ScommesseSportive #SerieA #NationsLeague"
+        messaggio += "i nostri algoritmi stanno analizzando le quote dei prossimi match. Domani alla stessa ora usciranno i pronostici ufficiali con il miglior rapporto rischio/rendimento.\n\n"
+        messaggio += "#PronosticiCalcio #ScommesseSportive #BettingTips #Uefa"
         
     elif data_prima_partita == oggi:
         messaggio = "🔥 **LE GIOCATE UFFICIALI DEL MATCH LAB**\n\n"
@@ -70,26 +75,26 @@ def analizza_e_invia():
                 quota_scelta = 0
                 
                 if 1.50 <= quota_1 <= 1.90:
-                    giocata_scelta = f"Vittoria {squadra_casa}"
+                    giocata_scelta = f"vittoria {squadra_casa}"
                     quota_scelta = quota_1
                 elif 1.50 <= quota_over <= 1.85:
-                    giocata_scelta = "Over 2.5 Gol"
+                    giocata_scelta = "over 2.5 gol"
                     quota_scelta = quota_over
                     
                 if giocata_scelta:
                     messaggio += f"⚽ **{squadra_casa} - {squadra_trasferta}**\n"
-                    messaggio += f"🎯 Analisi: **{giocata_scelta}**\n"
-                    messaggio += f"📈 Quota di valore: **{quota_scelta}**\n\n"
+                    messaggio += f"🎯 analisi: **{giocata_scelta}**\n"
+                    messaggio += f"📈 quota di valore: **{quota_scelta}**\n\n"
                     partite_trovate += 1
                     
         if partite_trovate > 0:
-            messaggio += "#PronosticiCalcio #ScommesseSportive #SerieA #NationsLeague"
+            messaggio += "#PronosticiCalcio #ScommesseSportive #ChampionsLeague #EuropaLeague"
         else:
-            messaggio = "Oggi nessuna quota ha superato il filtro matematico di sicurezza del modello."
+            messaggio = "oggi nessuna quota ha superato il filtro matematico di sicurezza del modello."
 
     if messaggio:
         url_telegram = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
         requests.post(url_telegram, json={"chat_id": CHAT_ID, "text": messaggio, "parse_mode": "Markdown"})
-        print("Messaggio inviato!")
+        print("messaggio inviato!")
 
 analizza_e_invia()
