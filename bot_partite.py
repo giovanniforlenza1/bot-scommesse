@@ -6,7 +6,7 @@ TELEGRAM_TOKEN = "8981487141:AAFvKmVGm62wnENn-6uJZPedv0WMbp8ewr0"
 CHAT_ID = "-1004229932372" 
 ODDS_API_KEY = "8c17009a702111adb9f70dff1242a7c7"
 
-# traduciamo esclusivamente i nomi delle nazioni
+# traduciamo esclusivamente i nomi di tutte le nazioni europee
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
     "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
@@ -14,14 +14,25 @@ TRADUZIONI_NAZIONALI = {
     "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
     "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", 
     "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria", 
-    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia"
+    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
+    "Finland": "Finlandia", "Belarus": "Bielorussia", "Czech Republic": "Repubblica Ceca",
+    "Slovakia": "Slovacchia", "Slovenia": "Slovenia", "Romania": "Romania",
+    "Bulgaria": "Bulgaria", "Greece": "Grecia", "Iceland": "Islanda",
+    "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
+    "Bosnia and Herzegovina": "Bosnia ed Erzegovina", "Montenegro": "Montenegro",
+    "North Macedonia": "Macedonia del Nord", "Georgia": "Georgia", "Ukraine": "Ucraina",
+    "Lithuania": "Lituania", "Latvia": "Lettonia", "Estonia": "Estonia",
+    "Cyprus": "Cipro", "Malta": "Malta", "Moldova": "Moldavia", "Andorra": "Andorra",
+    "San Marino": "San Marino", "Liechtenstein": "Liechtenstein", "Luxembourg": "Lussemburgo",
+    "Armenia": "Armenia", "Azerbaijan": "Azerbaigian", "Kazakhstan": "Kazakistan",
+    "Kosovo": "Kosovo", "Israel": "Israele", "Faroe Islands": "Isole Faroe",
+    "Gibraltar": "Gibilterra"
 }
 
 def traduci_squadra(nome_inglese):
     return TRADUZIONI_NAZIONALI.get(nome_inglese, nome_inglese)
 
 def calcola_rischio(quota):
-    # assegna il livello di rischio in base alla fascia di quota
     if quota <= 1.60:
         return "🟢 basso"
     elif quota <= 1.75:
@@ -130,6 +141,6 @@ def analizza_e_invia():
     if messaggio:
         url_telegram = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
         requests.post(url_telegram, json={"chat_id": CHAT_ID, "text": messaggio, "parse_mode": "Markdown"})
-        print("messaggio inviato con il nuovo sistema di rischio!")
+        print("messaggio inviato con il dizionario aggiornato!")
 
 analizza_e_invia()
