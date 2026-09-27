@@ -50,7 +50,7 @@ def analizza_e_invia():
     if data_prima_partita == domani:
         messaggio = "⏳ **IL MODELLO STA CALCOLANDO LE PROSSIME SFIDE**\n\n"
         messaggio += "i nostri algoritmi stanno analizzando le quote dei prossimi match. Domani alla stessa ora usciranno i pronostici ufficiali con il miglior rapporto rischio/rendimento.\n\n"
-        messaggio += "#PronosticiCalcio #ScommesseSportive #BettingTips #Uefa"
+        messaggio += "#PronosticiCalcio #Scommesse #QuoteValore #BettingTips"
         
     elif data_prima_partita == oggi:
         messaggio = "🔥 **LE GIOCATE UFFICIALI DEL MATCH LAB**\n\n"
@@ -61,6 +61,8 @@ def analizza_e_invia():
             squadra_trasferta = partita['away_team']
             
             if partita.get('bookmakers'):
+                # estraiamo il nome del bookmaker direttamente dai dati
+                nome_bookmaker = partita['bookmakers'][0]['title']
                 mercati = partita['bookmakers'][0]['markets']
                 quota_1 = 0
                 quota_over = 0
@@ -84,11 +86,11 @@ def analizza_e_invia():
                 if giocata_scelta:
                     messaggio += f"⚽ **{squadra_casa} - {squadra_trasferta}**\n"
                     messaggio += f"🎯 analisi: **{giocata_scelta}**\n"
-                    messaggio += f"📈 quota di valore: **{quota_scelta}**\n\n"
+                    messaggio += f"📈 quota di valore: **{quota_scelta}** su **{nome_bookmaker}**\n\n"
                     partite_trovate += 1
                     
         if partite_trovate > 0:
-            messaggio += "#PronosticiCalcio #ScommesseSportive #ChampionsLeague #EuropaLeague"
+            messaggio += "#PronosticiCalcio #Scommesse #ChampionsLeague #SerieA"
         else:
             messaggio = "oggi nessuna quota ha superato il filtro matematico di sicurezza del modello."
 
