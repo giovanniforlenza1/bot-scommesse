@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBR | Smart Betting Routing</title>
+    <title>SBR | Analisi Oggettiva delle Quote Sportive</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Palette stile Bet365 (tinte unite) */
+            /* Palette stile Bet365 */
             --bet-green: #126e51;
             --bet-bg: #282828;
             --bet-panel: #333333;
@@ -25,82 +25,101 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bet-bg); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
-        /* Header in stile bookmaker */
-        header { background-color: var(--bet-green); border-bottom: 2px solid var(--bet-yellow); position: fixed; width: 100%; top: 0; z-index: 1000; }
+        /* Header */
+        header { background-color: var(--bet-green); border-bottom: 2px solid var(--bet-yellow); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         .nav-container { max-width: 1000px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
         
         .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .brand h1 { font-size: 22px; font-weight: 800; color: var(--text-main); margin: 0; }
-        .brand span { font-size: 14px; font-weight: 600; color: var(--bet-yellow); }
+        .brand h1 { font-size: 24px; font-weight: 800; color: var(--text-main); margin: 0; letter-spacing: -0.5px; }
+        .brand span { font-size: 13px; font-weight: 600; color: var(--bet-yellow); text-transform: uppercase; letter-spacing: 1px; }
         
-        .nav-links { display: flex; gap: 20px; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
         .nav-links a { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
         .nav-links a:hover { color: var(--bet-yellow); }
+        .nav-btn { background-color: var(--bet-yellow); color: #111; padding: 6px 14px; border-radius: 4px; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+        .nav-btn:hover { background-color: var(--bet-yellow-hover); color: #111; }
         
-        .spacer { height: 60px; }
+        .spacer { height: 65px; }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; }
 
-        /* Sezione Hero pulita e diretta */
-        .hero { text-align: center; padding: 40px 0 60px; }
-        .hero h2 { font-size: 36px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); }
-        .hero p { font-size: 16px; color: var(--text-muted); max-width: 700px; margin: 0 auto 30px; }
+        /* Hero Section */
+        .hero { text-align: center; padding: 40px 0 70px; border-bottom: 1px solid var(--border-solid); margin-bottom: 50px; }
+        .hero h2 { font-size: 42px; font-weight: 800; margin-bottom: 24px; color: var(--text-main); line-height: 1.2; letter-spacing: -1px; }
+        .hero p { font-size: 18px; color: var(--text-muted); max-width: 750px; margin: 0 auto 35px; line-height: 1.7; }
         
-        .btn-primary { display: inline-flex; align-items: center; gap: 10px; background-color: var(--bet-yellow); color: #111111; padding: 16px 24px; border-radius: 4px; text-decoration: none; font-weight: 800; font-size: 16px; text-transform: uppercase; border: none; cursor: pointer; transition: background-color 0.2s; }
-        .btn-primary:hover { background-color: var(--bet-yellow-hover); }
+        .btn-primary { display: inline-flex; align-items: center; gap: 12px; background-color: var(--bet-yellow); color: #111111; padding: 18px 30px; border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 16px; text-transform: uppercase; border: none; transition: all 0.2s; box-shadow: 0 4px 15px rgba(255, 223, 0, 0.15); }
+        .btn-primary:hover { background-color: var(--bet-yellow-hover); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 223, 0, 0.25); }
+
+        /* Sezione: Spiegazione Metodo */
+        .method-section { background-color: var(--bet-panel); border-radius: 8px; padding: 40px; margin-bottom: 60px; border-left: 4px solid var(--bet-yellow); }
+        .method-section h3 { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); }
+        .method-section p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 15px; }
+        .method-section p:last-child { margin-bottom: 0; }
 
         /* Sezione: Come funziona */
-        .section-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 20px; border-bottom: 1px solid var(--border-solid); padding-bottom: 10px; }
+        .section-title { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 30px; display: flex; align-items: center; gap: 12px; }
+        .section-title i { color: var(--bet-yellow); }
         
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 60px; }
-        .feature-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 4px; padding: 25px; text-align: center; }
-        .feature-icon { font-size: 30px; color: var(--bet-yellow); margin-bottom: 15px; }
-        .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
-        .feature-card p { font-size: 14px; color: var(--text-muted); }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 70px; }
+        .feature-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 8px; padding: 30px 25px; text-align: center; transition: border-color 0.3s; }
+        .feature-card:hover { border-color: var(--bet-yellow); }
+        .feature-icon { font-size: 34px; color: var(--bet-yellow); margin-bottom: 20px; }
+        .feature-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
+        .feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
         /* Dashboard Statistiche */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
-        .stat-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 4px; padding: 20px; text-align: center; }
-        .stat-label { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
-        .stat-value { font-size: 28px; font-weight: 800; color: var(--text-main); }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
+        .stat-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 8px; padding: 25px; text-align: center; }
+        .stat-label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 32px; font-weight: 800; color: var(--text-main); }
         .stat-value.profit { color: var(--success); }
         .stat-value.negative { color: var(--danger); }
 
+        /* FAQ Section */
+        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 70px; }
+        .faq-card { background-color: var(--bet-card); border: 1px solid var(--border-solid); padding: 25px; border-radius: 8px; }
+        .faq-card h4 { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; display: flex; gap: 10px; }
+        .faq-card h4 i { color: var(--bet-yellow); margin-top: 4px; }
+        .faq-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
         /* Storico Schedine */
-        .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 24px; margin-bottom: 50px; }
         
-        .ticket { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 4px; border-top: 4px solid var(--bet-green); position: relative; }
-        .ticket-header { padding: 15px; border-bottom: 1px solid var(--border-solid); display: flex; justify-content: space-between; align-items: center; background-color: var(--bet-card); }
+        .ticket { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 8px; border-top: 5px solid var(--bet-green); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .ticket-header { padding: 18px; border-bottom: 1px solid var(--border-solid); display: flex; justify-content: space-between; align-items: center; background-color: var(--bet-card); border-radius: 4px 4px 0 0; }
         .t-date { font-size: 13px; font-weight: 600; color: var(--text-muted); }
-        .t-status { font-size: 12px; font-weight: 800; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; }
-        .t-status.vinta { background-color: rgba(34, 197, 94, 0.2); color: var(--success); }
-        .t-status.persa { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .t-status.attesa { background-color: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+        .t-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .t-status.vinta { background-color: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.3); }
+        .t-status.persa { background-color: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .t-status.attesa { background-color: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--border-solid); }
         
-        .match-row { padding: 15px; border-bottom: 1px solid var(--border-solid); }
+        .match-row { padding: 16px; border-bottom: 1px solid var(--border-solid); }
         .match-row:last-child { border-bottom: none; }
-        .m-teams { font-size: 14px; font-weight: 700; margin-bottom: 5px; display: block; }
-        .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .m-pick { font-size: 13px; font-weight: 600; color: var(--bet-yellow); }
-        .m-quote { font-size: 13px; font-weight: 700; }
-        .m-result { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .m-teams { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: block; color: #fff; }
+        .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .m-pick { font-size: 13px; font-weight: 700; color: var(--bet-yellow); }
+        .m-quote { font-size: 13px; font-weight: 700; color: var(--text-muted); }
+        .m-result { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         .m-result.vinta { color: var(--success); }
         .m-result.persa { color: var(--danger); }
         .m-result.attesa { color: var(--text-muted); }
         
-        .ticket-footer { padding: 15px; border-top: 1px solid var(--border-solid); background-color: var(--bet-card); }
-        .t-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
-        .t-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 800; color: var(--text-main); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-solid); }
+        .ticket-footer { padding: 18px; border-top: 1px solid var(--border-solid); background-color: var(--bet-card); border-radius: 0 0 8px 8px; }
+        .t-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+        .t-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; color: var(--text-main); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-solid); }
+        .t-total span:last-child { color: var(--bet-yellow); }
 
         /* Footer */
-        footer { background-color: #1a1a1a; padding: 40px 20px; text-align: center; border-top: 1px solid var(--border-solid); }
-        .footer-icons { font-size: 24px; color: #666; margin-bottom: 15px; display: flex; justify-content: center; gap: 15px; }
-        .disclaimer { font-size: 12px; color: #888; max-width: 800px; margin: 0 auto; line-height: 1.5; }
-        .disclaimer strong { color: #aaa; }
+        footer { background-color: #1a1a1a; padding: 50px 20px; text-align: center; border-top: 1px solid var(--border-solid); }
+        .footer-icons { font-size: 28px; color: #555; margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
+        .disclaimer { font-size: 12px; color: #888; max-width: 900px; margin: 0 auto; line-height: 1.6; }
+        .disclaimer strong { color: #bbb; }
         
         @media (max-width: 768px) {
-            .features-grid, .stats-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .features-grid, .stats-grid, .faq-grid { grid-template-columns: 1fr; }
+            .nav-links a:not(.nav-btn) { display: none; }
+            .hero h2 { font-size: 32px; }
         }
     </style>
 </head>
@@ -110,12 +129,13 @@
         <div class="nav-container">
             <a href="#" class="brand">
                 <h1>SBR</h1>
-                <span>Smart Betting Routing</span>
+                <span>Metodo Alpha</span>
             </a>
             <nav class="nav-links">
-                <a href="#come-funziona">Come funziona</a>
-                <a href="#dashboard">Dashboard dati</a>
-                <a href="#storico">Registro giocate</a>
+                <a href="#il-metodo">Il Metodo</a>
+                <a href="#statistiche">Statistiche</a>
+                <a href="#storico">Storico</a>
+                <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank">Canale Telegram</a>
             </nav>
         </div>
     </header>
@@ -124,36 +144,42 @@
 
     <div class="container">
         <section class="hero">
-            <h2>Analisi oggettiva delle quote sportive.</h2>
-            <p>Nessuna garanzia di vincita, nessuna formula magica. Il Modello Alpha analizza la pura matematica dei palinsesti per trovare giocate con un reale vantaggio statistico rispetto alle quote proposte dai bookmaker italiani.</p>
-            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="btn-primary">
-                <i class="fa-brands fa-telegram fa-lg"></i> Unisciti al canale Telegram
+            <h2>Analisi matematica delle quote sportive.</h2>
+            <p>Nessuna promessa di arricchimento, nessuna formula magica. Il nostro modello analizza quotidianamente i palinsesti per individuare il reale vantaggio statistico rispetto alle quote offerte dai bookmaker.</p>
+            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="btn-primary" target="_blank">
+                <i class="fa-brands fa-telegram fa-xl"></i> Accedi ai pronostici gratuiti
             </a>
         </section>
 
-        <section id="come-funziona">
-            <h3 class="section-title">Perché seguire l'algoritmo</h3>
+        <section id="il-metodo" class="method-section">
+            <h3>Il vantaggio matematico</h3>
+            <p>Il concetto alla base di SBR è semplice: cercare le inefficienze del mercato. I bookmaker non sono perfetti e a volte propongono quote leggermente più alte di quanto le reali probabilità suggeriscano.</p>
+            <p>Il nostro algoritmo scansiona enormi moli di dati per individuare questi scarti e li seleziona per te. Nel lungo periodo, affidarsi alla pura matematica scartando l'emotività è l'unico approccio razionale per affrontare il mercato sportivo.</p>
+        </section>
+
+        <section>
+            <h3 class="section-title"><i class="fa-solid fa-list-check"></i> Perché seguire l'algoritmo</h3>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fa-solid fa-calculator feature-icon"></i>
                     <h3>Dati, non opinioni</h3>
-                    <p>Le scelte si basano unicamente sui numeri. Il sistema azzera l'emotività e il tifo, selezionando solo le quote che presentano un valore matematico effettivo.</p>
+                    <p>Le scelte si basano unicamente sui numeri. azzeriamo l'emotività e il tifo, selezionando solo le quote che presentano un valore oggettivo ed effettivo.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-clock feature-icon"></i>
                     <h3>Risparmio di tempo</h3>
-                    <p>L'algoritmo fa il lavoro sporco al posto tuo: confronta centinaia di partite ogni giorno ed estrae solo le selezioni migliori.</p>
+                    <p>L'algoritmo fa il lavoro sporco al posto tuo: confronta centinaia di partite ogni giorno. ti consegniamo solo le selezioni migliori, già filtrate e pronte.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-folder-open feature-icon"></i>
                     <h3>Trasparenza totale</h3>
-                    <p>Non nascondiamo le perdite. Lo storico che vedi qui sotto è pubblico, generato in automatico e mostra in tempo reale i risultati reali di ogni simulazione.</p>
+                    <p>Non nascondiamo le perdite. lo storico che vedi in questa pagina è pubblico, generato in automatico e mostra l'andamento reale delle simulazioni.</p>
                 </div>
             </div>
         </section>
 
-        <section id="dashboard">
-            <h3 class="section-title">Bilancio simulato</h3>
+        <section id="statistiche">
+            <h3 class="section-title"><i class="fa-solid fa-chart-line"></i> Bilancio simulato</h3>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Cassa simulata</div>
@@ -170,15 +196,43 @@
             </div>
         </section>
 
-        <section id="storico">
-            <h3 class="section-title">Registro pubblico delle giocate</h3>
-            <div id="storico-container" class="tickets-container">
-                <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px;">
-                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
-                    <p style="margin-top: 10px; font-size: 14px;">Caricamento dello storico in corso...</p>
+        <section>
+            <h3 class="section-title"><i class="fa-regular fa-circle-question"></i> Domande frequenti</h3>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-angle-right"></i> Quanto costa il servizio?</h4>
+                    <p>L'accesso al canale Telegram e la consultazione di questa dashboard sono completamente gratuiti. non richiediamo abbonamenti o pagamenti per farti leggere i pronostici elaborati dal sistema.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-angle-right"></i> È garantita la vincita?</h4>
+                    <p>Assolutamente no. il rischio è sempre presente e come puoi vedere dallo storico ci sono anche giocate perdenti. il nostro obiettivo è semplicemente avere un vantaggio statistico sui mercati.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-angle-right"></i> Posso giocare queste schedine?</h4>
+                    <p>I dati forniti sono simulazioni statistiche. se decidi di utilizzarle per piazzare scommesse reali, fallo sempre in modo responsabile, utilizzando solo fondi che puoi permetterti di perdere.</p>
+                </div>
+                <div class="faq-card">
+                    <h4><i class="fa-solid fa-angle-right"></i> Quali bookmaker utilizzate?</h4>
+                    <p>Il nostro algoritmo scansiona esclusivamente le quote dei principali operatori autorizzati dall'agenzia delle dogane e dei monopoli (adm) legalmente operanti sul territorio italiano.</p>
                 </div>
             </div>
         </section>
+
+        <section id="storico">
+            <h3 class="section-title"><i class="fa-solid fa-receipt"></i> Registro pubblico delle giocate</h3>
+            <div id="storico-container" class="tickets-container">
+                <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 50px; background: var(--bet-panel); border-radius: 8px;">
+                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                    <p style="margin-top: 15px; font-size: 14px; font-weight: 600;">Caricamento del database in corso...</p>
+                </div>
+            </div>
+        </section>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="btn-primary" target="_blank">
+                <i class="fa-brands fa-telegram fa-xl"></i> Entra nel canale gratuito
+            </a>
+        </div>
     </div>
 
     <footer>
@@ -188,8 +242,8 @@
         </div>
         <div class="disclaimer">
             <strong>Il gioco è vietato ai minori di 18 anni e può causare dipendenza patologica.</strong><br><br>
-            Questo sito ha scopo puramente informativo. Le quote mostrate derivano da concessionari autorizzati, ma i dati della cassa e le giocate sono simulazioni statistiche gratuite che non rappresentano un incitamento al gioco d'azzardo. Se decidi di scommettere sui mercati reali, fallo responsabilmente e secondo le tue disponibilità economiche.<br><br>
-            © 2026 SBR. Tutti i diritti riservati.
+            Questo sito ha scopo puramente informativo e statistico. Le quote mostrate derivano da operatori autorizzati, ma i dati del bilancio e le schedine sono simulazioni matematiche gratuite che non rappresentano in alcun modo un incitamento o un invito al gioco d'azzardo. SBR non raccoglie scommesse. Se decidi di scommettere sui mercati reali, fallo responsabilmente e secondo le tue disponibilità economiche.<br><br>
+            © 2026 SBR - Smart Betting Routing. Tutti i diritti riservati.
         </div>
     </footer>
 
@@ -316,7 +370,7 @@
                 }
             })
             .catch(err => {
-                document.getElementById('storico-container').innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--danger); padding: 40px; border: 1px solid var(--border-solid); border-radius: 4px;">Errore nel caricamento del database. Riprova più tardi.</div>';
+                document.getElementById('storico-container').innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--danger); padding: 40px; border: 1px solid var(--border-solid); border-radius: 8px; background: var(--bet-card);">Errore nel caricamento del database. Riprova più tardi.</div>';
             });
     </script>
 </body>
