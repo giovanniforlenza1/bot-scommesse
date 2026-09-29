@@ -40,7 +40,6 @@ TRADUZIONI_NAZIONALI = {
 }
 
 def traduci_squadra(nome_inglese):
-    # il comando strip() pulisce eventuali spazi vuoti che impedivano la traduzione
     nome_pulito = nome_inglese.strip()
     return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
 
@@ -85,12 +84,20 @@ def aggiorna_risultati(db):
                     score_trasferta = int(next((s['score'] for s in scores if s['name'] == squadra_trasferta_originale), 0))
                     
                     vinta = False
-                    if 'vittoria' in p['pronostico']:
+                    if p['pronostico'] == f"vittoria {p['squadra_casa']}":
                         vinta = score_casa > score_trasferta
-                    elif 'over 2.5' in p['pronostico']:
+                    elif p['pronostico'] == f"vittoria {p['squadra_trasferta']}":
+                        vinta = score_trasferta > score_casa
+                    elif p['pronostico'] == "pareggio":
+                        vinta = score_casa == score_trasferta
+                    elif p['pronostico'] == "over 2.5 gol":
                         vinta = (score_casa + score_trasferta) > 2
-                    elif 'gol' in p['pronostico']:
+                    elif p['pronostico'] == "under 2.5 gol":
+                        vinta = (score_casa + score_trasferta) < 3
+                    elif p['pronostico'] == "gol (entrambe segnano)":
                         vinta = score_casa > 0 and score_trasferta > 0
+                    elif p['pronostico'] == "no gol":
+                        vinta = score_casa == 0 or score_trasferta == 0
                         
                     p['stato'] = 'vinta' if vinta else 'persa'
                     p['risultato_reale'] = f"{score_casa}-{score_trasferta}"
@@ -111,9 +118,15 @@ def crea_schedina(db):
     giocate_selezionate = []
     
     for camp in campionati:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals"
-        res = requests.get(url)
-        if res.status_code != 200: continue
+        # sistema di sicurezza a doppio binario per evitare il crash dell'api
+        url_completo = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
+        res = requests.get(url_completo)
+        
+        if res.status_code != 200:
+            url_sicuro = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals"
+            res = requests.get(url_sicuro)
+            if res.status_code != 200:
+                continue
         
         for partita in res.json():
             data_ita = datetime.strptime(partita['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
@@ -122,15 +135,38 @@ def crea_schedina(db):
                     if book['title'] in siti_italiani:
                         quota_max = 0
                         miglior_giocata = ""
+                        
                         for mercato in book['markets']:
                             if mercato['key'] == 'h2h':
-                                q = next((o['price'] for o in mercato['outcomes'] if o['name'] == partita['home_team']), 0)
-                                if 1.45 <= q <= 1.95 and q > quota_max:
-                                    quota_max, miglior_giocata = q, f"vittoria {traduci_squadra(partita['home_team'])}"
+                                q1 = next((o['price'] for o in mercato['outcomes'] if o['name'] == partita['home_team']), 0)
+                                if 1.45 <= q1 <= 1.95 and q1 > quota_max:
+                                    quota_max, miglior_giocata = q1, f"vittoria {traduci_squadra(partita['home_team'])}"
+                                    
+                                q2 = next((o['price'] for o in mercato['outcomes'] if o['name'] == partita['away_team']), 0)
+                                if 1.45 <= q2 <= 1.95 and q2 > quota_max:
+                                    quota_max, miglior_giocata = q2, f"vittoria {traduci_squadra(partita['away_team'])}"
+                                    
+                                qx = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Draw'), 0)
+                                if 1.45 <= qx <= 1.95 and qx > quota_max:
+                                    quota_max, miglior_giocata = qx, "pareggio"
+                                    
                             elif mercato['key'] == 'totals':
-                                q = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Over' and o.get('point') == 2.5), 0)
-                                if 1.45 <= q <= 1.95 and q > quota_max:
-                                    quota_max, miglior_giocata = q, "over 2.5 gol"
+                                q_over = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Over' and o.get('point') == 2.5), 0)
+                                if 1.45 <= q_over <= 1.95 and q_over > quota_max:
+                                    quota_max, miglior_giocata = q_over, "over 2.5 gol"
+                                    
+                                q_under = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Under' and o.get('point') == 2.5), 0)
+                                if 1.45 <= q_under <= 1.95 and q_under > quota_max:
+                                    quota_max, miglior_giocata = q_under, "under 2.5 gol"
+                                    
+                            elif mercato['key'] == 'btts':
+                                q_gol = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Yes'), 0)
+                                if 1.45 <= q_gol <= 1.95 and q_gol > quota_max:
+                                    quota_max, miglior_giocata = q_gol, "gol (entrambe segnano)"
+                                    
+                                q_nogol = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'No'), 0)
+                                if 1.45 <= q_nogol <= 1.95 and q_nogol > quota_max:
+                                    quota_max, miglior_giocata = q_nogol, "no gol"
                         
                         if miglior_giocata:
                             giocate_selezionate.append({
@@ -167,7 +203,7 @@ def crea_schedina(db):
     
     db['schedine'].append(nuova_schedina)
     
-    msg = f"📊 **NUOVA RICEVUTA SBR | MODELLO ALPHA**\ninvestimento simulato: {importo}€ | quota totale: {quota_totale}\n\n"
+    msg = f"📊 **NUOVA RICEVUTA SBR | MODELLO ALPHA**\ncapitale simulato: {importo}€ | quota totale: {quota_totale}\n\n"
     for p in top_4:
         msg += f"⚽ {p['data']} | {p['squadra_casa']} - {p['squadra_trasferta']}\n🎯 {p['pronostico']} (@{p['quota']})\n\n"
     msg += "**#SBR #PronosticiCalcio #ValueBetting #ModelloAlpha**"
