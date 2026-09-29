@@ -1,0 +1,55 @@
+{
+    "capitale_iniziale": 200.0,
+    "schedine": [
+        {
+            "id": "49677526",
+            "data_creazione": "29/09/2026",
+            "importo": 10.0,
+            "quota_totale": 11.33,
+            "ritorno_potenziale": 113.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "aa65ea35f0aa1c0bb87cbcb9e5341b5b",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Hungary",
+                    "squadra_trasferta": "Georgia",
+                    "pronostico": "vittoria Hungary",
+                    "quota": 1.95,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4985fdd6c7e6801fcca1f9f1e78aed66",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Ukraine",
+                    "squadra_trasferta": "Northern Ireland",
+                    "pronostico": "vittoria Ukraine",
+                    "quota": 1.92,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Poland",
+                    "squadra_trasferta": "Romania",
+                    "pronostico": "over 2.5 gol",
+                    "quota": 1.75,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "25729c523424cd79daafd14635c7ea12",
+                    "data": "29/09 20:45",
+                    "squadra_casa": "Bulgaria",
+                    "squadra_trasferta": "Estonia",
+                    "pronostico": "vittoria Bulgaria",
+                    "quota": 1.73,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        }
+    ]
+}
