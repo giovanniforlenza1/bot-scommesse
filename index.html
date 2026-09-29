@@ -3,113 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Match Lab | Dashboard Algoritmica</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Match Lab | Algoritmo di Value Betting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #09090b;
-            --card-bg: #18181b;
-            --card-border: #27272a;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --danger: #ef4444;
-            --wait: #f59e0b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg: #f3f4f6;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --wait: #d97706;
+            --paper: #ffffff;
+            --paper-border: #e5e7eb;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); -webkit-font-smoothing: antialiased; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); -webkit-font-smoothing: antialiased; }
         
         /* Navbar */
-        nav { background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; padding: 16px 24px; text-align: center; }
-        nav h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; text-transform: uppercase; background: linear-gradient(to right, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        nav { background: #ffffff; border-bottom: 1px solid var(--paper-border); position: sticky; top: 0; z-index: 100; padding: 15px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; text-transform: uppercase; color: var(--accent); }
+        nav p { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
         
-        .container { max-width: 700px; margin: 0 auto; padding: 24px 16px; }
+        .container { max-width: 700px; margin: 0 auto; padding: 25px 15px; }
         
         /* Hero Stats */
-        .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }
-        .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .stat-card.main { grid-column: span 2; background: linear-gradient(145deg, #18181b 0%, #1e1e24 100%); position: relative; overflow: hidden; }
-        .stat-card.main::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 60%); pointer-events: none; }
-        .stat-label { color: var(--text-muted); font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; }
-        .stat-value { font-size: 38px; font-weight: 800; letter-spacing: -1px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 35px; }
+        .stat-card { background: var(--paper); border: 1px solid var(--paper-border); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .stat-card.main { grid-column: span 2; background: var(--accent); color: white; border: none; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
+        .stat-label { font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 5px; opacity: 0.8; }
+        .stat-card:not(.main) .stat-label { color: var(--text-muted); }
+        .stat-value { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
         .stat-value.profit { color: var(--success); }
         .stat-value.negative { color: var(--danger); }
         
-        .sub-stats { font-size: 24px; }
+        .section-title { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
         
-        /* Titoli Sezione */
-        .section-title { font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        /* Stile Scontrino Cartaceo */
+        .ticket { background: var(--paper); border-radius: 4px; padding: 25px; margin-bottom: 25px; position: relative; box-shadow: 0 8px 15px rgba(0,0,0,0.08); border-top: 8px solid var(--text-main); overflow: hidden; }
         
-        /* Schedine (Cards) */
-        .schedina { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; margin-bottom: 20px; transition: transform 0.2s; }
-        .schedina-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 16px; }
-        .schedina-info { display: flex; flex-direction: column; gap: 4px; }
-        .s-date { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-        .s-quota { font-size: 18px; font-weight: 800; }
+        /* Timbro per le schedine chiuse */
+        .stamp { position: absolute; top: 50px; right: 20px; font-size: 40px; font-weight: 900; text-transform: uppercase; border: 4px solid; border-radius: 8px; padding: 5px 15px; transform: rotate(-15deg); opacity: 0.15; pointer-events: none; letter-spacing: 2px; }
+        .stamp.vinta { color: var(--success); border-color: var(--success); opacity: 0.2; }
+        .stamp.persa { color: var(--danger); border-color: var(--danger); opacity: 0.2; }
         
-        /* Badge Stati */
-        .badge { padding: 6px 12px; border-radius: 30px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-        .badge.vinta { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
-        .badge.persa { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
-        .badge.in.attesa { background: rgba(245, 158, 11, 0.1); color: var(--wait); border: 1px solid rgba(245, 158, 11, 0.2); }
-
-        /* Lista Partite */
-        .match { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--card-border); }
-        .match:last-child { border-bottom: none; padding-bottom: 0; }
-        .m-teams { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-        .m-pick { font-size: 12px; color: var(--text-muted); }
-        .m-result { font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .ticket-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 15px; margin-bottom: 15px; font-family: 'Space Mono', monospace; }
+        .t-logo { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+        .t-details { font-size: 12px; color: var(--text-muted); }
+        
+        .match-row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; }
+        .match-row:last-of-type { border-bottom: none; }
+        .m-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .m-teams { font-size: 14px; font-weight: 700; color: var(--text-main); }
+        .m-pick { font-size: 13px; font-weight: 600; color: var(--accent); }
+        .m-bottom { display: flex; justify-content: space-between; font-size: 12px; font-family: 'Space Mono', monospace; color: var(--text-muted); }
+        .m-result-icon { font-size: 14px; }
         .m-vinta { color: var(--success); }
         .m-persa { color: var(--danger); }
-        .m-attesa { color: var(--wait); font-size: 12px; }
-
+        
+        .ticket-footer { margin-top: 15px; border-top: 2px dashed #cbd5e1; padding-top: 15px; font-family: 'Space Mono', monospace; }
+        .t-recap-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; font-weight: 600; }
+        .t-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0; }
+        
+        /* Finto codice a barre per il realismo dello scontrino */
+        .barcode { height: 35px; width: 100%; margin-top: 20px; background: repeating-linear-gradient(90deg, var(--text-main), var(--text-main) 2px, transparent 2px, transparent 4px, var(--text-main) 4px, var(--text-main) 5px, transparent 5px, transparent 8px); opacity: 0.6; }
+        
         /* Pulsante Telegram */
-        .cta-btn { display: block; width: 100%; background: #2481cc; color: white; text-align: center; padding: 16px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 16px; margin-top: 32px; transition: background 0.2s; }
-        .cta-btn:hover { background: #1d6fa5; }
+        .cta-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #0088cc; color: white; padding: 18px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; margin: 30px 0; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3); transition: transform 0.2s; }
+        .cta-btn:active { transform: scale(0.98); }
+
+        /* Footer Legale (Obbligatorio) */
+        footer { background: #1f2937; color: #9ca3af; padding: 30px 20px; text-align: center; font-size: 11px; line-height: 1.6; }
+        .footer-logos { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; font-size: 24px; color: #fff; opacity: 0.8; }
+        .legal-text strong { color: #fff; }
     </style>
 </head>
 <body>
 
     <nav>
         <h1>Match Lab</h1>
+        <p>Ricevute Algoritmiche Certificate</p>
     </nav>
 
     <div class="container">
-        <div class="hero-stats">
+        <div class="stats-grid">
             <div class="stat-card main">
-                <div class="stat-label">Cassa Simulata Live</div>
+                <div class="stat-label">Capitale Simulato</div>
                 <div class="stat-value" id="capitale">-- €</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Profitto Netto</div>
-                <div class="stat-value sub-stats" id="profitto">-- €</div>
+                <div class="stat-value" id="profitto">-- €</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Win Rate</div>
-                <div class="stat-value sub-stats" id="winrate">--%</div>
+                <div class="stat-value" id="winrate">--%</div>
             </div>
         </div>
 
         <div class="section-title">
-            <i class="fa-solid fa-bolt"></i> Ultime Schedine
+            <i class="fa-solid fa-receipt"></i> Ultime Ricevute
         </div>
         
         <div id="storico">
             <div style="text-align: center; color: var(--text-muted); padding: 40px;">
-                <i class="fa-solid fa-circle-notch fa-spin fa-2x"></i>
-                <p style="margin-top: 10px;">Sincronizzazione col database...</p>
+                <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 10px; font-weight: 600;">Verifica giocate in corso...</p>
             </div>
         </div>
 
         <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="cta-btn">
-            <i class="fa-brands fa-telegram"></i> Entra nel Canale Telegram Ufficiale
+            <i class="fa-brands fa-telegram fa-lg"></i> Ricevi i pronostici gratis su Telegram
         </a>
     </div>
 
+    <footer>
+        <div class="footer-logos">
+            <i class="fa-solid fa-ban"></i>
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="legal-text">
+            <strong>Il gioco è vietato ai minori di 18 anni e può causare dipendenza patologica.</strong><br><br>
+            Questo sito e il relativo canale telegram hanno puro scopo informativo e statistico. Le informazioni fornite rappresentano l'elaborazione di un algoritmo matematico e non costituiscono in alcun modo un incitamento al gioco d'azzardo né una garanzia di vincita.<br><br>
+            Le quote riportate sono indicative e soggette a variazioni da parte dei bookmakers autorizzati dall'agenzia delle dogane e dei monopoli (adm). Ti invitiamo a giocare responsabilmente e solo su piattaforme legali.<br><br>
+        </div>
+    </footer>
+
     <script>
-        // SOSTITUISCI "TUO_USERNAME" CON IL TUO NOME UTENTE DI GITHUB
+        // Ora punta direttamente al file interno
         const RAW_URL = 'database.json';
 
         fetch(RAW_URL)
@@ -122,56 +144,80 @@
                 contenitore.innerHTML = ''; 
                 
                 data.schedine.slice().reverse().forEach(sc => {
+                    let textStamp = '';
+                    let classStamp = '';
+
                     if (sc.stato_schedina === 'vinta') {
                         capitale += (sc.ritorno_potenziale - sc.importo);
                         vinte++;
+                        textStamp = 'VINTA';
+                        classStamp = 'vinta';
                     } else if (sc.stato_schedina === 'persa') {
                         capitale -= sc.importo;
                         perse++;
+                        textStamp = 'PERSA';
+                        classStamp = 'persa';
                     } else {
                         capitale -= sc.importo;
                     }
 
                     let matchesHTML = sc.partite.map(p => {
-                        let icona = '<i class="fa-solid fa-clock m-attesa"></i>';
-                        let classeEsito = 'm-attesa';
-                        let score = p.risultato_reale || '';
+                        let icona = '<i class="fa-solid fa-clock"></i> In attesa';
+                        let classeEsito = '';
+                        let score = p.risultato_reale ? `[${p.risultato_reale}]` : '';
                         
                         if(p.stato === 'vinta') {
-                            icona = '<i class="fa-solid fa-check m-vinta"></i>';
+                            icona = '<i class="fa-solid fa-circle-check"></i>';
                             classeEsito = 'm-vinta';
                         } else if(p.stato === 'persa') {
-                            icona = '<i class="fa-solid fa-xmark m-persa"></i>';
+                            icona = '<i class="fa-solid fa-circle-xmark"></i>';
                             classeEsito = 'm-persa';
                         }
 
                         return `
-                        <div class="match">
-                            <div>
-                                <div class="m-teams">${p.squadra_casa} - ${p.squadra_trasferta}</div>
-                                <div class="m-pick">${p.pronostico} @ ${p.quota}</div>
+                        <div class="match-row">
+                            <div class="m-top">
+                                <span class="m-teams">${p.squadra_casa} - ${p.squadra_trasferta}</span>
+                                <span class="m-pick">${p.pronostico.toUpperCase()}</span>
                             </div>
-                            <div class="m-result ${classeEsito}">
-                                ${score} ${icona}
+                            <div class="m-bottom">
+                                <span>Quota: ${p.quota.toFixed(2)}</span>
+                                <span class="m-result-icon ${classeEsito}">${score} ${icona}</span>
                             </div>
                         </div>
                         `;
                     }).join('');
 
-                    let colorQuota = sc.stato_schedina === 'vinta' ? 'var(--success)' : '#fff';
+                    let htmlStamp = textStamp ? `<div class="stamp ${classStamp}">${textStamp}</div>` : '';
 
                     contenitore.innerHTML += `
-                        <div class="schedina">
-                            <div class="schedina-header">
-                                <div class="schedina-info">
-                                    <span class="s-date">${sc.data_creazione} • Investimento: ${sc.importo}€</span>
-                                    <span class="s-quota" style="color: ${colorQuota}">Quota Totale: ${sc.quota_totale}</span>
-                                </div>
-                                <div class="badge ${sc.stato_schedina.replace(' ', '.')}">${sc.stato_schedina}</div>
+                        <div class="ticket">
+                            ${htmlStamp}
+                            <div class="ticket-header">
+                                <div class="t-logo">MATCH LAB A.I.</div>
+                                <div class="t-details">RICEVUTA GIOCATA: #${sc.id.toUpperCase()}</div>
+                                <div class="t-details">DATA EMISSIONE: ${sc.data_creazione}</div>
                             </div>
-                            <div>
+                            
+                            <div class="ticket-matches">
                                 ${matchesHTML}
                             </div>
+                            
+                            <div class="ticket-footer">
+                                <div class="t-recap-row">
+                                    <span>Quota Totale:</span>
+                                    <span>${sc.quota_totale.toFixed(2)}</span>
+                                </div>
+                                <div class="t-recap-row">
+                                    <span>Importo Simulato:</span>
+                                    <span>€ ${sc.importo.toFixed(2)}</span>
+                                </div>
+                                <div class="t-total">
+                                    <span>VINCITA POTENZIALE:</span>
+                                    <span>€ ${sc.ritorno_potenziale.toFixed(2)}</span>
+                                </div>
+                            </div>
+                            <div class="barcode"></div>
                         </div>
                     `;
                 });
@@ -192,7 +238,7 @@
                 }
             })
             .catch(err => {
-                document.getElementById('storico').innerHTML = '<p style="text-align:center; color: var(--danger);">Errore nel caricamento del database algoritmico.</p>';
+                document.getElementById('storico').innerHTML = '<p style="text-align:center; color: var(--danger); font-weight:bold;">Errore nel caricamento del database.</p>';
             });
     </script>
 </body>
