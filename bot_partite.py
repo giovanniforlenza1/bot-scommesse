@@ -5,9 +5,10 @@ import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-TELEGRAM_TOKEN = "8981487141:AAFvKmVGm62wnENn-6uJZPedv0WMbp8ewr0"
-CHAT_ID = "-1004229932372" 
-ODDS_API_KEY = "8c17009a702111adb9f70dff1242a7c7"
+# Ora le chiavi sono pescate in totale sicurezza dai Secrets
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+CHAT_ID = os.environ.get("CHAT_ID")
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
 
 campionati = [
     'soccer_italy_serie_a', 
