@@ -40,7 +40,9 @@ TRADUZIONI_NAZIONALI = {
 }
 
 def traduci_squadra(nome_inglese):
-    return TRADUZIONI_NAZIONALI.get(nome_inglese, nome_inglese)
+    # il comando strip() pulisce eventuali spazi vuoti che impedivano la traduzione
+    nome_pulito = nome_inglese.strip()
+    return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
 
 def carica_database():
     if os.path.exists('database.json'):
@@ -83,7 +85,7 @@ def aggiorna_risultati(db):
                     score_trasferta = int(next((s['score'] for s in scores if s['name'] == squadra_trasferta_originale), 0))
                     
                     vinta = False
-                    if p['pronostico'].startswith('vittoria'):
+                    if 'vittoria' in p['pronostico']:
                         vinta = score_casa > score_trasferta
                     elif 'over 2.5' in p['pronostico']:
                         vinta = (score_casa + score_trasferta) > 2
@@ -165,10 +167,10 @@ def crea_schedina(db):
     
     db['schedine'].append(nuova_schedina)
     
-    msg = f"🔥 **NUOVA SCHEDINA SBR ELABORATA DA NEXUS**\ninvestimento: {importo}€ | quota totale: {quota_totale}\n\n"
+    msg = f"📊 **NUOVA RICEVUTA SBR | MODELLO ALPHA**\ninvestimento simulato: {importo}€ | quota totale: {quota_totale}\n\n"
     for p in top_4:
         msg += f"⚽ {p['data']} | {p['squadra_casa']} - {p['squadra_trasferta']}\n🎯 {p['pronostico']} (@{p['quota']})\n\n"
-    msg += "**#SBR #PronosticiCalcio #ValueBetting #NexusAI**"
+    msg += "**#SBR #PronosticiCalcio #ValueBetting #ModelloAlpha**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
