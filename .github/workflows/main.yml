@@ -2,24 +2,34 @@ name: Motore Bot Telegram
 
 on:
   schedule:
-    # Esegue lo script tutti i giorni alle 10:00 UTC (le 12:00 in Italia)
     - cron: '0 10 * * *'
-  workflow_dispatch: # Questo ti permette di avviarlo anche a mano con un tasto per fare i test
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   esegui-bot:
     runs-on: ubuntu-latest
     steps:
-      - name: Clona il codice
-        uses: actions/checkout@v3
+      - name: clona il codice
+        uses: actions/checkout@v4
         
-      - name: Installa Python
-        uses: actions/setup-python@v4
+      - name: installa Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           
-      - name: Installa i pacchetti necessari
+      - name: installa pacchetti
         run: pip install requests
         
-      - name: Avvia il Bot
+      - name: avvia l'algoritmo
         run: python bot_partite.py
+        
+      - name: salva il database
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add database.json
+          git commit -m "aggiornamento automatico schedine e risultati" || echo "nessun aggiornamento necessario"
+          git push
