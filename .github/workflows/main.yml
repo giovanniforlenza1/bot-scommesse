@@ -24,6 +24,10 @@ jobs:
         run: pip install requests
         
       - name: avvia l'algoritmo
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python bot_partite.py
         
       - name: salva il database
