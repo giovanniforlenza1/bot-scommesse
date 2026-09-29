@@ -5,7 +5,7 @@ import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-# Ora le chiavi sono pescate in totale sicurezza dai Secrets
+# Le chiavi vengono pescate in totale sicurezza dai Secrets
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
@@ -110,7 +110,7 @@ def crea_schedina(db):
                             })
                         break
 
-    if non giocate_selezionate: return
+    if not giocate_selezionate: return
     
     giocate_selezionate.sort(key=lambda x: x['quota'], reverse=True)
     top_4 = giocate_selezionate[:4]
