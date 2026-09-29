@@ -5,7 +5,6 @@ import uuid
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-# Le chiavi vengono pescate in totale sicurezza dai Secrets
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
@@ -17,6 +16,31 @@ campionati = [
     'soccer_uefa_europa_league'
 ]
 siti_italiani = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Lottomatica', 'Betfair', 'William Hill']
+
+TRADUZIONI_NAZIONALI = {
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
+    "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
+    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
+    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", 
+    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria", 
+    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
+    "Finland": "Finlandia", "Belarus": "Bielorussia", "Czech Republic": "Repubblica Ceca",
+    "Slovakia": "Slovacchia", "Slovenia": "Slovenia", "Romania": "Romania",
+    "Bulgaria": "Bulgaria", "Greece": "Grecia", "Iceland": "Islanda",
+    "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
+    "Bosnia and Herzegovina": "Bosnia ed Erzegovina", "Montenegro": "Montenegro",
+    "North Macedonia": "Macedonia del Nord", "Georgia": "Georgia", "Ukraine": "Ucraina",
+    "Lithuania": "Lituania", "Latvia": "Lettonia", "Estonia": "Estonia",
+    "Cyprus": "Cipro", "Malta": "Malta", "Moldova": "Moldavia", "Andorra": "Andorra",
+    "San Marino": "San Marino", "Liechtenstein": "Liechtenstein", "Luxembourg": "Lussemburgo",
+    "Armenia": "Armenia", "Azerbaijan": "Azerbaigian", "Kazakhstan": "Kazakistan",
+    "Kosovo": "Kosovo", "Israel": "Israele", "Faroe Islands": "Isole Faroe",
+    "Gibraltar": "Gibilterra"
+}
+
+def traduci_squadra(nome_inglese):
+    return TRADUZIONI_NAZIONALI.get(nome_inglese, nome_inglese)
 
 def carica_database():
     if os.path.exists('database.json'):
@@ -46,8 +70,17 @@ def aggiorna_risultati(db):
                 if p['stato'] == 'in attesa' and p['id_partita'] in risultati_live:
                     scores = risultati_live[p['id_partita']]
                     if not scores: continue
-                    score_casa = int(next((s['score'] for s in scores if s['name'] == p['squadra_casa']), 0))
-                    score_trasferta = int(next((s['score'] for s in scores if s['name'] == p['squadra_trasferta']), 0))
+                    
+                    squadra_casa_originale = ""
+                    squadra_trasferta_originale = ""
+                    for s in scores:
+                        if traduci_squadra(s['name']) == p['squadra_casa']:
+                            squadra_casa_originale = s['name']
+                        if traduci_squadra(s['name']) == p['squadra_trasferta']:
+                            squadra_trasferta_originale = s['name']
+                            
+                    score_casa = int(next((s['score'] for s in scores if s['name'] == squadra_casa_originale), 0))
+                    score_trasferta = int(next((s['score'] for s in scores if s['name'] == squadra_trasferta_originale), 0))
                     
                     vinta = False
                     if p['pronostico'].startswith('vittoria'):
@@ -91,7 +124,7 @@ def crea_schedina(db):
                             if mercato['key'] == 'h2h':
                                 q = next((o['price'] for o in mercato['outcomes'] if o['name'] == partita['home_team']), 0)
                                 if 1.45 <= q <= 1.95 and q > quota_max:
-                                    quota_max, miglior_giocata = q, f"vittoria {partita['home_team']}"
+                                    quota_max, miglior_giocata = q, f"vittoria {traduci_squadra(partita['home_team'])}"
                             elif mercato['key'] == 'totals':
                                 q = next((o['price'] for o in mercato['outcomes'] if o['name'] == 'Over' and o.get('point') == 2.5), 0)
                                 if 1.45 <= q <= 1.95 and q > quota_max:
@@ -101,8 +134,8 @@ def crea_schedina(db):
                             giocate_selezionate.append({
                                 'id_partita': partita['id'],
                                 'data': data_ita.strftime("%d/%m %H:%M"),
-                                'squadra_casa': partita['home_team'],
-                                'squadra_trasferta': partita['away_team'],
+                                'squadra_casa': traduci_squadra(partita['home_team']),
+                                'squadra_trasferta': traduci_squadra(partita['away_team']),
                                 'pronostico': miglior_giocata,
                                 'quota': quota_max,
                                 'stato': 'in attesa',
@@ -132,10 +165,10 @@ def crea_schedina(db):
     
     db['schedine'].append(nuova_schedina)
     
-    msg = f"🔥 **NUOVA SCHEDINA MATCH LAB**\nInvestimento: {importo}€ | Quota Totale: {quota_totale}\n\n"
+    msg = f"🔥 **NUOVA SCHEDINA SBR ELABORATA DA NEXUS**\ninvestimento: {importo}€ | quota totale: {quota_totale}\n\n"
     for p in top_4:
         msg += f"⚽ {p['data']} | {p['squadra_casa']} - {p['squadra_trasferta']}\n🎯 {p['pronostico']} (@{p['quota']})\n\n"
-    msg += "**#PronosticiCalcio #Schedina #MatchLab #ValueBetting**"
+    msg += "**#SBR #PronosticiCalcio #ValueBetting #NexusAI**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
