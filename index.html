@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Lab | Il Banco di Prova</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-size: 32px; margin: 0; }
+        .stats { display: flex; justify-content: space-between; background: #1a1a1a; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #333; }
+        .stat-box { text-align: center; flex: 1; }
+        .stat-box h3 { margin: 0; font-size: 24px; font-weight: bold; }
+        .stat-box p { margin: 5px 0 0; font-size: 11px; color: #888; text-transform: uppercase; }
+        .schedina-card { background: #1a1a1a; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #444; }
+        .schedina-card.vinta { border-left-color: #00ff88; }
+        .schedina-card.persa { border-left-color: #ff3366; }
+        .schedina-card.attesa { border-left-color: #ffd700; }
+        .match-list { margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; font-size: 13px; }
+        .match-item { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ccc; }
+        .match-item.vinta { color: #00ff88; }
+        .match-item.persa { color: #ff3366; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MATCH <span>LAB</span></h1>
+            <p style="color: #888;">Capitale Simulato Live</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-box">
+                <h3 id="capitale">0.00€</h3>
+                <p>Cassa Attuale</p>
+            </div>
+            <div class="stat-box">
+                <h3 id="profitto">0.00€</h3>
+                <p>Profitto Netto</p>
+            </div>
+            <div class="stat-box">
+                <h3 id="winrate">0%</h3>
+                <p>Win Rate</p>
+            </div>
+        </div>
+
+        <div id="storico"></div>
+    </div>
+
+    <script>
+        // Sostituisci "tuousername" con il tuo nome su GitHub
+        fetch('https://raw.githubusercontent.com/giovanniforlenza1/bot-scommesse/main/database.json')
+            .then(res => res.json())
+            .then(data => {
+                let capitale = data.capitale_iniziale;
+                let vinte = 0, perse = 0;
+                
+                const contenitore = document.getElementById('storico');
+                
+                data.schedine.slice().reverse().forEach(sc => {
+                    if (sc.stato_schedina === 'vinta') {
+                        capitale += (sc.ritorno_potenziale - sc.importo);
+                        vinte++;
+                    } else if (sc.stato_schedina === 'persa') {
+                        capitale -= sc.importo;
+                        perse++;
+                    } else {
+                        capitale -= sc.importo; // I soldi in gioco vengono scalati
+                    }
+
+                    let matchesHTML = sc.partite.map(p => `
+                        <div class="match-item ${p.stato}">
+                            <span>${p.squadra_casa} - ${p.squadra_trasferta} (${p.pronostico})</span>
+                            <span>${p.risultato_reale || '⏳'}</span>
+                        </div>
+                    `).join('');
+
+                    contenitore.innerHTML += `
+                        <div class="schedina-card ${sc.stato_schedina}">
+                            <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                                <span>Quota: ${sc.quota_totale} | Ritorno: ${sc.ritorno_potenziale}€</span>
+                                <span style="text-transform: uppercase;">${sc.stato_schedina}</span>
+                            </div>
+                            <div class="match-list">${matchesHTML}</div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('capitale').innerText = capitale.toFixed(2) + '€';
+                document.getElementById('profitto').innerText = (capitale - data.capitale_iniziale).toFixed(2) + '€';
+                let totali = vinte + perse;
+                if (totali > 0) document.getElementById('winrate').innerText = Math.round((vinte / totali) * 100) + '%';
+            });
+    </script>
+</body>
+</html>
