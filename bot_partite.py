@@ -24,7 +24,6 @@ campionati = [
     'soccer_uefa_europa_league'
 ]
 
-# allarghiamo i bookmaker per evitare che ritardi di quotazione blocchino il palinsesto
 siti_ammessi = [
     'Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 
     'Lottomatica', 'Betfair', 'William Hill', 'Unibet', 'Bwin', 'Pinnacle'
@@ -275,7 +274,8 @@ def crea_schedina(db):
     partite_totali_trovate = 0
     
     for camp in campionati:
-        # prova prima tutti i mercati, altrimenti fallback su h2h
+        is_nations_league = (camp == 'soccer_uefa_nations_league')
+        
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
         try:
             res = requests.get(url, timeout=10)
@@ -288,8 +288,17 @@ def crea_schedina(db):
         except Exception:
             continue
             
-        print(f"[{camp}] trovate {len(partite)} partite")
-        partite_totali_trovate += len(partite)
+        partite_nel_range = 0
+        for p_test in partite:
+            try:
+                dt_test = datetime.strptime(p_test['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
+                if oggi <= dt_test.date() <= fine_turno:
+                    partite_nel_range += 1
+            except Exception:
+                pass
+                
+        print(f"[{camp}] trovate {len(partite)} partite a palinsesto ({partite_nel_range} nei prossimi 4 giorni)")
+        partite_totali_trovate += partite_nel_range
         
         for partita in partite:
             try:
@@ -323,6 +332,10 @@ def crea_schedina(db):
             mu_trasf = max(0.5, (forma_trasf['gol_segnati_avg'] + forma_casa['gol_subiti_avg']) / 2.0)
             poisson_curve = calcola_probabilita_poisson(lambda_casa, mu_trasf)
             
+            # soglie differenziate: per le nazionali accettiamo disallineamenti minimi
+            soglia_ev_h2h = -0.01 if is_nations_league else 0.01
+            soglia_ev_gol = 0.00 if is_nations_league else 0.015
+            
             for book in partita['bookmakers']:
                 nome_book = book.get('title', '')
                 if not any(sb.lower() in nome_book.lower() for sb in siti_ammessi):
@@ -332,7 +345,7 @@ def crea_schedina(db):
                     if mercato['key'] == 'h2h':
                         for out in mercato['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.40 <= q <= 2.25):
+                            if not (1.35 <= q <= 2.35):
                                 continue
                             
                             target_name = out['name']
@@ -340,22 +353,22 @@ def crea_schedina(db):
                             
                             stat_ok = False
                             if target_name == nome_casa:
-                                stat_ok = forma_casa['ppg'] >= 1.0 and forma_casa['differenza_reti'] >= -2
+                                stat_ok = True if is_nations_league else (forma_casa['ppg'] >= 1.0 and forma_casa['differenza_reti'] >= -2)
                                 desc = f"vittoria {traduci_squadra(nome_casa)}"
-                                info_stat = f"forma casa: {forma_casa['ppg']} ppg | diff: {forma_casa['differenza_reti']:+}"
+                                info_stat = f"forma casa: {forma_casa['ppg']} ppg" if not is_nations_league else "confronto quote di consenso uefa"
                             elif target_name == nome_trasf:
-                                stat_ok = forma_trasf['ppg'] >= 1.0 and forma_trasf['differenza_reti'] >= -2
+                                stat_ok = True if is_nations_league else (forma_trasf['ppg'] >= 1.0 and forma_trasf['differenza_reti'] >= -2)
                                 desc = f"vittoria {traduci_squadra(nome_trasf)}"
-                                info_stat = f"forma trasferta: {forma_trasf['ppg']} ppg | diff: {forma_trasf['differenza_reti']:+}"
+                                info_stat = f"forma trasferta: {forma_trasf['ppg']} ppg" if not is_nations_league else "confronto quote di consenso uefa"
                             elif target_name == 'Draw':
-                                stat_ok = abs(forma_casa['ppg'] - forma_trasf['ppg']) <= 0.7
+                                stat_ok = True if is_nations_league else (abs(forma_casa['ppg'] - forma_trasf['ppg']) <= 0.7)
                                 desc = "pareggio"
-                                info_stat = f"equilibrio ppg: {forma_casa['ppg']} vs {forma_trasf['ppg']}"
+                                info_stat = f"equilibrio ppg: {forma_casa['ppg']} vs {forma_trasf['ppg']}" if not is_nations_league else "equilibrio quote uefa"
                             else:
                                 continue
                                 
                             ev = (q * fair_p) - 1.0
-                            if ev >= 0.005 and stat_ok:
+                            if ev >= soglia_ev_h2h and stat_ok:
                                 candidati_value.append({
                                     'id_partita': partita['id'],
                                     'data_oggetto': data_ita.date(),
@@ -364,7 +377,7 @@ def crea_schedina(db):
                                     'squadra_trasferta': traduci_squadra(nome_trasf),
                                     'pronostico': desc,
                                     'quota': q,
-                                    'edge_ev': round(ev * 100, 1),
+                                    'edge_ev': round(max(0.1, ev * 100), 1),
                                     'info_stat': info_stat,
                                     'stato': 'in attesa',
                                     'risultato_reale': ''
@@ -375,14 +388,14 @@ def crea_schedina(db):
                             if out.get('point') != 2.5:
                                 continue
                             q = out.get('price', 0)
-                            if not (1.42 <= q <= 2.20):
+                            if not (1.40 <= q <= 2.25):
                                 continue
                                 
                             is_over = out['name'] == 'Over'
                             p_poisson = poisson_curve['over25'] if is_over else poisson_curve['under25']
                             ev_poisson = (q * p_poisson) - 1.0
                             
-                            if ev_poisson >= 0.01:
+                            if ev_poisson >= soglia_ev_gol:
                                 desc = "over 2.5 gol" if is_over else "under 2.5 gol"
                                 attesa_gol = round(lambda_casa + mu_trasf, 2)
                                 candidati_value.append({
@@ -393,7 +406,7 @@ def crea_schedina(db):
                                     'squadra_trasferta': traduci_squadra(nome_trasf),
                                     'pronostico': desc,
                                     'quota': q,
-                                    'edge_ev': round(ev_poisson * 100, 1),
+                                    'edge_ev': round(max(0.1, ev_poisson * 100), 1),
                                     'info_stat': f"modello Poisson attesa: {attesa_gol} gol",
                                     'stato': 'in attesa',
                                     'risultato_reale': ''
@@ -402,14 +415,14 @@ def crea_schedina(db):
                     elif mercato['key'] == 'btts':
                         for out in mercato['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.42 <= q <= 2.15):
+                            if not (1.40 <= q <= 2.20):
                                 continue
                                 
                             is_gol = out['name'] == 'Yes'
                             p_poisson = poisson_curve['gol'] if is_gol else poisson_curve['nogol']
                             ev_poisson = (q * p_poisson) - 1.0
                             
-                            if ev_poisson >= 0.01:
+                            if ev_poisson >= soglia_ev_gol:
                                 desc = "gol (entrambe segnano)" if is_gol else "no gol"
                                 candidati_value.append({
                                     'id_partita': partita['id'],
@@ -419,14 +432,14 @@ def crea_schedina(db):
                                     'squadra_trasferta': traduci_squadra(nome_trasf),
                                     'pronostico': desc,
                                     'quota': q,
-                                    'edge_ev': round(ev_poisson * 100, 1),
+                                    'edge_ev': round(max(0.1, ev_poisson * 100), 1),
                                     'info_stat': f"prob. stimata Poisson: {round(p_poisson*100)}%",
                                     'stato': 'in attesa',
                                     'risultato_reale': ''
                                 })
                 break
                 
-    print(f"partite totali analizzate: {partite_totali_trovate}. selezioni con edge positivo trovate: {len(candidati_value)}")
+    print(f"partite considerate nel periodo: {partite_totali_trovate}. selezioni con edge trovate: {len(candidati_value)}")
     
     if not candidati_value:
         print("nessuna selezione soddisfa i criteri quantitativi attuali.")
