@@ -5,6 +5,7 @@ import uuid
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from collections import defaultdict
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -46,9 +47,7 @@ def traduci_squadra(nome_inglese):
     return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
 
 def analizza_forma(squadra, api_key):
-    # se manca la chiave o l'api non risponde, restituiamo dati neutri per non bloccare la value bet
     fallback_neutro = {'ppg': 1.5, 'media_gol_totali': 2.5, 'differenza_reti': 0}
-    
     if not api_key: return fallback_neutro
     headers = {'x-apisports-key': api_key}
     
@@ -73,7 +72,6 @@ def analizza_forma(squadra, api_key):
         for f in fixtures:
             goals_home = f['goals']['home']
             goals_away = f['goals']['away']
-            
             if goals_home is None or goals_away is None: 
                 match_giocati -= 1
                 continue
@@ -166,12 +164,49 @@ def aggiorna_risultati(db):
             elif tutte_vinte:
                 schedina['stato_schedina'] = 'vinta'
 
+def seleziona_blocco_temporale(giocate):
+    """
+    Raggruppa le partite in finestre temporali compatte:
+    1. Preferisce una singola giornata con almeno 3-4 partite
+    2. Altrimenti seleziona il weekend (sabato + domenica)
+    3. Altrimenti prende le prime 4 partite più vicine nel tempo
+    """
+    if len(giocate) < 3:
+        return []
+
+    per_data = defaultdict(list)
+    for g in giocate:
+        per_data[g['data_oggetto']].append(g)
+
+    # 1. Cerca il singolo giorno con più opportunità
+    date_ordinate = sorted(per_data.keys())
+    for d in date_ordinate:
+        if len(per_data[d]) >= 4:
+            return sorted(per_data[d], key=lambda x: x['quota'], reverse=True)[:4]
+        if len(per_data[d]) == 3:
+            return sorted(per_data[d], key=lambda x: x['quota'], reverse=True)[:3]
+
+    # 2. Cerca nel weekend (sabato e domenica consecutivi)
+    match_weekend = [g for g in giocate if g['data_oggetto'].weekday() in (5, 6)]
+    if len(match_weekend) >= 4:
+        return sorted(match_weekend, key=lambda x: x['quota'], reverse=True)[:4]
+
+    # 3. Fallback compatto: prendi le partite cronologicamente più vicine (max finestra 24-36h)
+    giocate_cronologiche = sorted(giocate, key=lambda x: x['timestamp_dt'])
+    primo_orario = giocate_cronologiche[0]['timestamp_dt']
+    blocco_vicino = [g for g in giocate_cronologiche if (g['timestamp_dt'] - primo_orario) <= timedelta(hours=36)]
+    
+    if len(blocco_vicino) >= 3:
+        return sorted(blocco_vicino, key=lambda x: x['quota'], reverse=True)[:4]
+
+    return []
+
 def crea_schedina(db):
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia).date()
-    fine_turno = oggi + timedelta(days=3)
+    fine_turno = oggi + timedelta(days=4)
     
-    giocate_selezionate = []
+    giocate_valide = []
     
     for camp in campionati:
         url_completo = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
@@ -244,8 +279,10 @@ def crea_schedina(db):
                                 valida = media_comb <= 2.8
                                     
                             if valida:
-                                giocate_selezionate.append({
+                                giocate_valide.append({
                                     'id_partita': partita['id'],
+                                    'timestamp_dt': data_ita,
+                                    'data_oggetto': data_ita.date(),
                                     'data': data_ita.strftime("%d/%m %H:%M"),
                                     'squadra_casa': traduci_squadra(partita['home_team']),
                                     'squadra_trasferta': traduci_squadra(partita['away_team']),
@@ -256,15 +293,30 @@ def crea_schedina(db):
                                 })
                         break
 
-    if not giocate_selezionate: return
+    if not giocate_valide: return
     
-    giocate_selezionate.sort(key=lambda x: x['quota'], reverse=True)
-    top_4 = giocate_selezionate[:4]
+    # applicazione del filtro anti-sovrapposizione oraria
+    selezione = seleziona_blocco_temporale(giocate_valide)
+    if not selezione: return
     
     quota_totale = 1.0
-    for g in top_4: quota_totale *= g['quota']
+    for g in selezione: quota_totale *= g['quota']
     quota_totale = round(quota_totale, 2)
     importo = 10.0
+    
+    # ripuliamo i campi interni prima di salvare nel database
+    partite_salvate = []
+    for g in selezione:
+        partite_salvate.append({
+            'id_partita': g['id_partita'],
+            'data': g['data'],
+            'squadra_casa': g['squadra_casa'],
+            'squadra_trasferta': g['squadra_trasferta'],
+            'pronostico': g['pronostico'],
+            'quota': g['quota'],
+            'stato': g['stato'],
+            'risultato_reale': g['risultato_reale']
+        })
     
     nuova_schedina = {
         'id': str(uuid.uuid4())[:8],
@@ -273,13 +325,13 @@ def crea_schedina(db):
         'quota_totale': quota_totale,
         'ritorno_potenziale': round(importo * quota_totale, 2),
         'stato_schedina': 'in attesa',
-        'partite': top_4
+        'partite': partite_salvate
     }
     
     db['schedine'].append(nuova_schedina)
     
     msg = f"📊 **NUOVA RICEVUTA SBR | MODELLO ALPHA**\ncapitale simulato: {importo}€ | quota totale: {quota_totale}\n\n"
-    for p in top_4:
+    for p in partite_salvate:
         msg += f"⚽ {p['data']} | {p['squadra_casa']} - {p['squadra_trasferta']}\n🎯 {p['pronostico']} (@{p['quota']})\n\n"
     msg += "**#SBR #PronosticiCalcio #ValueBetting #ModelloAlpha**"
     
