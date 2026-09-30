@@ -38,476 +38,189 @@ TRADUZIONI_NAZIONALI = {
     "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria", 
     "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
     "Finland": "Finlandia", "Belarus": "Bielorussia", "Czech Republic": "Repubblica Ceca",
-    "Slovakia": "Slovacchia", "Slovenia": "Slovacchia", "Romania": "Romania",
-    "Bulgaria": "Bulgaria", "Greece": "Grecia", "Iceland": "Islanda",
-    "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
-    "Bosnia and Herzegovina": "Bosnia ed Erzegovina", "Montenegro": "Montenegro",
-    "North Macedonia": "Macedonia del Nord", "Georgia": "Georgia", "Ukraine": "Ucraina",
-    "Lithuania": "Lituania", "Latvia": "Lettonia", "Estonia": "Estonia",
-    "Cyprus": "Cipro", "Malta": "Malta", "Moldova": "Moldavia", "Andorra": "Andorra",
-    "San Marino": "San Marino", "Liechtenstein": "Liechtenstein", "Luxembourg": "Lussemburgo",
-    "Armenia": "Armenia", "Azerbaijan": "Azerbaigian", "Kazakhstan": "Kazakistan",
-    "Kosovo": "Kosovo", "Israel": "Israele", "Faroe Islands": "Isole Faroe",
-    "Gibraltar": "Gibilterra"
+    "Slovakia": "Slovacchia", "Slovenia": "Slovenia", "Romania": "Romania",
+    "Bulgaria": "Bulgaria", "Greece": "Grecia", "Iceland": "Islanda"
 }
 
 def traduci_squadra(nome_inglese):
-    nome_pulito = nome_inglese.strip()
-    return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
+    return TRADUZIONI_NAZIONALI.get(nome_inglese.strip(), nome_inglese.strip())
 
 def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
-    fallback_neutro = {
-        'ppg': 1.5,
-        'gol_segnati_avg': 1.3,
-        'gol_subiti_avg': 1.2,
-        'differenza_reti': 0
-    }
-    if not api_key:
-        return fallback_neutro
-        
-    headers = {'x-apisports-key': api_key}
+    fallback_neutro = {'ppg': 1.2, 'gol_segnati_avg': 1.2, 'gol_subiti_avg': 1.2, 'differenza_reti': 0}
+    if not api_key: return fallback_neutro
     try:
+        headers = {'x-apisports-key': api_key}
         res = requests.get(f"https://v3.football.api-sports.io/teams?search={squadra}", headers=headers, timeout=10)
         data = res.json()
-        if not data.get('response'):
-            return fallback_neutro
-            
+        if not data.get('response'): return fallback_neutro
         team_id = data['response'][0]['team']['id']
         time.sleep(0.35)
-        
-        res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=6", headers=headers, timeout=10)
+        res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=5", headers=headers, timeout=10)
         fixtures = res_fix.json().get('response', [])
-        
-        punti = 0
-        gf_tot = 0
-        gs_tot = 0
-        match_considerati = 0
-        
+        punti, gf_tot, gs_tot, match_considerati = 0, 0, 0, 0
         for f in fixtures:
             gh = f['goals']['home']
             ga = f['goals']['away']
-            if gh is None or ga is None:
-                continue
-                
-            is_home_game = (f['teams']['home']['id'] == team_id)
-            gf = gh if is_home_game else ga
-            gs = ga if is_home_game else gh
-            
-            peso = 1.3 if ((ruolo == 'home' and is_home_game) or (ruolo == 'away' and not is_home_game)) else 0.8
-            
+            if gh is None or ga is None: continue
+            is_home = (f['teams']['home']['id'] == team_id)
+            gf = gh if is_home else ga
+            gs = ga if is_home else gh
+            peso = 1.2 if ((ruolo == 'home' and is_home) or (ruolo == 'away' and not is_home)) else 0.8
             gf_tot += gf * peso
             gs_tot += gs * peso
-            
-            punti_partita = 3 if gf > gs else (1 if gf == gs else 0)
-            punti += punti_partita * peso
+            punti += (3 if gf > gs else (1 if gf == gs else 0)) * peso
             match_considerati += peso
-            
-        if match_considerati == 0:
-            return fallback_neutro
-            
+        if match_considerati == 0: return fallback_neutro
         return {
             'ppg': round(punti / match_considerati, 2),
             'gol_segnati_avg': max(0.5, round(gf_tot / match_considerati, 2)),
             'gol_subiti_avg': max(0.5, round(gs_tot / match_considerati, 2)),
             'differenza_reti': round((gf_tot - gs_tot) / match_considerati, 2)
         }
-    except Exception:
+    except:
         return fallback_neutro
 
 def poisson_prob(lmbda, k):
     return (math.pow(lmbda, k) * math.exp(-lmbda)) / math.factorial(k)
 
 def calcola_probabilita_poisson(lambda_casa, mu_trasferta):
-    p_over25 = 0.0
-    p_btts = 0.0
-    
+    p_over25, p_btts = 0.0, 0.0
     for g_casa in range(7):
-        p_c = poisson_prob(lambda_casa, g_casa)
         for g_trasf in range(7):
-            p_t = poisson_prob(mu_trasferta, g_trasf)
-            p_esito = p_c * p_t
-            
-            if (g_casa + g_trasf) > 2.5:
-                p_over25 += p_esito
-            if g_casa > 0 and g_trasf > 0:
-                p_btts += p_esito
-                
-    return {
-        'over25': min(0.95, max(0.05, p_over25)),
-        'under25': min(0.95, max(0.05, 1.0 - p_over25)),
-        'gol': min(0.95, max(0.05, p_btts)),
-        'nogol': min(0.95, max(0.05, 1.0 - p_btts))
-    }
+            p_esito = poisson_prob(lambda_casa, g_casa) * poisson_prob(mu_trasferta, g_trasf)
+            if (g_casa + g_trasf) > 2.5: p_over25 += p_esito
+            if g_casa > 0 and g_trasf > 0: p_btts += p_esito
+    return {'over25': p_over25, 'under25': 1.0 - p_over25, 'gol': p_btts, 'nogol': 1.0 - p_btts}
 
 def de_vig_mercato(outcomes):
-    implied = {}
-    tot_implied = 0.0
-    for o in outcomes:
-        price = o.get('price', 0)
-        if price > 1.0:
-            p = 1.0 / price
-            key = o.get('name')
-            if 'point' in o:
-                key = f"{key}_{o['point']}"
-            implied[key] = p
-            tot_implied += p
-            
-    if tot_implied == 0:
-        return {}
-        
-    return {k: v / tot_implied for k, v in implied.items()}
+    implied = {o.get('name') if 'point' not in o else f"{o.get('name')}_{o['point']}": 1.0 / o.get('price', 1) for o in outcomes if o.get('price', 0) > 1.0}
+    tot = sum(implied.values())
+    return {k: v / tot for k, v in implied.items()} if tot > 0 else {}
 
 def carica_database():
     if os.path.exists('database.json'):
-        with open('database.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
+        with open('database.json', 'r', encoding='utf-8') as f: return json.load(f)
     return {'capitale_iniziale': 200.0, 'schedine': []}
 
 def salva_database(db):
-    with open('database.json', 'w', encoding='utf-8') as f:
-        json.dump(db, f, indent=4, ensure_ascii=False)
+    with open('database.json', 'w', encoding='utf-8') as f: json.dump(db, f, indent=4, ensure_ascii=False)
 
 def aggiorna_risultati(db):
-    risultati_live = {}
+    live = {}
     for camp in campionati:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?apiKey={ODDS_API_KEY}&daysFrom=3"
         try:
-            res = requests.get(url, timeout=10)
+            res = requests.get(f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?apiKey={ODDS_API_KEY}&daysFrom=3", timeout=10)
             if res.status_code == 200:
-                for match in res.json():
-                    if match.get('completed'):
-                        risultati_live[match['id']] = match.get('scores')
-        except Exception:
-            continue
-    
-    for schedina in db['schedine']:
-        if schedina['stato_schedina'] == 'in attesa':
-            tutte_vinte = True
-            almeno_una_persa = False
-            for p in schedina['partite']:
-                if p['stato'] == 'in attesa' and p['id_partita'] in risultati_live:
-                    scores = risultati_live[p['id_partita']]
-                    if not scores:
-                        continue
-                    
-                    squadra_casa_originale = ""
-                    squadra_trasferta_originale = ""
-                    for s in scores:
-                        if traduci_squadra(s['name']) == p['squadra_casa']:
-                            squadra_casa_originale = s['name']
-                        if traduci_squadra(s['name']) == p['squadra_trasferta']:
-                            squadra_trasferta_originale = s['name']
-                            
-                    score_casa = int(next((s['score'] for s in scores if s['name'] == squadra_casa_originale), 0))
-                    score_trasferta = int(next((s['score'] for s in scores if s['name'] == squadra_trasferta_originale), 0))
-                    
-                    vinta = False
+                for m in res.json():
+                    if m.get('completed'): live[m['id']] = m.get('scores')
+        except: pass
+    for sc in db['schedine']:
+        if sc['stato_schedina'] == 'in attesa':
+            vinte, perse = True, False
+            for p in sc['partite']:
+                if p['stato'] == 'in attesa' and p['id_partita'] in live and live[p['id_partita']]:
+                    sc_casa = next((s['score'] for s in live[p['id_partita']] if traduci_squadra(s['name']) == p['squadra_casa']), 0)
+                    sc_trasf = next((s['score'] for s in live[p['id_partita']] if traduci_squadra(s['name']) == p['squadra_trasferta']), 0)
+                    sc_casa, sc_trasf = int(sc_casa), int(sc_trasf)
                     pron = p['pronostico'].lower()
-                    if f"vittoria {p['squadra_casa'].lower()}" in pron:
-                        vinta = score_casa > score_trasferta
-                    elif f"vittoria {p['squadra_trasferta'].lower()}" in pron:
-                        vinta = score_trasferta > score_casa
-                    elif "pareggio" in pron:
-                        vinta = score_casa == score_trasferta
-                    elif "over 2.5" in pron:
-                        vinta = (score_casa + score_trasferta) > 2
-                    elif "under 2.5" in pron:
-                        vinta = (score_casa + score_trasferta) < 3
-                    elif "gol" in pron and "no" not in pron:
-                        vinta = score_casa > 0 and score_trasferta > 0
-                    elif "no gol" in pron:
-                        vinta = score_casa == 0 or score_trasferta == 0
-                        
-                    p['stato'] = 'vinta' if vinta else 'persa'
-                    p['risultato_reale'] = f"{score_casa}-{score_trasferta}"
-                
-                if p['stato'] == 'persa':
-                    almeno_una_persa = True
-                if p['stato'] == 'in attesa':
-                    tutte_vinte = False
-                
-            if almeno_una_persa:
-                schedina['stato_schedina'] = 'persa'
-            elif tutte_vinte:
-                schedina['stato_schedina'] = 'vinta'
-
-def ottimizza_composizione_coupon(candidati):
-    if not candidati:
-        return []
-        
-    candidati_ordinati = sorted(candidati, key=lambda x: x['edge_ev'], reverse=True)
-    
-    per_data = defaultdict(list)
-    for c in candidati_ordinati:
-        per_data[c['data_oggetto']].append(c)
-        
-    selezioni = []
-    for d in sorted(per_data.keys()):
-        if len(per_data[d]) >= 1:
-            selezioni = per_data[d][:3]
-            break
-            
-    if not selezioni:
-        selezioni = candidati_ordinati[:2]
-        
-    coupon = []
-    quota_prog = 1.0
-    for s in selezioni:
-        nuova_quota = quota_prog * s['quota']
-        if len(coupon) >= 1 and nuova_quota > 4.50:
-            break
-        coupon.append(s)
-        quota_prog = nuova_quota
-        if len(coupon) == 3:
-            break
-            
-    return coupon
+                    vinta = False
+                    if "vittoria " + p['squadra_casa'].lower() in pron: vinta = sc_casa > sc_trasf
+                    elif "vittoria " + p['squadra_trasferta'].lower() in pron: vinta = sc_trasf > sc_casa
+                    elif "pareggio" in pron: vinta = sc_casa == sc_trasf
+                    elif "over 2.5" in pron: vinta = (sc_casa + sc_trasf) > 2
+                    elif "under 2.5" in pron: vinta = (sc_casa + sc_trasf) < 3
+                    elif "gol" in pron and "no" not in pron: vinta = sc_casa > 0 and sc_trasf > 0
+                    elif "no gol" in pron: vinta = sc_casa == 0 or sc_trasf == 0
+                    p['stato'], p['risultato_reale'] = ('vinta' if vinta else 'persa'), f"{sc_casa}-{sc_trasf}"
+                if p['stato'] == 'persa': perse = True
+                if p['stato'] == 'in attesa': vinte = False
+            sc['stato_schedina'] = 'persa' if perse else ('vinta' if vinte else 'in attesa')
 
 def crea_schedina(db):
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia).date()
-    fine_turno = oggi + timedelta(days=4)
-    
-    candidati_value = []
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Scansione attiva da {oggi} a {fine_turno}...")
-    
-    partite_totali_trovate = 0
+    fine_turno = oggi + timedelta(days=5)
+    candidati = []
     
     for camp in campionati:
-        is_nations_league = (camp == 'soccer_uefa_nations_league')
-        
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
         try:
-            res = requests.get(url, timeout=10)
-            if res.status_code != 200:
-                url_fallback = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
-                res = requests.get(url_fallback, timeout=10)
-                if res.status_code != 200:
-                    continue
+            res = requests.get(f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts", timeout=10)
+            if res.status_code != 200: continue
             partite = res.json()
-        except Exception:
-            continue
-            
-        partite_nel_range = 0
-        for p_test in partite:
-            try:
-                dt_test = datetime.strptime(p_test['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-                if oggi <= dt_test.date() <= fine_turno:
-                    partite_nel_range += 1
-            except Exception:
-                pass
-                
-        print(f"[{camp}] trovate {len(partite)} partite totali ({partite_nel_range} nei prossimi 4 giorni)")
-        partite_totali_trovate += partite_nel_range
+        except: continue
         
         for partita in partite:
             try:
                 data_ita = datetime.strptime(partita['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            except Exception:
-                continue
-                
-            if not (oggi <= data_ita.date() <= fine_turno) or not partita.get('bookmakers'):
-                continue
-                
-            nome_casa = partita['home_team']
-            nome_trasf = partita['away_team']
+                if not (oggi <= data_ita.date() <= fine_turno): continue
+            except: continue
             
-            mercato_h2h_devig = {}
-            mercato_totals_devig = {}
-            mercato_btts_devig = {}
+            nome_casa, nome_trasf = partita['home_team'], partita['away_team']
+            mercato_h2h, mercato_tot, mercato_btts = {}, {}, {}
             
             for b in partita['bookmakers']:
+                if not any(sb.lower() in b.get('title', '').lower() for sb in siti_ammessi): continue
                 for m in b.get('markets', []):
-                    if m['key'] == 'h2h' and not mercato_h2h_devig:
-                        mercato_h2h_devig = de_vig_mercato(m['outcomes'])
-                    elif m['key'] == 'totals' and not mercato_totals_devig:
-                        mercato_totals_devig = de_vig_mercato(m['outcomes'])
-                    elif m['key'] == 'btts' and not mercato_btts_devig:
-                        mercato_btts_devig = de_vig_mercato(m['outcomes'])
+                    if m['key'] == 'h2h': mercato_h2h = de_vig_mercato(m['outcomes'])
+                    elif m['key'] == 'totals': mercato_tot = de_vig_mercato(m['outcomes'])
+                    elif m['key'] == 'btts': mercato_btts = de_vig_mercato(m['outcomes'])
             
-            forma_casa = analizza_forma_avanzata(nome_casa, API_FOOTBALL_KEY, ruolo='home')
-            forma_trasf = analizza_forma_avanzata(nome_trasf, API_FOOTBALL_KEY, ruolo='away')
+            fc = analizza_forma_avanzata(nome_casa, API_FOOTBALL_KEY, 'home')
+            ft = analizza_forma_avanzata(nome_trasf, API_FOOTBALL_KEY, 'away')
+            poisson_curve = calcola_probabilita_poisson(max(0.6, (fc['gol_segnati_avg'] + ft['gol_subiti_avg']) / 2.0), max(0.5, (ft['gol_segnati_avg'] + fc['gol_subiti_avg']) / 2.0))
             
-            lambda_casa = max(0.6, (forma_casa['gol_segnati_avg'] + forma_trasf['gol_subiti_avg']) / 2.0)
-            mu_trasf = max(0.5, (forma_trasf['gol_segnati_avg'] + forma_casa['gol_subiti_avg']) / 2.0)
-            poisson_curve = calcola_probabilita_poisson(lambda_casa, mu_trasf)
-            
-            # Parametri adattivi: quote tra 1.25 e 2.50 per le Nazionali
-            q_min_h2h = 1.25 if is_nations_league else 1.40
-            q_max_h2h = 2.50 if is_nations_league else 2.25
-            
-            soglia_ev_h2h = -0.01 if is_nations_league else 0.01
-            soglia_ev_gol = 0.00 if is_nations_league else 0.015
-            
-            for book in partita['bookmakers']:
-                nome_book = book.get('title', '')
-                if not any(sb.lower() in nome_book.lower() for sb in siti_ammessi):
-                    continue
-                    
-                for mercato in book.get('markets', []):
-                    if mercato['key'] == 'h2h':
-                        for out in mercato['outcomes']:
-                            q = out.get('price', 0)
-                            if not (q_min_h2h <= q <= q_max_h2h):
-                                continue
-                            
-                            target_name = out['name']
-                            fair_p = mercato_h2h_devig.get(target_name, 1.0 / q)
-                            
-                            stat_ok = False
-                            if target_name == nome_casa:
-                                stat_ok = True if is_nations_league else (forma_casa['ppg'] >= 1.0 and forma_casa['differenza_reti'] >= -2)
-                                desc = f"vittoria {traduci_squadra(nome_casa)}"
-                                info_stat = f"forma casa: {forma_casa['ppg']} ppg" if not is_nations_league else "confronto quote di consenso uefa"
-                            elif target_name == nome_trasf:
-                                stat_ok = True if is_nations_league else (forma_trasf['ppg'] >= 1.0 and forma_trasf['differenza_reti'] >= -2)
-                                desc = f"vittoria {traduci_squadra(nome_trasf)}"
-                                info_stat = f"forma trasferta: {forma_trasf['ppg']} ppg" if not is_nations_league else "confronto quote di consenso uefa"
-                            elif target_name == 'Draw':
-                                stat_ok = True if is_nations_league else (abs(forma_casa['ppg'] - forma_trasf['ppg']) <= 0.7)
-                                desc = "pareggio"
-                                info_stat = f"equilibrio ppg: {forma_casa['ppg']} vs {forma_trasf['ppg']}" if not is_nations_league else "equilibrio quote uefa"
-                            else:
-                                continue
-                                
+            for b in partita['bookmakers']:
+                if not any(sb.lower() in b.get('title', '').lower() for sb in siti_ammessi): continue
+                for m in b.get('markets', []):
+                    for out in m['outcomes']:
+                        q = out.get('price', 0)
+                        if not (1.30 <= q <= 2.60): continue
+                        
+                        ev, score, desc = -1.0, 0, ""
+                        if m['key'] == 'h2h':
+                            fair_p = mercato_h2h.get(out['name'], 1.0 / q)
                             ev = (q * fair_p) - 1.0
-                            if ev >= soglia_ev_h2h and stat_ok:
-                                candidati_value.append({
-                                    'id_partita': partita['id'],
-                                    'data_oggetto': data_ita.date(),
-                                    'data': data_ita.strftime("%d/%m %H:%M"),
-                                    'squadra_casa': traduci_squadra(nome_casa),
-                                    'squadra_trasferta': traduci_squadra(nome_trasf),
-                                    'pronostico': desc,
-                                    'quota': q,
-                                    'edge_ev': round(max(0.1, ev * 100), 1),
-                                    'info_stat': info_stat,
-                                    'stato': 'in attesa',
-                                    'risultato_reale': ''
-                                })
-                                
-                    elif mercato['key'] == 'totals':
-                        for out in mercato['outcomes']:
-                            if out.get('point') != 2.5:
-                                continue
-                            q = out.get('price', 0)
-                            q_min_tot = 1.30 if is_nations_league else 1.40
-                            q_max_tot = 2.40 if is_nations_league else 2.25
-                            if not (q_min_tot <= q <= q_max_tot):
-                                continue
-                                
-                            is_over = out['name'] == 'Over'
-                            p_poisson = poisson_curve['over25'] if is_over else poisson_curve['under25']
-                            ev_poisson = (q * p_poisson) - 1.0
+                            if out['name'] == nome_casa and fc['ppg'] >= 0.8: desc = f"vittoria {traduci_squadra(nome_casa)}"
+                            elif out['name'] == nome_trasf and ft['ppg'] >= 0.8: desc = f"vittoria {traduci_squadra(nome_trasf)}"
+                            elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 1.0: desc = "pareggio"
+                        elif m['key'] == 'totals' and out.get('point') == 2.5:
+                            fair_p = poisson_curve['over25'] if out['name'] == 'Over' else poisson_curve['under25']
+                            ev = (q * fair_p) - 1.0
+                            desc = "over 2.5 gol" if out['name'] == 'Over' else "under 2.5 gol"
+                        elif m['key'] == 'btts':
+                            fair_p = poisson_curve['gol'] if out['name'] == 'Yes' else poisson_curve['nogol']
+                            ev = (q * fair_p) - 1.0
+                            desc = "gol (entrambe segnano)" if out['name'] == 'Yes' else "no gol"
                             
-                            if ev_poisson >= soglia_ev_gol:
-                                desc = "over 2.5 gol" if is_over else "under 2.5 gol"
-                                attesa_gol = round(lambda_casa + mu_trasf, 2)
-                                candidati_value.append({
-                                    'id_partita': partita['id'],
-                                    'data_oggetto': data_ita.date(),
-                                    'data': data_ita.strftime("%d/%m %H:%M"),
-                                    'squadra_casa': traduci_squadra(nome_casa),
-                                    'squadra_trasferta': traduci_squadra(nome_trasf),
-                                    'pronostico': desc,
-                                    'quota': q,
-                                    'edge_ev': round(max(0.1, ev_poisson * 100), 1),
-                                    'info_stat': f"modello Poisson attesa: {attesa_gol} gol",
-                                    'stato': 'in attesa',
-                                    'risultato_reale': ''
-                                })
-                                
-                    elif mercato['key'] == 'btts':
-                        for out in mercato['outcomes']:
-                            q = out.get('price', 0)
-                            q_min_btts = 1.35 if is_nations_league else 1.40
-                            q_max_btts = 2.35 if is_nations_league else 2.20
-                            if not (q_min_btts <= q <= q_max_btts):
-                                continue
-                                
-                            is_gol = out['name'] == 'Yes'
-                            p_poisson = poisson_curve['gol'] if is_gol else poisson_curve['nogol']
-                            ev_poisson = (q * p_poisson) - 1.0
-                            
-                            if ev_poisson >= soglia_ev_gol:
-                                desc = "gol (entrambe segnano)" if is_gol else "no gol"
-                                candidati_value.append({
-                                    'id_partita': partita['id'],
-                                    'data_oggetto': data_ita.date(),
-                                    'data': data_ita.strftime("%d/%m %H:%M"),
-                                    'squadra_casa': traduci_squadra(nome_casa),
-                                    'squadra_trasferta': traduci_squadra(nome_trasf),
-                                    'pronostico': desc,
-                                    'quota': q,
-                                    'edge_ev': round(max(0.1, ev_poisson * 100), 1),
-                                    'info_stat': f"prob. stimata Poisson: {round(p_poisson*100)}%",
-                                    'stato': 'in attesa',
-                                    'risultato_reale': ''
-                                })
-                break
-                
-    print(f"Partite considerate nel periodo (4 giorni): {partite_totali_trovate}. Selezioni con Edge trovate: {len(candidati_value)}")
+                        if desc and ev > -0.05:
+                            score = fair_p + (ev * 2.0)
+                            candidati.append({
+                                'id_partita': partita['id'], 'data_oggetto': data_ita.date(), 'data': data_ita.strftime("%d/%m %H:%M"),
+                                'squadra_casa': traduci_squadra(nome_casa), 'squadra_trasferta': traduci_squadra(nome_trasf),
+                                'pronostico': desc, 'quota': q, 'score': score, 'stato': 'in attesa', 'risultato_reale': ''
+                            })
+                break 
+
+    if not candidati: return
     
-    if not candidati_value:
-        print("Nessuna selezione soddisfa i criteri quantitativi attuali.")
-        return
+    unici = {}
+    for c in sorted(candidati, key=lambda x: x['score'], reverse=True):
+        if c['id_partita'] not in unici: unici[c['id_partita']] = c
         
-    coupon_selezionato = ottimizza_composizione_coupon(candidati_value)
-    if not coupon_selezionato:
-        print("Impossibile assemblare un coupon coerente.")
-        return
-        
-    quota_totale = 1.0
-    for c in coupon_selezionato:
-        quota_totale *= c['quota']
-    quota_totale = round(quota_totale, 2)
-    importo = 10.0
+    finalisti = sorted(unici.values(), key=lambda x: x['score'], reverse=True)[:3]
+    quota_totale = round(math.prod([c['quota'] for c in finalisti]), 2)
     
-    partite_salvate = []
-    for c in coupon_selezionato:
-        partite_salvate.append({
-            'id_partita': c['id_partita'],
-            'data': c['data'],
-            'squadra_casa': c['squadra_casa'],
-            'squadra_trasferta': c['squadra_trasferta'],
-            'pronostico': c['pronostico'],
-            'quota': c['quota'],
-            'stato': c['stato'],
-            'risultato_reale': c['risultato_reale']
-        })
-        
-    nuova_schedina = {
-        'id': str(uuid.uuid4())[:8],
-        'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
-        'importo': importo,
-        'quota_totale': quota_totale,
-        'ritorno_potenziale': round(importo * quota_totale, 2),
-        'stato_schedina': 'in attesa',
-        'partite': partite_salvate
-    }
+    db['schedine'].append({
+        'id': str(uuid.uuid4())[:8], 'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
+        'importo': 10.0, 'quota_totale': quota_totale, 'ritorno_potenziale': round(10.0 * quota_totale, 2),
+        'stato_schedina': 'in attesa', 'partite': finalisti
+    })
     
-    db['schedine'].append(nuova_schedina)
+    msg = f"📊 **RICEVUTA SBR | MODELLO ALPHA**\nselezione ibrida | quota totale: {quota_totale} | stake simulato: 10.0€\n\n"
+    for c in finalisti: msg += f"⚽ {c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}\n🎯 {c['pronostico'].upper()} (@{c['quota']})\n\n"
+    msg += "esito e storico verificati sul portale ufficiale.\n**#SBR #PronosticiCalcio #ValueBetting #ModelloAlpha**"
     
-    num_eventi = len(coupon_selezionato)
-    tipo_giocata = "SINGOLA DI VALORE" if num_eventi == 1 else (f"DOPPIA AD ALTO VALORE" if num_eventi == 2 else f"TRIPLA SELEZIONATA")
-    
-    msg = f"📊 **RICEVUTA SBR | MODELLO ALPHA**\n"
-    msg += f"tipologia: {tipo_giocata} | quota totale: {quota_totale} | stake simulato: {importo}€\n\n"
-    
-    for c in coupon_selezionato:
-        msg += f"⚽ {c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}\n"
-        msg += f"🎯 {c['pronostico'].upper()} (@{c['quota']})\n"
-        msg += f"📈 edge quantitativo: +{c['edge_ev']}% | {c['info_stat']}\n\n"
-        
-    msg += "esito e storico verificati sul portale ufficiale.\n"
-    msg += "**#SBR #ValueBetting #ExpectedValue #Poisson #ModelloAlpha**"
-    
-    r = requests.post(
-        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-        json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"},
-        timeout=10
-    )
-    print(f"Messaggio Telegram inviato con status code: {r.status_code}")
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
 def main():
     db = carica_database()
