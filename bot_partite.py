@@ -38,7 +38,7 @@ TRADUZIONI_NAZIONALI = {
     "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria", 
     "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
     "Finland": "Finlandia", "Belarus": "Bielorussia", "Czech Republic": "Repubblica Ceca",
-    "Slovakia": "Slovacchia", "Slovenia": "Slovenia", "Romania": "Romania",
+    "Slovakia": "Slovacchia", "Slovenia": "Slovacchia", "Romania": "Romania",
     "Bulgaria": "Bulgaria", "Greece": "Grecia", "Iceland": "Islanda",
     "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
     "Bosnia and Herzegovina": "Bosnia ed Erzegovina", "Montenegro": "Montenegro",
@@ -269,7 +269,7 @@ def crea_schedina(db):
     fine_turno = oggi + timedelta(days=4)
     
     candidati_value = []
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] scansione attiva da {oggi} a {fine_turno}...")
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Scansione attiva da {oggi} a {fine_turno}...")
     
     partite_totali_trovate = 0
     
@@ -297,7 +297,7 @@ def crea_schedina(db):
             except Exception:
                 pass
                 
-        print(f"[{camp}] trovate {len(partite)} partite a palinsesto ({partite_nel_range} nei prossimi 4 giorni)")
+        print(f"[{camp}] trovate {len(partite)} partite totali ({partite_nel_range} nei prossimi 4 giorni)")
         partite_totali_trovate += partite_nel_range
         
         for partita in partite:
@@ -332,7 +332,10 @@ def crea_schedina(db):
             mu_trasf = max(0.5, (forma_trasf['gol_segnati_avg'] + forma_casa['gol_subiti_avg']) / 2.0)
             poisson_curve = calcola_probabilita_poisson(lambda_casa, mu_trasf)
             
-            # soglie differenziate: per le nazionali accettiamo disallineamenti minimi
+            # Parametri adattivi: quote tra 1.25 e 2.50 per le Nazionali
+            q_min_h2h = 1.25 if is_nations_league else 1.40
+            q_max_h2h = 2.50 if is_nations_league else 2.25
+            
             soglia_ev_h2h = -0.01 if is_nations_league else 0.01
             soglia_ev_gol = 0.00 if is_nations_league else 0.015
             
@@ -345,7 +348,7 @@ def crea_schedina(db):
                     if mercato['key'] == 'h2h':
                         for out in mercato['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.35 <= q <= 2.35):
+                            if not (q_min_h2h <= q <= q_max_h2h):
                                 continue
                             
                             target_name = out['name']
@@ -388,7 +391,9 @@ def crea_schedina(db):
                             if out.get('point') != 2.5:
                                 continue
                             q = out.get('price', 0)
-                            if not (1.40 <= q <= 2.25):
+                            q_min_tot = 1.30 if is_nations_league else 1.40
+                            q_max_tot = 2.40 if is_nations_league else 2.25
+                            if not (q_min_tot <= q <= q_max_tot):
                                 continue
                                 
                             is_over = out['name'] == 'Over'
@@ -415,7 +420,9 @@ def crea_schedina(db):
                     elif mercato['key'] == 'btts':
                         for out in mercato['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.40 <= q <= 2.20):
+                            q_min_btts = 1.35 if is_nations_league else 1.40
+                            q_max_btts = 2.35 if is_nations_league else 2.20
+                            if not (q_min_btts <= q <= q_max_btts):
                                 continue
                                 
                             is_gol = out['name'] == 'Yes'
@@ -439,15 +446,15 @@ def crea_schedina(db):
                                 })
                 break
                 
-    print(f"partite considerate nel periodo: {partite_totali_trovate}. selezioni con edge trovate: {len(candidati_value)}")
+    print(f"Partite considerate nel periodo (4 giorni): {partite_totali_trovate}. Selezioni con Edge trovate: {len(candidati_value)}")
     
     if not candidati_value:
-        print("nessuna selezione soddisfa i criteri quantitativi attuali.")
+        print("Nessuna selezione soddisfa i criteri quantitativi attuali.")
         return
         
     coupon_selezionato = ottimizza_composizione_coupon(candidati_value)
     if not coupon_selezionato:
-        print("impossibile assemblare un coupon coerente.")
+        print("Impossibile assemblare un coupon coerente.")
         return
         
     quota_totale = 1.0
@@ -500,7 +507,7 @@ def crea_schedina(db):
         json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"},
         timeout=10
     )
-    print(f"messaggio telegram inviato con status code: {r.status_code}")
+    print(f"Messaggio Telegram inviato con status code: {r.status_code}")
 
 def main():
     db = carica_database()
