@@ -296,6 +296,64 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "1e373b95",
+            "data_creazione": "30/09/2026",
+            "importo": 10.0,
+            "quota_totale": 8.47,
+            "ritorno_potenziale": 84.7,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "18c29d24c37e4fa9c5c2a12218c87944",
+                    "data_oggetto": "2026-10-04",
+                    "data": "04/10 20:45",
+                    "squadra_casa": "Galles",
+                    "squadra_trasferta": "Danimarca",
+                    "pronostico": "vittoria Danimarca",
+                    "quota": 1.83,
+                    "score": 0.4601015228426397,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Polonia",
+                    "squadra_trasferta": "Romania",
+                    "pronostico": "vittoria Polonia",
+                    "quota": 1.53,
+                    "score": 0.4304253181513735,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "32c438139763280b8efb86423e5b911e",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 18:00",
+                    "squadra_casa": "Latvia",
+                    "squadra_trasferta": "Montenegro",
+                    "pronostico": "vittoria Montenegro",
+                    "quota": 1.8,
+                    "score": 0.4201781844449798,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "7db202b104fa0b2c3efc16c9ab45dc1e",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 16:00",
+                    "squadra_casa": "Kazakhstan",
+                    "squadra_trasferta": "Moldova",
+                    "pronostico": "vittoria Kazakhstan",
+                    "quota": 1.68,
+                    "score": 0.4018146467919633,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
