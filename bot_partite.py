@@ -157,7 +157,8 @@ def crea_schedina(db):
                     if m['key'] == 'h2h':
                         for out in m['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.20 <= q <= 2.80): continue
+                            # abbiamo alzato la soglia minima a 1.45 per garantire quote molto più succulente
+                            if not (1.45 <= q <= 2.90): continue
                             
                             fair_p = mercato_h2h.get(out['name'], 1.0 / q)
                             ev = (q * fair_p) - 1.0
@@ -167,7 +168,7 @@ def crea_schedina(db):
                             elif out['name'] == nome_trasf and ft['ppg'] >= 0.5: desc = f"vittoria {traduci_squadra(nome_trasf)}"
                             elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 1.0: desc = "pareggio"
                             
-                            if desc and ev > -0.10:
+                            if desc and ev > -0.15:
                                 score = fair_p + (ev * 2.0)
                                 candidati.append({
                                     'id_partita': partita['id'], 
@@ -193,9 +194,15 @@ def crea_schedina(db):
     for c in sorted(candidati, key=lambda x: x['score'], reverse=True):
         if c['id_partita'] not in unici: unici[c['id_partita']] = c
         
-    finalisti = sorted(unici.values(), key=lambda x: x['score'], reverse=True)[:3]
+    # abbiamo ripristinato il limite a 4 eventi per riportare in alto il moltiplicatore
+    finalisti = []
     quota_totale = 1.0
-    for c in finalisti: quota_totale *= c['quota']
+    for c in sorted(unici.values(), key=lambda x: x['score'], reverse=True):
+        if len(finalisti) >= 4:
+            break
+        finalisti.append(c)
+        quota_totale *= c['quota']
+        
     quota_totale = round(quota_totale, 2)
     
     db['schedine'].append({
@@ -204,12 +211,12 @@ def crea_schedina(db):
         'stato_schedina': 'in attesa', 'partite': finalisti
     })
     
-    msg = f"🚀 **nuova opportunità di valore individuata**\n\n**Modello Alpha** ha appena elaborato e certificato una nuova selezione ibrida.\n\n"
+    msg = f"🚀 **nuova multipla ad alto rendimento individuata**\n\n**Modello Alpha** ha appena elaborato e certificato una nuova selezione.\n\n"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti: 
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n🎯 {c['pronostico'].upper()} (@{c['quota']})\n\n"
     msg += "puoi verificare l'esito e l'andamento storico della cassa direttamente sul nostro portale ufficiale.\n\n"
-    msg += "**#SBR #PronosticiCalcio #ValueBetting #IntelligenzaArtificiale #SportTrading**"
+    msg += "**#SBR #PronosticiCalcio #SchedinaVincente #IntelligenzaArtificiale #SportTrading**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
