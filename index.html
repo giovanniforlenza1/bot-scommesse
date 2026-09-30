@@ -55,7 +55,7 @@
         .section-title i { color: var(--bet-yellow); }
         .last-update-tag { font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text-muted); background-color: var(--bet-panel); border: 1px solid var(--border-solid); padding: 5px 12px; border-radius: 4px; }
 
-        /* Spiegazione Metodo */
+        /* Metodo */
         .method-section { background-color: var(--bet-panel); border-radius: 6px; padding: 30px; margin-bottom: 50px; border-left: 4px solid var(--bet-yellow); }
         .method-section h3 { font-size: 20px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
         .method-section p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
@@ -255,10 +255,10 @@
             </div>
 
             <div class="filters-bar">
-                <button class="filter-btn active" onclick="filtraStorico('tutte')">Tutte (<span id="count-tutte">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('vinta')">Vinte (<span id="count-vinte">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('persa')">Perse (<span id="count-perse">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('in attesa')">In attesa (<span id="count-attesa">0</span>)</button>
+                <button class="filter-btn active" onclick="filtraStorico('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
+                <button class="filter-btn" onclick="filtraStorico('vinta', this)">Vinte (<span id="count-vinte">0</span>)</button>
+                <button class="filter-btn" onclick="filtraStorico('persa', this)">Perse (<span id="count-perse">0</span>)</button>
+                <button class="filter-btn" onclick="filtraStorico('in attesa', this)">In attesa (<span id="count-attesa">0</span>)</button>
             </div>
 
             <div id="storico-container" class="tickets-container">
@@ -360,12 +360,19 @@
             });
         }
 
-        function filtraStorico(filtro) {
+        function filtraStorico(filtro, elementoPremuto) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            if (elementoPremuto) {
+                elementoPremuto.classList.add('active');
+            } else {
+                const btnDefault = document.querySelector('.filter-btn');
+                if (btnDefault) btnDefault.classList.add('active');
+            }
 
             const container = document.getElementById('storico-container');
             container.innerHTML = '';
+
+            if (!databaseGlobale || !databaseGlobale.schedine) return;
 
             const schedineFiltrate = databaseGlobale.schedine.slice().reverse().filter(sc => {
                 if (filtro === 'tutte') return true;
@@ -498,7 +505,6 @@
                     document.getElementById('winrate').innerText = Math.round((vinte / totaliDecisi) * 100) + '%';
                 }
 
-                // Calcolo ROI / Yield
                 if (totalePuntato > 0) {
                     let roi = (profittoNetto / totalePuntato) * 100;
                     let elYield = document.getElementById('yield');
@@ -507,14 +513,13 @@
                     else if (roi < 0) elYield.classList.add('negative');
                 }
 
-                // Ultimo aggiornamento
                 if (data.schedine.length > 0) {
                     let ultimaData = data.schedine[data.schedine.length - 1].data_creazione;
                     document.getElementById('last-update').innerHTML = `<i class="fa-solid fa-rotate"></i> ultimo controllo: ${ultimaData}`;
                 }
 
                 renderizzaGrafico(labelsGrafico, puntiCassa);
-                filtraStorico('tutte');
+                filtraStorico('tutte', null);
             })
             .catch(err => {
                 document.getElementById('storico-container').innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--danger); padding: 40px; border: 1px solid var(--border-solid); border-radius: 6px; background: var(--bet-card);">Errore nel caricamento del database. Riprova più tardi.</div>';
