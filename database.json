@@ -150,6 +150,56 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "f75b8b3c",
+            "data_creazione": "30/09/2026",
+            "importo": 10.0,
+            "quota_totale": 14.16,
+            "ritorno_potenziale": 141.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "a2b54d223ce491ac52af34a462de0140",
+                    "data": "01/10 20:45",
+                    "squadra_casa": "Malta",
+                    "squadra_trasferta": "Gibilterra",
+                    "pronostico": "over 2.5 gol",
+                    "quota": 1.95,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Polonia",
+                    "squadra_trasferta": "Romania",
+                    "pronostico": "under 2.5 gol",
+                    "quota": 1.95,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
+                    "data": "03/10 18:00",
+                    "squadra_casa": "Croazia",
+                    "squadra_trasferta": "Inghilterra",
+                    "pronostico": "under 2.5 gol",
+                    "quota": 1.95,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "adc5517ae91bb43f3406d577b489abc0",
+                    "data": "01/10 20:45",
+                    "squadra_casa": "Israele",
+                    "squadra_trasferta": "Kosovo",
+                    "pronostico": "over 2.5 gol",
+                    "quota": 1.91,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
