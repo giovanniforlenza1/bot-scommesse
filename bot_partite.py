@@ -123,7 +123,6 @@ def crea_schedina(db):
     
     for camp in campionati:
         try:
-            # Rimuoviamo i mercati secondari pesanti (totals, btts) per risparmiare chiamate API ed evitare crash da piano gratuito
             url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
             res = requests.get(url, timeout=10)
             if res.status_code != 200:
@@ -171,13 +170,14 @@ def crea_schedina(db):
                             if desc and ev > -0.10:
                                 score = fair_p + (ev * 2.0)
                                 candidati.append({
-                                    'id_partita': partita['id'], 'data_oggetto': data_ita.date(), 'data': data_ita.strftime("%d/%m %H:%M"),
+                                    'id_partita': partita['id'], 
+                                    'data_oggetto': str(data_ita.date()), 
+                                    'data': data_ita.strftime("%d/%m %H:%M"),
                                     'squadra_casa': traduci_squadra(nome_casa), 'squadra_trasferta': traduci_squadra(nome_trasf),
                                     'pronostico': desc, 'quota': q, 'score': score, 'stato': 'in attesa', 'risultato_reale': ''
                                 })
                 break 
 
-    # Sistema di autodiagnosi e avviso Telegram
     if not candidati:
         msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. Ecco il report diagnostico:\n\n"
         msg_err += f"• **Partite scansionate valide**: {partite_totali}\n"
@@ -204,7 +204,6 @@ def crea_schedina(db):
         'stato_schedina': 'in attesa', 'partite': finalisti
     })
     
-    # Copy ottimizzato SEO Social
     msg = f"🚀 **nuova opportunità di valore individuata**\n\n**Modello Alpha** ha appena elaborato e certificato una nuova selezione ibrida.\n\n"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti: 
