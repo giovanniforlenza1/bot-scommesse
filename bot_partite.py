@@ -46,12 +46,16 @@ def traduci_squadra(nome_inglese):
     return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
 
 def analizza_forma(squadra, api_key):
-    if not api_key: return None
+    # se manca la chiave o l'api non risponde, restituiamo dati neutri per non bloccare la value bet
+    fallback_neutro = {'ppg': 1.5, 'media_gol_totali': 2.5, 'differenza_reti': 0}
+    
+    if not api_key: return fallback_neutro
     headers = {'x-apisports-key': api_key}
+    
     try:
         res = requests.get(f"https://v3.football.api-sports.io/teams?search={squadra}", headers=headers)
         data = res.json()
-        if not data.get('response'): return None
+        if not data.get('response'): return fallback_neutro
         
         team_id = data['response'][0]['team']['id']
         time.sleep(0.5) 
@@ -64,12 +68,15 @@ def analizza_forma(squadra, api_key):
         gol_subiti = 0
         match_giocati = len(fixtures)
         
-        if match_giocati == 0: return None
+        if match_giocati == 0: return fallback_neutro
         
         for f in fixtures:
             goals_home = f['goals']['home']
             goals_away = f['goals']['away']
-            if goals_home is None or goals_away is None: continue
+            
+            if goals_home is None or goals_away is None: 
+                match_giocati -= 1
+                continue
             
             if f['teams']['home']['id'] == team_id:
                 gf, gs = goals_home, goals_away
@@ -81,14 +88,16 @@ def analizza_forma(squadra, api_key):
             
             if gf > gs: punti += 3
             elif gf == gs: punti += 1
+            
+        if match_giocati == 0: return fallback_neutro
         
         return {
-            'punti': punti,
-            'media_gol_fatti': gol_fatti / match_giocati,
-            'media_gol_subiti': gol_subiti / match_giocati
+            'ppg': punti / match_giocati,
+            'media_gol_totali': (gol_fatti + gol_subiti) / match_giocati,
+            'differenza_reti': gol_fatti - gol_subiti
         }
     except Exception:
-        return None
+        return fallback_neutro
 
 def carica_database():
     if os.path.exists('database.json'):
@@ -219,21 +228,20 @@ def crea_schedina(db):
                             forma_t = analizza_forma(partita['away_team'], API_FOOTBALL_KEY)
                             
                             valida = False
-                            if forma_c and forma_t:
-                                if "vittoria" in miglior_giocata:
-                                    squadra_scelta = traduci_squadra(partita['home_team'])
-                                    if squadra_scelta in miglior_giocata:
-                                        valida = forma_c['punti'] >= 7
-                                    else:
-                                        valida = forma_t['punti'] >= 7
-                                elif miglior_giocata == "pareggio":
-                                    valida = abs(forma_c['punti'] - forma_t['punti']) <= 3
-                                elif miglior_giocata == "over 2.5 gol" or miglior_giocata == "gol (entrambe segnano)":
-                                    media = (forma_c['media_gol_fatti'] + forma_c['media_gol_subiti'] + forma_t['media_gol_fatti'] + forma_t['media_gol_subiti']) / 2
-                                    valida = media >= 2.5
-                                elif miglior_giocata == "under 2.5 gol" or miglior_giocata == "no gol":
-                                    media = (forma_c['media_gol_fatti'] + forma_c['media_gol_subiti'] + forma_t['media_gol_fatti'] + forma_t['media_gol_subiti']) / 2
-                                    valida = media <= 2.2
+                            if "vittoria" in miglior_giocata:
+                                squadra_scelta = traduci_squadra(partita['home_team'])
+                                if squadra_scelta in miglior_giocata:
+                                    valida = forma_c['ppg'] >= 1.0 and forma_c['differenza_reti'] >= -2
+                                else:
+                                    valida = forma_t['ppg'] >= 1.0 and forma_t['differenza_reti'] >= -2
+                            elif miglior_giocata == "pareggio":
+                                valida = abs(forma_c['ppg'] - forma_t['ppg']) <= 0.8
+                            elif miglior_giocata in ["over 2.5 gol", "gol (entrambe segnano)"]:
+                                media_comb = (forma_c['media_gol_totali'] + forma_t['media_gol_totali']) / 2
+                                valida = media_comb >= 2.2
+                            elif miglior_giocata in ["under 2.5 gol", "no gol"]:
+                                media_comb = (forma_c['media_gol_totali'] + forma_t['media_gol_totali']) / 2
+                                valida = media_comb <= 2.8
                                     
                             if valida:
                                 giocate_selezionate.append({
