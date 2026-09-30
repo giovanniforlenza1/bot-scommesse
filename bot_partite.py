@@ -14,19 +14,21 @@ ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
 
 campionati = [
+    'soccer_uefa_nations_league',
     'soccer_italy_serie_a',
     'soccer_epl',
     'soccer_spain_la_liga',
     'soccer_germany_bundesliga',
     'soccer_france_ligue_one',
     'soccer_uefa_champs_league',
-    'soccer_uefa_europa_league',
-    'soccer_uefa_europa_conference_league',
-    'soccer_uefa_nations_league',
-    'soccer_fifa_world_cup_qualifiers_europe'
+    'soccer_uefa_europa_league'
 ]
 
-siti_italiani = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Lottomatica', 'Betfair', 'William Hill']
+# allarghiamo i bookmaker per evitare che ritardi di quotazione blocchino il palinsesto
+siti_ammessi = [
+    'Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 
+    'Lottomatica', 'Betfair', 'William Hill', 'Unibet', 'Bwin', 'Pinnacle'
+]
 
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
@@ -231,44 +233,33 @@ def aggiorna_risultati(db):
                 schedina['stato_schedina'] = 'vinta'
 
 def ottimizza_composizione_coupon(candidati):
-    """
-    Costruisce coupon snelli e ad alta efficienza:
-    - Minimo 1 evento (singola ad alto valore), massimo 3 eventi (stop assoluto a schedine lunghe).
-    - Quota target complessiva contenuta: tra 1.80 e 4.50.
-    """
     if not candidati:
         return []
         
-    # Ordiniamo rigidamente per valore atteso decrescente (i migliori in assoluto)
     candidati_ordinati = sorted(candidati, key=lambda x: x['edge_ev'], reverse=True)
     
-    # Raggruppamento per data per favorire chiusure rapide
     per_data = defaultdict(list)
     for c in candidati_ordinati:
         per_data[c['data_oggetto']].append(c)
         
     selezioni = []
-    # 1. Preferenza a partite ravvicinate nello stesso giorno
     for d in sorted(per_data.keys()):
-        if len(per_data[d]) >= 2:
-            selezioni = per_data[d][:3]  # mai più di 3
+        if len(per_data[d]) >= 1:
+            selezioni = per_data[d][:3]
             break
             
-    # 2. Se non ci sono 2 match nello stesso giorno, prendi i top assoluti per edge
     if not selezioni:
         selezioni = candidati_ordinati[:2]
         
-    # Selezione con tetto massimo rigido: max 3 eventi e quota max 4.50
     coupon = []
     quota_prog = 1.0
     for s in selezioni:
         nuova_quota = quota_prog * s['quota']
-        # se abbiamo già 1 o 2 partite e aggiungerne un'altra farebbe superare quota 4.50, ci fermiamo
         if len(coupon) >= 1 and nuova_quota > 4.50:
             break
         coupon.append(s)
         quota_prog = nuova_quota
-        if len(coupon) == 3:  # stop rigido a 3 eventi
+        if len(coupon) == 3:
             break
             
     return coupon
@@ -279,20 +270,25 @@ def crea_schedina(db):
     fine_turno = oggi + timedelta(days=4)
     
     candidati_value = []
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Scansione palinsesti allargati da {oggi} a {fine_turno}...")
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] scansione attiva da {oggi} a {fine_turno}...")
     
     partite_totali_trovate = 0
     
     for camp in campionati:
+        # prova prima tutti i mercati, altrimenti fallback su h2h
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
         try:
             res = requests.get(url, timeout=10)
             if res.status_code != 200:
-                continue
+                url_fallback = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
+                res = requests.get(url_fallback, timeout=10)
+                if res.status_code != 200:
+                    continue
             partite = res.json()
         except Exception:
             continue
             
+        print(f"[{camp}] trovate {len(partite)} partite")
         partite_totali_trovate += len(partite)
         
         for partita in partite:
@@ -307,7 +303,6 @@ def crea_schedina(db):
             nome_casa = partita['home_team']
             nome_trasf = partita['away_team']
             
-            # De-vigging di consenso
             mercato_h2h_devig = {}
             mercato_totals_devig = {}
             mercato_btts_devig = {}
@@ -329,14 +324,15 @@ def crea_schedina(db):
             poisson_curve = calcola_probabilita_poisson(lambda_casa, mu_trasf)
             
             for book in partita['bookmakers']:
-                if book['title'] not in siti_italiani:
+                nome_book = book.get('title', '')
+                if not any(sb.lower() in nome_book.lower() for sb in siti_ammessi):
                     continue
                     
                 for mercato in book.get('markets', []):
                     if mercato['key'] == 'h2h':
                         for out in mercato['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.40 <= q <= 2.20):
+                            if not (1.40 <= q <= 2.25):
                                 continue
                             
                             target_name = out['name']
@@ -348,18 +344,18 @@ def crea_schedina(db):
                                 desc = f"vittoria {traduci_squadra(nome_casa)}"
                                 info_stat = f"forma casa: {forma_casa['ppg']} ppg | diff: {forma_casa['differenza_reti']:+}"
                             elif target_name == nome_trasf:
-                                stat_ok = forma_trasf['ppg'] >= 1.1 and forma_trasf['differenza_reti'] >= -1
+                                stat_ok = forma_trasf['ppg'] >= 1.0 and forma_trasf['differenza_reti'] >= -2
                                 desc = f"vittoria {traduci_squadra(nome_trasf)}"
                                 info_stat = f"forma trasferta: {forma_trasf['ppg']} ppg | diff: {forma_trasf['differenza_reti']:+}"
                             elif target_name == 'Draw':
-                                stat_ok = abs(forma_casa['ppg'] - forma_trasf['ppg']) <= 0.6
+                                stat_ok = abs(forma_casa['ppg'] - forma_trasf['ppg']) <= 0.7
                                 desc = "pareggio"
                                 info_stat = f"equilibrio ppg: {forma_casa['ppg']} vs {forma_trasf['ppg']}"
                             else:
                                 continue
                                 
                             ev = (q * fair_p) - 1.0
-                            if ev >= 0.01 and stat_ok:
+                            if ev >= 0.005 and stat_ok:
                                 candidati_value.append({
                                     'id_partita': partita['id'],
                                     'data_oggetto': data_ita.date(),
@@ -386,7 +382,7 @@ def crea_schedina(db):
                             p_poisson = poisson_curve['over25'] if is_over else poisson_curve['under25']
                             ev_poisson = (q * p_poisson) - 1.0
                             
-                            if ev_poisson >= 0.015:
+                            if ev_poisson >= 0.01:
                                 desc = "over 2.5 gol" if is_over else "under 2.5 gol"
                                 attesa_gol = round(lambda_casa + mu_trasf, 2)
                                 candidati_value.append({
@@ -413,7 +409,7 @@ def crea_schedina(db):
                             p_poisson = poisson_curve['gol'] if is_gol else poisson_curve['nogol']
                             ev_poisson = (q * p_poisson) - 1.0
                             
-                            if ev_poisson >= 0.015:
+                            if ev_poisson >= 0.01:
                                 desc = "gol (entrambe segnano)" if is_gol else "no gol"
                                 candidati_value.append({
                                     'id_partita': partita['id'],
@@ -430,15 +426,15 @@ def crea_schedina(db):
                                 })
                 break
                 
-    print(f"Partite totali analizzate: {partite_totali_trovate}. Selezioni con Edge positivo trovate: {len(candidati_value)}")
+    print(f"partite totali analizzate: {partite_totali_trovate}. selezioni con edge positivo trovate: {len(candidati_value)}")
     
     if not candidati_value:
-        print("Nessuna selezione soddisfa i criteri quantitativi attuali.")
+        print("nessuna selezione soddisfa i criteri quantitativi attuali.")
         return
         
     coupon_selezionato = ottimizza_composizione_coupon(candidati_value)
     if not coupon_selezionato:
-        print("Impossibile assemblare un coupon coerente.")
+        print("impossibile assemblare un coupon coerente.")
         return
         
     quota_totale = 1.0
@@ -491,7 +487,7 @@ def crea_schedina(db):
         json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"},
         timeout=10
     )
-    print(f"Messaggio Telegram inviato con status code: {r.status_code}")
+    print(f"messaggio telegram inviato con status code: {r.status_code}")
 
 def main():
     db = carica_database()
