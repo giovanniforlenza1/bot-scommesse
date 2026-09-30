@@ -2,12 +2,14 @@ import requests
 import json
 import os
 import uuid
+import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
+API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
 
 campionati = [
     'soccer_italy_serie_a', 
@@ -42,6 +44,51 @@ TRADUZIONI_NAZIONALI = {
 def traduci_squadra(nome_inglese):
     nome_pulito = nome_inglese.strip()
     return TRADUZIONI_NAZIONALI.get(nome_pulito, nome_pulito)
+
+def analizza_forma(squadra, api_key):
+    if not api_key: return None
+    headers = {'x-apisports-key': api_key}
+    try:
+        res = requests.get(f"https://v3.football.api-sports.io/teams?search={squadra}", headers=headers)
+        data = res.json()
+        if not data.get('response'): return None
+        
+        team_id = data['response'][0]['team']['id']
+        time.sleep(0.5) 
+        
+        res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=5", headers=headers)
+        fixtures = res_fix.json().get('response', [])
+        
+        punti = 0
+        gol_fatti = 0
+        gol_subiti = 0
+        match_giocati = len(fixtures)
+        
+        if match_giocati == 0: return None
+        
+        for f in fixtures:
+            goals_home = f['goals']['home']
+            goals_away = f['goals']['away']
+            if goals_home is None or goals_away is None: continue
+            
+            if f['teams']['home']['id'] == team_id:
+                gf, gs = goals_home, goals_away
+            else:
+                gf, gs = goals_away, goals_home
+                
+            gol_fatti += gf
+            gol_subiti += gs
+            
+            if gf > gs: punti += 3
+            elif gf == gs: punti += 1
+        
+        return {
+            'punti': punti,
+            'media_gol_fatti': gol_fatti / match_giocati,
+            'media_gol_subiti': gol_subiti / match_giocati
+        }
+    except Exception:
+        return None
 
 def carica_database():
     if os.path.exists('database.json'):
@@ -118,7 +165,6 @@ def crea_schedina(db):
     giocate_selezionate = []
     
     for camp in campionati:
-        # sistema di sicurezza a doppio binario per evitare il crash dell'api
         url_completo = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h,totals,btts"
         res = requests.get(url_completo)
         
@@ -169,16 +215,37 @@ def crea_schedina(db):
                                     quota_max, miglior_giocata = q_nogol, "no gol"
                         
                         if miglior_giocata:
-                            giocate_selezionate.append({
-                                'id_partita': partita['id'],
-                                'data': data_ita.strftime("%d/%m %H:%M"),
-                                'squadra_casa': traduci_squadra(partita['home_team']),
-                                'squadra_trasferta': traduci_squadra(partita['away_team']),
-                                'pronostico': miglior_giocata,
-                                'quota': quota_max,
-                                'stato': 'in attesa',
-                                'risultato_reale': ''
-                            })
+                            forma_c = analizza_forma(partita['home_team'], API_FOOTBALL_KEY)
+                            forma_t = analizza_forma(partita['away_team'], API_FOOTBALL_KEY)
+                            
+                            valida = False
+                            if forma_c and forma_t:
+                                if "vittoria" in miglior_giocata:
+                                    squadra_scelta = traduci_squadra(partita['home_team'])
+                                    if squadra_scelta in miglior_giocata:
+                                        valida = forma_c['punti'] >= 7
+                                    else:
+                                        valida = forma_t['punti'] >= 7
+                                elif miglior_giocata == "pareggio":
+                                    valida = abs(forma_c['punti'] - forma_t['punti']) <= 3
+                                elif miglior_giocata == "over 2.5 gol" or miglior_giocata == "gol (entrambe segnano)":
+                                    media = (forma_c['media_gol_fatti'] + forma_c['media_gol_subiti'] + forma_t['media_gol_fatti'] + forma_t['media_gol_subiti']) / 2
+                                    valida = media >= 2.5
+                                elif miglior_giocata == "under 2.5 gol" or miglior_giocata == "no gol":
+                                    media = (forma_c['media_gol_fatti'] + forma_c['media_gol_subiti'] + forma_t['media_gol_fatti'] + forma_t['media_gol_subiti']) / 2
+                                    valida = media <= 2.2
+                                    
+                            if valida:
+                                giocate_selezionate.append({
+                                    'id_partita': partita['id'],
+                                    'data': data_ita.strftime("%d/%m %H:%M"),
+                                    'squadra_casa': traduci_squadra(partita['home_team']),
+                                    'squadra_trasferta': traduci_squadra(partita['away_team']),
+                                    'pronostico': miglior_giocata,
+                                    'quota': quota_max,
+                                    'stato': 'in attesa',
+                                    'risultato_reale': ''
+                                })
                         break
 
     if not giocate_selezionate: return
