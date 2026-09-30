@@ -115,9 +115,6 @@
         .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: var(--text-main); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-solid); }
         .t-total span:last-child { color: var(--bet-yellow); font-family: 'JetBrains Mono', monospace; font-size: 16px; }
 
-        .btn-copy { width: 100%; margin-top: 12px; background-color: transparent; border: 1px dashed var(--border-solid); color: var(--text-muted); padding: 8px; border-radius: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
-        .btn-copy:hover { border-color: var(--bet-yellow); color: var(--bet-yellow); }
-
         /* FAQ */
         .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 60px; }
         .faq-card { background-color: var(--bet-card); border: 1px solid var(--border-solid); padding: 20px; border-radius: 6px; }
@@ -130,9 +127,6 @@
         .footer-icons { font-size: 26px; color: #555; margin-bottom: 18px; display: flex; justify-content: center; gap: 20px; }
         .disclaimer { font-size: 12px; color: #888; max-width: 900px; margin: 0 auto; line-height: 1.6; }
         .disclaimer strong { color: #bbb; }
-
-        /* Toast notifica copia */
-        #toast { position: fixed; bottom: 20px; right: 20px; background-color: var(--bet-yellow); color: #111; padding: 12px 20px; border-radius: 4px; font-weight: 800; font-size: 13px; text-transform: uppercase; display: none; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
         @media (max-width: 768px) {
             .features-grid, .stats-grid, .faq-grid { grid-template-columns: 1fr; }
@@ -282,8 +276,6 @@
         </div>
     </div>
 
-    <div id="toast">Schedina copiata negli appunti!</div>
-
     <footer>
         <div class="footer-icons">
             <i class="fa-solid fa-ban" title="Divieto minori 18"></i>
@@ -365,27 +357,6 @@
                         }
                     }
                 }
-            });
-        }
-
-        function copiaSchedina(id) {
-            if (!databaseGlobale) return;
-            const sc = databaseGlobale.schedine.find(s => s.id === id);
-            if (!sc) return;
-
-            let testo = `📊 SBR - MODELLO ALPHA\nID: #${sc.id} | Quota Totale: ${sc.quota_totale.toFixed(2)}\n\n`;
-            sc.partite.forEach(p => {
-                let c = formattaNome(p.squadra_casa);
-                let t = formattaNome(p.squadra_trasferta);
-                let pron = p.pronostico.replace(p.squadra_casa, c);
-                testo += `⚽ ${c} - ${t}\n🎯 ${pron.toUpperCase()} (@${p.quota.toFixed(2)})\n\n`;
-            });
-            testo += `Canale: https://t.me/+nyQkDOrFWrkyNGI8`;
-
-            navigator.clipboard.writeText(testo).then(() => {
-                const toast = document.getElementById('toast');
-                toast.style.display = 'block';
-                setTimeout(() => { toast.style.display = 'none'; }, 2500);
             });
         }
 
@@ -473,9 +444,6 @@
                                 <span>Vincita potenziale:</span>
                                 <span>€ ${sc.ritorno_potenziale.toFixed(2)}</span>
                             </div>
-                            <button class="btn-copy" onclick="copiaSchedina('${sc.id}')">
-                                <i class="fa-regular fa-copy"></i> Copia selezione
-                            </button>
                         </div>
                     </div>
                 `;
