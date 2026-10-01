@@ -5,6 +5,7 @@ import uuid
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from collections import defaultdict
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -163,12 +164,11 @@ def crea_schedina(db):
                             ev = (q * fair_p) - 1.0
                             desc = ""
                             
-                            if out['name'] == nome_casa and fc['ppg'] >= 1.5 and fc['differenza_reti'] > 0: desc = f"vittoria {traduci_squadra(nome_casa)}"
-                            elif out['name'] == nome_trasf and ft['ppg'] >= 1.5 and ft['differenza_reti'] > 0: desc = f"vittoria {traduci_squadra(nome_trasf)}"
+                            if out['name'] == nome_casa and fc['ppg'] >= 1.2 and fc['differenza_reti'] >= 0: desc = f"vittoria {traduci_squadra(nome_casa)}"
+                            elif out['name'] == nome_trasf and ft['ppg'] >= 1.2 and ft['differenza_reti'] >= 0: desc = f"vittoria {traduci_squadra(nome_trasf)}"
                             elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 0.5: desc = "pareggio"
                             
-                            # scudo statistico attivato: accettiamo solo quote con fair value quasi neutro o positivo
-                            if desc and ev > -0.02:
+                            if desc and ev > -0.05:
                                 score = fair_p + (ev * 2.0)
                                 candidati.append({
                                     'id_partita': partita['id'], 
@@ -180,12 +180,12 @@ def crea_schedina(db):
                 break 
 
     if not candidati:
-        msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. Ecco il report diagnostico:\n\n"
-        msg_err += f"• **Partite scansionate valide**: {partite_totali}\n"
+        msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. ecco il report diagnostico:\n\n"
+        msg_err += f"• **partite scansionate valide**: {partite_totali}\n"
         if errori_api:
-            msg_err += f"• **Errori API rilevati**: {', '.join(errori_api)}\n"
+            msg_err += f"• **errori API rilevati**: {', '.join(errori_api)}\n"
         else:
-            msg_err += "• **Motivazione**: le quote attuali non garantiscono il livello minimo di sicurezza statistica sul value betting."
+            msg_err += "• **motivazione**: le quote attuali non garantiscono il livello minimo di sicurezza statistica sul value betting."
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
         return
     
@@ -193,7 +193,6 @@ def crea_schedina(db):
     for c in sorted(candidati, key=lambda x: x['score'], reverse=True):
         if c['id_partita'] not in unici: unici[c['id_partita']] = c
         
-    # limite massimo di 3 eventi per salvare il win rate della cassa
     finalisti = []
     quota_totale = 1.0
     for c in sorted(unici.values(), key=lambda x: x['score'], reverse=True):
@@ -203,6 +202,14 @@ def crea_schedina(db):
         quota_totale *= c['quota']
         
     quota_totale = round(quota_totale, 2)
+    
+    # blocco anti-singola povera e verifica raddoppio
+    if len(finalisti) < 2 or quota_totale < 2.00:
+        msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. ecco il report diagnostico:\n\n"
+        msg_err += f"• **partite scansionate valide**: {partite_totali}\n"
+        msg_err += f"• **motivazione**: il sistema ha bloccato la ricevuta per preservare il rapporto rischio/rendimento. le selezioni trovate avrebbero generato una quota complessiva di {quota_totale} con soli {len(finalisti)} eventi. giochiamo esclusivamente raddoppi combinati."
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
+        return
     
     db['schedine'].append({
         'id': str(uuid.uuid4())[:8], 'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
