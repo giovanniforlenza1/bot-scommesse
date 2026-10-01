@@ -412,6 +412,28 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "743acdf3",
+            "data_creazione": "01/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.35,
+            "ritorno_potenziale": 13.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "0db832b7346f766521d9e67cd5ab1687",
+                    "data_oggetto": "2026-10-01",
+                    "data": "01/10 20:46",
+                    "squadra_casa": "Republic of Ireland",
+                    "squadra_trasferta": "Austria",
+                    "pronostico": "pareggio",
+                    "quota": 1.35,
+                    "score": 0.7638677548761935,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
