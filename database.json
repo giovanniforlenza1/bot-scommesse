@@ -157,7 +157,7 @@
             "importo": 10.0,
             "quota_totale": 14.16,
             "ritorno_potenziale": 141.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "a2b54d223ce491ac52af34a462de0140",
@@ -166,8 +166,8 @@
                     "squadra_trasferta": "Gibilterra",
                     "pronostico": "over 2.5 gol",
                     "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
@@ -207,7 +207,7 @@
             "importo": 10.0,
             "quota_totale": 10.57,
             "ritorno_potenziale": 105.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "a2b54d223ce491ac52af34a462de0140",
@@ -216,8 +216,8 @@
                     "squadra_trasferta": "Gibilterra",
                     "pronostico": "over 2.5 gol",
                     "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "adc5517ae91bb43f3406d577b489abc0",
@@ -268,8 +268,8 @@
                     "pronostico": "vittoria Germania",
                     "quota": 1.22,
                     "score": 0.7126516464471407,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
