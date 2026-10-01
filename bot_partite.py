@@ -5,7 +5,6 @@ import uuid
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from collections import defaultdict
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -45,7 +44,7 @@ def traduci_squadra(nome_inglese):
     return TRADUZIONI_NAZIONALI.get(nome_inglese.strip(), nome_inglese.strip())
 
 def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
-    fallback_neutro = {'ppg': 1.0, 'differenza_reti': 0}
+    fallback_neutro = {'ppg': 1.0}
     if not api_key: return fallback_neutro
     try:
         headers = {'x-apisports-key': api_key}
@@ -56,7 +55,7 @@ def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
         time.sleep(0.35)
         res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=5", headers=headers, timeout=10)
         fixtures = res_fix.json().get('response', [])
-        punti, match_considerati, diff_reti = 0, 0, 0
+        punti, match_considerati = 0, 0
         for f in fixtures:
             gh = f['goals']['home']
             ga = f['goals']['away']
@@ -66,10 +65,9 @@ def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
             gs = ga if is_home else gh
             peso = 1.2 if ((ruolo == 'home' and is_home) or (ruolo == 'away' and not is_home)) else 0.8
             punti += (3 if gf > gs else (1 if gf == gs else 0)) * peso
-            diff_reti += (gf - gs) * peso
             match_considerati += peso
         if match_considerati == 0: return fallback_neutro
-        return {'ppg': round(punti / match_considerati, 2), 'differenza_reti': round(diff_reti / match_considerati, 2)}
+        return {'ppg': round(punti / match_considerati, 2)}
     except:
         return fallback_neutro
 
@@ -119,7 +117,6 @@ def crea_schedina(db):
     fine_turno = oggi + timedelta(days=6)
     candidati = []
     
-    errori_api = []
     partite_totali = 0
     
     for camp in campionati:
@@ -127,11 +124,9 @@ def crea_schedina(db):
             url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
             res = requests.get(url, timeout=10)
             if res.status_code != 200:
-                errori_api.append(f"{camp} ({res.status_code})")
                 continue
             partite = res.json()
         except: 
-            errori_api.append(f"{camp} (timeout)")
             continue
         
         for partita in partite:
@@ -158,17 +153,18 @@ def crea_schedina(db):
                     if m['key'] == 'h2h':
                         for out in m['outcomes']:
                             q = out.get('price', 0)
-                            if not (1.35 <= q <= 2.50): continue
+                            if not (1.25 <= q <= 2.80): continue
                             
                             fair_p = mercato_h2h.get(out['name'], 1.0 / q)
                             ev = (q * fair_p) - 1.0
                             desc = ""
                             
-                            if out['name'] == nome_casa and fc['ppg'] >= 1.2 and fc['differenza_reti'] >= 0: desc = f"vittoria {traduci_squadra(nome_casa)}"
-                            elif out['name'] == nome_trasf and ft['ppg'] >= 1.2 and ft['differenza_reti'] >= 0: desc = f"vittoria {traduci_squadra(nome_trasf)}"
-                            elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 0.5: desc = "pareggio"
+                            # Criteri super allentati per raccogliere sempre candidati
+                            if out['name'] == nome_casa and fc['ppg'] >= 0.6: desc = f"vittoria {traduci_squadra(nome_casa)}"
+                            elif out['name'] == nome_trasf and ft['ppg'] >= 0.6: desc = f"vittoria {traduci_squadra(nome_trasf)}"
+                            elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 0.8: desc = "pareggio"
                             
-                            if desc and ev > -0.05:
+                            if desc:
                                 score = fair_p + (ev * 2.0)
                                 candidati.append({
                                     'id_partita': partita['id'], 
@@ -180,13 +176,6 @@ def crea_schedina(db):
                 break 
 
     if not candidati:
-        msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. ecco il report diagnostico:\n\n"
-        msg_err += f"• **partite scansionate valide**: {partite_totali}\n"
-        if errori_api:
-            msg_err += f"• **errori API rilevati**: {', '.join(errori_api)}\n"
-        else:
-            msg_err += "• **motivazione**: le quote attuali non garantiscono il livello minimo di sicurezza statistica sul value betting."
-        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
         return
     
     unici = {}
@@ -203,26 +192,18 @@ def crea_schedina(db):
         
     quota_totale = round(quota_totale, 2)
     
-    # blocco anti-singola povera e verifica raddoppio
-    if len(finalisti) < 2 or quota_totale < 2.00:
-        msg_err = f"⚠️ **SBR ALERT DI SISTEMA**\n\n**Nessuna giocata elaborata oggi**. ecco il report diagnostico:\n\n"
-        msg_err += f"• **partite scansionate valide**: {partite_totali}\n"
-        msg_err += f"• **motivazione**: il sistema ha bloccato la ricevuta per preservare il rapporto rischio/rendimento. le selezioni trovate avrebbero generato una quota complessiva di {quota_totale} con soli {len(finalisti)} eventi. giochiamo esclusivamente raddoppi combinati."
-        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
-        return
-    
     db['schedine'].append({
         'id': str(uuid.uuid4())[:8], 'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
         'importo': 10.0, 'quota_totale': quota_totale, 'ritorno_potenziale': round(10.0 * quota_totale, 2),
         'stato_schedina': 'in attesa', 'partite': finalisti
     })
     
-    msg = f"🚀 **nuova selezione di valore certificata**\n\n**Modello Alpha** ha analizzato i palinsesti e blindato una nuova giocata statistica.\n\n"
+    msg = f"🚀 **nuova selezione in gioco**\n\n**Modello Alpha** ha analizzato l'intero palinsesto e stilato la classifica delle migliori opportunità matematiche.\n\n"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti: 
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n🎯 {c['pronostico'].upper()} (@{c['quota']})\n\n"
-    msg += "puoi verificare l'esito matematico direttamente sul nostro registro pubblico.\n\n"
-    msg += "**#SBR #PronosticiCalcio #ValueBetting #SportTrading**"
+    msg += "verifica l'esito della schedina sul nostro registro pubblico.\n\n"
+    msg += "#PronosticiCalcio #ValueBetting #SportTrading #SBR"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
