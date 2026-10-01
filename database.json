@@ -354,6 +354,64 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "a45700f0",
+            "data_creazione": "01/10/2026",
+            "importo": 10.0,
+            "quota_totale": 8.6,
+            "ritorno_potenziale": 86.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Belgio",
+                    "squadra_trasferta": "Turchia",
+                    "pronostico": "vittoria Belgio",
+                    "quota": 1.56,
+                    "score": 0.6245496880766191,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
+                    "data_oggetto": "2026-10-03",
+                    "data": "03/10 18:00",
+                    "squadra_casa": "Croazia",
+                    "squadra_trasferta": "Inghilterra",
+                    "pronostico": "vittoria Inghilterra",
+                    "quota": 1.91,
+                    "score": 0.47996552528577685,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "18c29d24c37e4fa9c5c2a12218c87944",
+                    "data_oggetto": "2026-10-04",
+                    "data": "04/10 20:45",
+                    "squadra_casa": "Galles",
+                    "squadra_trasferta": "Danimarca",
+                    "pronostico": "vittoria Danimarca",
+                    "quota": 1.85,
+                    "score": 0.4706848672116404,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Polonia",
+                    "squadra_trasferta": "Romania",
+                    "pronostico": "vittoria Polonia",
+                    "quota": 1.56,
+                    "score": 0.46634293369055646,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
