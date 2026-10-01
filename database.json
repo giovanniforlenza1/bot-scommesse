@@ -2,56 +2,6 @@
     "capitale_iniziale": 200.0,
     "schedine": [
         {
-            "id": "49677526",
-            "data_creazione": "29/09/2026",
-            "importo": 10.0,
-            "quota_totale": 11.33,
-            "ritorno_potenziale": 113.3,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "id_partita": "aa65ea35f0aa1c0bb87cbcb9e5341b5b",
-                    "data": "02/10 20:45",
-                    "squadra_casa": "Hungary",
-                    "squadra_trasferta": "Georgia",
-                    "pronostico": "vittoria Hungary",
-                    "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "4985fdd6c7e6801fcca1f9f1e78aed66",
-                    "data": "02/10 20:45",
-                    "squadra_casa": "Ukraine",
-                    "squadra_trasferta": "Northern Ireland",
-                    "pronostico": "vittoria Ukraine",
-                    "quota": 1.92,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
-                    "data": "02/10 20:45",
-                    "squadra_casa": "Poland",
-                    "squadra_trasferta": "Romania",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.75,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "25729c523424cd79daafd14635c7ea12",
-                    "data": "29/09 20:45",
-                    "squadra_casa": "Bulgaria",
-                    "squadra_trasferta": "Estonia",
-                    "pronostico": "vittoria Bulgaria",
-                    "quota": 1.73,
-                    "stato": "persa",
-                    "risultato_reale": "0-0"
-                }
-            ]
-        },
-        {
             "id": "bce0df57",
             "data_creazione": "29/09/2026",
             "importo": 10.0,
@@ -146,106 +96,6 @@
                     "squadra_trasferta": "Georgia",
                     "pronostico": "under 2.5 gol",
                     "quota": 1.75,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                }
-            ]
-        },
-        {
-            "id": "f75b8b3c",
-            "data_creazione": "30/09/2026",
-            "importo": 10.0,
-            "quota_totale": 14.16,
-            "ritorno_potenziale": 141.6,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "id_partita": "a2b54d223ce491ac52af34a462de0140",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Malta",
-                    "squadra_trasferta": "Gibilterra",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.95,
-                    "stato": "persa",
-                    "risultato_reale": "1-0"
-                },
-                {
-                    "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
-                    "data": "02/10 20:45",
-                    "squadra_casa": "Polonia",
-                    "squadra_trasferta": "Romania",
-                    "pronostico": "under 2.5 gol",
-                    "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
-                    "data": "03/10 18:00",
-                    "squadra_casa": "Croazia",
-                    "squadra_trasferta": "Inghilterra",
-                    "pronostico": "under 2.5 gol",
-                    "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "adc5517ae91bb43f3406d577b489abc0",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Israele",
-                    "squadra_trasferta": "Kosovo",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.91,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                }
-            ]
-        },
-        {
-            "id": "b0dc07a1",
-            "data_creazione": "30/09/2026",
-            "importo": 10.0,
-            "quota_totale": 10.57,
-            "ritorno_potenziale": 105.7,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "id_partita": "a2b54d223ce491ac52af34a462de0140",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Malta",
-                    "squadra_trasferta": "Gibilterra",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.95,
-                    "stato": "persa",
-                    "risultato_reale": "1-0"
-                },
-                {
-                    "id_partita": "adc5517ae91bb43f3406d577b489abc0",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Israele",
-                    "squadra_trasferta": "Kosovo",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.91,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "d4cee9aa708870095e23599afb35bce0",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Danimarca",
-                    "squadra_trasferta": "Portogallo",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.7,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "6321b7d465a21274f0da7a5e50dbf5ef",
-                    "data": "01/10 20:45",
-                    "squadra_casa": "Grecia",
-                    "squadra_trasferta": "Olanda",
-                    "pronostico": "over 2.5 gol",
-                    "quota": 1.67,
                     "stato": "in attesa",
                     "risultato_reale": ""
                 }
@@ -408,28 +258,6 @@
                     "pronostico": "vittoria Polonia",
                     "quota": 1.56,
                     "score": 0.46634293369055646,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                }
-            ]
-        },
-        {
-            "id": "743acdf3",
-            "data_creazione": "01/10/2026",
-            "importo": 10.0,
-            "quota_totale": 1.35,
-            "ritorno_potenziale": 13.5,
-            "stato_schedina": "in attesa",
-            "partite": [
-                {
-                    "id_partita": "0db832b7346f766521d9e67cd5ab1687",
-                    "data_oggetto": "2026-10-01",
-                    "data": "01/10 20:46",
-                    "squadra_casa": "Republic of Ireland",
-                    "squadra_trasferta": "Austria",
-                    "pronostico": "pareggio",
-                    "quota": 1.35,
-                    "score": 0.7638677548761935,
                     "stato": "in attesa",
                     "risultato_reale": ""
                 }
