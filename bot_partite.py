@@ -5,7 +5,6 @@ import uuid
 import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from collections import defaultdict
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -45,7 +44,7 @@ def traduci_squadra(nome_inglese):
     return TRADUZIONI_NAZIONALI.get(nome_inglese.strip(), nome_inglese.strip())
 
 def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
-    fallback_neutro = {'ppg': 1.0, 'gol_segnati_avg': 1.0, 'gol_subiti_avg': 1.0, 'differenza_reti': 0}
+    fallback_neutro = {'ppg': 1.0, 'differenza_reti': 0}
     if not api_key: return fallback_neutro
     try:
         headers = {'x-apisports-key': api_key}
@@ -56,7 +55,7 @@ def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
         time.sleep(0.35)
         res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=5", headers=headers, timeout=10)
         fixtures = res_fix.json().get('response', [])
-        punti, match_considerati = 0, 0
+        punti, match_considerati, diff_reti = 0, 0, 0
         for f in fixtures:
             gh = f['goals']['home']
             ga = f['goals']['away']
@@ -66,9 +65,10 @@ def analizza_forma_avanzata(squadra, api_key, ruolo='home'):
             gs = ga if is_home else gh
             peso = 1.2 if ((ruolo == 'home' and is_home) or (ruolo == 'away' and not is_home)) else 0.8
             punti += (3 if gf > gs else (1 if gf == gs else 0)) * peso
+            diff_reti += (gf - gs) * peso
             match_considerati += peso
         if match_considerati == 0: return fallback_neutro
-        return {'ppg': round(punti / match_considerati, 2)}
+        return {'ppg': round(punti / match_considerati, 2), 'differenza_reti': round(diff_reti / match_considerati, 2)}
     except:
         return fallback_neutro
 
@@ -157,18 +157,18 @@ def crea_schedina(db):
                     if m['key'] == 'h2h':
                         for out in m['outcomes']:
                             q = out.get('price', 0)
-                            # abbiamo alzato la soglia minima a 1.45 per garantire quote molto più succulente
-                            if not (1.45 <= q <= 2.90): continue
+                            if not (1.35 <= q <= 2.50): continue
                             
                             fair_p = mercato_h2h.get(out['name'], 1.0 / q)
                             ev = (q * fair_p) - 1.0
                             desc = ""
                             
-                            if out['name'] == nome_casa and fc['ppg'] >= 0.5: desc = f"vittoria {traduci_squadra(nome_casa)}"
-                            elif out['name'] == nome_trasf and ft['ppg'] >= 0.5: desc = f"vittoria {traduci_squadra(nome_trasf)}"
-                            elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 1.0: desc = "pareggio"
+                            if out['name'] == nome_casa and fc['ppg'] >= 1.5 and fc['differenza_reti'] > 0: desc = f"vittoria {traduci_squadra(nome_casa)}"
+                            elif out['name'] == nome_trasf and ft['ppg'] >= 1.5 and ft['differenza_reti'] > 0: desc = f"vittoria {traduci_squadra(nome_trasf)}"
+                            elif out['name'] == 'Draw' and abs(fc['ppg'] - ft['ppg']) <= 0.5: desc = "pareggio"
                             
-                            if desc and ev > -0.15:
+                            # scudo statistico attivato: accettiamo solo quote con fair value quasi neutro o positivo
+                            if desc and ev > -0.02:
                                 score = fair_p + (ev * 2.0)
                                 candidati.append({
                                     'id_partita': partita['id'], 
@@ -184,9 +184,8 @@ def crea_schedina(db):
         msg_err += f"• **Partite scansionate valide**: {partite_totali}\n"
         if errori_api:
             msg_err += f"• **Errori API rilevati**: {', '.join(errori_api)}\n"
-            msg_err += "*nota: se leggi l'errore 429 significa che hai superato il limite di chiamate gratuite mensili di The Odds API.*"
         else:
-            msg_err += "• **Motivazione**: le quote attuali non garantiscono il livello minimo di sicurezza statistica."
+            msg_err += "• **Motivazione**: le quote attuali non garantiscono il livello minimo di sicurezza statistica sul value betting."
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
         return
     
@@ -194,11 +193,11 @@ def crea_schedina(db):
     for c in sorted(candidati, key=lambda x: x['score'], reverse=True):
         if c['id_partita'] not in unici: unici[c['id_partita']] = c
         
-    # abbiamo ripristinato il limite a 4 eventi per riportare in alto il moltiplicatore
+    # limite massimo di 3 eventi per salvare il win rate della cassa
     finalisti = []
     quota_totale = 1.0
     for c in sorted(unici.values(), key=lambda x: x['score'], reverse=True):
-        if len(finalisti) >= 4:
+        if len(finalisti) >= 3:
             break
         finalisti.append(c)
         quota_totale *= c['quota']
@@ -211,12 +210,12 @@ def crea_schedina(db):
         'stato_schedina': 'in attesa', 'partite': finalisti
     })
     
-    msg = f"🚀 **nuova multipla ad alto rendimento individuata**\n\n**Modello Alpha** ha appena elaborato e certificato una nuova selezione.\n\n"
+    msg = f"🚀 **nuova selezione di valore certificata**\n\n**Modello Alpha** ha analizzato i palinsesti e blindato una nuova giocata statistica.\n\n"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti: 
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n🎯 {c['pronostico'].upper()} (@{c['quota']})\n\n"
-    msg += "puoi verificare l'esito e l'andamento storico della cassa direttamente sul nostro portale ufficiale.\n\n"
-    msg += "**#SBR #PronosticiCalcio #SchedinaVincente #IntelligenzaArtificiale #SportTrading**"
+    msg += "puoi verificare l'esito matematico direttamente sul nostro registro pubblico.\n\n"
+    msg += "**#SBR #PronosticiCalcio #ValueBetting #SportTrading**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
