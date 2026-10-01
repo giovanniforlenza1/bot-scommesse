@@ -434,6 +434,52 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "c2760795",
+            "data_creazione": "01/10/2026",
+            "importo": 10.0,
+            "quota_totale": 3.05,
+            "ritorno_potenziale": 30.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "b6048b1da7816b2a0944013e6c139609",
+                    "data_oggetto": "2026-10-03",
+                    "data": "03/10 20:45",
+                    "squadra_casa": "Svizzera",
+                    "squadra_trasferta": "Slovenia",
+                    "pronostico": "vittoria Svizzera",
+                    "quota": 1.35,
+                    "score": 0.689953980221287,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Italia",
+                    "pronostico": "vittoria Francia",
+                    "quota": 1.45,
+                    "score": 0.6456874325732784,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
+                    "data_oggetto": "2026-10-02",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Belgio",
+                    "squadra_trasferta": "Turchia",
+                    "pronostico": "vittoria Belgio",
+                    "quota": 1.56,
+                    "score": 0.6245496880766191,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
