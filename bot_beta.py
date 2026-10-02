@@ -9,8 +9,6 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
 
-# id leghe su api-football: nations league (5), qualificazioni (34), mondiali/europei etc.
-# club: serie a (135), epl (39), liga (140), bundesliga (78), ligue 1 (61), champions (2), europa (3)
 LEGHE_TARGET = [5, 34, 135, 39, 140, 78, 61, 2, 3]
 
 TRADUZIONI_NAZIONALI = {
@@ -44,18 +42,17 @@ def cerca_value_corners():
     
     headers = {'x-apisports-key': API_FOOTBALL_KEY}
     
-    # scansioniamo le quote per i prossimi 3 giorni
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Avvio Modello Beta (Corner) - Scansione palinsesti...")
+    
     for giorni_avanti in range(4):
         data_target = (oggi + timedelta(days=giorni_avanti)).strftime("%Y-%m-%d")
-        
-        # interroghiamo api-football per le quote di bet365 (bookmaker id 8)
         url = f"https://v3.football.api-sports.io/odds?date={data_target}&bookmaker=8"
+        
         try:
             res = requests.get(url, headers=headers, timeout=10)
             if res.status_code != 200:
                 errori_api.append(str(res.status_code))
                 continue
-            
             dati = res.json().get('response', [])
         except:
             errori_api.append("timeout")
@@ -70,23 +67,19 @@ def cerca_value_corners():
             fixture_data = match['fixture']
             match_date = datetime.strptime(fixture_data['date'], "%Y-%m-%dT%H:%M:%S%z").astimezone(fuso_italia)
             
-            casa = traduci_squadra(match['league']['name'] if 'league' in match else fixture_data.get('home_team', 'Casa')) 
-            # estrazione nomi corretti
             casa = traduci_squadra(match.get('fixture', {}).get('teams', {}).get('home', {}).get('name', 'Casa'))
             trasferta = traduci_squadra(match.get('fixture', {}).get('teams', {}).get('away', {}).get('name', 'Trasferta'))
             
             for book in match.get('bookmakers', []):
                 for mercato in book.get('markets', []):
-                    # cerchiamo il mercato dei calci d'angolo (di solito id 45 o nome corners)
                     nome_mercato = mercato.get('name', '').lower()
                     if 'corner' in nome_mercato or mercato.get('id') == 45:
                         for out in mercato.get('values', []):
                             valore = out.get('value', str(out.get('name', '')))
                             quota = float(out.get('odd', 0))
                             
-                            # peschiamo le linee over sui corner a quote di valore
-                            if 'over' in valore.lower() and 1.45 <= quota <= 2.20:
-                                punteggio = 1.0 / quota # base di ranking 
+                            if 'over' in valore.lower() and 1.45 <= quota <= 2.30:
+                                punteggio = 1.0 / quota 
                                 candidati.append({
                                     'id_partita': fixture_data['id'],
                                     'data_oggetto': str(match_date.date()),
@@ -101,8 +94,10 @@ def cerca_value_corners():
                                 })
                         break
 
+    print(f"Partite valide analizzate: {partite_totali}. Selezioni corner trovate: {len(candidati)}")
+
     if not candidati:
-        msg_err = f"⚠️ **SBR ALERT DI SISTEMA - MODELLO BETA**\n\n**nessuna giocata sui corner elaborata oggi**. il sistema non ha individuato mercati aperti o quote di valore sulle {partite_totali} partite valide."
+        msg_err = f"⚠️ **SBR ALERT DI SISTEMA - MODELLO BETA**\n\n**Nessuna giocata sui corner elaborata oggi**.\nI bookmaker non hanno ancora inserito i mercati sui calci d'angolo per le {partite_totali} partite valide in arrivo, oppure le quote non hanno superato i nostri filtri."
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
         return
         
@@ -122,7 +117,10 @@ def cerca_value_corners():
     quota_totale = round(quota_totale, 2)
     
     if len(finalisti) < 2 or quota_totale < 1.80:
-        return # fermiamo le giocate non sufficientemente profittevoli
+        print(f"Quota totale troppo bassa ({quota_totale}) o eventi insufficienti ({len(finalisti)}). Scarto la giocata.")
+        msg_err = f"⚠️️ **SBR ALERT DI SISTEMA - MODELLO BETA**\n\n**Ricevuta scartata in extremis**.\nIl modello aveva trovato {len(finalisti)} giocate sui corner, ma sviluppavano una quota totale di {quota_totale}. Il rapporto rischio/rendimento è stato giudicato svantaggioso."
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
+        return
         
     db = carica_database()
     db['schedine'].append({
@@ -136,7 +134,6 @@ def cerca_value_corners():
     })
     salva_database(db)
     
-    # copy ottimizzato in ottica seo social
     msg = f"🔍 **esclusiva modello beta: analisi mercati speciali**\n\nil nostro algoritmo statistico ha scansionato le linee sui calci d'angolo, individuando un'inefficienza sulle lavagne attuali.\n\n"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti:
