@@ -5,26 +5,36 @@ import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-# Il bot ora cerca specificamente la sua chiave isolata
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_OMEGA_KEY")
 
-# 5: Nations League, 34: Qualificazioni Mondiali, 4: Europei, 15: Mondiali
-# 135: Serie A, 39: Premier, 140: Liga, 78: Bundesliga, 61: Ligue 1, 2: Champions, 3: Europa League
 LEGHE_TARGET = [5, 34, 4, 15, 135, 39, 140, 78, 61, 2, 3] 
 
 def analizza_statistiche(team_id, headers):
     try:
-        res = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=5", headers=headers, timeout=10)
+        # Aggiramento blocco API: usiamo un range temporale (ultimi 150 giorni) invece del parametro 'last'
+        oggi = datetime.now()
+        data_to = oggi.strftime("%Y-%m-%d")
+        data_from = (oggi - timedelta(days=150)).strftime("%Y-%m-%d")
+        
+        url = f"https://v3.football.api-sports.io/fixtures?team={team_id}&from={data_from}&to={data_to}"
+        res = requests.get(url, headers=headers, timeout=10)
         
         dati_json = res.json()
         if dati_json.get('errors'):
             print(f"Errore API sul team {team_id}: {dati_json.get('errors')}")
             
-        fixtures = dati_json.get('response', [])
-        if not fixtures: return {"forma": 0, "gol_fatti": 0, "gol_subiti": 0}
+        tutte_fixtures = dati_json.get('response', [])
+        
+        # Filtriamo solo le partite finite (Full Time, After Extra Time, Penalties)
+        finite = [f for f in tutte_fixtures if f['fixture']['status']['short'] in ['FT', 'AET', 'PEN']]
+        
+        # Estraiamo le ultime 5 tramite Python
+        ultime_5 = finite[-5:]
+        
+        if not ultime_5: return {"forma": 0, "gol_fatti": 0, "gol_subiti": 0}
         
         pti, gf, gs = 0, 0, 0
-        for f in fixtures:
+        for f in ultime_5:
             is_home = f['teams']['home']['id'] == team_id
             g_pro = f['goals']['home'] if is_home else f['goals']['away']
             g_con = f['goals']['away'] if is_home else f['goals']['home']
@@ -33,8 +43,9 @@ def analizza_statistiche(team_id, headers):
             gs += g_con
             pti += 3 if g_pro > g_con else (1 if g_pro == g_con else 0)
             
-        return {"forma": round(pti/5, 2), "gol_fatti": round(gf/5, 2), "gol_subiti": round(gs/5, 2)}
-    except:
+        return {"forma": round(pti/len(ultime_5), 2), "gol_fatti": round(gf/len(ultime_5), 2), "gol_subiti": round(gs/len(ultime_5), 2)}
+    except Exception as e:
+        print(f"Errore parsing statistiche team {team_id}: {str(e)}")
         return {"forma": 0, "gol_fatti": 0, "gol_subiti": 0}
 
 def genera_analisi_giornaliera():
@@ -43,25 +54,24 @@ def genera_analisi_giornaliera():
     headers = {'x-apisports-key': API_FOOTBALL_KEY}
     
     database_analisi = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "analisi": []}
-    
     partite_valide = []
     
-    print("Ricerca partite (Club e Nazionali) per i prossimi 3 giorni con chiave Omega dedicata...")
+    print("Ricerca partite (Club e Nazionali) per oggi e domani con chiave Omega...")
     
-    for giorni_avanti in range(3):
+    # Riduciamo l'orizzonte a 2 giorni per evitare i blocchi temporali sui piani free
+    for giorni_avanti in range(2):
         data_target = (oggi + timedelta(days=giorni_avanti)).strftime("%Y-%m-%d")
         res = requests.get(f"https://v3.football.api-sports.io/fixtures?date={data_target}", headers=headers)
         
         if res.status_code == 200:
             dati = res.json()
             if dati.get('errors'):
-                print(f"Avviso API-Football: {dati['errors']}")
+                print(f"Avviso API-Football sui palinsesti: {dati['errors']}")
                 
             for m in dati.get('response', []):
                 if m['league']['id'] in LEGHE_TARGET:
                     partite_valide.append(m)
 
-    # Limite alzato a 15 partite grazie alla chiave API separata
     partite_valide = partite_valide[:15]
     print(f"Trovate e selezionate {len(partite_valide)} partite di cartello per l'analisi profonda.")
     
