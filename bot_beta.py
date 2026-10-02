@@ -44,10 +44,6 @@ def estrai_valore_stat(stats_array, tipo_stat):
     return 0.0
 
 def analizza_trend_squadra(team_id, headers):
-    """
-    Scarica le ultime 3 partite giocate e calcola la media esatta di corner e cartellini.
-    Limitato a 3 per non esaurire il piano gratuito di API-Football.
-    """
     stats_medie = {'corner': 0.0, 'cartellini': 0.0}
     try:
         res_fix = requests.get(f"https://v3.football.api-sports.io/fixtures?team={team_id}&last=3", headers=headers, timeout=10)
@@ -71,7 +67,7 @@ def analizza_trend_squadra(team_id, headers):
             rossi = estrai_valore_stat(stats, 'Red Cards')
             
             tot_corner += corner
-            tot_cartellini += (gialli + (rossi * 2)) # Un rosso pesa il doppio
+            tot_cartellini += (gialli + (rossi * 2))
             match_validi += 1
             
         if match_validi > 0:
@@ -90,7 +86,6 @@ def genera_modello_predittivo():
     
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Avvio Modello Beta Predittivo: Scansione trend...")
     
-    # 1. Recupero le partite dei prossimi 2 giorni
     partite_candidabili = []
     for giorni_avanti in range(2):
         data_target = (oggi + timedelta(days=giorni_avanti)).strftime("%Y-%m-%d")
@@ -104,7 +99,6 @@ def genera_modello_predittivo():
         except:
             continue
             
-    # 2. Limitiamo l'analisi a massimo 5 match per proteggere le chiamate API
     partite_candidabili = partite_candidabili[:5]
     print(f"Trovati {len(partite_candidabili)} match di cartello. Inizio analisi referti storici...")
     
@@ -119,15 +113,12 @@ def genera_modello_predittivo():
         home_name = traduci_squadra(match['teams']['home']['name'])
         away_name = traduci_squadra(match['teams']['away']['name'])
         
-        print(f"Analisi in corso: {home_name} - {away_name}...")
         trend_home = analizza_trend_squadra(home_id, headers)
         trend_away = analizza_trend_squadra(away_id, headers)
         
         corner_totali_attesi = trend_home['corner'] + trend_away['corner']
         cartellini_totali_attesi = trend_home['cartellini'] + trend_away['cartellini']
         
-        # LOGICA PREDITTIVA
-        # Se le squadre superano i 10.5 corner di media combinata, andiamo sull'Over 8.5
         if corner_totali_attesi >= 10.5:
             selezioni_giocabili.append({
                 'id_partita': fix_data['id'],
@@ -135,11 +126,12 @@ def genera_modello_predittivo():
                 'squadra_casa': home_name,
                 'squadra_trasferta': away_name,
                 'pronostico': "Over 8.5 Calci d'Angolo",
-                'quota_minima_consigliata': 1.45,
+                'quota': 1.45,
                 'info_trend': f"Trend combinato: {round(corner_totali_attesi, 1)} corner a partita",
-                'score': corner_totali_attesi
+                'score': corner_totali_attesi,
+                'stato': 'in attesa',
+                'risultato_reale': ''
             })
-        # Altrimenti, se sono squadre fallose/nervose (media cartellini combinata > 5.5)
         elif cartellini_totali_attesi >= 5.5:
             selezioni_giocabili.append({
                 'id_partita': fix_data['id'],
@@ -147,9 +139,11 @@ def genera_modello_predittivo():
                 'squadra_casa': home_name,
                 'squadra_trasferta': away_name,
                 'pronostico': "Over 3.5 Cartellini Totali",
-                'quota_minima_consigliata': 1.50,
+                'quota': 1.50,
                 'info_trend': f"Trend nervosismo: {round(cartellini_totali_attesi, 1)} cartellini a partita",
-                'score': cartellini_totali_attesi
+                'score': cartellini_totali_attesi,
+                'stato': 'in attesa',
+                'risultato_reale': ''
             })
 
     if not selezioni_giocabili:
@@ -157,27 +151,40 @@ def genera_modello_predittivo():
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg_err, "parse_mode": "Markdown"})
         return
         
-    # Ordiniamo per score (i trend più aggressivi) e prendiamo le top 3
     finalisti = sorted(selezioni_giocabili, key=lambda x: x['score'], reverse=True)[:3]
     
-    # Costruiamo il messaggio SEO Social
+    quota_combinata = 1.0
+    for c in finalisti:
+        quota_combinata *= c['quota']
+    
+    # Salva nel database pubblico
+    db = carica_database()
+    db['schedine'].append({
+        'id': str(uuid.uuid4())[:8],
+        'modello': 'beta',
+        'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
+        'importo': 10.0,
+        'quota_totale': round(quota_combinata, 2),
+        'ritorno_potenziale': round(10.0 * quota_combinata, 2),
+        'stato_schedina': 'in attesa',
+        'partite': finalisti
+    })
+    salva_database(db)
+    
     msg = f"📊 **MODELLO BETA: TREND SPECIAL BETS**\n\n"
     msg += "Il nostro motore ha analizzato i referti arbitrali delle ultime gare, calcolando l'aggressività e le tendenze di gioco per prevedere i mercati secondari.\n\n"
     msg += "⚠️ *Non essendoci quote stabili pre-match, gioca questa selezione solo se il tuo bookmaker offre una quota pari o superiore a quella indicata.*\n\n"
     
-    quota_combinata = 1.0
     for c in finalisti:
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n"
         msg += f"🎯 **Giocata:** {c['pronostico']}\n"
         msg += f"📈 **Dato Reale:** {c['info_trend']}\n"
-        msg += f"💰 **Gioca solo se a quota > {c['quota_minima_consigliata']}**\n\n"
-        quota_combinata *= c['quota_minima_consigliata']
+        msg += f"💰 **Gioca solo se a quota > {c['quota']}**\n\n"
         
     msg += f"💡 **Moltiplicatore potenziale minimo:** @{round(quota_combinata, 2)}\n\n"
     msg += "**#SBR #PronosticiCalcio #CornerBetting #StatisticheCalcio #SportTrading**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    print("Modello Beta eseguito. Messaggio Telegram inviato con i trend statistici.")
 
 if __name__ == "__main__":
     genera_modello_predittivo()
