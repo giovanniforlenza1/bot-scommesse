@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
 
-# Campionati supportati da The Odds API (Club e Nazionali)
+# campionati supportati da The Odds API (club e nazionali)
 CAMPIONATI = [
     'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
     'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
@@ -37,8 +37,8 @@ def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
 def calcola_quota_reale(quote):
-    # Converte le quote del mercato nelle probabilità pure (De-vigging)
-    prob_implicita = sum(1 / q for q in quote) # Questa è la lavagna (es. 1.05 = 5% di aggio)
+    # converte le quote del mercato nelle probabilità pure calcolando l'aggio
+    prob_implicita = sum(1 / q for q in quote) 
     prob_reali = [(1 / q) / prob_implicita for q in quote]
     quote_reali = [1 / p for p in prob_reali]
     return quote_reali, prob_reali, prob_implicita
@@ -47,9 +47,12 @@ def genera_analisi_quantitativa():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
     
+    # limite temporale impostato a 4 giorni da oggi
+    limite_temporale = oggi + timedelta(days=4)
+    
     database_analisi = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "analisi": []}
     
-    print("Avvio Modello Omega (Analisi Quantitativa e De-Vigging del Mercato)...")
+    print("avvio modello Omega (analisi quantitativa con filtro temporale e quote medie)...")
     
     for camp in CAMPIONATI:
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
@@ -59,7 +62,13 @@ def genera_analisi_quantitativa():
         matches = res.json()
         
         for m in matches:
-            # Calcoliamo la media del mercato globale per avere dati stabili
+            # parsing della data della partita e applicazione del filtro temporale
+            data_partita_utc = datetime.strptime(m['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC"))
+            data_partita_ita = data_partita_utc.astimezone(fuso)
+            
+            if data_partita_ita > limite_temporale:
+                continue # scartiamo le partite che si giocano tra più di 4 giorni
+            
             q_1_list, q_x_list, q_2_list = [], [], []
             
             for book in m.get('bookmakers', []):
@@ -72,37 +81,37 @@ def genera_analisi_quantitativa():
                             
             if not q_1_list or not q_x_list or not q_2_list: continue
             
-            # Quota media del mercato globale
+            # quota media del mercato globale
             avg_1 = sum(q_1_list) / len(q_1_list)
             avg_x = sum(q_x_list) / len(q_x_list)
             avg_2 = sum(q_2_list) / len(q_2_list)
             
-            # Matematica pura: estraiamo la quota reale senza l'aggio del bookmaker
+            # estrazione quota reale eliminando il margine del banco
             quote_reali, prob_reali, aggio = calcola_quota_reale([avg_1, avg_x, avg_2])
             margine_perc = round((aggio - 1) * 100, 2)
             
             home_ita = traduci_squadra(m['home_team'])
             away_ita = traduci_squadra(m['away_team'])
             
-            # Selezioniamo l'esito con la probabilità reale più alta
+            # selezioniamo l'esito con la probabilità più alta in assoluto
             miglior_prob = max(prob_reali)
             indice_migliore = prob_reali.index(miglior_prob)
-            
-            # Filtro di sicurezza: operiamo solo su eventi con almeno il 50% di probabilità matematica
-            if miglior_prob < 0.50:
-                continue
                 
-            pronostico_str = f"vittoria {home_ita}" if indice_migliore == 0 else (f"vittoria {away_ita}" if indice_migliore == 2 else "Pareggio")
+            pronostico_str = f"vittoria {home_ita}" if indice_migliore == 0 else (f"vittoria {away_ita}" if indice_migliore == 2 else "pareggio")
             quota_pura_fiera = round(quote_reali[indice_migliore], 2)
             
-            # APPLICHIAMO L'EDGE (VANTAGGIO): Chiediamo al Cecchino di trovare una quota superiore del +4% rispetto alla quota pura matematica
+            # applichiamo il vantaggio matematico del 4% sulla quota
             quota_valore_richiesta = round(quota_pura_fiera * 1.04, 2)
             
+            # filtro rigido per alta probabilità: accettiamo solo quote finali comprese esattamente tra 1.50 e 2.00
+            if not (1.50 <= quota_valore_richiesta <= 2.00):
+                continue
+            
             testo_report = (
-                f"Analisi Quantitativa (De-Vig): Il mercato applica un aggio del {margine_perc}%. "
-                f"La probabilità matematica reale calcolata per la {pronostico_str} è del {round(miglior_prob*100, 1)}%, "
-                f"che corrisponde a una Quota Equa (Fair Odd) di @{quota_pura_fiera}. "
-                f"Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @{quota_valore_richiesta}."
+                f"analisi quantitativa del mercato: i bookmaker applicano un aggio del {margine_perc}%. "
+                f"la probabilità matematica di successo per la {pronostico_str} è del {round(miglior_prob*100, 1)}%, "
+                f"corrispondente a una quota equa di @{quota_pura_fiera}. "
+                f"il modello Omega esige l'ingresso a una quota minima di @{quota_valore_richiesta} per mantenere il vantaggio statistico in questo range di sicurezza."
             )
             
             database_analisi["analisi"].append({
@@ -114,13 +123,13 @@ def genera_analisi_quantitativa():
                 "report_testuale": testo_report
             })
 
-    # Ordiniamo per probabilità (i match più sicuri in alto)
+    # ordiniamo gli eventi in base alla quota dalla più bassa e sicura alla più alta nel range
     database_analisi["analisi"] = sorted(database_analisi["analisi"], key=lambda x: x["quota_valore_minima"])
     
     with open('database_analisi.json', 'w', encoding='utf-8') as f:
         json.dump(database_analisi, f, indent=4, ensure_ascii=False)
         
-    print(f"Modello Quantitativo Omega: elaborate {len(database_analisi['analisi'])} opportunità di Value Betting.")
+    print(f"modello Omega aggiornato: elaborate {len(database_analisi['analisi'])} partite ottimali nei prossimi 4 giorni.")
 
 if __name__ == "__main__":
     genera_analisi_quantitativa()
