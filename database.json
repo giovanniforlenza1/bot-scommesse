@@ -488,6 +488,41 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "d54d99c2",
+            "modello": "omega",
+            "data_creazione": "02/10/2026",
+            "importo": 10.0,
+            "quota_totale": 3.14,
+            "ritorno_potenziale": 31.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "5d9aac1a239e87ecc555aba2fe4426cf",
+                    "data": "06/10 20:45",
+                    "squadra_casa": "Croazia",
+                    "squadra_trasferta": "Spagna",
+                    "pronostico": "vittoria Spagna",
+                    "quota": 1.95,
+                    "bookmaker": "Betfair",
+                    "score": 0.32000000000000006,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
+                    "data": "05/10 20:45",
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Belgio",
+                    "pronostico": "vittoria Francia",
+                    "quota": 1.61,
+                    "bookmaker": "Betfair",
+                    "score": 0.0,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
