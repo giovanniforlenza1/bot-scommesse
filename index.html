@@ -3,135 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBR | Analisi Oggettiva delle Quote Sportive</title>
+    <title>SBR | Smart Betting Routing Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bet-green: #126e51;
-            --bet-bg: #282828;
-            --bet-panel: #333333;
-            --bet-card: #3a3a3a;
-            --bet-yellow: #ffdf00;
-            --bet-yellow-hover: #e6c800;
-            --text-main: #ffffff;
-            --text-muted: #cccccc;
-            --border-solid: #4a4a4a;
+            /* Nuova Palette */
+            --prussian-blue: #102542;
+            --vibrant-coral: #F87060;
+            --alabaster-grey: #CDD7D6;
+            --khaki-beige: #B3A394;
+            --white: #FFFFFF;
+            
+            /* Variabili derivate */
+            --bg-body: #f4f6f6;
+            --text-main: var(--prussian-blue);
+            --text-muted: #5c6b7d;
+            --border-solid: var(--alabaster-grey);
             --success: #22c55e;
             --danger: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bet-bg); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
         /* Header */
-        header { background-color: var(--bet-green); border-bottom: 2px solid var(--bet-yellow); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .nav-container { max-width: 1000px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        
+        header { background-color: var(--prussian-blue); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(16, 37, 66, 0.15); }
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .brand h1 { font-size: 24px; font-weight: 800; color: var(--text-main); margin: 0; letter-spacing: -0.5px; }
-        .brand span { font-size: 13px; font-weight: 600; color: var(--bet-yellow); text-transform: uppercase; letter-spacing: 1px; }
+        .brand h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0; letter-spacing: -0.5px; }
+        .nav-btn { background-color: var(--vibrant-coral); color: var(--white); padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+        .nav-btn:hover { opacity: 0.9; }
+        .spacer { height: 70px; }
         
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--bet-yellow); }
-        .nav-btn { background-color: var(--bet-yellow); color: #111; padding: 6px 14px; border-radius: 4px; font-weight: 800; font-size: 13px; text-transform: uppercase; }
-        .nav-btn:hover { background-color: var(--bet-yellow-hover); color: #111; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Modelli Info */
+        .models-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .model-card { background-color: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-solid); border-top: 4px solid var(--prussian-blue); }
+        .model-card.alpha { border-top-color: var(--prussian-blue); }
+        .model-card.beta { border-top-color: var(--khaki-beige); }
+        .model-card.omega { border-top-color: var(--vibrant-coral); }
+        .model-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .model-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        /* Dashboard Controller */
+        .dashboard-header { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid var(--border-solid); display: flex; flex-direction: column; gap: 20px; }
         
-        .spacer { height: 65px; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
-
-        /* Hero Section */
-        .hero { text-align: center; padding: 30px 0 50px; border-bottom: 1px solid var(--border-solid); margin-bottom: 40px; }
-        .hero h2 { font-size: 38px; font-weight: 800; margin-bottom: 20px; color: var(--text-main); line-height: 1.2; letter-spacing: -1px; }
-        .hero p { font-size: 17px; color: var(--text-muted); max-width: 750px; margin: 0 auto 30px; line-height: 1.7; }
+        .model-selector { display: flex; gap: 10px; border-bottom: 1px solid var(--border-solid); padding-bottom: 20px; }
+        .model-tab { flex: 1; padding: 12px; text-align: center; font-weight: 700; font-size: 14px; color: var(--text-muted); background: var(--alabaster-grey); border-radius: 8px; cursor: pointer; transition: all 0.2s; border: none; text-transform: uppercase; }
+        .model-tab:hover { background: #e2e8e8; }
+        .model-tab.active { background: var(--prussian-blue); color: var(--white); }
         
-        .btn-primary { display: inline-flex; align-items: center; gap: 10px; background-color: var(--bet-yellow); color: #111111; padding: 16px 26px; border-radius: 4px; text-decoration: none; font-weight: 800; font-size: 15px; text-transform: uppercase; border: none; cursor: pointer; transition: background-color 0.2s; }
-        .btn-primary:hover { background-color: var(--bet-yellow-hover); }
+        .status-selector { display: flex; gap: 10px; flex-wrap: wrap; }
+        .status-btn { background: transparent; border: 1px solid var(--khaki-beige); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+        .status-btn:hover { border-color: var(--prussian-blue); color: var(--prussian-blue); }
+        .status-btn.active { background: var(--vibrant-coral); color: var(--white); border-color: var(--vibrant-coral); }
 
-        .section-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .section-title-text { display: flex; align-items: center; gap: 10px; }
-        .section-title i { color: var(--bet-yellow); }
-        .last-update-tag { font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text-muted); background-color: var(--bet-panel); border: 1px solid var(--border-solid); padding: 5px 12px; border-radius: 4px; }
-
-        /* Metodo */
-        .method-section { background-color: var(--bet-panel); border-radius: 6px; padding: 30px; margin-bottom: 50px; border-left: 4px solid var(--bet-yellow); }
-        .method-section h3 { font-size: 20px; font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
-        .method-section p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 12px; }
-        .method-section p:last-child { margin-bottom: 0; }
-
-        /* Feature Grid */
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
-        .feature-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 6px; padding: 25px 20px; text-align: center; }
-        .feature-icon { font-size: 30px; color: var(--bet-yellow); margin-bottom: 15px; }
-        .feature-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
-        .feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-
-        /* Statistiche a 4 colonne con ROI */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 6px; padding: 20px 15px; text-align: center; }
-        .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-        .stat-value { font-size: 26px; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace; }
+        /* Statistiche */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 20px 15px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
+        .stat-value { font-size: 24px; font-weight: 800; color: var(--prussian-blue); font-family: 'JetBrains Mono', monospace; }
         .stat-value.profit { color: var(--success); }
         .stat-value.negative { color: var(--danger); }
 
-        /* Grafico Equity Curve */
-        .chart-box { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 6px; padding: 25px; margin-bottom: 50px; }
-        .chart-box h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-        .chart-box h4 i { color: var(--bet-yellow); }
-        .chart-wrapper { position: relative; height: 260px; width: 100%; }
-
-        /* Filtri Storico */
-        .filters-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .filter-btn { background-color: var(--bet-panel); border: 1px solid var(--border-solid); color: var(--text-muted); padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-        .filter-btn:hover { color: var(--text-main); border-color: var(--bet-yellow); }
-        .filter-btn.active { background-color: var(--bet-yellow); color: #111; border-color: var(--bet-yellow); }
+        /* Grafico */
+        .chart-box { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .chart-wrapper { position: relative; height: 300px; width: 100%; }
 
         /* Schedine */
-        .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .ticket { background-color: var(--bet-panel); border: 1px solid var(--border-solid); border-radius: 6px; border-top: 4px solid var(--bet-green); display: flex; flex-direction: column; justify-content: space-between; }
-        
-        .ticket-header { padding: 14px 16px; border-bottom: 1px solid var(--border-solid); display: flex; justify-content: space-between; align-items: center; background-color: var(--bet-card); }
-        .t-date { font-size: 12px; font-weight: 600; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-        .t-status { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .t-status.vinta { background-color: rgba(34, 197, 94, 0.2); color: var(--success); }
-        .t-status.persa { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .t-status.attesa { background-color: rgba(255, 255, 255, 0.08); color: var(--text-muted); }
+        .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .ticket { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+        .ticket-header { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); display: flex; justify-content: space-between; align-items: center; background-color: #fafbfc; }
+        .t-date { font-size: 12px; font-weight: 600; color: var(--khaki-beige); font-family: 'JetBrains Mono', monospace; }
+        .t-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+        .t-status.vinta { background-color: #dcfce7; color: var(--success); }
+        .t-status.persa { background-color: #fee2e2; color: var(--danger); }
+        .t-status.attesa { background-color: var(--alabaster-grey); color: var(--text-muted); }
 
-        .match-row { padding: 14px 16px; border-bottom: 1px solid var(--border-solid); }
+        .match-row { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); }
         .match-row:last-child { border-bottom: none; }
-        .m-teams { font-size: 14px; font-weight: 700; margin-bottom: 6px; display: block; color: #fff; }
+        .m-teams { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; color: var(--prussian-blue); }
         .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .m-pick { font-size: 12px; font-weight: 700; color: var(--bet-yellow); text-transform: uppercase; }
-        .m-quote { font-size: 13px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); }
-        .m-result { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; }
-        .m-result.vinta { color: var(--success); }
-        .m-result.persa { color: var(--danger); }
-        .m-result.attesa { color: var(--text-muted); }
+        .m-pick { font-size: 12px; font-weight: 700; color: var(--vibrant-coral); text-transform: uppercase; }
+        .m-quote { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--khaki-beige); }
+        .m-result { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
 
-        .ticket-footer { padding: 14px 16px; border-top: 1px solid var(--border-solid); background-color: var(--bet-card); }
-        .t-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
-        .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: var(--text-main); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-solid); }
-        .t-total span:last-child { color: var(--bet-yellow); font-family: 'JetBrains Mono', monospace; font-size: 16px; }
-
-        /* FAQ */
-        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 60px; }
-        .faq-card { background-color: var(--bet-card); border: 1px solid var(--border-solid); padding: 20px; border-radius: 6px; }
-        .faq-card h4 { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; gap: 8px; }
-        .faq-card h4 i { color: var(--bet-yellow); margin-top: 3px; }
-        .faq-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-
-        /* Footer */
-        footer { background-color: #1a1a1a; padding: 50px 20px; text-align: center; border-top: 1px solid var(--border-solid); }
-        .footer-icons { font-size: 26px; color: #555; margin-bottom: 18px; display: flex; justify-content: center; gap: 20px; }
-        .disclaimer { font-size: 12px; color: #888; max-width: 900px; margin: 0 auto; line-height: 1.6; }
-        .disclaimer strong { color: #bbb; }
+        .ticket-footer { padding: 14px 16px; border-top: 1px solid var(--alabaster-grey); background-color: #fafbfc; }
+        .t-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: var(--prussian-blue); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--alabaster-grey); }
 
         @media (max-width: 768px) {
-            .features-grid, .stats-grid, .faq-grid { grid-template-columns: 1fr; }
-            .nav-links a:not(.nav-btn) { display: none; }
-            .hero h2 { font-size: 30px; }
+            .models-info-grid, .stats-grid { grid-template-columns: 1fr; }
+            .model-selector { flex-direction: column; }
         }
     </style>
 </head>
@@ -141,290 +107,183 @@
         <div class="nav-container">
             <a href="#" class="brand">
                 <h1>SBR</h1>
-                <span>Metodo Alpha</span>
             </a>
-            <nav class="nav-links">
-                <a href="#il-metodo">Il Metodo</a>
-                <a href="#statistiche">Statistiche</a>
-                <a href="#storico">Storico</a>
-                <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank">Canale Telegram</a>
-            </nav>
+            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank"><i class="fa-brands fa-telegram"></i> Canale Telegram</a>
         </div>
     </header>
 
     <div class="spacer"></div>
 
     <div class="container">
-        <section class="hero">
-            <h2>Analisi oggettiva delle quote sportive.</h2>
-            <p>Nessuna promessa di guadagno, nessuna formula magica. Il Modello Alpha esegue scansioni matematiche continue sui palinsesti per rintracciare il valore statistico reale scartando ogni forma di tifo o emozione.</p>
-            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="btn-primary" target="_blank">
-                <i class="fa-brands fa-telegram fa-xl"></i> Accedi ai pronostici gratuiti
-            </a>
-        </section>
-
-        <section id="il-metodo" class="method-section">
-            <h3>Il vantaggio matematico</h3>
-            <p>Il principio alla base di SBR è individuare le inefficienze dei mercati sportivi. I bookmaker aggiornano migliaia di quote ogni ora e inevitabilmente rilasciano moltiplicatori che non riflettono fedelmente le reali probabilità del campo.</p>
-            <p>Il Modello Alpha estrae queste discrepanze e ne valida la coerenza incrociando i dati di rendimento delle squadre. Affidarsi ai numeri nel medio e lungo periodo è l'unico metodo razionale per tutelare il proprio capitale.</p>
-        </section>
-
-        <section>
-            <div class="section-title">
-                <div class="section-title-text"><i class="fa-solid fa-list-check"></i> Perché seguire l'algoritmo</div>
+        <!-- Spiegazione Modelli -->
+        <div class="models-info-grid">
+            <div class="model-card alpha">
+                <h3>Modello Alpha</h3>
+                <p>Algoritmo quantitativo incentrato sul Value Betting dei mercati principali (1X2, Over, Gol). Identifica le inefficienze matematiche calcolando il valore atteso sulle quote pre-match.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fa-solid fa-calculator feature-icon"></i>
-                    <h3>Dati, non opinioni</h3>
-                    <p>Le decisioni del sistema derivano da formule quantitative. Eliminiamo i pareri personali e le convinzioni soggettive per focalizzarci solo sul rendimento matematico.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fa-solid fa-clock feature-icon"></i>
-                    <h3>Risparmio di tempo</h3>
-                    <p>Il bot elabora e compara centinaia di palinsesti al giorno in totale autonomia. Ricevi direttamente le sintesi pronte senza dover analizzare manualmente i calendari.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fa-solid fa-folder-open feature-icon"></i>
-                    <h3>Trasparenza totale</h3>
-                    <p>Non nascondiamo le schedine errate. Lo storico che consulti è sincronizzato via software e mostra integralmente tutti i risultati positivi e negativi.</p>
-                </div>
+            <div class="model-card beta">
+                <h3>Modello Beta</h3>
+                <p>Architettura statistica focalizzata sui mercati speciali (Corner, Cartellini). Analizza i referti arbitrali e lo stile di gioco storico per isolare i trend di aggressività.</p>
             </div>
-        </section>
-
-        <section id="statistiche">
-            <div class="section-title">
-                <div class="section-title-text"><i class="fa-solid fa-chart-line"></i> Bilancio simulato</div>
-                <div class="last-update-tag" id="last-update"><i class="fa-regular fa-clock"></i> verifica in corso...</div>
+            <div class="model-card omega">
+                <h3>Modello Omega <span style="font-size: 10px; background: var(--vibrant-coral); color: white; padding: 2px 6px; border-radius: 4px;">NEW</span></h3>
+                <p>Infrastruttura ETL predittiva. L'Analista elabora proiezioni testuali complete, il Cecchino incrocia i dati con i flussi live dei bookmaker per colpire solo al picco di valore.</p>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Cassa simulata</div>
-                    <div class="stat-value" id="capitale">-- €</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Profitto netto</div>
-                    <div class="stat-value" id="profitto">-- €</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Yield (ROI)</div>
-                    <div class="stat-value" id="yield">--%</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Win rate storico</div>
-                    <div class="stat-value" id="winrate">--%</div>
-                </div>
-            </div>
-
-            <div class="chart-box">
-                <h4><i class="fa-solid fa-chart-area"></i> Progressione cassa (Equity curve)</h4>
-                <div class="chart-wrapper">
-                    <canvas id="equityChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="section-title">
-                <div class="section-title-text"><i class="fa-regular fa-circle-question"></i> Domande frequenti</div>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-card">
-                    <h4><i class="fa-solid fa-angle-right"></i> Quanto costa il servizio?</h4>
-                    <p>L'accesso al canale Telegram ufficiale e la consultazione dei report in questo portale sono completamente gratuiti. Non sono previsti canoni né costi nascosti.</p>
-                </div>
-                <div class="faq-card">
-                    <h4><i class="fa-solid fa-angle-right"></i> È garantita la vincita?</h4>
-                    <p>Assolutamente no. Il margine d'errore è parte integrante delle quote sportive e come testimonia il nostro registro pubblico esistono giocate negative. Il nostro scopo è mantenere un vantaggio statistico costante.</p>
-                </div>
-                <div class="faq-card">
-                    <h4><i class="fa-solid fa-angle-right"></i> Posso giocare queste selezioni?</h4>
-                    <p>I valori mostrati sono simulazioni statistiche a scopo di studio. Se scegli di replicarle sui bookmaker, fallo con moderazione impiegando solo somme destinate all'intrattenimento.</p>
-                </div>
-                <div class="faq-card">
-                    <h4><i class="fa-solid fa-angle-right"></i> Quali bookmaker monitorate?</h4>
-                    <p>Il motore interroga le quotazioni fornite dai principali operatori con regolare licenza rilasciata dall'agenzia delle dogane e dei monopoli (adm) attivi sul suolo italiano.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="storico">
-            <div class="section-title">
-                <div class="section-title-text"><i class="fa-solid fa-receipt"></i> Registro pubblico delle giocate</div>
-            </div>
-
-            <div class="filters-bar">
-                <button class="filter-btn active" onclick="filtraStorico('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('vinta', this)">Vinte (<span id="count-vinte">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('persa', this)">Perse (<span id="count-perse">0</span>)</button>
-                <button class="filter-btn" onclick="filtraStorico('in attesa', this)">In attesa (<span id="count-attesa">0</span>)</button>
-            </div>
-
-            <div id="storico-container" class="tickets-container">
-                <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 50px; background: var(--bet-panel); border-radius: 6px;">
-                    <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
-                    <p style="margin-top: 15px; font-size: 14px; font-weight: 600;">Sincronizzazione archivio dati in corso...</p>
-                </div>
-            </div>
-        </section>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="btn-primary" target="_blank">
-                <i class="fa-brands fa-telegram fa-xl"></i> Ricevi i prossimi aggiornamenti su Telegram
-            </a>
         </div>
+
+        <!-- Controller Dashboard -->
+        <div class="dashboard-header">
+            <div class="model-selector">
+                <button class="model-tab active" onclick="selezionaModello('alpha')">Alpha (Mercati Principali)</button>
+                <button class="model-tab" onclick="selezionaModello('beta')">Beta (Special Bets)</button>
+                <button class="model-tab" onclick="selezionaModello('omega')">Omega (Predittivo ETL)</button>
+            </div>
+            <div class="status-selector">
+                <button class="status-btn active" onclick="selezionaFiltro('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
+                <button class="status-btn" onclick="selezionaFiltro('vinta', this)">Vinte (<span id="count-vinte">0</span>)</button>
+                <button class="status-btn" onclick="selezionaFiltro('persa', this)">Perse (<span id="count-perse">0</span>)</button>
+                <button class="status-btn" onclick="selezionaFiltro('in attesa', this)">In Attesa (<span id="count-attesa">0</span>)</button>
+            </div>
+        </div>
+
+        <!-- Statistiche -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Cassa Modello</div>
+                <div class="stat-value" id="capitale">-- €</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Profitto Netto</div>
+                <div class="stat-value" id="profitto">-- €</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Yield (ROI)</div>
+                <div class="stat-value" id="yield">--%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value" id="winrate">--%</div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-wrapper">
+                <canvas id="equityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Schedine -->
+        <div id="storico-container" class="tickets-container"></div>
     </div>
 
-    <footer>
-        <div class="footer-icons">
-            <i class="fa-solid fa-ban" title="Divieto minori 18"></i>
-            <i class="fa-solid fa-scale-balanced" title="Gioco Responsabile"></i>
-        </div>
-        <div class="disclaimer">
-            <strong>Il gioco è vietato ai minori di 18 anni e può causare dipendenza patologica.</strong><br><br>
-            Questo sito ha finalità informativa, statistica ed educativa. I dati di cassa e le combinazioni indicate costituiscono simulazioni algoritmiche gratuite che non invitano né incitano al gioco d'azzardo. SBR non raccoglie scommesse. Qualora decidessi di operare sui mercati reali, ti invitiamo alla massima responsabilità economica.<br><br>
-            © 2026 SBR - Smart Betting Routing. Tutti i diritti riservati.
-        </div>
-    </footer>
-
     <script>
-        const TRADUZIONI = {
-            "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
-            "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
-            "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
-            "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
-            "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
-            "Serbia": "Serbia", "Finland": "Finlandia", "Belarus": "Bielorussia", "Czech Republic": "Repubblica Ceca",
-            "Slovakia": "Slovacchia", "Slovenia": "Slovenia", "Romania": "Romania", "Bulgaria": "Bulgaria",
-            "Greece": "Grecia", "Iceland": "Islanda", "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
-            "Bosnia and Herzegovina": "Bosnia ed Erzegovina", "Montenegro": "Montenegro", "North Macedonia": "Macedonia del Nord",
-            "Georgia": "Georgia", "Ukraine": "Ucraina", "Lithuania": "Lituania", "Latvia": "Lettonia", "Estonia": "Estonia",
-            "Cyprus": "Cipro", "Malta": "Malta"
-        };
-
-        function formattaNome(nome) {
-            let n = nome.trim();
-            return TRADUZIONI[n] || n;
-        }
-
         let databaseGlobale = null;
+        let modelloAttuale = 'alpha';
+        let filtroAttuale = 'tutte';
         let chartIstanza = null;
 
-        function renderizzaGrafico(labels, puntiCassa) {
-            const ctx = document.getElementById('equityChart').getContext('2d');
-            if (chartIstanza) chartIstanza.destroy();
-
-            chartIstanza = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Capitale (€)',
-                        data: puntiCassa,
-                        borderColor: '#22c55e',
-                        backgroundColor: 'transparent',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#ffdf00',
-                        pointBorderColor: '#111111',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        tension: 0.15
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#1f2937',
-                            titleFont: { family: 'Inter', size: 12 },
-                            bodyFont: { family: 'JetBrains Mono', size: 13, weight: 'bold' },
-                            callbacks: {
-                                label: function(c) { return ' Cassa: ' + c.parsed.y.toFixed(2) + ' €'; }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: '#3a3a3a' },
-                            ticks: { color: '#cccccc', font: { family: 'JetBrains Mono', size: 11 } }
-                        },
-                        y: {
-                            grid: { color: '#3a3a3a' },
-                            ticks: { color: '#cccccc', font: { family: 'JetBrains Mono', size: 11 } }
-                        }
-                    }
-                }
+        function selezionaModello(modello) {
+            modelloAttuale = modello;
+            document.querySelectorAll('.model-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(modello));
             });
+            aggiornaDashboard();
         }
 
-        function filtraStorico(filtro, elementoPremuto) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (elementoPremuto) {
-                elementoPremuto.classList.add('active');
+        function selezionaFiltro(filtro, elemento) {
+            filtroAttuale = filtro;
+            document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+            if(elemento) elemento.classList.add('active');
+            aggiornaDashboard();
+        }
+
+        function aggiornaDashboard() {
+            if (!databaseGlobale) return;
+
+            // Filtra schedine per modello (se modello non c'è nel db, per legacy lo consideriamo 'alpha')
+            const schedineModello = databaseGlobale.schedine.filter(sc => {
+                let mod = sc.modello ? sc.modello.toLowerCase() : 'alpha';
+                return mod === modelloAttuale;
+            });
+
+            // Calcoli Statistiche per il modello selezionato
+            let capitale = 200.0; // Base fissa per ogni modello per tracciamento indipendente
+            let vinte = 0, perse = 0, inAttesa = 0, totalePuntato = 0;
+            let labelsGrafico = ['Start'];
+            let puntiCassa = [200.0];
+
+            schedineModello.forEach(sc => {
+                totalePuntato += sc.importo;
+                if (sc.stato_schedina === 'vinta') {
+                    capitale += (sc.ritorno_potenziale - sc.importo);
+                    vinte++;
+                } else if (sc.stato_schedina === 'persa') {
+                    capitale -= sc.importo;
+                    perse++;
+                } else {
+                    inAttesa++;
+                }
+                labelsGrafico.push(sc.data_creazione);
+                puntiCassa.push(Number(capitale.toFixed(2)));
+            });
+
+            // Update Counters
+            document.getElementById('count-tutte').innerText = schedineModello.length;
+            document.getElementById('count-vinte').innerText = vinte;
+            document.getElementById('count-perse').innerText = perse;
+            document.getElementById('count-attesa').innerText = inAttesa;
+
+            // Update Stats
+            let profittoNetto = capitale - 200.0;
+            document.getElementById('capitale').innerText = capitale.toFixed(2) + ' €';
+            
+            let elProfitto = document.getElementById('profitto');
+            elProfitto.innerText = (profittoNetto > 0 ? '+' : '') + profittoNetto.toFixed(2) + ' €';
+            elProfitto.className = 'stat-value ' + (profittoNetto > 0 ? 'profit' : (profittoNetto < 0 ? 'negative' : ''));
+
+            let totaliDecisi = vinte + perse;
+            document.getElementById('winrate').innerText = totaliDecisi > 0 ? Math.round((vinte / totaliDecisi) * 100) + '%' : '--%';
+
+            let elYield = document.getElementById('yield');
+            if (totalePuntato > 0) {
+                let roi = (profittoNetto / totalePuntato) * 100;
+                elYield.innerText = (roi > 0 ? '+' : '') + roi.toFixed(1) + '%';
+                elYield.className = 'stat-value ' + (roi > 0 ? 'profit' : (roi < 0 ? 'negative' : ''));
             } else {
-                const btnDefault = document.querySelector('.filter-btn');
-                if (btnDefault) btnDefault.classList.add('active');
+                elYield.innerText = '--%';
+                elYield.className = 'stat-value';
             }
 
+            // Update Chart
+            renderizzaGrafico(labelsGrafico, puntiCassa);
+
+            // Render Tickets
             const container = document.getElementById('storico-container');
             container.innerHTML = '';
 
-            if (!databaseGlobale || !databaseGlobale.schedine) return;
-
-            const schedineFiltrate = databaseGlobale.schedine.slice().reverse().filter(sc => {
-                if (filtro === 'tutte') return true;
-                return sc.stato_schedina === filtro;
-            });
+            const schedineFiltrate = schedineModello.slice().reverse().filter(sc => filtroAttuale === 'tutte' || sc.stato_schedina === filtroAttuale);
 
             if (schedineFiltrate.length === 0) {
-                container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px; background: var(--bet-panel); border-radius: 6px;">Nessuna schedina presente per questo filtro.</div>';
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna giocata trovata per il Modello ${modelloAttuale.toUpperCase()} con i filtri attuali.</div>`;
                 return;
             }
 
             schedineFiltrate.forEach(sc => {
-                let classStamp = 'attesa';
-                let textStamp = 'In attesa';
-
-                if (sc.stato_schedina === 'vinta') {
-                    classStamp = 'vinta';
-                    textStamp = 'Vinta';
-                } else if (sc.stato_schedina === 'persa') {
-                    classStamp = 'persa';
-                    textStamp = 'Persa';
-                }
-
+                let classStamp = sc.stato_schedina === 'vinta' ? 'vinta' : (sc.stato_schedina === 'persa' ? 'persa' : 'attesa');
+                
                 let matchesHTML = sc.partite.map(p => {
-                    let classEsito = 'attesa';
-                    let icona = '<i class="fa-regular fa-clock"></i>';
+                    let icon = p.stato === 'vinta' ? '✓' : (p.stato === 'persa' ? '✗' : '⏱');
+                    let color = p.stato === 'vinta' ? 'var(--success)' : (p.stato === 'persa' ? 'var(--danger)' : 'var(--text-muted)');
                     let score = p.risultato_reale ? `[${p.risultato_reale}] ` : '';
-
-                    if (p.stato === 'vinta') {
-                        classEsito = 'vinta';
-                        icona = '<i class="fa-solid fa-check"></i>';
-                    } else if (p.stato === 'persa') {
-                        classEsito = 'persa';
-                        icona = '<i class="fa-solid fa-xmark"></i>';
-                    }
-
-                    let casa = formattaNome(p.squadra_casa);
-                    let trasferta = formattaNome(p.squadra_trasferta);
-                    let pronostico = p.pronostico.replace(p.squadra_casa, casa);
-
                     return `
                     <div class="match-row">
-                        <span class="m-teams">${casa} - ${trasferta}</span>
+                        <span class="m-teams">${p.squadra_casa} - ${p.squadra_trasferta}</span>
                         <div class="m-details">
-                            <span class="m-pick">${pronostico}</span>
+                            <span class="m-pick">${p.pronostico}</span>
                             <span class="m-quote">@${p.quota.toFixed(2)}</span>
                         </div>
-                        <div class="m-result ${classEsito}">
-                            ${score}${icona}
-                        </div>
-                    </div>
-                    `;
+                        <div class="m-result" style="color: ${color};">${score}${icon}</div>
+                    </div>`;
                 }).join('');
 
                 container.innerHTML += `
@@ -432,97 +291,63 @@
                         <div>
                             <div class="ticket-header">
                                 <span class="t-date">${sc.data_creazione}</span>
-                                <span class="t-status ${classStamp}">${textStamp}</span>
+                                <span class="t-status ${classStamp}">${sc.stato_schedina}</span>
                             </div>
-                            <div class="t-body">
-                                ${matchesHTML}
-                            </div>
+                            <div>${matchesHTML}</div>
                         </div>
                         <div class="ticket-footer">
-                            <div class="t-row">
-                                <span>Quota totale:</span>
-                                <span>${sc.quota_totale.toFixed(2)}</span>
-                            </div>
-                            <div class="t-row">
-                                <span>Puntata simulata:</span>
-                                <span>€ ${sc.importo.toFixed(2)}</span>
-                            </div>
-                            <div class="t-total">
-                                <span>Vincita potenziale:</span>
-                                <span>€ ${sc.ritorno_potenziale.toFixed(2)}</span>
-                            </div>
+                            <div class="t-row"><span>Quota totale:</span><span>${sc.quota_totale.toFixed(2)}</span></div>
+                            <div class="t-row"><span>Stake:</span><span>€ ${sc.importo.toFixed(2)}</span></div>
+                            <div class="t-total"><span>Vincita:</span><span>€ ${sc.ritorno_potenziale.toFixed(2)}</span></div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
 
-        const RAW_URL = 'database.json';
+        function renderizzaGrafico(labels, data) {
+            const ctx = document.getElementById('equityChart').getContext('2d');
+            if (chartIstanza) chartIstanza.destroy();
+            
+            // Colore della linea in base al modello
+            let lineColor = '#102542'; // Alpha: Prussian Blue
+            if(modelloAttuale === 'beta') lineColor = '#B3A394'; // Beta: Khaki
+            if(modelloAttuale === 'omega') lineColor = '#F87060'; // Omega: Coral
 
-        fetch(RAW_URL)
+            chartIstanza = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Capitale (€)',
+                        data: data,
+                        borderColor: lineColor,
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        pointBackgroundColor: lineColor,
+                        pointRadius: 4,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: '#CDD7D6' } }
+                    }
+                }
+            });
+        }
+
+        fetch('database.json')
             .then(res => res.json())
             .then(data => {
                 databaseGlobale = data;
-                let capitale = data.capitale_iniziale;
-                let vinte = 0, perse = 0, inAttesa = 0;
-                let totalePuntato = 0;
-
-                let labelsGrafico = ['Start'];
-                let puntiCassa = [data.capitale_iniziale];
-
-                data.schedine.forEach(sc => {
-                    totalePuntato += sc.importo;
-
-                    if (sc.stato_schedina === 'vinta') {
-                        capitale += (sc.ritorno_potenziale - sc.importo);
-                        vinte++;
-                    } else if (sc.stato_schedina === 'persa') {
-                        capitale -= sc.importo;
-                        perse++;
-                    } else {
-                        inAttesa++;
-                    }
-
-                    labelsGrafico.push(sc.data_creazione);
-                    puntiCassa.push(Number(capitale.toFixed(2)));
-                });
-
-                document.getElementById('count-tutte').innerText = data.schedine.length;
-                document.getElementById('count-vinte').innerText = vinte;
-                document.getElementById('count-perse').innerText = perse;
-                document.getElementById('count-attesa').innerText = inAttesa;
-
-                let profittoNetto = capitale - data.capitale_iniziale;
-                document.getElementById('capitale').innerText = capitale.toFixed(2) + ' €';
-
-                let elProfitto = document.getElementById('profitto');
-                elProfitto.innerText = (profittoNetto > 0 ? '+' : '') + profittoNetto.toFixed(2) + ' €';
-                if (profittoNetto > 0) elProfitto.classList.add('profit');
-                else if (profittoNetto < 0) elProfitto.classList.add('negative');
-
-                let totaliDecisi = vinte + perse;
-                if (totaliDecisi > 0) {
-                    document.getElementById('winrate').innerText = Math.round((vinte / totaliDecisi) * 100) + '%';
-                }
-
-                if (totalePuntato > 0) {
-                    let roi = (profittoNetto / totalePuntato) * 100;
-                    let elYield = document.getElementById('yield');
-                    elYield.innerText = (roi > 0 ? '+' : '') + roi.toFixed(1) + '%';
-                    if (roi > 0) elYield.classList.add('profit');
-                    else if (roi < 0) elYield.classList.add('negative');
-                }
-
-                if (data.schedine.length > 0) {
-                    let ultimaData = data.schedine[data.schedine.length - 1].data_creazione;
-                    document.getElementById('last-update').innerHTML = `<i class="fa-solid fa-rotate"></i> ultimo controllo: ${ultimaData}`;
-                }
-
-                renderizzaGrafico(labelsGrafico, puntiCassa);
-                filtraStorico('tutte', null);
+                aggiornaDashboard();
             })
             .catch(err => {
-                document.getElementById('storico-container').innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--danger); padding: 40px; border: 1px solid var(--border-solid); border-radius: 6px; background: var(--bet-card);">Errore nel caricamento del database. Riprova più tardi.</div>';
+                document.getElementById('storico-container').innerHTML = '<div style="color: var(--danger); padding: 40px;">Errore caricamento database.</div>';
             });
     </script>
 </body>
