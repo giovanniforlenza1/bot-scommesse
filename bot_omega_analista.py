@@ -1,11 +1,13 @@
 import requests
 import json
 import os
+import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
-LEGHE_TARGET = [135, 39, 140, 78, 61] 
+# Aggiunti ID Nations League (5), Qualificazioni (34), Champions (2), Europa League (3)
+LEGHE_TARGET = [5, 34, 135, 39, 140, 78, 61, 2, 3] 
 
 def analizza_statistiche(team_id, headers):
     try:
@@ -30,51 +32,66 @@ def analizza_statistiche(team_id, headers):
 def genera_analisi_giornaliera():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
-    data_target = (oggi + timedelta(days=1)).strftime("%Y-%m-%d")
-    
     headers = {'x-apisports-key': API_FOOTBALL_KEY}
-    res = requests.get(f"https://v3.football.api-sports.io/fixtures?date={data_target}", headers=headers)
-    
-    matches = [m for m in res.json().get('response', []) if m['league']['id'] in LEGHE_TARGET]
     
     database_analisi = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "analisi": []}
+    partite_totali = 0
     
-    for m in matches:
-        home_name = m['teams']['home']['name']
-        away_name = m['teams']['away']['name']
+    print("Avvio scansione palinsesti per i prossimi 3 giorni...")
+    
+    for giorni_avanti in range(3):
+        data_target = (oggi + timedelta(days=giorni_avanti)).strftime("%Y-%m-%d")
+        res = requests.get(f"https://v3.football.api-sports.io/fixtures?date={data_target}", headers=headers)
         
-        stat_h = analizza_statistiche(m['teams']['home']['id'], headers)
-        stat_a = analizza_statistiche(m['teams']['away']['id'], headers)
-        
-        testo = f"L'analisi algoritmica sul match {home_name}-{away_name} evidenzia "
-        if stat_h['forma'] > stat_a['forma']:
-            testo += f"un netto vantaggio per i padroni di casa (PPG {stat_h['forma']} vs {stat_a['forma']}). "
-        else:
-            testo += f"un equilibrio tattico o una spinta ospite. "
+        if res.status_code != 200:
+            continue
             
-        attesa_gol = stat_h['gol_fatti'] + stat_a['gol_subiti']
-        if attesa_gol > 2.5:
-            testo += "Il modello predittivo indica un'alta probabilità di Over 2.5 date le difese aperte."
-            fair_odd = 1.50
-            pick = "Over 2.5"
-        else:
-            testo += "I dati suggeriscono una partita bloccata tatticamente."
-            fair_odd = 1.65
-            pick = "Under 2.5"
-            
-        database_analisi["analisi"].append({
-            "id_partita": m['fixture']['id'],
-            "match": f"{home_name} - {away_name}",
-            "data": m['fixture']['date'],
-            "consiglio_algoritmo": pick,
-            "quota_valore_minima": fair_odd,
-            "report_testuale": testo
-        })
+        matches = [m for m in res.json().get('response', []) if m['league']['id'] in LEGHE_TARGET]
         
+        for m in matches:
+            home_name = m['teams']['home']['name']
+            away_name = m['teams']['away']['name']
+            
+            print(f"Elaborazione: {home_name} - {away_name}")
+            
+            # Pausa strategica per non esaurire i limiti gratuiti al secondo di API-Football
+            time.sleep(0.4)
+            stat_h = analizza_statistiche(m['teams']['home']['id'], headers)
+            time.sleep(0.4)
+            stat_a = analizza_statistiche(m['teams']['away']['id'], headers)
+            
+            testo = f"L'analisi algoritmica sul match {home_name}-{away_name} evidenzia "
+            if stat_h['forma'] > stat_a['forma']:
+                testo += f"un netto vantaggio per i padroni di casa (PPG {stat_h['forma']} vs {stat_a['forma']}). "
+            elif stat_a['forma'] > stat_h['forma']:
+                testo += f"un vantaggio per la squadra in trasferta (PPG {stat_a['forma']} vs {stat_h['forma']}). "
+            else:
+                testo += f"un sostanziale equilibrio tattico. "
+                
+            attesa_gol = stat_h['gol_fatti'] + stat_a['gol_subiti']
+            if attesa_gol > 2.5:
+                testo += "Il modello predittivo indica un'alta probabilità di Over 2.5 date le difese aperte."
+                fair_odd = 1.50
+                pick = "Over 2.5"
+            else:
+                testo += "I dati suggeriscono una partita bloccata tatticamente."
+                fair_odd = 1.60
+                pick = "Under 2.5"
+                
+            database_analisi["analisi"].append({
+                "id_partita": m['fixture']['id'],
+                "match": f"{home_name} - {away_name}",
+                "data": m['fixture']['date'],
+                "consiglio_algoritmo": pick,
+                "quota_valore_minima": fair_odd,
+                "report_testuale": testo
+            })
+            partite_totali += 1
+            
     with open('database_analisi.json', 'w', encoding='utf-8') as f:
         json.dump(database_analisi, f, indent=4, ensure_ascii=False)
         
-    print(f"Modello Omega Analista: elaborate {len(matches)} partite e salvate in database_analisi.json.")
+    print(f"Modello Omega Analista: elaborate {partite_totali} partite e salvate in database_analisi.json.")
 
 if __name__ == "__main__":
     genera_analisi_giornaliera()
