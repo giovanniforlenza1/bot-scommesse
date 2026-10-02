@@ -444,6 +444,50 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "6e46c5da",
+            "modello": "omega",
+            "data_creazione": "02/10/2026",
+            "importo": 10.0,
+            "quota_totale": 22.56,
+            "ritorno_potenziale": 225.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "380b8f24ec5430fb545a7490c1017285",
+                    "data": "10/10 16:00",
+                    "squadra_casa": "Sunderland",
+                    "squadra_trasferta": "Brighton and Hove Albion",
+                    "pronostico": "vittoria Sunderland",
+                    "quota": 3.05,
+                    "score": 1.4299999999999997,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "6dbab232dd8d2aed0cb1d6f7978fb7b1",
+                    "data": "11/10 17:30",
+                    "squadra_casa": "Liverpool",
+                    "squadra_trasferta": "Manchester City",
+                    "pronostico": "vittoria Liverpool",
+                    "quota": 2.7,
+                    "score": 1.3100000000000003,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "02e6c0ccb11bb7ce78989ce49d67110b",
+                    "data": "10/10 16:00",
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Brentford",
+                    "pronostico": "vittoria Aston Villa",
+                    "quota": 2.74,
+                    "score": 0.8500000000000003,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
