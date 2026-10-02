@@ -1,0 +1,37 @@
+name: Avvia Modello Omega (Cecchino)
+
+on:
+  schedule:
+    # 12:00 UTC corrisponde alle 14:00 in Italia
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-cecchino:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Installa dipendenze
+        run: pip install requests tzdata
+
+      - name: Esegui Cecchino
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python bot_omega_cecchino.py
+
+      - name: Salva la schedina sul sito
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add database.json
+          git commit -m "Schedina piazzata dal Cecchino Omega" || echo "Nessuna nuova giocata trovata"
+          git push
