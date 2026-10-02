@@ -1,125 +1,709 @@
 {
-    "ultimo_aggiornamento": "2026-10-02 20:22",
+    "ultimo_aggiornamento": "2026-10-02 20:37",
     "analisi": [
         {
-            "id_partita": "1528923",
-            "match": "Kazakhstan - Moldova",
-            "data": "2026-10-02T14:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Kazakhstan-Moldova. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "edb80d633a1906e5865ab70cc9b540ea",
+            "match": "Barcelona - Getafe",
+            "data": "2026-10-10T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Barcelona",
+            "quota_valore_minima": 1.15,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.44%. La probabilità matematica reale calcolata per la vittoria Barcelona è del 90.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.11. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.15."
         },
         {
-            "id_partita": "1528930",
-            "match": "Cyprus - Armenia",
-            "data": "2026-10-02T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Cyprus-Armenia. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "a1b75fa94c18a201e6feec4cd04a2d56",
+            "match": "Spagna - Repubblica Ceca",
+            "data": "2026-10-03T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Spagna",
+            "quota_valore_minima": 1.18,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.53%. La probabilità matematica reale calcolata per la vittoria Spagna è del 88.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.13. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.18."
         },
         {
-            "id_partita": "1545608",
-            "match": "Latvia - Montenegro",
-            "data": "2026-10-02T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Latvia-Montenegro. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "2849460eb4d15adbb20ec15927a0fd4a",
+            "match": "Paris Saint Germain - Le Mans FC",
+            "data": "2026-10-10T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Paris Saint Germain",
+            "quota_valore_minima": 1.18,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.31%. La probabilità matematica reale calcolata per la vittoria Paris Saint Germain è del 88.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.13. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.18."
         },
         {
-            "id_partita": "1528924",
-            "match": "France - Italy",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: France-Italy. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "05615ea2e80df56ae5b887dec1ca2f52",
+            "match": "Bielorussia - San Marino",
+            "data": "2026-10-03T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Bielorussia",
+            "quota_valore_minima": 1.19,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.09%. La probabilità matematica reale calcolata per la vittoria Bielorussia è del 87.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.14. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.19."
         },
         {
-            "id_partita": "1528925",
-            "match": "Belgium - Türkiye",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Belgium-Türkiye. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "8a9d20b23417357011c10585a99335e9",
+            "match": "Viking FK - Bayern Munich",
+            "data": "2026-10-13T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Bayern Munich",
+            "quota_valore_minima": 1.21,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.69%. La probabilità matematica reale calcolata per la vittoria Bayern Munich è del 86.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.16. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.21."
         },
         {
-            "id_partita": "1528926",
-            "match": "Hungary - Georgia",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Hungary-Georgia. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "1a01b0611dacd334e1558a5097e05023",
+            "match": "Inter Milan - Parma",
+            "data": "2026-10-10T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Inter Milan",
+            "quota_valore_minima": 1.25,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.74%. La probabilità matematica reale calcolata per la vittoria Inter Milan è del 83.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.2. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.25."
         },
         {
-            "id_partita": "1528927",
-            "match": "Ukraine - Northern Ireland",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Ukraine-Northern Ireland. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "8de611cbeea26af7bae8f076d9237fd4",
+            "match": "Olanda - Serbia",
+            "data": "2026-10-04T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Olanda",
+            "quota_valore_minima": 1.28,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.96%. La probabilità matematica reale calcolata per la vittoria Olanda è del 81.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.23. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.28."
         },
         {
-            "id_partita": "1528928",
-            "match": "Poland - Romania",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Poland-Romania. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "8012c0d9c6c0b99e57d9465837c5ae94",
+            "match": "Inghilterra - Repubblica Ceca",
+            "data": "2026-10-06T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Inghilterra",
+            "quota_valore_minima": 1.33,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 8.17%. La probabilità matematica reale calcolata per la vittoria Inghilterra è del 78.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.28. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.33."
         },
         {
-            "id_partita": "1528929",
-            "match": "Bosnia & Herzegovina - Sweden",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Bosnia & Herzegovina-Sweden. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "3b71160ad20dba786c4f92e33c987d80",
+            "match": "Augsburg - Bayern Munich",
+            "data": "2026-10-10T13:30:00Z",
+            "consiglio_algoritmo": "vittoria Bayern Munich",
+            "quota_valore_minima": 1.33,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.02%. La probabilità matematica reale calcolata per la vittoria Bayern Munich è del 77.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.28. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.33."
         },
         {
-            "id_partita": "1528931",
-            "match": "Faroe Islands - Slovakia",
-            "data": "2026-10-02T18:45:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Faroe Islands-Slovakia. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "0def5b7ac0c0a816aa080774d7082c9b",
+            "match": "Bournemouth - SK Sturm Graz",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Bournemouth",
+            "quota_valore_minima": 1.33,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.34%. La probabilità matematica reale calcolata per la vittoria Bournemouth è del 78.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.28. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.33."
         },
         {
-            "id_partita": "1528932",
-            "match": "Finland - Albania",
-            "data": "2026-10-03T13:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Finland-Albania. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "bf2142d1ca76ba2fc9e61afce80f86c0",
+            "match": "Manchester City - Ipswich Town",
+            "data": "2026-10-17T14:00:00Z",
+            "consiglio_algoritmo": "vittoria Manchester City",
+            "quota_valore_minima": 1.35,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.93%. La probabilità matematica reale calcolata per la vittoria Manchester City è del 76.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.3. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.35."
         },
         {
-            "id_partita": "1528933",
-            "match": "Croatia - England",
-            "data": "2026-10-03T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Croatia-England. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "eccd63bf768e2f2a358b871d3f33a63d",
+            "match": "Real Madrid - Sevilla",
+            "data": "2026-10-18T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Real Madrid",
+            "quota_valore_minima": 1.37,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.82%. La probabilità matematica reale calcolata per la vittoria Real Madrid è del 75.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.32. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.37."
         },
         {
-            "id_partita": "1528934",
-            "match": "Belarus - San Marino",
-            "data": "2026-10-03T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Belarus-San Marino. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "9a64448205fdc4b95f45641bb946706c",
+            "match": "Bayern Munich - RB Leipzig",
+            "data": "2026-10-17T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Bayern Munich",
+            "quota_valore_minima": 1.37,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.5%. La probabilità matematica reale calcolata per la vittoria Bayern Munich è del 75.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.32. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.37."
         },
         {
-            "id_partita": "1528935",
-            "match": "Iceland - Bulgaria",
-            "data": "2026-10-03T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Iceland-Bulgaria. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "id_partita": "feda75190a774fb92164059453b037be",
+            "match": "Benfica - Celtic",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Benfica",
+            "quota_valore_minima": 1.38,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.15%. La probabilità matematica reale calcolata per la vittoria Benfica è del 75.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.33. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.38."
         },
         {
-            "id_partita": "1545609",
-            "match": "Estonia - Luxembourg",
-            "data": "2026-10-03T16:00:00+00:00",
-            "consiglio_algoritmo": "Over 2.5",
+            "id_partita": "93177465a42a0fb7802f1c8b06d6ee3a",
+            "match": "Arsenal - Lille",
+            "data": "2026-10-13T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Arsenal",
+            "quota_valore_minima": 1.39,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.22%. La probabilità matematica reale calcolata per la vittoria Arsenal è del 74.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.34. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.39."
+        },
+        {
+            "id_partita": "2903ee092f7e08c549b130a3d394ac3c",
+            "match": "LASK - Liverpool",
+            "data": "2026-10-14T16:45:00Z",
+            "consiglio_algoritmo": "vittoria Liverpool",
+            "quota_valore_minima": 1.39,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.43%. La probabilità matematica reale calcolata per la vittoria Liverpool è del 74.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.34. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.39."
+        },
+        {
+            "id_partita": "ca3f4b075d835413f9cb7bd3c439fdd0",
+            "match": "Inter Milan - Club Brugge",
+            "data": "2026-10-13T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Inter Milan",
+            "quota_valore_minima": 1.41,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.0%. La probabilità matematica reale calcolata per la vittoria Inter Milan è del 73.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.36. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.41."
+        },
+        {
+            "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+            "match": "AS Roma - Genoa",
+            "data": "2026-10-17T18:45:00Z",
+            "consiglio_algoritmo": "vittoria AS Roma",
+            "quota_valore_minima": 1.42,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.8%. La probabilità matematica reale calcolata per la vittoria AS Roma è del 73.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.37. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.42."
+        },
+        {
+            "id_partita": "dd431688ed5c8f383b6434fd4f01e883",
+            "match": "Galatasaray - Barcelona",
+            "data": "2026-10-13T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Barcelona",
+            "quota_valore_minima": 1.44,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.12%. La probabilità matematica reale calcolata per la vittoria Barcelona è del 72.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.38. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.44."
+        },
+        {
+            "id_partita": "b6048b1da7816b2a0944013e6c139609",
+            "match": "Svizzera - Slovenia",
+            "data": "2026-10-03T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Svizzera",
+            "quota_valore_minima": 1.45,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.68%. La probabilità matematica reale calcolata per la vittoria Svizzera è del 71.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.39. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.45."
+        },
+        {
+            "id_partita": "571499e2d0a5fccc92b7801aa4d6c124",
+            "match": "AZ Alkmaar - Hapoel Be'er Sheva",
+            "data": "2026-10-15T16:45:00Z",
+            "consiglio_algoritmo": "vittoria AZ Alkmaar",
+            "quota_valore_minima": 1.45,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.59%. La probabilità matematica reale calcolata per la vittoria AZ Alkmaar è del 71.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.39. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.45."
+        },
+        {
+            "id_partita": "551f242223b1625f458d1a2ea212a0c3",
+            "match": "Real Madrid - Villarreal",
+            "data": "2026-10-10T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Real Madrid",
+            "quota_valore_minima": 1.46,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.12%. La probabilità matematica reale calcolata per la vittoria Real Madrid è del 71.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.4. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.46."
+        },
+        {
+            "id_partita": "d7576351b8cb2396e32cc3de0446f3de",
+            "match": "ŠK Slovan Bratislava - VfB Stuttgart",
+            "data": "2026-10-14T19:00:00Z",
+            "consiglio_algoritmo": "vittoria VfB Stuttgart",
+            "quota_valore_minima": 1.46,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.36%. La probabilità matematica reale calcolata per la vittoria VfB Stuttgart è del 71.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.4. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.46."
+        },
+        {
+            "id_partita": "9b2bf9bed21283dcad774dd5be7ba1da",
+            "match": "Rennes - OFI Crete",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Rennes",
+            "quota_valore_minima": 1.47,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.33%. La probabilità matematica reale calcolata per la vittoria Rennes è del 71.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.41. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.47."
+        },
+        {
+            "id_partita": "3fb63658405d468954f57745cd115118",
+            "match": "Borussia Dortmund - Werder Bremen",
+            "data": "2026-10-09T18:30:00Z",
+            "consiglio_algoritmo": "vittoria Borussia Dortmund",
+            "quota_valore_minima": 1.5,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.0%. La probabilità matematica reale calcolata per la vittoria Borussia Dortmund è del 69.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.44. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.5."
+        },
+        {
+            "id_partita": "fad99d69743794a14fe2961d8fb9e8f2",
+            "match": "Sparta Prague - Lillestrom",
+            "data": "2026-10-15T16:45:00Z",
+            "consiglio_algoritmo": "vittoria Sparta Prague",
+            "quota_valore_minima": 1.5,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 8.86%. La probabilità matematica reale calcolata per la vittoria Sparta Prague è del 69.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.44. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.5."
+        },
+        {
+            "id_partita": "b870dcfba5e5920d3f1551a3aa1ea435",
+            "match": "Arsenal - Leeds United",
+            "data": "2026-10-10T11:30:00Z",
+            "consiglio_algoritmo": "vittoria Arsenal",
+            "quota_valore_minima": 1.52,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.88%. La probabilità matematica reale calcolata per la vittoria Arsenal è del 68.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.46. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.52."
+        },
+        {
+            "id_partita": "f03c08c0ae5fd66c2d2df2053115bb94",
+            "match": "TSG Hoffenheim - Hamburger SV",
+            "data": "2026-10-10T13:30:00Z",
+            "consiglio_algoritmo": "vittoria TSG Hoffenheim",
+            "quota_valore_minima": 1.57,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.26%. La probabilità matematica reale calcolata per la vittoria TSG Hoffenheim è del 66.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.51. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.57."
+        },
+        {
+            "id_partita": "34f584ab922e220dc4f3b81217959d6d",
+            "match": "Rennes - Auxerre",
+            "data": "2026-10-11T15:15:00Z",
+            "consiglio_algoritmo": "vittoria Rennes",
+            "quota_valore_minima": 1.57,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.12%. La probabilità matematica reale calcolata per la vittoria Rennes è del 66.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.51. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.57."
+        },
+        {
+            "id_partita": "b03dd3e42a0894b49f11ac599d2eb3b1",
+            "match": "Jagiellonia Białystok - FC Ararat-Armenia",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Jagiellonia Białystok",
+            "quota_valore_minima": 1.57,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 9.28%. La probabilità matematica reale calcolata per la vittoria Jagiellonia Białystok è del 66.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.51. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.57."
+        },
+        {
+            "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
+            "match": "Francia - Italia",
+            "data": "2026-10-02T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Francia",
+            "quota_valore_minima": 1.58,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.44%. La probabilità matematica reale calcolata per la vittoria Francia è del 65.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.52. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.58."
+        },
+        {
+            "id_partita": "a2b398e3cd93d7096008281dde9e6504",
+            "match": "Islanda - Bulgaria",
+            "data": "2026-10-03T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Islanda",
+            "quota_valore_minima": 1.58,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.05%. La probabilità matematica reale calcolata per la vittoria Islanda è del 65.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.52. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.58."
+        },
+        {
+            "id_partita": "40c1bd70fee927f9bfa8901edab02b48",
+            "match": "Napoli - Frosinone",
+            "data": "2026-10-10T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Napoli",
+            "quota_valore_minima": 1.58,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.19%. La probabilità matematica reale calcolata per la vittoria Napoli è del 65.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.52. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.58."
+        },
+        {
+            "id_partita": "f3034246520a2ee4ff0ac0d5074966f8",
+            "match": "Strasbourg - Paris Saint Germain",
+            "data": "2026-10-17T15:15:00Z",
+            "consiglio_algoritmo": "vittoria Paris Saint Germain",
+            "quota_valore_minima": 1.58,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 9.83%. La probabilità matematica reale calcolata per la vittoria Paris Saint Germain è del 65.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.52. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.58."
+        },
+        {
+            "id_partita": "2c173b3bd3a1491f17fcad1012019c4f",
+            "match": "Lille - Le Havre",
+            "data": "2026-10-10T15:15:00Z",
+            "consiglio_algoritmo": "vittoria Lille",
+            "quota_valore_minima": 1.59,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.08%. La probabilità matematica reale calcolata per la vittoria Lille è del 65.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.53. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.59."
+        },
+        {
+            "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
+            "match": "Belgio - Turchia",
+            "data": "2026-10-02T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Belgio",
+            "quota_valore_minima": 1.61,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.58%. La probabilità matematica reale calcolata per la vittoria Belgio è del 64.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.55. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.61."
+        },
+        {
+            "id_partita": "aef660734585649651415961a9d177c6",
+            "match": "Villarreal - Elche CF",
+            "data": "2026-10-17T14:15:00Z",
+            "consiglio_algoritmo": "vittoria Villarreal",
+            "quota_valore_minima": 1.61,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.73%. La probabilità matematica reale calcolata per la vittoria Villarreal è del 64.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.55. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.61."
+        },
+        {
+            "id_partita": "da3a8db9ad8d25b73789727f7dde009d",
+            "match": "Torreense - Sunderland",
+            "data": "2026-10-15T16:45:00Z",
+            "consiglio_algoritmo": "vittoria Sunderland",
+            "quota_valore_minima": 1.62,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.68%. La probabilità matematica reale calcolata per la vittoria Sunderland è del 64.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.56. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.62."
+        },
+        {
+            "id_partita": "5d9aac1a239e87ecc555aba2fe4426cf",
+            "match": "Croazia - Spagna",
+            "data": "2026-10-06T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Spagna",
+            "quota_valore_minima": 1.63,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 9.94%. La probabilità matematica reale calcolata per la vittoria Spagna è del 63.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.57. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.63."
+        },
+        {
+            "id_partita": "846e496fc232b2fc20214754836727d0",
+            "match": "Real Betis - Barcelona",
+            "data": "2026-10-17T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Barcelona",
+            "quota_valore_minima": 1.63,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.84%. La probabilità matematica reale calcolata per la vittoria Barcelona è del 63.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.57. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.63."
+        },
+        {
+            "id_partita": "d2f1973a0c6e22f7846864e97db3e78d",
+            "match": "Italia - Turchia",
+            "data": "2026-10-05T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Italia",
             "quota_valore_minima": 1.65,
-            "report_testuale": "Top match internazionale individuato: Estonia-Luxembourg. Il modello Omega delega la valutazione esclusivamente al tracking delle quote in tempo reale."
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.78%. La probabilità matematica reale calcolata per la vittoria Italia è del 63.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.59. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.65."
+        },
+        {
+            "id_partita": "9baaf4e48b041cfef04e70e42532502e",
+            "match": "Tottenham Hotspur - Coventry City",
+            "data": "2026-10-19T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Tottenham Hotspur",
+            "quota_valore_minima": 1.65,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.37%. La probabilità matematica reale calcolata per la vittoria Tottenham Hotspur è del 63.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.59. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.65."
+        },
+        {
+            "id_partita": "01cb7a67c8ae71201ec27297455fc0e8",
+            "match": "RB Leipzig - Eintracht Frankfurt",
+            "data": "2026-10-10T16:30:00Z",
+            "consiglio_algoritmo": "vittoria RB Leipzig",
+            "quota_valore_minima": 1.68,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.28%. La probabilità matematica reale calcolata per la vittoria RB Leipzig è del 61.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.62. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.68."
+        },
+        {
+            "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
+            "match": "Francia - Belgio",
+            "data": "2026-10-05T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Francia",
+            "quota_valore_minima": 1.71,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.46%. La probabilità matematica reale calcolata per la vittoria Francia è del 61.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.64. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.71."
+        },
+        {
+            "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
+            "match": "Polonia - Romania",
+            "data": "2026-10-02T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Polonia",
+            "quota_valore_minima": 1.72,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.39%. La probabilità matematica reale calcolata per la vittoria Polonia è del 60.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.65. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.72."
+        },
+        {
+            "id_partita": "407f7d03157d1dfad384876e6a6bc910",
+            "match": "Cagliari - Juventus",
+            "data": "2026-10-11T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Juventus",
+            "quota_valore_minima": 1.72,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.48%. La probabilità matematica reale calcolata per la vittoria Juventus è del 60.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.65. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.72."
+        },
+        {
+            "id_partita": "c0f72699f32ec193b64fd54092fe268d",
+            "match": "Lazio - Monza",
+            "data": "2026-10-11T13:00:00Z",
+            "consiglio_algoritmo": "vittoria Lazio",
+            "quota_valore_minima": 1.73,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.37%. La probabilità matematica reale calcolata per la vittoria Lazio è del 60.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.66. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.73."
+        },
+        {
+            "id_partita": "9fc08b390a49c4434f7cf631a0bb88fb",
+            "match": "Brighton and Hove Albion - Crystal Palace",
+            "data": "2026-10-18T13:00:00Z",
+            "consiglio_algoritmo": "vittoria Brighton and Hove Albion",
+            "quota_valore_minima": 1.74,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.94%. La probabilità matematica reale calcolata per la vittoria Brighton and Hove Albion è del 59.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.67. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.74."
+        },
+        {
+            "id_partita": "0f2e7ff90b994f31d5cd48a9680943e1",
+            "match": "Atalanta BC - Venezia",
+            "data": "2026-10-12T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Atalanta BC",
+            "quota_valore_minima": 1.75,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.11%. La probabilità matematica reale calcolata per la vittoria Atalanta BC è del 59.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.68. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.75."
+        },
+        {
+            "id_partita": "9aade3e736c3d113dab19e641c43e272",
+            "match": "SC Paderborn - VfB Stuttgart",
+            "data": "2026-10-10T13:30:00Z",
+            "consiglio_algoritmo": "vittoria VfB Stuttgart",
+            "quota_valore_minima": 1.75,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.2%. La probabilità matematica reale calcolata per la vittoria VfB Stuttgart è del 59.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.68. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.75."
+        },
+        {
+            "id_partita": "f696a248965373d9071dc0662e5c58a8",
+            "match": "Nottingham Forest - Arsenal",
+            "data": "2026-10-18T15:30:00Z",
+            "consiglio_algoritmo": "vittoria Arsenal",
+            "quota_valore_minima": 1.76,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.97%. La probabilità matematica reale calcolata per la vittoria Arsenal è del 59.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.69. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.76."
+        },
+        {
+            "id_partita": "ad25a350c89b64715e15c59cde5653d3",
+            "match": "Lille - Brest",
+            "data": "2026-10-17T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Lille",
+            "quota_valore_minima": 1.77,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.05%. La probabilità matematica reale calcolata per la vittoria Lille è del 58.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.7. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.77."
+        },
+        {
+            "id_partita": "a902c361d1a8c4fd596ffb93d71ab378",
+            "match": "Portogallo - Norvegia",
+            "data": "2026-10-04T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Portogallo",
+            "quota_valore_minima": 1.79,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.9%. La probabilità matematica reale calcolata per la vittoria Portogallo è del 58.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.72. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.79."
+        },
+        {
+            "id_partita": "eaf509fb37413b7d055cd394667792b3",
+            "match": "SC Freiburg - FC Schalke 04",
+            "data": "2026-10-11T15:30:00Z",
+            "consiglio_algoritmo": "vittoria SC Freiburg",
+            "quota_valore_minima": 1.79,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.44%. La probabilità matematica reale calcolata per la vittoria SC Freiburg è del 58.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.72. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.79."
+        },
+        {
+            "id_partita": "bfefc309177723410230fee52f650315",
+            "match": "Bologna - Inter Milan",
+            "data": "2026-10-17T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Inter Milan",
+            "quota_valore_minima": 1.81,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.33%. La probabilità matematica reale calcolata per la vittoria Inter Milan è del 57.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.74. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.81."
+        },
+        {
+            "id_partita": "4c4026e2782f09d6f0ff2bde2a390513",
+            "match": "Juventus - Lazio",
+            "data": "2026-10-18T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Juventus",
+            "quota_valore_minima": 1.82,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.0%. La probabilità matematica reale calcolata per la vittoria Juventus è del 57.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.75. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.82."
+        },
+        {
+            "id_partita": "984691837d31fd0c59c088f377f55f75",
+            "match": "Real Betis - CA Osasuna",
+            "data": "2026-10-11T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Real Betis",
+            "quota_valore_minima": 1.82,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.17%. La probabilità matematica reale calcolata per la vittoria Real Betis è del 57.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.75. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.82."
+        },
+        {
+            "id_partita": "471f891b1f6516a864ad94c8eb649f5e",
+            "match": "Lyon - Nice",
+            "data": "2026-10-18T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Lyon",
+            "quota_valore_minima": 1.82,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.01%. La probabilità matematica reale calcolata per la vittoria Lyon è del 57.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.75. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.82."
+        },
+        {
+            "id_partita": "096d800bcc95c547ef592cbef624d080",
+            "match": "Bayer Leverkusen - SC Freiburg",
+            "data": "2026-10-18T13:30:00Z",
+            "consiglio_algoritmo": "vittoria Bayer Leverkusen",
+            "quota_valore_minima": 1.83,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.99%. La probabilità matematica reale calcolata per la vittoria Bayer Leverkusen è del 56.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.76. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.83."
+        },
+        {
+            "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
+            "match": "Lech Poznań - Bayer Leverkusen",
+            "data": "2026-10-15T16:45:00Z",
+            "consiglio_algoritmo": "vittoria Bayer Leverkusen",
+            "quota_valore_minima": 1.83,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.5%. La probabilità matematica reale calcolata per la vittoria Bayer Leverkusen è del 56.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.76. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.83."
+        },
+        {
+            "id_partita": "7895f97f2f9577f3b13287a3d086859d",
+            "match": "Fulham - Hull City",
+            "data": "2026-10-17T14:00:00Z",
+            "consiglio_algoritmo": "vittoria Fulham",
+            "quota_valore_minima": 1.85,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.74%. La probabilità matematica reale calcolata per la vittoria Fulham è del 56.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.78. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.85."
+        },
+        {
+            "id_partita": "d8eac776adb07b0e7f01d8736d097291",
+            "match": "Union Berlin - Borussia Dortmund",
+            "data": "2026-10-17T13:30:00Z",
+            "consiglio_algoritmo": "vittoria Borussia Dortmund",
+            "quota_valore_minima": 1.85,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.66%. La probabilità matematica reale calcolata per la vittoria Borussia Dortmund è del 56.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.78. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.85."
+        },
+        {
+            "id_partita": "c2c64ebfc5810226f807c1920d580392",
+            "match": "AS Monaco - Toulouse",
+            "data": "2026-10-10T18:45:00Z",
+            "consiglio_algoritmo": "vittoria AS Monaco",
+            "quota_valore_minima": 1.85,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.45%. La probabilità matematica reale calcolata per la vittoria AS Monaco è del 56.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.78. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.85."
+        },
+        {
+            "id_partita": "048b8e582376b00f3acbaaf879ec05ec",
+            "match": "Malta - Andorra",
+            "data": "2026-10-04T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Malta",
+            "quota_valore_minima": 1.86,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.9%. La probabilità matematica reale calcolata per la vittoria Malta è del 55.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.79. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.86."
+        },
+        {
+            "id_partita": "22c9b2c43cbe1334381269550dab78e6",
+            "match": "Manchester United - Tottenham Hotspur",
+            "data": "2026-10-10T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Manchester United",
+            "quota_valore_minima": 1.87,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.88%. La probabilità matematica reale calcolata per la vittoria Manchester United è del 55.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.8. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.87."
+        },
+        {
+            "id_partita": "907639dade64cca45d1ab639195d201e",
+            "match": "Venezia - Napoli",
+            "data": "2026-10-17T13:00:00Z",
+            "consiglio_algoritmo": "vittoria Napoli",
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.8%. La probabilità matematica reale calcolata per la vittoria Napoli è del 54.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.82. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.89."
+        },
+        {
+            "id_partita": "45d4a466e32cd2b4ea535207923ceaf5",
+            "match": "Chelsea - Bournemouth",
+            "data": "2026-10-10T14:00:00Z",
+            "consiglio_algoritmo": "vittoria Chelsea",
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.77%. La probabilità matematica reale calcolata per la vittoria Chelsea è del 55.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.82. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.89."
+        },
+        {
+            "id_partita": "2997b68cc93f62d8a1dee9f06bedbefd",
+            "match": "Real Sociedad - Deportivo La Coruña",
+            "data": "2026-10-11T14:15:00Z",
+            "consiglio_algoritmo": "vittoria Real Sociedad",
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.05%. La probabilità matematica reale calcolata per la vittoria Real Sociedad è del 54.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.82. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.89."
+        },
+        {
+            "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
+            "match": "Aston Villa - Fenerbahce",
+            "data": "2026-10-14T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Aston Villa",
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.27%. La probabilità matematica reale calcolata per la vittoria Aston Villa è del 55.0%, che corrisponde a una Quota Equa (Fair Odd) di @1.82. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.89."
+        },
+        {
+            "id_partita": "1156265e39cc2b943da422a53d2a832a",
+            "match": "Macedonia del Nord - Scozia",
+            "data": "2026-10-03T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Scozia",
+            "quota_valore_minima": 1.94,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.79%. La probabilità matematica reale calcolata per la vittoria Scozia è del 53.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.87. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.94."
+        },
+        {
+            "id_partita": "1cf64166dda1e0da8b325161deb39662",
+            "match": "Sassuolo - AC Milan",
+            "data": "2026-10-11T16:00:00Z",
+            "consiglio_algoritmo": "vittoria AC Milan",
+            "quota_valore_minima": 1.98,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.26%. La probabilità matematica reale calcolata per la vittoria AC Milan è del 52.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.9. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.98."
+        },
+        {
+            "id_partita": "9a422e1aad1053828eaf629a58d901de",
+            "match": "Werder Bremen - SC Paderborn",
+            "data": "2026-10-17T13:30:00Z",
+            "consiglio_algoritmo": "vittoria Werder Bremen",
+            "quota_valore_minima": 1.98,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.59%. La probabilità matematica reale calcolata per la vittoria Werder Bremen è del 52.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.9. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.98."
+        },
+        {
+            "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
+            "match": "Croazia - Inghilterra",
+            "data": "2026-10-03T16:00:00Z",
+            "consiglio_algoritmo": "vittoria Inghilterra",
+            "quota_valore_minima": 1.99,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.62%. La probabilità matematica reale calcolata per la vittoria Inghilterra è del 52.5%, che corrisponde a una Quota Equa (Fair Odd) di @1.91. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @1.99."
+        },
+        {
+            "id_partita": "b077aa049133c0358bcd643bfee48da3",
+            "match": "Troyes - RC Lens",
+            "data": "2026-10-17T18:45:00Z",
+            "consiglio_algoritmo": "vittoria RC Lens",
+            "quota_valore_minima": 2.01,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.14%. La probabilità matematica reale calcolata per la vittoria RC Lens è del 51.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.93. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.01."
+        },
+        {
+            "id_partita": "431fc65e67cd737bceb5827118d3f7eb",
+            "match": "Salzburg - AC Milan",
+            "data": "2026-10-15T16:45:00Z",
+            "consiglio_algoritmo": "vittoria AC Milan",
+            "quota_valore_minima": 2.01,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.32%. La probabilità matematica reale calcolata per la vittoria AC Milan è del 51.9%, che corrisponde a una Quota Equa (Fair Odd) di @1.93. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.01."
+        },
+        {
+            "id_partita": "a7769e85ee3c914abe40a277de800869",
+            "match": "Isole Faroe - Slovacchia",
+            "data": "2026-10-02T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Slovacchia",
+            "quota_valore_minima": 2.02,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.46%. La probabilità matematica reale calcolata per la vittoria Slovacchia è del 51.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.94. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.02."
+        },
+        {
+            "id_partita": "6436925dd15916d7041ba32b60000d48",
+            "match": "Espanyol - Atlético Madrid",
+            "data": "2026-10-17T12:00:00Z",
+            "consiglio_algoritmo": "vittoria Atlético Madrid",
+            "quota_valore_minima": 2.02,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.39%. La probabilità matematica reale calcolata per la vittoria Atlético Madrid è del 51.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.94. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.02."
+        },
+        {
+            "id_partita": "221916b8b36706ec52aa655a64e5f1d2",
+            "match": "Hamburger SV - VfB Stuttgart",
+            "data": "2026-10-17T13:30:00Z",
+            "consiglio_algoritmo": "vittoria VfB Stuttgart",
+            "quota_valore_minima": 2.03,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.65%. La probabilità matematica reale calcolata per la vittoria VfB Stuttgart è del 51.2%, che corrisponde a una Quota Equa (Fair Odd) di @1.95. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.03."
+        },
+        {
+            "id_partita": "3869391e3dbdcaa74153b11df56a3fe5",
+            "match": "Alavés - Atlético Madrid",
+            "data": "2026-10-10T14:15:00Z",
+            "consiglio_algoritmo": "vittoria Atlético Madrid",
+            "quota_valore_minima": 2.04,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 5.82%. La probabilità matematica reale calcolata per la vittoria Atlético Madrid è del 51.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.96. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.04."
+        },
+        {
+            "id_partita": "cb7067ac191abf32ad49dad45e46f639",
+            "match": "Troyes - Marseille",
+            "data": "2026-10-11T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Marseille",
+            "quota_valore_minima": 2.04,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.12%. La probabilità matematica reale calcolata per la vittoria Marseille è del 51.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.96. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.04."
+        },
+        {
+            "id_partita": "367da93aa21a1e13eeafb94fd2263c75",
+            "match": "Udinese - Lecce",
+            "data": "2026-10-18T10:30:00Z",
+            "consiglio_algoritmo": "vittoria Udinese",
+            "quota_valore_minima": 2.05,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.08%. La probabilità matematica reale calcolata per la vittoria Udinese è del 50.8%, che corrisponde a una Quota Equa (Fair Odd) di @1.97. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.05."
+        },
+        {
+            "id_partita": "f9403dd597edbfaa73abdc974e55344c",
+            "match": "AC Milan - Atalanta BC",
+            "data": "2026-10-18T16:00:00Z",
+            "consiglio_algoritmo": "vittoria AC Milan",
+            "quota_valore_minima": 2.05,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.2%. La probabilità matematica reale calcolata per la vittoria AC Milan è del 50.7%, che corrisponde a una Quota Equa (Fair Odd) di @1.97. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.05."
+        },
+        {
+            "id_partita": "3957ec8d52653fa1c852825bea985fb7",
+            "match": "NEC Nijmegen - PFC Levski Sofia",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria NEC Nijmegen",
+            "quota_valore_minima": 2.05,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.72%. La probabilità matematica reale calcolata per la vittoria NEC Nijmegen è del 50.6%, che corrisponde a una Quota Equa (Fair Odd) di @1.97. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.05."
+        },
+        {
+            "id_partita": "1f566f17c50fe5162724ec2863d2207b",
+            "match": "CA Osasuna - Real Racing Club de Santander",
+            "data": "2026-10-18T12:00:00Z",
+            "consiglio_algoritmo": "vittoria CA Osasuna",
+            "quota_valore_minima": 2.06,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 7.36%. La probabilità matematica reale calcolata per la vittoria CA Osasuna è del 50.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.98. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.06."
+        },
+        {
+            "id_partita": "4a0c0e7aa93708ae03af18db691f750f",
+            "match": "Grecia - Germania",
+            "data": "2026-10-04T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Germania",
+            "quota_valore_minima": 2.07,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.04%. La probabilità matematica reale calcolata per la vittoria Germania è del 50.3%, che corrisponde a una Quota Equa (Fair Odd) di @1.99. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.07."
+        },
+        {
+            "id_partita": "007dc2ff845c33e3e18f2bd2bc126304",
+            "match": "Brest - Angers",
+            "data": "2026-10-10T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Brest",
+            "quota_valore_minima": 2.07,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.22%. La probabilità matematica reale calcolata per la vittoria Brest è del 50.1%, che corrisponde a una Quota Equa (Fair Odd) di @1.99. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.07."
+        },
+        {
+            "id_partita": "3ee605005bdc62da54d42a0ec3e1a930",
+            "match": "Dinamo Zagreb - Anderlecht",
+            "data": "2026-10-15T19:00:00Z",
+            "consiglio_algoritmo": "vittoria Dinamo Zagreb",
+            "quota_valore_minima": 2.07,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.43%. La probabilità matematica reale calcolata per la vittoria Dinamo Zagreb è del 50.4%, che corrisponde a una Quota Equa (Fair Odd) di @1.99. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.07."
+        },
+        {
+            "id_partita": "5d6f9accd6f79ae4216dfd29ccc342b2",
+            "match": "Feyenoord - Como",
+            "data": "2026-10-14T16:45:00Z",
+            "consiglio_algoritmo": "vittoria Como",
+            "quota_valore_minima": 2.08,
+            "report_testuale": "Analisi Quantitativa (De-Vig): Il mercato applica un aggio del 6.04%. La probabilità matematica reale calcolata per la vittoria Como è del 50.1%, che corrisponde a una Quota Equa (Fair Odd) di @2.0. Per garantire un vantaggio statistico (+EV), il Modello Omega esige una Value Bet minima di @2.08."
         }
     ]
 }
