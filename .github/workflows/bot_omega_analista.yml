@@ -23,7 +23,7 @@ jobs:
 
       - name: Esegui Analista
         env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: python bot_omega_analista.py
 
       - name: Salva il database delle analisi
