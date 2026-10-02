@@ -9,18 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            /* Nuova Palette */
-            --prussian-blue: #102542;
+            var(--prussian-blue): #102542;
             --vibrant-coral: #F87060;
             --alabaster-grey: #CDD7D6;
             --khaki-beige: #B3A394;
             --white: #FFFFFF;
             
-            /* Variabili derivate */
             --bg-body: #f4f6f6;
-            --text-main: var(--prussian-blue);
+            --text-main: #102542;
             --text-muted: #5c6b7d;
-            --border-solid: var(--alabaster-grey);
+            --border-solid: #CDD7D6;
             --success: #22c55e;
             --danger: #ef4444;
         }
@@ -28,8 +26,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
-        /* Header */
-        header { background-color: var(--prussian-blue); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(16, 37, 66, 0.15); }
+        header { background-color: #102542; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(16, 37, 66, 0.15); }
         .nav-container { max-width: 1100px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
         .brand h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0; letter-spacing: -0.5px; }
@@ -39,41 +36,40 @@
         
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Modelli Info */
         .models-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
-        .model-card { background-color: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-solid); border-top: 4px solid var(--prussian-blue); }
-        .model-card.alpha { border-top-color: var(--prussian-blue); }
+        .model-card { background-color: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-solid); border-top: 4px solid #102542; }
+        .model-card.alpha { border-top-color: #102542; }
         .model-card.beta { border-top-color: var(--khaki-beige); }
         .model-card.omega { border-top-color: var(--vibrant-coral); }
         .model-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
         .model-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
-        /* Dashboard Controller */
         .dashboard-header { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid var(--border-solid); display: flex; flex-direction: column; gap: 20px; }
         
         .model-selector { display: flex; gap: 10px; border-bottom: 1px solid var(--border-solid); padding-bottom: 20px; }
         .model-tab { flex: 1; padding: 12px; text-align: center; font-weight: 700; font-size: 14px; color: var(--text-muted); background: var(--alabaster-grey); border-radius: 8px; cursor: pointer; transition: all 0.2s; border: none; text-transform: uppercase; }
         .model-tab:hover { background: #e2e8e8; }
-        .model-tab.active { background: var(--prussian-blue); color: var(--white); }
+        
+        /* Colori dinamici per i tab attivi */
+        .model-tab.tab-alpha.active { background: #102542; color: var(--white); }
+        .model-tab.tab-beta.active { background: var(--khaki-beige); color: var(--white); }
+        .model-tab.tab-omega.active { background: var(--vibrant-coral); color: var(--white); }
         
         .status-selector { display: flex; gap: 10px; flex-wrap: wrap; }
         .status-btn { background: transparent; border: 1px solid var(--khaki-beige); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-        .status-btn:hover { border-color: var(--prussian-blue); color: var(--prussian-blue); }
+        .status-btn:hover { border-color: #102542; color: #102542; }
         .status-btn.active { background: var(--vibrant-coral); color: var(--white); border-color: var(--vibrant-coral); }
 
-        /* Statistiche */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
         .stat-card { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 20px 15px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
-        .stat-value { font-size: 24px; font-weight: 800; color: var(--prussian-blue); font-family: 'JetBrains Mono', monospace; }
+        .stat-value { font-size: 24px; font-weight: 800; color: #102542; font-family: 'JetBrains Mono', monospace; }
         .stat-value.profit { color: var(--success); }
         .stat-value.negative { color: var(--danger); }
 
-        /* Grafico */
         .chart-box { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .chart-wrapper { position: relative; height: 300px; width: 100%; }
 
-        /* Schedine */
         .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .ticket { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
         .ticket-header { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); display: flex; justify-content: space-between; align-items: center; background-color: #fafbfc; }
@@ -85,7 +81,7 @@
 
         .match-row { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); }
         .match-row:last-child { border-bottom: none; }
-        .m-teams { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; color: var(--prussian-blue); }
+        .m-teams { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; color: #102542; }
         .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .m-pick { font-size: 12px; font-weight: 700; color: var(--vibrant-coral); text-transform: uppercase; }
         .m-quote { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--khaki-beige); }
@@ -93,7 +89,7 @@
 
         .ticket-footer { padding: 14px 16px; border-top: 1px solid var(--alabaster-grey); background-color: #fafbfc; }
         .t-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-        .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: var(--prussian-blue); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--alabaster-grey); }
+        .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: #102542; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--alabaster-grey); }
 
         @media (max-width: 768px) {
             .models-info-grid, .stats-grid { grid-template-columns: 1fr; }
@@ -115,7 +111,6 @@
     <div class="spacer"></div>
 
     <div class="container">
-        <!-- Spiegazione Modelli -->
         <div class="models-info-grid">
             <div class="model-card alpha">
                 <h3>Modello Alpha</h3>
@@ -131,12 +126,11 @@
             </div>
         </div>
 
-        <!-- Controller Dashboard -->
         <div class="dashboard-header">
             <div class="model-selector">
-                <button class="model-tab active" onclick="selezionaModello('alpha')">Alpha (Mercati Principali)</button>
-                <button class="model-tab" onclick="selezionaModello('beta')">Beta (Special Bets)</button>
-                <button class="model-tab" onclick="selezionaModello('omega')">Omega (Predittivo ETL)</button>
+                <button class="model-tab tab-alpha active" onclick="selezionaModello('alpha')">Alpha (Mercati Principali)</button>
+                <button class="model-tab tab-beta" onclick="selezionaModello('beta')">Beta (Special Bets)</button>
+                <button class="model-tab tab-omega" onclick="selezionaModello('omega')">Omega (Predittivo ETL)</button>
             </div>
             <div class="status-selector">
                 <button class="status-btn active" onclick="selezionaFiltro('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
@@ -146,7 +140,6 @@
             </div>
         </div>
 
-        <!-- Statistiche -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Cassa Modello</div>
@@ -172,7 +165,6 @@
             </div>
         </div>
 
-        <!-- Schedine -->
         <div id="storico-container" class="tickets-container"></div>
     </div>
 
@@ -185,7 +177,10 @@
         function selezionaModello(modello) {
             modelloAttuale = modello;
             document.querySelectorAll('.model-tab').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(modello));
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(modello)) {
+                    btn.classList.add('active');
+                }
             });
             aggiornaDashboard();
         }
@@ -200,14 +195,12 @@
         function aggiornaDashboard() {
             if (!databaseGlobale) return;
 
-            // Filtra schedine per modello (se modello non c'è nel db, per legacy lo consideriamo 'alpha')
             const schedineModello = databaseGlobale.schedine.filter(sc => {
                 let mod = sc.modello ? sc.modello.toLowerCase() : 'alpha';
                 return mod === modelloAttuale;
             });
 
-            // Calcoli Statistiche per il modello selezionato
-            let capitale = 200.0; // Base fissa per ogni modello per tracciamento indipendente
+            let capitale = 200.0;
             let vinte = 0, perse = 0, inAttesa = 0, totalePuntato = 0;
             let labelsGrafico = ['Start'];
             let puntiCassa = [200.0];
@@ -227,13 +220,11 @@
                 puntiCassa.push(Number(capitale.toFixed(2)));
             });
 
-            // Update Counters
             document.getElementById('count-tutte').innerText = schedineModello.length;
             document.getElementById('count-vinte').innerText = vinte;
             document.getElementById('count-perse').innerText = perse;
             document.getElementById('count-attesa').innerText = inAttesa;
 
-            // Update Stats
             let profittoNetto = capitale - 200.0;
             document.getElementById('capitale').innerText = capitale.toFixed(2) + ' €';
             
@@ -254,10 +245,8 @@
                 elYield.className = 'stat-value';
             }
 
-            // Update Chart
             renderizzaGrafico(labelsGrafico, puntiCassa);
 
-            // Render Tickets
             const container = document.getElementById('storico-container');
             container.innerHTML = '';
 
@@ -308,10 +297,9 @@
             const ctx = document.getElementById('equityChart').getContext('2d');
             if (chartIstanza) chartIstanza.destroy();
             
-            // Colore della linea in base al modello
-            let lineColor = '#102542'; // Alpha: Prussian Blue
-            if(modelloAttuale === 'beta') lineColor = '#B3A394'; // Beta: Khaki
-            if(modelloAttuale === 'omega') lineColor = '#F87060'; // Omega: Coral
+            let lineColor = '#102542'; 
+            if(modelloAttuale === 'beta') lineColor = '#B3A394'; 
+            if(modelloAttuale === 'omega') lineColor = '#F87060'; 
 
             chartIstanza = new Chart(ctx, {
                 type: 'line',
