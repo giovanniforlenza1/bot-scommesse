@@ -1,4 +1,125 @@
 {
-    "ultimo_aggiornamento": "2026-10-02 19:50",
-    "analisi": []
+    "ultimo_aggiornamento": "2026-10-02 20:02",
+    "analisi": [
+        {
+            "id_partita": "1528923",
+            "match": "Kazakhstan - Moldova",
+            "data": "2026-10-02T14:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Kazakhstan-Moldova evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528930",
+            "match": "Cyprus - Armenia",
+            "data": "2026-10-02T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Cyprus-Armenia evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1545608",
+            "match": "Latvia - Montenegro",
+            "data": "2026-10-02T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Latvia-Montenegro evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528924",
+            "match": "France - Italy",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match France-Italy evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528925",
+            "match": "Belgium - Türkiye",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Belgium-Türkiye evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528926",
+            "match": "Hungary - Georgia",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Hungary-Georgia evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528927",
+            "match": "Ukraine - Northern Ireland",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Ukraine-Northern Ireland evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528928",
+            "match": "Poland - Romania",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Poland-Romania evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528929",
+            "match": "Bosnia & Herzegovina - Sweden",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Bosnia & Herzegovina-Sweden evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528931",
+            "match": "Faroe Islands - Slovakia",
+            "data": "2026-10-02T18:45:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Faroe Islands-Slovakia evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528932",
+            "match": "Finland - Albania",
+            "data": "2026-10-03T13:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Finland-Albania evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528933",
+            "match": "Croatia - England",
+            "data": "2026-10-03T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Croatia-England evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528934",
+            "match": "Belarus - San Marino",
+            "data": "2026-10-03T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Belarus-San Marino evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1528935",
+            "match": "Iceland - Bulgaria",
+            "data": "2026-10-03T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Iceland-Bulgaria evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        },
+        {
+            "id_partita": "1545609",
+            "match": "Estonia - Luxembourg",
+            "data": "2026-10-03T16:00:00+00:00",
+            "consiglio_algoritmo": "Under 2.5",
+            "quota_valore_minima": 1.6,
+            "report_testuale": "L'analisi algoritmica sul match Estonia-Luxembourg evidenzia un sostanziale equilibrio tattico. I dati suggeriscono una partita bloccata tatticamente."
+        }
+    ]
 }
