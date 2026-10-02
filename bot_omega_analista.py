@@ -11,12 +11,11 @@ LEGHE_TARGET = [5, 34, 4, 15, 135, 39, 140, 78, 61, 2, 3]
 
 def analizza_statistiche(team_id, headers):
     try:
-        # Aggiramento blocco API: usiamo un range temporale (ultimi 150 giorni) invece del parametro 'last'
         oggi = datetime.now()
-        data_to = oggi.strftime("%Y-%m-%d")
-        data_from = (oggi - timedelta(days=150)).strftime("%Y-%m-%d")
+        # Calcolo dinamico della stagione sportiva (inizia a luglio/agosto)
+        stagione = oggi.year if oggi.month >= 7 else oggi.year - 1
         
-        url = f"https://v3.football.api-sports.io/fixtures?team={team_id}&from={data_from}&to={data_to}"
+        url = f"https://v3.football.api-sports.io/fixtures?team={team_id}&season={stagione}"
         res = requests.get(url, headers=headers, timeout=10)
         
         dati_json = res.json()
@@ -25,7 +24,10 @@ def analizza_statistiche(team_id, headers):
             
         tutte_fixtures = dati_json.get('response', [])
         
-        # Filtriamo solo le partite finite (Full Time, After Extra Time, Penalties)
+        # Ordiniamo per data per sicurezza
+        tutte_fixtures.sort(key=lambda x: x['fixture']['timestamp'])
+        
+        # Filtriamo solo le partite terminate
         finite = [f for f in tutte_fixtures if f['fixture']['status']['short'] in ['FT', 'AET', 'PEN']]
         
         # Estraiamo le ultime 5 tramite Python
@@ -58,7 +60,6 @@ def genera_analisi_giornaliera():
     
     print("Ricerca partite (Club e Nazionali) per oggi e domani con chiave Omega...")
     
-    # Riduciamo l'orizzonte a 2 giorni per evitare i blocchi temporali sui piani free
     for giorni_avanti in range(2):
         data_target = (oggi + timedelta(days=giorni_avanti)).strftime("%Y-%m-%d")
         res = requests.get(f"https://v3.football.api-sports.io/fixtures?date={data_target}", headers=headers)
@@ -81,9 +82,10 @@ def genera_analisi_giornaliera():
         
         print(f"Elaborazione tattica: {home_name} - {away_name}")
         
-        time.sleep(0.5)
+        # Pausa di 6.5 secondi per aggirare il limite di 10 richieste al minuto
+        time.sleep(6.5)
         stat_h = analizza_statistiche(m['teams']['home']['id'], headers)
-        time.sleep(0.5)
+        time.sleep(6.5)
         stat_a = analizza_statistiche(m['teams']['away']['id'], headers)
         
         testo = f"L'analisi algoritmica sul match {home_name}-{away_name} evidenzia "
