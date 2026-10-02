@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
-# Campionati principali per l'analisi
 LEGHE_TARGET = [135, 39, 140, 78, 61] 
 
 def analizza_statistiche(team_id, headers):
@@ -31,7 +30,7 @@ def analizza_statistiche(team_id, headers):
 def genera_analisi_giornaliera():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
-    data_target = (oggi + timedelta(days=1)).strftime("%Y-%m-%d") # Analizza le partite di domani
+    data_target = (oggi + timedelta(days=1)).strftime("%Y-%m-%d")
     
     headers = {'x-apisports-key': API_FOOTBALL_KEY}
     res = requests.get(f"https://v3.football.api-sports.io/fixtures?date={data_target}", headers=headers)
@@ -47,7 +46,6 @@ def genera_analisi_giornaliera():
         stat_h = analizza_statistiche(m['teams']['home']['id'], headers)
         stat_a = analizza_statistiche(m['teams']['away']['id'], headers)
         
-        # Generazione Testo Analitico (Ottimo per i tuoi contenuti SEO Social)
         testo = f"L'analisi algoritmica sul match {home_name}-{away_name} evidenzia "
         if stat_h['forma'] > stat_a['forma']:
             testo += f"un netto vantaggio per i padroni di casa (PPG {stat_h['forma']} vs {stat_a['forma']}). "
@@ -73,7 +71,6 @@ def genera_analisi_giornaliera():
             "report_testuale": testo
         })
         
-    # Salva il database ETL
     with open('database_analisi.json', 'w', encoding='utf-8') as f:
         json.dump(database_analisi, f, indent=4, ensure_ascii=False)
         
