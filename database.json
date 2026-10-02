@@ -400,6 +400,50 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "51a63d7f",
+            "modello": "omega",
+            "data_creazione": "02/10/2026",
+            "importo": 10.0,
+            "quota_totale": 14.5,
+            "ritorno_potenziale": 145.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "a7769e85ee3c914abe40a277de800869",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Faroe Islands",
+                    "squadra_trasferta": "Slovakia",
+                    "pronostico": "Over 2.5",
+                    "quota": 2.5,
+                    "score": 0.8500000000000001,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4985fdd6c7e6801fcca1f9f1e78aed66",
+                    "data": "02/10 20:45",
+                    "squadra_casa": "Ukraine",
+                    "squadra_trasferta": "Northern Ireland",
+                    "pronostico": "Over 2.5",
+                    "quota": 2.5,
+                    "score": 0.8500000000000001,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "5cf84a9c33cffc13da7ab489bfc4b35d",
+                    "data": "05/10 20:45",
+                    "squadra_casa": "Northern Ireland",
+                    "squadra_trasferta": "Georgia",
+                    "pronostico": "Over 2.5",
+                    "quota": 2.32,
+                    "score": 0.6699999999999999,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
