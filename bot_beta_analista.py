@@ -1,0 +1,103 @@
+import requests
+import json
+import os
+import math
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
+
+CAMPIONATI = [
+    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
+    'soccer_germany_bundesliga', 'soccer_uefa_champs_league'
+]
+
+def calcola_quota_reale(quote):
+    prob_implicita = sum(1 / q for q in quote) 
+    prob_reali = [(1 / q) / prob_implicita for q in quote]
+    return prob_reali
+
+def poisson_over_prob(lam, target):
+    # Calcola la probabilità esatta matematica di un Over usando Poisson
+    prob_under_or_equal = sum((math.exp(-lam) * (lam**k)) / math.factorial(k) for k in range(math.floor(target) + 1))
+    return 1 - prob_under_or_equal
+
+def genera_analisi_esotica():
+    fuso = ZoneInfo("Europe/Rome")
+    oggi = datetime.now(fuso)
+    limite_temporale = oggi + timedelta(days=2)
+    
+    database_beta = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "segnali": []}
+    
+    print("Avvio Modello Beta: Inferenza Matematica su Cartellini e Angoli...")
+    
+    for camp in CAMPIONATI:
+        url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
+        res = requests.get(url, timeout=10)
+        
+        if res.status_code != 200: continue
+        matches = res.json()
+        
+        for m in matches:
+            data_partita = datetime.strptime(m['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso)
+            if data_partita > limite_temporale: continue
+            
+            q_1_list, q_x_list, q_2_list = [], [], []
+            for book in m.get('bookmakers', []):
+                for market in book.get('markets', []):
+                    if market['key'] == 'h2h':
+                        for out in market['outcomes']:
+                            if out['name'] == m['home_team']: q_1_list.append(out['price'])
+                            elif out['name'] == m['away_team']: q_2_list.append(out['price'])
+                            elif out['name'] == 'Draw': q_x_list.append(out['price'])
+                            
+            if not q_1_list or not q_x_list or not q_2_list: continue
+            
+            avg_1, avg_x, avg_2 = sum(q_1_list)/len(q_1_list), sum(q_x_list)/len(q_x_list), sum(q_2_list)/len(q_2_list)
+            prob_reali = calcola_quota_reale([avg_1, avg_x, avg_2])
+            
+            # MODELLO CARTELLINI: basato sulla tensione del match (probabilità di pareggio alta = match teso)
+            tensione_match = prob_reali[1] / 0.35 # normalizzato
+            cartellini_attesi = 3.5 + (tensione_match * 2.5)
+            prob_over_4_5_cards = poisson_over_prob(cartellini_attesi, 4.5)
+            
+            # MODELLO ANGOLI: basato sullo sbilanciamento offensivo (differenza tra le forze in campo)
+            squilibrio = abs(prob_reali[0] - prob_reali[2])
+            angoli_attesi = 8.5 + (squilibrio * 4.0)
+            prob_over_9_5_corners = poisson_over_prob(angoli_attesi, 9.5)
+            
+            # Isoliamo solo gli eventi con un vantaggio matematico schiacciante (> 55% di probabilità pura)
+            if prob_over_4_5_cards > 0.55:
+                quota_equa = round((1 / prob_over_4_5_cards) * 1.05, 2) # Aggiungiamo 5% di vantaggio per noi
+                if 1.50 <= quota_equa <= 2.00:
+                    database_beta["segnali"].append({
+                        "match": f"{m['home_team']} - {m['away_team']}",
+                        "data": data_partita.strftime("%d/%m %H:%M"),
+                        "mercato": "Cartellini",
+                        "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                        "probabilita": round(prob_over_4_5_cards * 100, 1),
+                        "quota_ingresso_minima": quota_equa
+                    })
+                    
+            if prob_over_9_5_corners > 0.55:
+                quota_equa = round((1 / prob_over_9_5_corners) * 1.05, 2)
+                if 1.50 <= quota_equa <= 2.00:
+                    database_beta["segnali"].append({
+                        "match": f"{m['home_team']} - {m['away_team']}",
+                        "data": data_partita.strftime("%d/%m %H:%M"),
+                        "mercato": "Calci d'Angolo",
+                        "pronostico": "Over 9.5 Calci d'Angolo",
+                        "probabilita": round(prob_over_9_5_corners * 100, 1),
+                        "quota_ingresso_minima": quota_equa
+                    })
+
+    # Ordiniamo per probabilità decrescente (i più sicuri in cima)
+    database_beta["segnali"] = sorted(database_beta["segnali"], key=lambda x: x["probabilita"], reverse=True)
+    
+    with open('database_beta.json', 'w', encoding='utf-8') as f:
+        json.dump(database_beta, f, indent=4, ensure_ascii=False)
+        
+    print(f"Modello Beta: Trovati {len(database_beta['segnali'])} segnali esotici di alto valore.")
+
+if __name__ == "__main__":
+    genera_analisi_esotica()
