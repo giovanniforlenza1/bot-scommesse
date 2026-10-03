@@ -7,7 +7,7 @@
             "importo": 10.0,
             "quota_totale": 14.09,
             "ritorno_potenziale": 140.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "aa65ea35f0aa1c0bb87cbcb9e5341b5b",
@@ -16,8 +16,8 @@
                     "squadra_trasferta": "Georgia",
                     "pronostico": "vittoria Ungheria",
                     "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
@@ -26,8 +26,8 @@
                     "squadra_trasferta": "Romania",
                     "pronostico": "under 2.5 gol",
                     "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "6-0"
                 },
                 {
                     "id_partita": "267fa609da39d3dacc04a6d6a41a559a",
@@ -46,8 +46,8 @@
                     "squadra_trasferta": "Irlanda del Nord",
                     "pronostico": "vittoria Ucraina",
                     "quota": 1.92,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
@@ -57,7 +57,7 @@
             "importo": 10.0,
             "quota_totale": 12.84,
             "ritorno_potenziale": 128.4,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
@@ -66,8 +66,8 @@
                     "squadra_trasferta": "Romania",
                     "pronostico": "under 2.5 gol",
                     "quota": 1.95,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "6-0"
                 },
                 {
                     "id_partita": "32c438139763280b8efb86423e5b911e",
@@ -76,8 +76,8 @@
                     "squadra_trasferta": "Montenegro",
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.94,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
@@ -96,8 +96,8 @@
                     "squadra_trasferta": "Georgia",
                     "pronostico": "under 2.5 gol",
                     "quota": 1.75,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 }
             ]
         },
@@ -107,7 +107,7 @@
             "importo": 10.0,
             "quota_totale": 2.36,
             "ritorno_potenziale": 23.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "546150d4747a3a5108c7e9860426bf36",
@@ -130,8 +130,8 @@
                     "pronostico": "vittoria Francia",
                     "quota": 1.43,
                     "score": 0.6303840714141394,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "b6048b1da7816b2a0944013e6c139609",
@@ -153,7 +153,7 @@
             "importo": 10.0,
             "quota_totale": 8.47,
             "ritorno_potenziale": 84.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "18c29d24c37e4fa9c5c2a12218c87944",
@@ -176,8 +176,8 @@
                     "pronostico": "vittoria Polonia",
                     "quota": 1.53,
                     "score": 0.4304253181513735,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6-0"
                 },
                 {
                     "id_partita": "32c438139763280b8efb86423e5b911e",
@@ -188,8 +188,8 @@
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.8,
                     "score": 0.4201781844449798,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "7db202b104fa0b2c3efc16c9ab45dc1e",
@@ -200,8 +200,8 @@
                     "pronostico": "vittoria Kazakhstan",
                     "quota": 1.68,
                     "score": 0.4018146467919633,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -222,8 +222,8 @@
                     "pronostico": "vittoria Belgio",
                     "quota": 1.56,
                     "score": 0.6245496880766191,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
@@ -258,8 +258,8 @@
                     "pronostico": "vittoria Polonia",
                     "quota": 1.56,
                     "score": 0.46634293369055646,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6-0"
                 }
             ]
         },
@@ -269,7 +269,7 @@
             "importo": 10.0,
             "quota_totale": 3.05,
             "ritorno_potenziale": 30.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "b6048b1da7816b2a0944013e6c139609",
@@ -292,8 +292,8 @@
                     "pronostico": "vittoria Francia",
                     "quota": 1.45,
                     "score": 0.6456874325732784,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
@@ -304,8 +304,8 @@
                     "pronostico": "vittoria Belgio",
                     "quota": 1.56,
                     "score": 0.6245496880766191,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 }
             ]
         },
@@ -315,7 +315,7 @@
             "importo": 10.0,
             "quota_totale": 3.16,
             "ritorno_potenziale": 31.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "b6048b1da7816b2a0944013e6c139609",
@@ -338,8 +338,8 @@
                     "pronostico": "vittoria Francia",
                     "quota": 1.49,
                     "score": 0.6344824135688196,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
@@ -350,8 +350,8 @@
                     "pronostico": "vittoria Belgio",
                     "quota": 1.57,
                     "score": 0.6238965238480194,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 }
             ]
         },
@@ -361,7 +361,7 @@
             "importo": 10.0,
             "quota_totale": 2.96,
             "ritorno_potenziale": 29.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "b6048b1da7816b2a0944013e6c139609",
@@ -384,8 +384,8 @@
                     "pronostico": "vittoria Francia",
                     "quota": 1.46,
                     "score": 0.553413236060448,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "d2f1973a0c6e22f7846864e97db3e78d",
@@ -408,7 +408,7 @@
             "importo": 10.0,
             "quota_totale": 14.5,
             "ritorno_potenziale": 145.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "a7769e85ee3c914abe40a277de800869",
@@ -418,8 +418,8 @@
                     "pronostico": "Over 2.5",
                     "quota": 2.5,
                     "score": 0.8500000000000001,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "4985fdd6c7e6801fcca1f9f1e78aed66",
@@ -429,8 +429,8 @@
                     "pronostico": "Over 2.5",
                     "quota": 2.5,
                     "score": 0.8500000000000001,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-3"
                 },
                 {
                     "id_partita": "5cf84a9c33cffc13da7ab489bfc4b35d",
