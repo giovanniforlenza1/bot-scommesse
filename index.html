@@ -328,7 +328,10 @@
             });
         }
 
-        fetch('database.json')
+        // Sistema di Cache Busting inserito qui per eludere la memoria del server
+        const urlFresco = 'database.json?v=' + new Date().getTime();
+
+        fetch(urlFresco)
             .then(res => res.json())
             .then(data => {
                 databaseGlobale = data;
