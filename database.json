@@ -558,6 +558,41 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "707bccc5",
+            "modello": "alpha",
+            "data_creazione": "03/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.18,
+            "ritorno_potenziale": 11.8,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Spagna",
+                    "squadra_trasferta": "Czech Republic",
+                    "pronostico": "1",
+                    "quota": 1.05,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Belarus",
+                    "squadra_trasferta": "San Marino",
+                    "pronostico": "1",
+                    "quota": 1.06,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Finland",
+                    "squadra_trasferta": "Albania",
+                    "pronostico": "1",
+                    "quota": 1.06,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
