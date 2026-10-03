@@ -2,7 +2,7 @@ name: Esegui Alpha Cecchino
 
 on:
   schedule:
-    - cron: '30 7 * * *' # Gira alle 07:30 UTC (mezz'ora dopo l'analista)
+    - cron: '30 7 * * *'
   workflow_dispatch:
 
 jobs:
@@ -19,10 +19,18 @@ jobs:
           python-version: '3.10'
 
       - name: Installa dipendenze
-        run: pip install requests
+        run: pip install requests tzdata
 
       - name: Lancia Allerta Telegram Alpha
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python bot_alpha_cecchino.py
+
+      - name: Salva database principale
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add database.json
+          git commit -m "Aggiornamento Database Dashboard Alpha" || echo "Nessuna modifica"
+          git push
