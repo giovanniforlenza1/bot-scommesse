@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-10-02 20:47",
+    "ultimo_aggiornamento": "2026-10-03 06:09",
     "analisi": [
         {
             "id_partita": "a2b398e3cd93d7096008281dde9e6504",
@@ -7,55 +7,31 @@
             "data": "2026-10-03T16:00:00Z",
             "consiglio_algoritmo": "vittoria Islanda",
             "quota_valore_minima": 1.58,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.05%. la probabilità matematica di successo per la vittoria Islanda è del 65.7%, corrispondente a una quota equa di @1.52. il modello Omega esige l'ingresso a una quota minima di @1.58 per mantenere il vantaggio statistico in questo range di sicurezza."
-        },
-        {
-            "id_partita": "429e47b7c49fba99d5cbcba70b9c48c5",
-            "match": "Belgio - Turchia",
-            "data": "2026-10-02T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Belgio",
-            "quota_valore_minima": 1.61,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.52%. la probabilità matematica di successo per la vittoria Belgio è del 64.4%, corrispondente a una quota equa di @1.55. il modello Omega esige l'ingresso a una quota minima di @1.61 per mantenere il vantaggio statistico in questo range di sicurezza."
-        },
-        {
-            "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
-            "match": "Francia - Italia",
-            "data": "2026-10-02T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Francia",
-            "quota_valore_minima": 1.61,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 5.32%. la probabilità matematica di successo per la vittoria Francia è del 64.5%, corrispondente a una quota equa di @1.55. il modello Omega esige l'ingresso a una quota minima di @1.61 per mantenere il vantaggio statistico in questo range di sicurezza."
-        },
-        {
-            "id_partita": "5d9aac1a239e87ecc555aba2fe4426cf",
-            "match": "Croazia - Spagna",
-            "data": "2026-10-06T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Spagna",
-            "quota_valore_minima": 1.63,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 9.94%. la probabilità matematica di successo per la vittoria Spagna è del 63.6%, corrispondente a una quota equa di @1.57. il modello Omega esige l'ingresso a una quota minima di @1.63 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.73%. la probabilità matematica di successo per la vittoria Islanda è del 65.8%, corrispondente a una quota equa di @1.52. il modello Omega esige l'ingresso a una quota minima di @1.58 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
             "id_partita": "d2f1973a0c6e22f7846864e97db3e78d",
             "match": "Italia - Turchia",
             "data": "2026-10-05T18:45:00Z",
             "consiglio_algoritmo": "vittoria Italia",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.78%. la probabilità matematica di successo per la vittoria Italia è del 63.0%, corrispondente a una quota equa di @1.59. il modello Omega esige l'ingresso a una quota minima di @1.65 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "quota_valore_minima": 1.6,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.83%. la probabilità matematica di successo per la vittoria Italia è del 64.7%, corrispondente a una quota equa di @1.54. il modello Omega esige l'ingresso a una quota minima di @1.6 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
-            "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
-            "match": "Polonia - Romania",
-            "data": "2026-10-02T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Polonia",
-            "quota_valore_minima": 1.67,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.61%. la probabilità matematica di successo per la vittoria Polonia è del 62.2%, corrispondente a una quota equa di @1.61. il modello Omega esige l'ingresso a una quota minima di @1.67 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "id_partita": "5d9aac1a239e87ecc555aba2fe4426cf",
+            "match": "Croazia - Spagna",
+            "data": "2026-10-06T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Spagna",
+            "quota_valore_minima": 1.62,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 8.95%. la probabilità matematica di successo per la vittoria Spagna è del 64.1%, corrispondente a una quota equa di @1.56. il modello Omega esige l'ingresso a una quota minima di @1.62 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
             "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
             "match": "Francia - Belgio",
             "data": "2026-10-05T18:45:00Z",
             "consiglio_algoritmo": "vittoria Francia",
-            "quota_valore_minima": 1.71,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.4%. la probabilità matematica di successo per la vittoria Francia è del 61.1%, corrispondente a una quota equa di @1.64. il modello Omega esige l'ingresso a una quota minima di @1.71 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "quota_valore_minima": 1.68,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.94%. la probabilità matematica di successo per la vittoria Francia è del 61.5%, corrispondente a una quota equa di @1.62. il modello Omega esige l'ingresso a una quota minima di @1.68 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
             "id_partita": "a902c361d1a8c4fd596ffb93d71ab378",
@@ -63,31 +39,31 @@
             "data": "2026-10-04T18:45:00Z",
             "consiglio_algoritmo": "vittoria Portogallo",
             "quota_valore_minima": 1.79,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 5.9%. la probabilità matematica di successo per la vittoria Portogallo è del 58.0%, corrispondente a una quota equa di @1.72. il modello Omega esige l'ingresso a una quota minima di @1.79 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 5.85%. la probabilità matematica di successo per la vittoria Portogallo è del 58.2%, corrispondente a una quota equa di @1.72. il modello Omega esige l'ingresso a una quota minima di @1.79 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
             "id_partita": "048b8e582376b00f3acbaaf879ec05ec",
             "match": "Malta - Andorra",
             "data": "2026-10-04T16:00:00Z",
             "consiglio_algoritmo": "vittoria Malta",
-            "quota_valore_minima": 1.86,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.9%. la probabilità matematica di successo per la vittoria Malta è del 55.9%, corrispondente a una quota equa di @1.79. il modello Omega esige l'ingresso a una quota minima di @1.86 per mantenere il vantaggio statistico in questo range di sicurezza."
-        },
-        {
-            "id_partita": "1156265e39cc2b943da422a53d2a832a",
-            "match": "Macedonia del Nord - Scozia",
-            "data": "2026-10-03T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Scozia",
-            "quota_valore_minima": 1.94,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.79%. la probabilità matematica di successo per la vittoria Scozia è del 53.5%, corrispondente a una quota equa di @1.87. il modello Omega esige l'ingresso a una quota minima di @1.94 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "quota_valore_minima": 1.87,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 7.92%. la probabilità matematica di successo per la vittoria Malta è del 55.5%, corrispondente a una quota equa di @1.8. il modello Omega esige l'ingresso a una quota minima di @1.87 per mantenere il vantaggio statistico in questo range di sicurezza."
         },
         {
             "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
             "match": "Croazia - Inghilterra",
             "data": "2026-10-03T16:00:00Z",
             "consiglio_algoritmo": "vittoria Inghilterra",
-            "quota_valore_minima": 1.99,
-            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 5.58%. la probabilità matematica di successo per la vittoria Inghilterra è del 52.4%, corrispondente a una quota equa di @1.91. il modello Omega esige l'ingresso a una quota minima di @1.99 per mantenere il vantaggio statistico in questo range di sicurezza."
+            "quota_valore_minima": 1.9,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 5.5%. la probabilità matematica di successo per la vittoria Inghilterra è del 54.5%, corrispondente a una quota equa di @1.83. il modello Omega esige l'ingresso a una quota minima di @1.9 per mantenere il vantaggio statistico in questo range di sicurezza."
+        },
+        {
+            "id_partita": "1156265e39cc2b943da422a53d2a832a",
+            "match": "Macedonia del Nord - Scozia",
+            "data": "2026-10-03T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Scozia",
+            "quota_valore_minima": 1.92,
+            "report_testuale": "analisi quantitativa del mercato: i bookmaker applicano un aggio del 6.45%. la probabilità matematica di successo per la vittoria Scozia è del 54.0%, corrispondente a una quota equa di @1.85. il modello Omega esige l'ingresso a una quota minima di @1.92 per mantenere il vantaggio statistico in questo range di sicurezza."
         }
     ]
 }
