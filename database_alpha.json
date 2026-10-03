@@ -1,4 +1,55 @@
 {
-    "ultimo_aggiornamento": "2026-10-03 15:55",
-    "cassaforte": []
+    "ultimo_aggiornamento": "2026-10-03 16:02",
+    "cassaforte": [
+        {
+            "match": "North Macedonia - Scozia",
+            "data": "03/10 20:45",
+            "favorita": "Scozia",
+            "pronostico": "2 DNB Sintetico",
+            "quota_protetta": 1.18,
+            "probabilita_vittoria": 57.9,
+            "split_cassa_vittoria": 72.4,
+            "split_cassa_pareggio": 27.6
+        },
+        {
+            "match": "Portogallo - Norvegia",
+            "data": "04/10 20:45",
+            "favorita": "Portogallo",
+            "pronostico": "1 DNB Sintetico",
+            "quota_protetta": 1.26,
+            "probabilita_vittoria": 57.9,
+            "split_cassa_vittoria": 77.2,
+            "split_cassa_pareggio": 22.8
+        },
+        {
+            "match": "Malta - Andorra",
+            "data": "04/10 18:00",
+            "favorita": "Malta",
+            "pronostico": "1 DNB Sintetico",
+            "quota_protetta": 1.15,
+            "probabilita_vittoria": 56.5,
+            "split_cassa_vittoria": 69.6,
+            "split_cassa_pareggio": 30.4
+        },
+        {
+            "match": "Croazia - Inghilterra",
+            "data": "03/10 18:00",
+            "favorita": "Inghilterra",
+            "pronostico": "2 DNB Sintetico",
+            "quota_protetta": 1.27,
+            "probabilita_vittoria": 55.8,
+            "split_cassa_vittoria": 74.6,
+            "split_cassa_pareggio": 25.4
+        },
+        {
+            "match": "Greece - Germania",
+            "data": "04/10 20:45",
+            "favorita": "Germania",
+            "pronostico": "2 DNB Sintetico",
+            "quota_protetta": 1.36,
+            "probabilita_vittoria": 51.5,
+            "split_cassa_vittoria": 74.1,
+            "split_cassa_pareggio": 25.9
+        }
+    ]
 }
