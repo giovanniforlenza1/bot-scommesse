@@ -1,62 +1,47 @@
 import json
 import os
 import numpy as np
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+import joblib
 
-def allena_intelligenza_artificiale():
-    if not os.path.exists('database.json'):
-        print("database principale non trovato.")
+def allena_modello_analitico():
+    if not os.path.exists('database_storico.json'):
+        print("database storico non trovato. attendere la raccolta dati delle prime partite.")
         return
 
-    with open('database.json', 'r', encoding='utf-8') as f:
+    with open('database_storico.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
 
-    # estraiamo solo le scommesse concluse per l'addestramento
-    scommesse_chiuse = [s for s in db.get('schedine', []) if s.get('stato_schedina') in ['vinta', 'persa']]
+    # estraiamo le partite concluse con i loro dati analitici profondi
+    partite_chiuse = [p for p in db.get('match_giocati', []) if p.get('esito_reale') in [0, 1]]
 
-    if len(scommesse_chiuse) < 3:
-        print("dati insufficienti: il machine learning ha bisogno di più schedine chiuse per trarre conclusioni statistiche.")
+    if len(partite_chiuse) < 10:
+        print("dati insufficienti: il random forest richiede almeno 10 match conclusi per imparare i pattern complessi del mercato.")
         return
 
     X = []
     y = []
-    mappa_modelli = {'alpha': 1, 'beta': 2, 'omega': 3}
 
-    # la macchina studia le tue giocate passate
-    for s in scommesse_chiuse:
-        mod = mappa_modelli.get(s.get('modello', 'omega').lower(), 3)
-        quota = s.get('quota_totale', 2.0)
-        num_partite = len(s.get('partite', []))
-        esito = 1 if s.get('stato_schedina') == 'vinta' else 0
+    # il modello studia le vere variabili della partita per trovare correlazioni nascoste
+    for p in partite_chiuse:
+        prob_casa = p.get('prob_casa', 0.33)
+        prob_x = p.get('prob_x', 0.33)
+        prob_trasferta = p.get('prob_trasferta', 0.33)
+        aggio_mercato = p.get('aggio', 1.05)
+        quota_offerta = p.get('quota_reale', 2.0)
+        
+        # assembliamo le caratteristiche matematiche del match
+        features = [prob_casa, prob_x, prob_trasferta, aggio_mercato, quota_offerta]
+        X.append(features)
+        y.append(p.get('esito_reale')) # 1 se la scommessa era corretta, 0 se sbagliata
 
-        X.append([mod, quota, num_partite])
-        y.append(esito)
+    # addestramento del random forest classifier per scovare le anomalie
+    modello_rf = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=5)
+    modello_rf.fit(X, y)
 
-    # addestramento dell'albero decisionale per isolare i pattern perdenti
-    modello_ml = DecisionTreeClassifier(random_state=42, max_depth=4)
-    modello_ml.fit(X, y)
-
-    # regole base di partenza
-    nuove_regole = {
-        "alpha": {"quota_max_sicura": 3.0}, 
-        "beta": {"quota_max_sicura": 3.0}, 
-        "omega": {"quota_max_sicura": 3.0}
-    }
-
-    # test predittivo: simuliamo quote future per vedere a che livello la macchina prevede una sconfitta certa
-    for nome, cod in mappa_modelli.items():
-        for q in np.arange(1.5, 5.0, 0.2):
-            pred = modello_ml.predict([[cod, q, 2]])
-            if pred[0] == 0:
-                # la macchina ha capito che oltre questa quota il modello perde sistematicamente
-                nuove_regole[nome]["quota_max_sicura"] = round(q - 0.1, 2)
-                break
-
-    # salviamo il nuovo cervello
-    with open('regole_ml.json', 'w', encoding='utf-8') as f:
-        json.dump(nuove_regole, f, indent=4, ensure_ascii=False)
-
-    print("addestramento completato: le nuove direttive di limitazione rischio sono pronte.")
+    # salviamo l'intelligenza artificiale addestrata in un file binario pronto all'uso
+    joblib.dump(modello_rf, 'cervello_omega.pkl')
+    print("addestramento completato: il modello ha imparato a riconoscere le partite ingannevoli incrociando i dati.")
 
 if __name__ == "__main__":
-    allena_intelligenza_artificiale()
+    allena_modello_analitico()
