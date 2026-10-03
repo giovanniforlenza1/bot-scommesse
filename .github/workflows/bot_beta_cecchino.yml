@@ -2,7 +2,7 @@ name: Esegui Beta Cecchino
 
 on:
   schedule:
-    - cron: '30 8 * * *' # Gira alle 08:30 UTC (mezz'ora dopo l'analista)
+    - cron: '30 8 * * *'
   workflow_dispatch:
 
 jobs:
@@ -19,10 +19,18 @@ jobs:
           python-version: '3.10'
 
       - name: Installa dipendenze
-        run: pip install requests
+        run: pip install requests tzdata
 
-      - name: Lancia Allerta Telegram
+      - name: Lancia Allerta Telegram Beta
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python bot_beta_cecchino.py
+
+      - name: Salva database principale
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add database.json
+          git commit -m "Aggiornamento Database Dashboard Beta" || echo "Nessuna modifica"
+          git push
