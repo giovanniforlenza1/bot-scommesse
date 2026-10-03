@@ -1,9 +1,22 @@
 import json
 import os
 import requests
+import uuid
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
+
+def carica_database_principale():
+    if os.path.exists('database.json'):
+        with open('database.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {'capitale_iniziale': 200.0, 'schedine': []}
+
+def salva_database_principale(db):
+    with open('database.json', 'w', encoding='utf-8') as f:
+        json.dump(db, f, indent=4, ensure_ascii=False)
 
 def lancia_allerta_esotica():
     if not os.path.exists('database_beta.json'):
@@ -18,24 +31,53 @@ def lancia_allerta_esotica():
         print("Nessun segnale esotico di valore trovato oggi.")
         return
         
-    # Prendiamo solo i 3 segnali più forti in assoluto
     top_segnali = segnali[:3]
     
+    db_principale = carica_database_principale()
+    fuso_italia = ZoneInfo("Europe/Rome")
+    oggi_str = datetime.now(fuso_italia).strftime("%d/%m/%Y")
+    budget_base = 10.0
+    
     msg = f"⚠️ **SEGNALI BETA: MERCATI ESOTICI (SINGOLE)** ⚠️\n\n"
-    msg += "Il modello matematico ha individuato fortissime anomalie statistiche sui mercati secondari. Verifica le quote sul tuo bookmaker di fiducia (Snai, Bet365, Eurobet) e piazza la giocata SOLO se l'offerta supera la nostra quota di ingresso minima.\n\n"
+    msg += "Il modello matematico ha individuato fortissime anomalie statistiche. Verifica le quote e piazza la giocata SOLO se l'offerta supera la quota minima.\n\n"
     
     for s in top_segnali:
+        squadre = s['match'].split(" - ")
+        casa = squadre[0] if len(squadre) > 1 else s['match']
+        trasferta = squadre[1] if len(squadre) > 1 else ""
+        
+        # Salvataggio nel database della dashboard
+        db_principale['schedine'].append({
+            'id': str(uuid.uuid4())[:8],
+            'modello': 'beta',
+            'data_creazione': oggi_str,
+            'importo': budget_base,
+            'quota_totale': s['quota_ingresso_minima'],
+            'ritorno_potenziale': round(budget_base * s['quota_ingresso_minima'], 2),
+            'stato_schedina': 'in attesa',
+            'partite': [{
+                'squadra_casa': casa,
+                'squadra_trasferta': trasferta,
+                'pronostico': s['pronostico'],
+                'quota': s['quota_ingresso_minima'],
+                'stato': 'in attesa',
+                'risultato_reale': ''
+            }]
+        })
+        
         msg += f"⚽ **{s['data']} | {s['match']}**\n"
         msg += f"🎯 **Mercato**: {s['mercato']}\n"
         msg += f"🔥 **Pronostico**: {s['pronostico']}\n"
         msg += f"📊 Probabilità matematica: {s['probabilita']}%\n"
-        msg += f"💰 **QUOTA MINIMA DA GIOCARE**: @{s['quota_ingresso_minima']}\n\n"
+        msg += f"💰 **QUOTA MINIMA DA GIOCARE**: @{s['quota_ingresso_minima']}\n"
+        msg += f"💼 **STAKE CONSIGLIATO**: Investire il **{s.get('stake_cassa_perc', 1.0)}%** della cassa.\n\n"
         
     msg += "La disciplina fa la differenza. Se il bookmaker offre di meno, scarta la giocata.\n\n"
     msg += "**#Angoli #Cartellini #SingoleDiValore #ValueBetting**"
     
+    salva_database_principale(db_principale)
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    print("Allerta Beta inviata su Telegram con successo.")
+    print("Allerta Beta inviata e salvata sulla dashboard con successo.")
 
 if __name__ == "__main__":
     lancia_allerta_esotica()
