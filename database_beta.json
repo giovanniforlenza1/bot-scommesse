@@ -1,4 +1,141 @@
 {
-    "ultimo_aggiornamento": "2026-10-03 15:35",
-    "segnali": []
+    "ultimo_aggiornamento": "2026-10-03 15:39",
+    "segnali": [
+        {
+            "match": "Estonia - Lussemburgo",
+            "data": "03/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 69.1,
+            "quota_ingresso_minima": 1.52
+        },
+        {
+            "match": "Svizzera - Slovenia",
+            "data": "03/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 67.7,
+            "quota_ingresso_minima": 1.55
+        },
+        {
+            "match": "Azerbaijan - Lithuania",
+            "data": "04/10 15:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 67.1,
+            "quota_ingresso_minima": 1.57
+        },
+        {
+            "match": "Malta - Andorra",
+            "data": "04/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 64.6,
+            "quota_ingresso_minima": 1.62
+        },
+        {
+            "match": "Republic of Ireland - Israel",
+            "data": "04/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 64.1,
+            "quota_ingresso_minima": 1.64
+        },
+        {
+            "match": "Finlandia - Albania",
+            "data": "03/10 15:01",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 64.0,
+            "quota_ingresso_minima": 1.64
+        },
+        {
+            "match": "Kosovo - Austria",
+            "data": "04/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 63.1,
+            "quota_ingresso_minima": 1.66
+        },
+        {
+            "match": "North Macedonia - Scozia",
+            "data": "03/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 62.0,
+            "quota_ingresso_minima": 1.69
+        },
+        {
+            "match": "Galles - Danimarca",
+            "data": "04/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 61.8,
+            "quota_ingresso_minima": 1.7
+        },
+        {
+            "match": "Islanda - Bulgaria",
+            "data": "03/10 18:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 61.6,
+            "quota_ingresso_minima": 1.7
+        },
+        {
+            "match": "Greece - Germania",
+            "data": "04/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 60.2,
+            "quota_ingresso_minima": 1.74
+        },
+        {
+            "match": "Croazia - Inghilterra",
+            "data": "03/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 59.8,
+            "quota_ingresso_minima": 1.76
+        },
+        {
+            "match": "Finlandia - Albania",
+            "data": "03/10 15:01",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 59.7,
+            "quota_ingresso_minima": 1.76
+        },
+        {
+            "match": "Portogallo - Norvegia",
+            "data": "04/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 56.6,
+            "quota_ingresso_minima": 1.86
+        },
+        {
+            "match": "North Macedonia - Scozia",
+            "data": "03/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 56.4,
+            "quota_ingresso_minima": 1.86
+        },
+        {
+            "match": "Islanda - Bulgaria",
+            "data": "03/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 56.3,
+            "quota_ingresso_minima": 1.86
+        },
+        {
+            "match": "Malta - Andorra",
+            "data": "04/10 18:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 56.1,
+            "quota_ingresso_minima": 1.87
+        }
+    ]
 }
