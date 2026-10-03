@@ -220,7 +220,7 @@ def crea_schedina(db):
         'stato_schedina': 'in attesa', 'partite': finalisti
     })
     
-    msg = f"🚀 **nuova selezione di valore certificata**\n\n**Modello Alpha** ha analizzato i palinsesti e blindato una nuova giocata statistica.\n\n"
+    msg = f"🚀 **ALPHA**"
     msg += f"📊 quota totale: {quota_totale}\n💰 stake simulato: 10.0€\n\n"
     for c in finalisti: 
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n🎯 {c['pronostico'].upper()} (@{c['quota']})\n\n"
