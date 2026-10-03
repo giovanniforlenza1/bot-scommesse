@@ -36,9 +36,6 @@ def lancia_allerta_esotica():
     oggi_str = datetime.now(fuso_italia).strftime("%d/%m/%Y")
     budget_base = 10.0
     
-    msg = "**MODELLO BETA**\n\n"
-    msg += "**singole su mercati esotici.**\n\n"
-    
     for s in top_segnali:
         squadre = s['match'].split(" - ")
         casa = squadre[0] if len(squadre) > 1 else s['match']
@@ -62,16 +59,18 @@ def lancia_allerta_esotica():
             }]
         })
         
+        msg = "**MODELLO BETA**\n\n"
+        msg += "**singola su mercato esotico.**\n\n"
         msg += f"⚽ **{s['data']} | {s['match']}**\n"
         msg += f"🎯 **mercato**: {s['mercato'].lower()}\n"
         msg += f"🔥 **pronostico**: {s['pronostico'].lower()}\n"
         msg += f"💰 **quota minima**: @{s['quota_ingresso_minima']}\n"
         msg += f"💼 **stake**: {s.get('stake_cassa_perc', 1.0)}% della cassa\n\n"
+        msg += "**#BettingProfessionale #Singole #ValueBetting**"
         
-    msg += "**#BettingProfessionale #PronosticiCalcio #ValueBetting #Singole**"
-    
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
+        
     salva_database_principale(db_principale)
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
 
 if __name__ == "__main__":
     lancia_allerta_esotica()
