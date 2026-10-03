@@ -20,7 +20,6 @@ def salva_database_principale(db):
 
 def lancia_allerta_esotica():
     if not os.path.exists('database_beta.json'):
-        print("Nessun database Beta trovato.")
         return
         
     with open('database_beta.json', 'r', encoding='utf-8') as f:
@@ -28,7 +27,6 @@ def lancia_allerta_esotica():
         
     segnali = db.get("segnali", [])
     if not segnali:
-        print("Nessun segnale esotico di valore trovato oggi.")
         return
         
     top_segnali = segnali[:3]
@@ -38,15 +36,14 @@ def lancia_allerta_esotica():
     oggi_str = datetime.now(fuso_italia).strftime("%d/%m/%Y")
     budget_base = 10.0
     
-    msg = f"⚠️ **SEGNALI BETA: MERCATI ESOTICI (SINGOLE)** ⚠️\n\n"
-    msg += "Il modello matematico ha individuato fortissime anomalie statistiche. Verifica le quote e piazza la giocata SOLO se l'offerta supera la quota minima.\n\n"
+    msg = "**MODELLO BETA**\n\n"
+    msg += "**singole su mercati esotici.**\n\n"
     
     for s in top_segnali:
         squadre = s['match'].split(" - ")
         casa = squadre[0] if len(squadre) > 1 else s['match']
         trasferta = squadre[1] if len(squadre) > 1 else ""
         
-        # Salvataggio nel database della dashboard
         db_principale['schedine'].append({
             'id': str(uuid.uuid4())[:8],
             'modello': 'beta',
@@ -66,18 +63,15 @@ def lancia_allerta_esotica():
         })
         
         msg += f"⚽ **{s['data']} | {s['match']}**\n"
-        msg += f"🎯 **Mercato**: {s['mercato']}\n"
-        msg += f"🔥 **Pronostico**: {s['pronostico']}\n"
-        msg += f"📊 Probabilità matematica: {s['probabilita']}%\n"
-        msg += f"💰 **QUOTA MINIMA DA GIOCARE**: @{s['quota_ingresso_minima']}\n"
-        msg += f"💼 **STAKE CONSIGLIATO**: Investire il **{s.get('stake_cassa_perc', 1.0)}%** della cassa.\n\n"
+        msg += f"🎯 **mercato**: {s['mercato'].lower()}\n"
+        msg += f"🔥 **pronostico**: {s['pronostico'].lower()}\n"
+        msg += f"💰 **quota minima**: @{s['quota_ingresso_minima']}\n"
+        msg += f"💼 **stake**: {s.get('stake_cassa_perc', 1.0)}% della cassa\n\n"
         
-    msg += "La disciplina fa la differenza. Se il bookmaker offre di meno, scarta la giocata.\n\n"
-    msg += "**#Angoli #Cartellini #SingoleDiValore #ValueBetting**"
+    msg += "**#BettingProfessionale #PronosticiCalcio #ValueBetting #Singole**"
     
     salva_database_principale(db_principale)
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    print("Allerta Beta inviata e salvata sulla dashboard con successo.")
 
 if __name__ == "__main__":
     lancia_allerta_esotica()
