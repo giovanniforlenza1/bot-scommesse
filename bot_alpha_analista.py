@@ -19,42 +19,20 @@ TRADUZIONI_NAZIONALI = {
     "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
     "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
     "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
-    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
-    "Kazakhstan": "Kazakistan", "Moldova": "Moldavia", "Cyprus": "Cipro",
-    "Armenia": "Armenia", "Latvia": "Lettonia", "Montenegro": "Montenegro",
-    "Georgia": "Georgia", "Ukraine": "Ucraina", "Northern Ireland": "Irlanda del Nord",
-    "Romania": "Romania", "Bosnia & Herzegovina": "Bosnia Erzegovina",
-    "Faroe Islands": "Isole Faroe", "Slovakia": "Slovacchia", "Finland": "Finlandia",
-    "Belarus": "Bielorussia", "San Marino": "San Marino", "Iceland": "Islanda",
-    "Bulgaria": "Bulgaria", "Estonia": "Estonia", "Luxembourg": "Lussemburgo"
+    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia"
 }
 
 def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
-def calcola_quota_reale(quote):
-    prob_implicita = sum(1 / q for q in quote) 
-    prob_reali = [(1 / q) / prob_implicita for q in quote]
-    return prob_reali, quote
-
-def calcola_dutching_dnb(quota_favorita, quota_pareggio):
-    # calcoliamo la percentuale di cassa da mettere sulla X per avere il rimborso totale
-    stake_copertura_x = 1 / quota_pareggio
-    # il resto va sulla vittoria della favorita
-    stake_vittoria = 1 - stake_copertura_x
-    
-    # la quota sintetica reale che otteniamo al netto della copertura
-    quota_sintetica_dnb = (stake_vittoria * quota_favorita)
-    return round(quota_sintetica_dnb, 2), round(stake_vittoria * 100, 1), round(stake_copertura_x * 100, 1)
-
-def genera_analisi_sicurezza():
+def genera_raddoppio_cassaforte():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
-    limite_temporale = oggi + timedelta(days=2)
+    limite_temporale = oggi + timedelta(days=5)
     
-    database_alpha = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "cassaforte": []}
+    database_alpha = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "schedine": []}
     
-    print("avvio Modello Alpha: costruzione quote sintetiche protette (Dutching)...")
+    partite_sicure = []
     
     for camp in CAMPIONATI:
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
@@ -78,47 +56,56 @@ def genera_analisi_sicurezza():
                             
             if not q_1_list or not q_x_list or not q_2_list: continue
             
-            avg_1, avg_x, avg_2 = sum(q_1_list)/len(q_1_list), sum(q_x_list)/len(q_x_list), sum(q_2_list)/len(q_2_list)
-            prob_reali, quote_medie = calcola_quota_reale([avg_1, avg_x, avg_2])
+            avg_1 = sum(q_1_list)/len(q_1_list)
+            avg_x = sum(q_x_list)/len(q_x_list)
+            avg_2 = sum(q_2_list)/len(q_2_list)
             
-            # alpha interviene solo se c'è una favorita con almeno il 50% di probabilità pura
-            miglior_prob = max(prob_reali[0], prob_reali[2])
-            if miglior_prob < 0.50: continue
+            prob_implicita = (1/avg_1) + (1/avg_x) + (1/avg_2)
+            prob_1 = (1/avg_1) / prob_implicita
+            prob_2 = (1/avg_2) / prob_implicita
+            
+            miglior_prob = max(prob_1, prob_2)
+            if miglior_prob < 0.60: continue 
             
             home_ita = traduci_squadra(m['home_team'])
             away_ita = traduci_squadra(m['away_team'])
             
-            if prob_reali[0] > prob_reali[2]:
-                squadra_fav = home_ita
-                q_fav = avg_1
-                pronostico = "1 DNB Sintetico"
+            if prob_1 > prob_2:
+                pronostico = "1"
+                quota_scelta = avg_1
             else:
-                squadra_fav = away_ita
-                q_fav = avg_2
-                pronostico = "2 DNB Sintetico"
+                pronostico = "2"
+                quota_scelta = avg_2
                 
-            quota_sintetica, split_fav, split_x = calcola_dutching_dnb(q_fav, avg_x)
-            
-            # operiamo solo se la quota sintetica pulita vale almeno 1.15
-            if quota_sintetica >= 1.15:
-                database_alpha["cassaforte"].append({
-                    "match": f"{home_ita} - {away_ita}",
-                    "data": data_partita.strftime("%d/%m %H:%M"),
-                    "favorita": squadra_fav,
-                    "pronostico": pronostico,
-                    "quota_protetta": quota_sintetica,
-                    "probabilita_vittoria": round(miglior_prob * 100, 1),
-                    "split_cassa_vittoria": split_fav,
-                    "split_cassa_pareggio": split_x
-                })
+            partite_sicure.append({
+                "match": f"{home_ita} - {away_ita}",
+                "squadra_casa": home_ita,
+                "squadra_trasferta": away_ita,
+                "data": data_partita.strftime("%d/%m %H:%M"),
+                "pronostico": pronostico,
+                "quota": round(quota_scelta, 2),
+                "probabilita": round(miglior_prob * 100, 1)
+            })
 
-    # ordiniamo dalla più probabile alla meno probabile per blindare il profitto
-    database_alpha["cassaforte"] = sorted(database_alpha["cassaforte"], key=lambda x: x["probabilita_vittoria"], reverse=True)
+    partite_sicure = sorted(partite_sicure, key=lambda x: x["probabilita"], reverse=True)
     
+    schedina_corrente = []
+    quota_totale = 1.0
+    
+    for p in partite_sicure:
+        schedina_corrente.append(p)
+        quota_totale *= p['quota']
+        
+        if quota_totale >= 1.80 or len(schedina_corrente) >= 3:
+            database_alpha["schedine"].append({
+                "quota_totale": round(quota_totale, 2),
+                "partite": schedina_corrente
+            })
+            schedina_corrente = []
+            quota_totale = 1.0
+
     with open('database_alpha.json', 'w', encoding='utf-8') as f:
         json.dump(database_alpha, f, indent=4, ensure_ascii=False)
-        
-    print(f"Modello Alpha: generate {len(database_alpha['cassaforte'])} roccaforti matematiche.")
 
 if __name__ == "__main__":
-    genera_analisi_sicurezza()
+    genera_raddoppio_cassaforte()
