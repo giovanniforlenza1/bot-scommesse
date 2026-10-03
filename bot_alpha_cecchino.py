@@ -20,7 +20,6 @@ def salva_database_principale(db):
 
 def lancia_allerta_dutching():
     if not os.path.exists('database_alpha.json'):
-        print("nessun database Alpha trovato.")
         return
         
     with open('database_alpha.json', 'r', encoding='utf-8') as f:
@@ -28,7 +27,6 @@ def lancia_allerta_dutching():
         
     segnali = db.get("cassaforte", [])
     if not segnali:
-        print("nessuna quota sicura rilevata oggi per la costruzione del dutching.")
         return
         
     top_segnali = segnali[:3]
@@ -38,19 +36,17 @@ def lancia_allerta_dutching():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi_str = datetime.now(fuso_italia).strftime("%d/%m/%Y")
     
-    msg = f"🛡️ **SEGNALI ALPHA: DUTCHING SINTETICO (BASSO RISCHIO)** 🛡️\n\n"
-    msg += "il modello ha individuato le favorite più solide del mercato. per battere il margine dei bookmaker, divideremo matematicamente la puntata per assicurarci il rimborso totale in caso di pareggio.\n\n"
+    msg = "**MODELLO ALPHA**\n\n"
+    msg += "**strategia di copertura matematica.**\n\n"
     
     for s in top_segnali:
         importo_vittoria = round((s['split_cassa_vittoria'] / 100) * budget_simulato, 2)
         importo_pareggio = round((s['split_cassa_pareggio'] / 100) * budget_simulato, 2)
         
-        # Estrapoliamo i nomi per la dashboard
         squadre = s['match'].split(" - ")
         casa = squadre[0] if len(squadre) > 1 else s['match']
         trasferta = squadre[1] if len(squadre) > 1 else ""
         
-        # Salvataggio nel database della dashboard
         db_principale['schedine'].append({
             'id': str(uuid.uuid4())[:8],
             'modello': 'alpha',
@@ -70,19 +66,16 @@ def lancia_allerta_dutching():
         })
         
         msg += f"⚽ **{s['data']} | {s['match']}**\n"
-        msg += f"🎯 **Giocata di Copertura**: {s['pronostico']}\n"
-        msg += f"📊 Probabilità matematica: {s['probabilita_vittoria']}%\n"
-        msg += f"🔥 **QUOTA SINTETICA**: @{s['quota_protetta']}\n\n"
-        msg += f"💼 **COME PIAZZARE {budget_simulato}€**:\n"
-        msg += f"👉 Puntare **{importo_vittoria}€** sulla vittoria di: {s['favorita']}\n"
-        msg += f"👉 Puntare **{importo_pareggio}€** sul Pareggio (X)\n\n"
+        msg += f"🎯 **giocata**: {s['pronostico'].lower()}\n"
+        msg += f"🔥 **quota sintetica**: @{s['quota_protetta']}\n"
+        msg += f"💼 **budget {budget_simulato}€ diviso così**:\n"
+        msg += f"👉 **{importo_vittoria}€** su vittoria {s['favorita']}\n"
+        msg += f"👉 **{importo_pareggio}€** su pareggio\n\n"
         
-    msg += "rispettare rigorosamente questa divisione del budget. l'unico rischio residuo è la vittoria della sfavorita.\n\n"
-    msg += "**#CoperturaMatematica #BettingProfessionale #DNB #Dutching #TradingSportivo**"
+    msg += "**#TradingSportivo #ValueBetting #PronosticiCalcio**"
     
     salva_database_principale(db_principale)
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    print("allerta Alpha inviata e salvata sulla dashboard con successo.")
 
 if __name__ == "__main__":
     lancia_allerta_dutching()
