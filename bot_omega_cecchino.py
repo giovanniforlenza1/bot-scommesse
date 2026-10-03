@@ -164,8 +164,8 @@ def esegui_cecchino():
     salva_database_principale(db_principale)
     
     # generazione del copy social in ottica SEO
-    msg = f"🎯 **esecuzione del modello Omega quantitativo completata**\n\n"
-    msg += "il nostro algoritmo ha analizzato il mercato globale ed estratto il vero vantaggio matematico. i bookmaker stanno sottovalutando queste probabilità.\n\n"
+    msg = f"🎯 **OMEGA / ETL predittiva**\n\n"
+    msg += "I bookmaker stanno sottovalutando queste probabilità.\n\n"
     msg += f"📊 **quota totale**: {quota_totale}\n💰 **stake simulato**: 10.0€\n\n"
     
     for c in finalisti:
