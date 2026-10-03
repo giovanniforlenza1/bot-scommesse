@@ -8,9 +8,30 @@ from zoneinfo import ZoneInfo
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
 
 CAMPIONATI = [
-    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
-    'soccer_germany_bundesliga', 'soccer_uefa_champs_league'
+    'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl', 
+    'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
 ]
+
+TRADUZIONI_NAZIONALI = {
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
+    "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
+    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
+    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
+    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
+    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
+    "Kazakhstan": "Kazakistan", "Moldova": "Moldavia", "Cyprus": "Cipro",
+    "Armenia": "Armenia", "Latvia": "Lettonia", "Montenegro": "Montenegro",
+    "Georgia": "Georgia", "Ukraine": "Ucraina", "Northern Ireland": "Irlanda del Nord",
+    "Romania": "Romania", "Bosnia & Herzegovina": "Bosnia Erzegovina",
+    "Faroe Islands": "Isole Faroe", "Slovakia": "Slovacchia", "Finland": "Finlandia",
+    "Belarus": "Bielorussia", "San Marino": "San Marino", "Iceland": "Islanda",
+    "Bulgaria": "Bulgaria", "Estonia": "Estonia", "Luxembourg": "Lussemburgo"
+}
+
+def traduci_squadra(nome):
+    return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
 def calcola_quota_reale(quote):
     prob_implicita = sum(1 / q for q in quote) 
@@ -18,7 +39,6 @@ def calcola_quota_reale(quote):
     return prob_reali
 
 def poisson_over_prob(lam, target):
-    # Calcola la probabilità esatta matematica di un Over usando Poisson
     prob_under_or_equal = sum((math.exp(-lam) * (lam**k)) / math.factorial(k) for k in range(math.floor(target) + 1))
     return 1 - prob_under_or_equal
 
@@ -56,22 +76,22 @@ def genera_analisi_esotica():
             avg_1, avg_x, avg_2 = sum(q_1_list)/len(q_1_list), sum(q_x_list)/len(q_x_list), sum(q_2_list)/len(q_2_list)
             prob_reali = calcola_quota_reale([avg_1, avg_x, avg_2])
             
-            # MODELLO CARTELLINI: basato sulla tensione del match (probabilità di pareggio alta = match teso)
-            tensione_match = prob_reali[1] / 0.35 # normalizzato
+            home_ita = traduci_squadra(m['home_team'])
+            away_ita = traduci_squadra(m['away_team'])
+            
+            tensione_match = prob_reali[1] / 0.35 
             cartellini_attesi = 3.5 + (tensione_match * 2.5)
             prob_over_4_5_cards = poisson_over_prob(cartellini_attesi, 4.5)
             
-            # MODELLO ANGOLI: basato sullo sbilanciamento offensivo (differenza tra le forze in campo)
             squilibrio = abs(prob_reali[0] - prob_reali[2])
             angoli_attesi = 8.5 + (squilibrio * 4.0)
             prob_over_9_5_corners = poisson_over_prob(angoli_attesi, 9.5)
             
-            # Isoliamo solo gli eventi con un vantaggio matematico schiacciante (> 55% di probabilità pura)
             if prob_over_4_5_cards > 0.55:
-                quota_equa = round((1 / prob_over_4_5_cards) * 1.05, 2) # Aggiungiamo 5% di vantaggio per noi
+                quota_equa = round((1 / prob_over_4_5_cards) * 1.05, 2) 
                 if 1.50 <= quota_equa <= 2.00:
                     database_beta["segnali"].append({
-                        "match": f"{m['home_team']} - {m['away_team']}",
+                        "match": f"{home_ita} - {away_ita}",
                         "data": data_partita.strftime("%d/%m %H:%M"),
                         "mercato": "Cartellini",
                         "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
@@ -83,7 +103,7 @@ def genera_analisi_esotica():
                 quota_equa = round((1 / prob_over_9_5_corners) * 1.05, 2)
                 if 1.50 <= quota_equa <= 2.00:
                     database_beta["segnali"].append({
-                        "match": f"{m['home_team']} - {m['away_team']}",
+                        "match": f"{home_ita} - {away_ita}",
                         "data": data_partita.strftime("%d/%m %H:%M"),
                         "mercato": "Calci d'Angolo",
                         "pronostico": "Over 9.5 Calci d'Angolo",
@@ -91,7 +111,6 @@ def genera_analisi_esotica():
                         "quota_ingresso_minima": quota_equa
                     })
 
-    # Ordiniamo per probabilità decrescente (i più sicuri in cima)
     database_beta["segnali"] = sorted(database_beta["segnali"], key=lambda x: x["probabilita"], reverse=True)
     
     with open('database_beta.json', 'w', encoding='utf-8') as f:
