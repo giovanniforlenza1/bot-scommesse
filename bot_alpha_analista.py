@@ -15,8 +15,18 @@ CAMPIONATI = [
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
     "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
-    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia"
-    # Aggiungi le altre nazioni per esteso come nei modelli precedenti
+    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
+    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
+    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
+    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
+    "Kazakhstan": "Kazakistan", "Moldova": "Moldavia", "Cyprus": "Cipro",
+    "Armenia": "Armenia", "Latvia": "Lettonia", "Montenegro": "Montenegro",
+    "Georgia": "Georgia", "Ukraine": "Ucraina", "Northern Ireland": "Irlanda del Nord",
+    "Romania": "Romania", "Bosnia & Herzegovina": "Bosnia Erzegovina",
+    "Faroe Islands": "Isole Faroe", "Slovakia": "Slovacchia", "Finland": "Finlandia",
+    "Belarus": "Bielorussia", "San Marino": "San Marino", "Iceland": "Islanda",
+    "Bulgaria": "Bulgaria", "Estonia": "Estonia", "Luxembourg": "Lussemburgo"
 }
 
 def traduci_squadra(nome):
@@ -71,9 +81,9 @@ def genera_analisi_sicurezza():
             avg_1, avg_x, avg_2 = sum(q_1_list)/len(q_1_list), sum(q_x_list)/len(q_x_list), sum(q_2_list)/len(q_2_list)
             prob_reali, quote_medie = calcola_quota_reale([avg_1, avg_x, avg_2])
             
-            # alpha interviene solo se c'è una favorita molto solida (oltre il 60% di probabilità pura)
+            # alpha interviene solo se c'è una favorita con almeno il 50% di probabilità pura
             miglior_prob = max(prob_reali[0], prob_reali[2])
-            if miglior_prob < 0.60: continue
+            if miglior_prob < 0.50: continue
             
             home_ita = traduci_squadra(m['home_team'])
             away_ita = traduci_squadra(m['away_team'])
@@ -89,8 +99,8 @@ def genera_analisi_sicurezza():
                 
             quota_sintetica, split_fav, split_x = calcola_dutching_dnb(q_fav, avg_x)
             
-            # proteggiamo il portafoglio: operiamo solo se la quota sintetica pulita vale almeno 1.35
-            if quota_sintetica >= 1.35:
+            # operiamo solo se la quota sintetica pulita vale almeno 1.15
+            if quota_sintetica >= 1.15:
                 database_alpha["cassaforte"].append({
                     "match": f"{home_ita} - {away_ita}",
                     "data": data_partita.strftime("%d/%m %H:%M"),
