@@ -10,14 +10,9 @@ CHAT_ID = os.environ.get("CHAT_ID")
 ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
 
 campionati = [
-    'soccer_uefa_nations_league',
-    'soccer_italy_serie_a',
-    'soccer_epl',
-    'soccer_spain_la_liga',
-    'soccer_germany_bundesliga',
-    'soccer_france_ligue_one',
-    'soccer_uefa_champs_league', 
-    'soccer_uefa_europa_league'
+    'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
+    'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
 ]
 
 siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Betfair', 'William Hill', 'Unibet']
@@ -66,7 +61,6 @@ def esegui_cecchino():
     db_analisi = carica_database_analisi()
     
     if not db_analisi or not db_analisi.get('analisi'):
-        print("nessun database di analisi trovato o database vuoto.")
         return
         
     candidati_valore = []
@@ -82,7 +76,6 @@ def esegui_cecchino():
                 nome_casa_ita = traduci_squadra(p_live['home_team'])
                 nome_trasf_ita = traduci_squadra(p_live['away_team'])
                 
-                # cerchiamo se la partita è tra quelle selezionate dall'analista
                 analisi_match = next((a for a in db_analisi['analisi'] if nome_casa_ita in a['match']), None)
                 if not analisi_match: continue
                 
@@ -101,12 +94,9 @@ def esegui_cecchino():
                             nome_esito_originale = out.get('name', '')
                             is_match = False
                             
-                            # logica avanzata per riconoscere il pareggio
                             if "pareggio" in pronostico_richiesto.lower():
                                 if nome_esito_originale.lower() == 'draw':
                                     is_match = True
-                            
-                            # logica avanzata per riconoscere le vittorie (con traduzione dinamica dell'esito)
                             elif "vittoria" in pronostico_richiesto.lower():
                                 squadra_vincente_ita = pronostico_richiesto.lower().replace("vittoria ", "").strip()
                                 nome_esito_ita = traduci_squadra(nome_esito_originale).lower()
@@ -117,7 +107,6 @@ def esegui_cecchino():
                                 miglior_quota = q_attuale
                                 book_vincente = book.get('title', '')
                                 
-                # il cecchino spara solo se il mercato offre una quota uguale o superiore al vantaggio matematico
                 if miglior_quota >= quota_minima:
                     data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
                     candidati_valore.append({
@@ -128,7 +117,7 @@ def esegui_cecchino():
                         'pronostico': pronostico_richiesto,
                         'quota': miglior_quota,
                         'bookmaker': book_vincente,
-                        'score': miglior_quota - quota_minima, # il nostro vantaggio sul mercato
+                        'score': miglior_quota - quota_minima,
                         'stato': 'in attesa',
                         'risultato_reale': ''
                     })
@@ -136,10 +125,8 @@ def esegui_cecchino():
             continue
             
     if not candidati_valore:
-        print("il mercato non sta offrendo le quote minime richieste. nessuna giocata effettuata per preservare il capitale.")
         return
         
-    # selezioniamo i 3 eventi con il vantaggio matematico più largo in assoluto
     finalisti = sorted(candidati_valore, key=lambda x: x['score'], reverse=True)[:3]
     
     quota_totale = 1.0
@@ -147,7 +134,6 @@ def esegui_cecchino():
     quota_totale = round(quota_totale, 2)
     
     if len(finalisti) < 2 or quota_totale < 2.00:
-        print("giocata annullata: eventi di valore insufficienti o quota combinata troppo bassa.")
         return
         
     db_principale = carica_database_principale()
@@ -163,21 +149,19 @@ def esegui_cecchino():
     })
     salva_database_principale(db_principale)
     
-    # generazione del copy social in ottica SEO
-    msg = f"🎯 **OMEGA / ETL predittiva**\n\n"
-    msg += "I bookmaker stanno sottovalutando queste probabilità.\n\n"
-    msg += f"📊 **quota totale**: {quota_totale}\n💰 **stake simulato**: 10.0€\n\n"
+    msg = "**MODELLO OMEGA**\n\n"
+    msg += "**schedina quantitativa.**\n\n"
+    msg += f"📊 **quota totale**: {quota_totale}\n"
+    msg += f"💰 **stake simulato**: 10.0€\n\n"
     
     for c in finalisti:
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n"
-        msg += f"🎯 **giocata**: {c['pronostico']} (@{c['quota']})\n"
-        msg += f"🏦 **trovata su**: {c['bookmaker']}\n\n"
+        msg += f"🎯 **giocata**: {c['pronostico'].lower()} (@{c['quota']})\n"
+        msg += f"🏦 **bookmaker**: {c['bookmaker']}\n\n"
         
-    msg += "tutti i dati e i calcoli di de-vigging sono registrati e visibili in trasparenza sulla nostra dashboard pubblica.\n\n"
-    msg += "**#PronosticiCalcio #ValueBetting #TradingSportivo #Betting**"
+    msg += "**#AlgoritmiPredittivi #ValueBetting #PronosticiCalcio #TradingSportivo**"
     
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    print("giocata piazzata con successo. il vantaggio è nostro.")
 
 if __name__ == "__main__":
     esegui_cecchino()
