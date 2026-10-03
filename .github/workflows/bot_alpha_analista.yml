@@ -1,0 +1,35 @@
+name: Esegui Alpha Analista
+
+on:
+  schedule:
+    - cron: '0 7 * * *' # Gira ogni mattina alle 07:00 UTC (09:00 in Italia)
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Installa dipendenze
+        run: pip install requests tzdata
+
+      - name: Esegui Analista Alpha
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python bot_alpha_analista.py
+
+      - name: Salva database Alpha
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add database_alpha.json
+          git commit -m "Aggiornamento Database Alpha (Dutching)" || echo "Nessuna modifica"
+          git push
