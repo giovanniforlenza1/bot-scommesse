@@ -628,6 +628,41 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "035682b6",
+            "modello": "alpha",
+            "data_creazione": "04/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.42,
+            "ritorno_potenziale": 14.2,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Svizzera",
+                    "squadra_trasferta": "North Macedonia",
+                    "pronostico": "1",
+                    "quota": 1.1,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Olanda",
+                    "squadra_trasferta": "Serbia",
+                    "pronostico": "1",
+                    "quota": 1.13,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Inghilterra",
+                    "squadra_trasferta": "Czech Republic",
+                    "pronostico": "1",
+                    "quota": 1.14,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
