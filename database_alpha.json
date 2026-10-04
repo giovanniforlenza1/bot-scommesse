@@ -1,49 +1,26 @@
 {
-    "ultimo_aggiornamento": "2026-10-03 16:41",
+    "ultimo_aggiornamento": "2026-10-04 15:00",
     "schedine": [
         {
-            "quota_totale": 1.18,
+            "quota_totale": 1.42,
             "partite": [
                 {
-                    "match": "Spagna - Czech Republic",
-                    "squadra_casa": "Spagna",
-                    "squadra_trasferta": "Czech Republic",
-                    "data": "03/10 20:45",
+                    "match": "Svizzera - North Macedonia",
+                    "squadra_casa": "Svizzera",
+                    "squadra_trasferta": "North Macedonia",
+                    "data": "06/10 20:45",
                     "pronostico": "1",
-                    "quota": 1.05,
-                    "probabilita": 90.5
+                    "quota": 1.1,
+                    "probabilita": 85.4
                 },
-                {
-                    "match": "Belarus - San Marino",
-                    "squadra_casa": "Belarus",
-                    "squadra_trasferta": "San Marino",
-                    "data": "03/10 18:00",
-                    "pronostico": "1",
-                    "quota": 1.06,
-                    "probabilita": 89.1
-                },
-                {
-                    "match": "Finland - Albania",
-                    "squadra_casa": "Finland",
-                    "squadra_trasferta": "Albania",
-                    "data": "03/10 15:01",
-                    "pronostico": "1",
-                    "quota": 1.06,
-                    "probabilita": 87.3
-                }
-            ]
-        },
-        {
-            "quota_totale": 1.78,
-            "partite": [
                 {
                     "match": "Olanda - Serbia",
                     "squadra_casa": "Olanda",
                     "squadra_trasferta": "Serbia",
                     "data": "04/10 20:45",
                     "pronostico": "1",
-                    "quota": 1.16,
-                    "probabilita": 81.5
+                    "quota": 1.13,
+                    "probabilita": 83.9
                 },
                 {
                     "match": "Inghilterra - Czech Republic",
@@ -51,31 +28,31 @@
                     "squadra_trasferta": "Czech Republic",
                     "data": "06/10 20:45",
                     "pronostico": "1",
-                    "quota": 1.18,
-                    "probabilita": 79.1
-                },
-                {
-                    "match": "Svizzera - Slovenia",
-                    "squadra_casa": "Svizzera",
-                    "squadra_trasferta": "Slovenia",
-                    "data": "03/10 20:45",
-                    "pronostico": "1",
-                    "quota": 1.3,
-                    "probabilita": 72.9
+                    "quota": 1.14,
+                    "probabilita": 82.9
                 }
             ]
         },
         {
-            "quota_totale": 2.06,
+            "quota_totale": 2.58,
             "partite": [
                 {
-                    "match": "Iceland - Bulgaria",
-                    "squadra_casa": "Iceland",
-                    "squadra_trasferta": "Bulgaria",
-                    "data": "03/10 18:00",
-                    "pronostico": "1",
-                    "quota": 1.43,
-                    "probabilita": 65.8
+                    "match": "Croazia - Spagna",
+                    "squadra_casa": "Croazia",
+                    "squadra_trasferta": "Spagna",
+                    "data": "06/10 20:45",
+                    "pronostico": "2",
+                    "quota": 1.28,
+                    "probabilita": 73.7
+                },
+                {
+                    "match": "Moldova - Slovakia",
+                    "squadra_casa": "Moldova",
+                    "squadra_trasferta": "Slovakia",
+                    "data": "06/10 20:45",
+                    "pronostico": "2",
+                    "quota": 1.4,
+                    "probabilita": 66.3
                 },
                 {
                     "match": "Italia - Turchia",
@@ -84,22 +61,13 @@
                     "data": "05/10 20:45",
                     "pronostico": "1",
                     "quota": 1.44,
-                    "probabilita": 65.4
+                    "probabilita": 65.8
                 }
             ]
         },
         {
-            "quota_totale": 2.14,
+            "quota_totale": 2.31,
             "partite": [
-                {
-                    "match": "Croazia - Spagna",
-                    "squadra_casa": "Croazia",
-                    "squadra_trasferta": "Spagna",
-                    "data": "06/10 20:45",
-                    "pronostico": "2",
-                    "quota": 1.4,
-                    "probabilita": 64.5
-                },
                 {
                     "match": "Francia - Belgio",
                     "squadra_casa": "Francia",
@@ -107,7 +75,16 @@
                     "data": "05/10 20:45",
                     "pronostico": "1",
                     "quota": 1.53,
-                    "probabilita": 61.6
+                    "probabilita": 62.0
+                },
+                {
+                    "match": "Montenegro - Armenia",
+                    "squadra_casa": "Montenegro",
+                    "squadra_trasferta": "Armenia",
+                    "data": "05/10 20:45",
+                    "pronostico": "1",
+                    "quota": 1.51,
+                    "probabilita": 61.5
                 }
             ]
         }
