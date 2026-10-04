@@ -663,6 +663,41 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "9916e4a4",
+            "modello": "omega",
+            "data_creazione": "04/10/2026",
+            "importo": 10.0,
+            "quota_totale": 3.32,
+            "ritorno_potenziale": 33.2,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "048b8e582376b00f3acbaaf879ec05ec",
+                    "data": "04/10 18:00",
+                    "squadra_casa": "Malta",
+                    "squadra_trasferta": "Andorra",
+                    "pronostico": "vittoria Malta",
+                    "quota": 1.91,
+                    "bookmaker": "Betfair",
+                    "score": 0.2999999999999998,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a902c361d1a8c4fd596ffb93d71ab378",
+                    "data": "04/10 20:45",
+                    "squadra_casa": "Portogallo",
+                    "squadra_trasferta": "Norvegia",
+                    "pronostico": "vittoria Portogallo",
+                    "quota": 1.74,
+                    "bookmaker": "Betfair",
+                    "score": 0.010000000000000009,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
