@@ -1,85 +1,67 @@
 {
-    "ultimo_aggiornamento": "2026-10-04 15:46",
+    "ultimo_aggiornamento": "2026-10-05 09:21",
     "segnali": [
-        {
-            "match": "Malta - Andorra",
-            "data": "04/10 18:00",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 67.5,
-            "quota_ingresso_minima": 1.56,
-            "stake_cassa_perc": 2.4
-        },
         {
             "match": "Bosnia & Herzegovina - Polonia",
             "data": "05/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 68.2,
+            "probabilita": 68.3,
             "quota_ingresso_minima": 1.54,
             "stake_cassa_perc": 2.4
         },
         {
-            "match": "Ukraine - Ungheria",
-            "data": "05/10 20:45",
+            "match": "Luxembourg - Bulgaria",
+            "data": "06/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 69.5,
-            "quota_ingresso_minima": 1.51,
+            "probabilita": 68.7,
+            "quota_ingresso_minima": 1.53,
             "stake_cassa_perc": 2.4
         },
         {
-            "match": "Kosovo - Austria",
-            "data": "04/10 18:00",
+            "match": "Belarus - Finland",
+            "data": "06/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 68.2,
-            "quota_ingresso_minima": 1.54,
+            "probabilita": 68.5,
+            "quota_ingresso_minima": 1.53,
             "stake_cassa_perc": 2.3
         },
         {
-            "match": "Galles - Danimarca",
-            "data": "04/10 20:45",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 67.0,
-            "quota_ingresso_minima": 1.57,
-            "stake_cassa_perc": 2.3
-        },
-        {
-            "match": "Republic of Ireland - Israel",
-            "data": "04/10 20:45",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 68.1,
-            "quota_ingresso_minima": 1.54,
-            "stake_cassa_perc": 2.3
-        },
-        {
-            "match": "Azerbaijan - Lithuania",
-            "data": "04/10 15:01",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 66.1,
-            "quota_ingresso_minima": 1.59,
-            "stake_cassa_perc": 2.1
-        },
-        {
-            "match": "Greece - Germania",
-            "data": "04/10 20:45",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 64.6,
-            "quota_ingresso_minima": 1.63,
-            "stake_cassa_perc": 2.1
-        },
-        {
-            "match": "Olanda - Serbia",
-            "data": "04/10 20:45",
+            "match": "Svizzera - North Macedonia",
+            "data": "06/10 20:45",
             "mercato": "Calci d'Angolo",
             "pronostico": "Over 9.5 Calci d'Angolo",
-            "probabilita": 64.8,
-            "quota_ingresso_minima": 1.62,
+            "probabilita": 68.2,
+            "quota_ingresso_minima": 1.54,
+            "stake_cassa_perc": 2.3
+        },
+        {
+            "match": "Inghilterra - Czech Republic",
+            "data": "06/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 66.9,
+            "quota_ingresso_minima": 1.57,
+            "stake_cassa_perc": 2.2
+        },
+        {
+            "match": "Scozia - Slovenia",
+            "data": "06/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 66.8,
+            "quota_ingresso_minima": 1.57,
+            "stake_cassa_perc": 2.2
+        },
+        {
+            "match": "Estonia - Iceland",
+            "data": "06/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 64.5,
+            "quota_ingresso_minima": 1.63,
             "stake_cassa_perc": 2.0
         },
         {
@@ -87,35 +69,35 @@
             "data": "05/10 18:00",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 65.5,
-            "quota_ingresso_minima": 1.6,
-            "stake_cassa_perc": 2.0
+            "probabilita": 65.0,
+            "quota_ingresso_minima": 1.61,
+            "stake_cassa_perc": 1.9
         },
         {
             "match": "Romania - Svezia",
             "data": "05/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 63.6,
+            "probabilita": 63.7,
             "quota_ingresso_minima": 1.65,
             "stake_cassa_perc": 1.9
+        },
+        {
+            "match": "Croazia - Spagna",
+            "data": "06/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 60.5,
+            "quota_ingresso_minima": 1.74,
+            "stake_cassa_perc": 1.8
         },
         {
             "match": "Montenegro - Armenia",
             "data": "05/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 61.7,
+            "probabilita": 61.6,
             "quota_ingresso_minima": 1.7,
-            "stake_cassa_perc": 1.8
-        },
-        {
-            "match": "Portogallo - Norvegia",
-            "data": "04/10 20:45",
-            "mercato": "Cartellini",
-            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 61.0,
-            "quota_ingresso_minima": 1.72,
             "stake_cassa_perc": 1.7
         },
         {
@@ -123,8 +105,8 @@
             "data": "05/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 59.8,
-            "quota_ingresso_minima": 1.76,
+            "probabilita": 59.1,
+            "quota_ingresso_minima": 1.78,
             "stake_cassa_perc": 1.7
         },
         {
@@ -132,9 +114,36 @@
             "data": "05/10 20:45",
             "mercato": "Cartellini",
             "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-            "probabilita": 58.0,
-            "quota_ingresso_minima": 1.81,
-            "stake_cassa_perc": 1.5
+            "probabilita": 57.5,
+            "quota_ingresso_minima": 1.83,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "Moldova - Slovakia",
+            "data": "06/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+            "probabilita": 59.9,
+            "quota_ingresso_minima": 1.75,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "Italia - Turchia",
+            "data": "05/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 56.0,
+            "quota_ingresso_minima": 1.87,
+            "stake_cassa_perc": 1.4
+        },
+        {
+            "match": "Moldova - Slovakia",
+            "data": "06/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 9.5 Calci d'Angolo",
+            "probabilita": 55.6,
+            "quota_ingresso_minima": 1.89,
+            "stake_cassa_perc": 1.4
         }
     ]
 }
