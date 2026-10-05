@@ -47,10 +47,11 @@ def aggiorna_risultati():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
         
-    schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') == 'in attesa']
+    schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') == 'in attesa' or s.get('stato_schedina') == 'persa'] 
+    # Includiamo anche quelle "perse" per permettere al bot di correggere il suo stesso errore sulle vecchie schedine
     
     if not schedine_in_attesa:
-        print("Nessuna schedina in attesa da aggiornare.")
+        print("Nessuna schedina da aggiornare.")
         return
         
     risultati_api = []
@@ -66,7 +67,6 @@ def aggiorna_risultati():
     modificato = False
     
     for schedina in schedine_in_attesa:
-        # Usiamo .get() per bypassare eventuali vecchie schedine prive di etichetta senza far crashare lo script
         if schedina.get('modello') == 'beta':
             continue 
             
@@ -74,10 +74,6 @@ def aggiorna_risultati():
         almeno_una_persa = False
         
         for p in schedina.get('partite', []):
-            if p.get('stato') != 'in attesa':
-                if p.get('stato') == 'persa': almeno_una_persa = True
-                continue
-                
             match_trovato = False
             for r in risultati_api:
                 if not r.get('completed') or not r.get('scores'): continue
@@ -94,11 +90,21 @@ def aggiorna_risultati():
                         
                     p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
                     
-                    if gol_casa > gol_trasf: esito_reale = f"vittoria {casa_ita.lower()}"
-                    elif gol_trasf > gol_casa: esito_reale = f"vittoria {trasf_ita.lower()}"
-                    else: esito_reale = "pareggio"
+                    pronostico_pulito = p.get('pronostico', '').lower().strip()
+                    vinta = False
                     
-                    if p.get('pronostico', '').lower() == esito_reale:
+                    # Logica di retrocompatibilità che legge sia "1/2" che "vittoria squadra"
+                    if gol_casa > gol_trasf:
+                        if pronostico_pulito == "1" or pronostico_pulito == f"vittoria {casa_ita.lower()}":
+                            vinta = True
+                    elif gol_trasf > gol_casa:
+                        if pronostico_pulito == "2" or pronostico_pulito == f"vittoria {trasf_ita.lower()}":
+                            vinta = True
+                    else:
+                        if pronostico_pulito == "x" or pronostico_pulito == "pareggio":
+                            vinta = True
+                            
+                    if vinta:
                         p['stato'] = 'vinta'
                     else:
                         p['stato'] = 'persa'
@@ -117,7 +123,7 @@ def aggiorna_risultati():
     if modificato:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database aggiornato con i nuovi risultati.")
+        print("Database aggiornato con i nuovi risultati corretti.")
     else:
         print("Nessun nuovo risultato definitivo trovato.")
 
