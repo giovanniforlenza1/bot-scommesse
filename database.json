@@ -636,7 +636,7 @@
             "importo": 10.0,
             "quota_totale": 1.42,
             "ritorno_potenziale": 14.2,
-            "stato_schedina": "persa",
+            "stato_schedina": "in attesa",
             "partite": [
                 {
                     "squadra_casa": "Svizzera",
