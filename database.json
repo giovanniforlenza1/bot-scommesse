@@ -47,7 +47,7 @@
                     "pronostico": "vittoria Ucraina",
                     "quota": 1.92,
                     "stato": "persa",
-                    "risultato_reale": "0-0"
+                    "risultato_reale": "0-3"
                 }
             ]
         },
@@ -77,7 +77,7 @@
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.94,
                     "stato": "vinta",
-                    "risultato_reale": "0-2"
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "ead81aac8131ba7e2f42e6989f4ba3c2",
@@ -86,8 +86,8 @@
                     "squadra_trasferta": "Inghilterra",
                     "pronostico": "vittoria Inghilterra",
                     "quota": 1.94,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-7"
                 },
                 {
                     "id_partita": "aa65ea35f0aa1c0bb87cbcb9e5341b5b",
@@ -142,8 +142,8 @@
                     "pronostico": "vittoria Svizzera",
                     "quota": 1.35,
                     "score": 0.5927555856465807,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 }
             ]
         },
@@ -164,8 +164,8 @@
                     "pronostico": "vittoria Danimarca",
                     "quota": 1.83,
                     "score": 0.4601015228426397,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-1"
                 },
                 {
                     "id_partita": "fdb1dbf27fe19575c7ce64fdfd4bcaa9",
@@ -280,8 +280,8 @@
                     "pronostico": "vittoria Svizzera",
                     "quota": 1.35,
                     "score": 0.689953980221287,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
@@ -326,8 +326,8 @@
                     "pronostico": "vittoria Svizzera",
                     "quota": 1.35,
                     "score": 0.7008539160774951,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
@@ -372,8 +372,8 @@
                     "pronostico": "vittoria Svizzera",
                     "quota": 1.35,
                     "score": 0.7246861924686195,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "e5ef3c5aba98aed80abcb9eb0d592bff",
@@ -651,7 +651,7 @@
                     "squadra_trasferta": "Serbia",
                     "pronostico": "1",
                     "quota": 1.13,
-                    "stato": "persa",
+                    "stato": "vinta",
                     "risultato_reale": "2-1"
                 },
                 {
