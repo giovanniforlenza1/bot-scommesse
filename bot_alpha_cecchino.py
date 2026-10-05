@@ -30,6 +30,11 @@ def lancia_allerta_raddoppio():
         return
         
     top_schedina = schedine[0] 
+    
+    # blocco di sicurezza totale: rifiuta e ignora le quote inferiori a 1.80
+    if top_schedina['quota_totale'] < 1.80:
+        return
+        
     budget_base = 10.0
     
     db_principale = carica_database_principale()
@@ -67,7 +72,7 @@ def lancia_allerta_raddoppio():
         msg += f"⚽ **{p['data']} | {p['match']}**\n"
         msg += f"🎯 **giocata**: {p['pronostico']} (@{p['quota']})\n\n"
         
-    msg += "**#RaddoppioSicuro #ValueBetting #TradingSportivo #Multipla**"
+    msg += "**#Raddoppio #BettingQuantitativo #TradingSportivo**"
     
     salva_database_principale(db_principale)
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
