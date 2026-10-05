@@ -922,8 +922,8 @@
                     "squadra_trasferta": "Armenia",
                     "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
                     "quota": 1.79,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "4"
                 }
             ]
         },
@@ -941,8 +941,8 @@
                     "squadra_trasferta": "Belgio",
                     "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
                     "quota": 1.76,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "3"
                 }
             ]
         }
