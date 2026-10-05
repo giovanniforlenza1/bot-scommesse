@@ -71,11 +71,13 @@ def genera_raddoppio_cassaforte():
             away_ita = traduci_squadra(m['away_team'])
             
             if prob_1 > prob_2:
-                pronostico = "1"
+                pronostico = f"vittoria {home_ita}"
                 quota_scelta = avg_1
             else:
-                pronostico = "2"
+                pronostico = f"vittoria {away_ita}"
                 quota_scelta = avg_2
+                
+            if quota_scelta < 1.25: continue
                 
             partite_sicure.append({
                 "match": f"{home_ita} - {away_ita}",
@@ -96,11 +98,12 @@ def genera_raddoppio_cassaforte():
         schedina_corrente.append(p)
         quota_totale *= p['quota']
         
-        if quota_totale >= 1.80 or len(schedina_corrente) >= 3:
-            database_alpha["schedine"].append({
-                "quota_totale": round(quota_totale, 2),
-                "partite": schedina_corrente
-            })
+        if quota_totale >= 1.80:
+            if len(schedina_corrente) <= 5:
+                database_alpha["schedine"].append({
+                    "quota_totale": round(quota_totale, 2),
+                    "partite": schedina_corrente
+                })
             schedina_corrente = []
             quota_totale = 1.0
 
