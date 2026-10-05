@@ -698,6 +698,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "13fd5c9b",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.54,
+            "ritorno_potenziale": 15.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Bosnia & Herzegovina",
+                    "squadra_trasferta": "Polonia",
+                    "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                    "quota": 1.54,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "eaea9b50",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.53,
+            "ritorno_potenziale": 15.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Luxembourg",
+                    "squadra_trasferta": "Bulgaria",
+                    "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                    "quota": 1.53,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "38ac2353",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.53,
+            "ritorno_potenziale": 15.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Belarus",
+                    "squadra_trasferta": "Finland",
+                    "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                    "quota": 1.53,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
