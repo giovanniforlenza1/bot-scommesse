@@ -2,7 +2,7 @@ name: Esegui Alpha Analista
 
 on:
   schedule:
-    - cron: '0 7 * * *' # Gira ogni mattina alle 07:00 UTC (09:00 in Italia)
+    - cron: '0 10 * * *'
   workflow_dispatch:
 
 jobs:
@@ -21,15 +21,15 @@ jobs:
       - name: Installa dipendenze
         run: pip install requests tzdata
 
-      - name: Esegui Analista Alpha
+      - name: Lancia Analista Alpha
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python bot_alpha_analista.py
 
-      - name: Salva database Alpha
+      - name: Salva database analista
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add database_alpha.json
-          git commit -m "Aggiornamento Database Alpha (Dutching)" || echo "Nessuna modifica"
+          git commit -m "Aggiornamento Database Analista Alpha" || echo "Nessuna modifica"
           git push
