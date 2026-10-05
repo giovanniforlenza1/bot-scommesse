@@ -38,7 +38,7 @@ def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
 def aggiorna_risultati():
-    print("Avvio Arbitro SBR: Controllo risultati in corso...")
+    print("Avvio Arbitro SBR: Controllo e auto-guarigione in corso...")
     
     if not os.path.exists('database.json'):
         print("Nessun database trovato.")
@@ -47,79 +47,89 @@ def aggiorna_risultati():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
         
-    # includiamo le schedine perse per permettere al bot di riaprirle se c'è stato un falso negativo
-    schedine_da_controllare = [s for s in db.get('schedine', []) if s.get('stato_schedina') in ['in attesa', 'persa']] 
-    
-    if not schedine_da_controllare:
-        print("Nessuna schedina da aggiornare.")
-        return
-        
-    risultati_api = []
-    for camp in CAMPIONATI:
-        try:
-            url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?apiKey={ODDS_API_KEY}&daysFrom=3"
-            res = requests.get(url, timeout=10)
-            if res.status_code == 200:
-                risultati_api.extend(res.json())
-        except Exception as e:
-            print(f"Errore caricamento {camp}: {e}")
-            
     modificato = False
     
-    for schedina in schedine_da_controllare:
+    # FASE 1: Auto-guarigione dei risultati già scritti nel database (corregge i falsi negativi del passato)
+    for schedina in db.get('schedine', []):
         if schedina.get('modello') == 'beta':
-            continue 
+            continue
             
-        tutte_concluse = True
-        almeno_una_persa = False
-        
         for p in schedina.get('partite', []):
-            match_trovato = False
-            for r in risultati_api:
-                if not r.get('completed') or not r.get('scores'): continue
-                
-                casa_ita = traduci_squadra(r.get('home_team', ''))
-                trasf_ita = traduci_squadra(r.get('away_team', ''))
-                
-                if p.get('squadra_casa') == casa_ita and p.get('squadra_trasferta') == trasf_ita:
-                    match_trovato = True
-                    gol_casa, gol_trasf = 0, 0
-                    for score in r['scores']:
-                        if score.get('name') == r.get('home_team'): gol_casa = int(score.get('score', 0))
-                        if score.get('name') == r.get('away_team'): gol_trasf = int(score.get('score', 0))
-                        
-                    p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
+            if p.get('risultato_reale') and '-' in p['risultato_reale']:
+                try:
+                    # estrapola i gol dalla stringa (es: "2-1")
+                    risultato_pulito = p['risultato_reale'].replace('[', '').replace(']', '').strip()
+                    gol_casa, gol_trasf = map(int, risultato_pulito.split('-'))
+                    pron_pulito = str(p.get('pronostico', '')).lower().strip()
+                    c_ita = str(p.get('squadra_casa', '')).lower().strip()
+                    t_ita = str(p.get('squadra_trasferta', '')).lower().strip()
                     
-                    pronostico_pulito = p.get('pronostico', '').lower().strip()
                     vinta = False
+                    if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_ita}"): vinta = True
+                    elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_ita}"): vinta = True
+                    elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
                     
-                    # logica di retrocompatibilità
-                    if gol_casa > gol_trasf:
-                        if pronostico_pulito == "1" or pronostico_pulito == f"vittoria {casa_ita.lower()}":
-                            vinta = True
-                    elif gol_trasf > gol_casa:
-                        if pronostico_pulito == "2" or pronostico_pulito == f"vittoria {trasf_ita.lower()}":
-                            vinta = True
-                    else:
-                        if pronostico_pulito == "x" or pronostico_pulito == "pareggio":
-                            vinta = True
-                            
-                    if vinta:
-                        p['stato'] = 'vinta'
-                    else:
-                        p['stato'] = 'persa'
-                        
-                    modificato = True
-                    break
-            
-            # controllo di stato post-aggiornamento per capire come chiudere l'intera schedina
-            if p.get('stato') == 'persa':
-                almeno_una_persa = True
-            elif p.get('stato') == 'in attesa':
-                tutte_concluse = False
+                    nuovo_stato_partita = 'vinta' if vinta else 'persa'
+                    if p.get('stato') != nuovo_stato_partita:
+                        p['stato'] = nuovo_stato_partita
+                        modificato = True
+                except:
+                    pass
+                    
+    # FASE 2: Ricerca nuovi risultati per le partite ancora "in attesa" tramite le API
+    schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') in ['in attesa', 'persa']]
+    
+    if schedine_in_attesa:
+        risultati_api = []
+        for camp in CAMPIONATI:
+            try:
+                url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?apiKey={ODDS_API_KEY}&daysFrom=3"
+                res = requests.get(url, timeout=10)
+                if res.status_code == 200:
+                    risultati_api.extend(res.json())
+            except Exception as e:
+                print(f"Errore caricamento {camp}: {e}")
                 
-        # ricalcolo totale del biglietto per resettare eventuali falsi negativi
-        vecchio_stato = schedina.get('stato_schedina')
+        for schedina in schedine_in_attesa:
+            if schedina.get('modello') == 'beta': continue
+            
+            for p in schedina.get('partite', []):
+                if p.get('stato') != 'in attesa': continue
+                
+                for r in risultati_api:
+                    if not r.get('completed') or not r.get('scores'): continue
+                    
+                    casa_ita = traduci_squadra(r.get('home_team', ''))
+                    trasf_ita = traduci_squadra(r.get('away_team', ''))
+                    
+                    if p.get('squadra_casa') == casa_ita and p.get('squadra_trasferta') == trasf_ita:
+                        gol_casa, gol_trasf = 0, 0
+                        for score in r['scores']:
+                            if score.get('name') == r.get('home_team'): gol_casa = int(score.get('score', 0))
+                            if score.get('name') == r.get('away_team'): gol_trasf = int(score.get('score', 0))
+                            
+                        p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
+                        
+                        pron_pulito = str(p.get('pronostico', '')).lower().strip()
+                        c_ita = casa_ita.lower()
+                        t_ita = trasf_ita.lower()
+                        
+                        vinta = False
+                        if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_ita}"): vinta = True
+                        elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_ita}"): vinta = True
+                        elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
+                        
+                        p['stato'] = 'vinta' if vinta else 'persa'
+                        modificato = True
+                        break
+                        
+    # FASE 3: Ricalcolo globale dello stato delle schedine
+    for schedina in db.get('schedine', []):
+        if schedina.get('modello') == 'beta': continue
+        
+        almeno_una_persa = any(p.get('stato') == 'persa' for p in schedina.get('partite', []))
+        tutte_concluse = all(p.get('stato') != 'in attesa' for p in schedina.get('partite', []))
+        
         if almeno_una_persa:
             nuovo_stato = 'persa'
         elif tutte_concluse:
@@ -127,16 +137,16 @@ def aggiorna_risultati():
         else:
             nuovo_stato = 'in attesa'
             
-        if vecchio_stato != nuovo_stato:
+        if schedina.get('stato_schedina') != nuovo_stato:
             schedina['stato_schedina'] = nuovo_stato
             modificato = True
 
     if modificato:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database aggiornato con i nuovi risultati corretti.")
+        print("Database aggiornato con successo.")
     else:
-        print("Nessun nuovo risultato definitivo trovato.")
+        print("Nessuna modifica necessaria.")
 
 if __name__ == "__main__":
     aggiorna_risultati()
