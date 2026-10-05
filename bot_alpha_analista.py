@@ -25,7 +25,7 @@ TRADUZIONI_NAZIONALI = {
 def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
-def genera_raddoppio_cassaforte():
+def genera_multipla_quota5():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
     limite_temporale = oggi + timedelta(days=5)
@@ -65,7 +65,9 @@ def genera_raddoppio_cassaforte():
             prob_2 = (1/avg_2) / prob_implicita
             
             miglior_prob = max(prob_1, prob_2)
-            if miglior_prob < 0.60: continue 
+            
+            # Parametro allentato al 48% per permettere quote sufficienti a raggiungere il x5
+            if miglior_prob < 0.48: continue 
             
             home_ita = traduci_squadra(m['home_team'])
             away_ita = traduci_squadra(m['away_team'])
@@ -98,7 +100,8 @@ def genera_raddoppio_cassaforte():
         schedina_corrente.append(p)
         quota_totale *= p['quota']
         
-        if quota_totale >= 1.80:
+        # Se raggiunge quota 5.00 con massimo 5 eventi, salva
+        if quota_totale >= 5.00:
             if len(schedina_corrente) <= 5:
                 database_alpha["schedine"].append({
                     "quota_totale": round(quota_totale, 2),
@@ -106,9 +109,13 @@ def genera_raddoppio_cassaforte():
                 })
             schedina_corrente = []
             quota_totale = 1.0
+        # Se supera le 5 partite ma non ha raggiunto quota 5.00, cestina e riparte
+        elif len(schedina_corrente) >= 5:
+            schedina_corrente = []
+            quota_totale = 1.0
 
     with open('database_alpha.json', 'w', encoding='utf-8') as f:
         json.dump(database_alpha, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    genera_raddoppio_cassaforte()
+    genera_multipla_quota5()
