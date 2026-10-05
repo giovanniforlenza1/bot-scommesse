@@ -1,63 +1,8 @@
 {
-    "ultimo_aggiornamento": "2026-10-05 13:33",
+    "ultimo_aggiornamento": "2026-10-05 14:07",
     "schedine": [
         {
-            "quota_totale": 2.4,
-            "partite": [
-                {
-                    "match": "Croazia - Spagna",
-                    "squadra_casa": "Croazia",
-                    "squadra_trasferta": "Spagna",
-                    "data": "06/10 20:45",
-                    "pronostico": "vittoria Spagna",
-                    "quota": 1.27,
-                    "probabilita": 74.7
-                },
-                {
-                    "match": "Borussia Dortmund - Werder Bremen",
-                    "squadra_casa": "Borussia Dortmund",
-                    "squadra_trasferta": "Werder Bremen",
-                    "data": "09/10 20:30",
-                    "pronostico": "vittoria Borussia Dortmund",
-                    "quota": 1.37,
-                    "probabilita": 69.3
-                },
-                {
-                    "match": "Arsenal - Leeds United",
-                    "squadra_casa": "Arsenal",
-                    "squadra_trasferta": "Leeds United",
-                    "data": "10/10 13:30",
-                    "pronostico": "vittoria Arsenal",
-                    "quota": 1.38,
-                    "probabilita": 69.0
-                }
-            ]
-        },
-        {
-            "quota_totale": 1.95,
-            "partite": [
-                {
-                    "match": "Italia - Turchia",
-                    "squadra_casa": "Italia",
-                    "squadra_trasferta": "Turchia",
-                    "data": "05/10 20:45",
-                    "pronostico": "vittoria Italia",
-                    "quota": 1.39,
-                    "probabilita": 68.7
-                },
-                {
-                    "match": "Moldova - Slovakia",
-                    "squadra_casa": "Moldova",
-                    "squadra_trasferta": "Slovakia",
-                    "data": "06/10 20:45",
-                    "pronostico": "vittoria Slovakia",
-                    "quota": 1.4,
-                    "probabilita": 66.4
-                }
-            ]
-        },
-        {
-            "quota_totale": 2.18,
+            "quota_totale": 5.46,
             "partite": [
                 {
                     "match": "Francia - Belgio",
@@ -75,7 +20,25 @@
                     "data": "05/10 20:45",
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.48,
-                    "probabilita": 63.1
+                    "probabilita": 63.3
+                },
+                {
+                    "match": "Cyprus - Latvia",
+                    "squadra_casa": "Cyprus",
+                    "squadra_trasferta": "Latvia",
+                    "data": "05/10 18:00",
+                    "pronostico": "vittoria Cyprus",
+                    "quota": 1.55,
+                    "probabilita": 60.7
+                },
+                {
+                    "match": "Estonia - Iceland",
+                    "squadra_casa": "Estonia",
+                    "squadra_trasferta": "Iceland",
+                    "data": "06/10 20:45",
+                    "pronostico": "vittoria Iceland",
+                    "quota": 1.62,
+                    "probabilita": 57.8
                 }
             ]
         }
