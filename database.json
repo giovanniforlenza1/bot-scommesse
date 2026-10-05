@@ -915,7 +915,7 @@
             "importo": 10.0,
             "quota_totale": 1.79,
             "ritorno_potenziale": 17.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Montenegro",
@@ -934,7 +934,7 @@
             "importo": 10.0,
             "quota_totale": 1.76,
             "ritorno_potenziale": 17.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Francia",
