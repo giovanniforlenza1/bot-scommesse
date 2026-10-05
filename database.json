@@ -706,7 +706,7 @@
             "importo": 10.0,
             "quota_totale": 1.54,
             "ritorno_potenziale": 15.4,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Bosnia & Herzegovina",
@@ -714,7 +714,7 @@
                     "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
                     "quota": 1.54,
                     "stato": "in attesa",
-                    "risultato_reale": ""
+                    "risultato_reale": "5"
                 }
             ]
         },
