@@ -798,6 +798,53 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "957e967b",
+            "modello": "omega",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 4.46,
+            "ritorno_potenziale": 44.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "d25e4cefbf1b47ae2ee43f7c70f0c1f2",
+                    "data": "05/10 18:02",
+                    "squadra_casa": "Cipro",
+                    "squadra_trasferta": "Lettonia",
+                    "pronostico": "vittoria Cipro",
+                    "quota": 1.6,
+                    "bookmaker": "Betfair",
+                    "score": 0.020000000000000018,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
+                    "data": "05/10 20:45",
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Belgio",
+                    "pronostico": "vittoria Francia",
+                    "quota": 1.53,
+                    "bookmaker": "Betfair",
+                    "score": 0.010000000000000009,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "bc11b98f6ba1da1f5d5d051fd14cd197",
+                    "data": "06/10 20:45",
+                    "squadra_casa": "Scozia",
+                    "squadra_trasferta": "Slovenia",
+                    "pronostico": "vittoria Scozia",
+                    "quota": 1.82,
+                    "bookmaker": "Betfair",
+                    "score": 0.010000000000000009,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
