@@ -47,10 +47,10 @@ def aggiorna_risultati():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
         
-    schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') == 'in attesa' or s.get('stato_schedina') == 'persa'] 
-    # Includiamo anche quelle "perse" per permettere al bot di correggere il suo stesso errore sulle vecchie schedine
+    # includiamo le schedine perse per permettere al bot di riaprirle se c'è stato un falso negativo
+    schedine_da_controllare = [s for s in db.get('schedine', []) if s.get('stato_schedina') in ['in attesa', 'persa']] 
     
-    if not schedine_in_attesa:
+    if not schedine_da_controllare:
         print("Nessuna schedina da aggiornare.")
         return
         
@@ -66,7 +66,7 @@ def aggiorna_risultati():
             
     modificato = False
     
-    for schedina in schedine_in_attesa:
+    for schedina in schedine_da_controllare:
         if schedina.get('modello') == 'beta':
             continue 
             
@@ -93,7 +93,7 @@ def aggiorna_risultati():
                     pronostico_pulito = p.get('pronostico', '').lower().strip()
                     vinta = False
                     
-                    # Logica di retrocompatibilità che legge sia "1/2" che "vittoria squadra"
+                    # logica di retrocompatibilità
                     if gol_casa > gol_trasf:
                         if pronostico_pulito == "1" or pronostico_pulito == f"vittoria {casa_ita.lower()}":
                             vinta = True
@@ -108,16 +108,27 @@ def aggiorna_risultati():
                         p['stato'] = 'vinta'
                     else:
                         p['stato'] = 'persa'
-                        almeno_una_persa = True
                         
                     modificato = True
                     break
             
-            if not match_trovato or p.get('stato') == 'in attesa':
+            # controllo di stato post-aggiornamento per capire come chiudere l'intera schedina
+            if p.get('stato') == 'persa':
+                almeno_una_persa = True
+            elif p.get('stato') == 'in attesa':
                 tutte_concluse = False
                 
-        if tutte_concluse or almeno_una_persa:
-            schedina['stato_schedina'] = 'persa' if almeno_una_persa else 'vinta'
+        # ricalcolo totale del biglietto per resettare eventuali falsi negativi
+        vecchio_stato = schedina.get('stato_schedina')
+        if almeno_una_persa:
+            nuovo_stato = 'persa'
+        elif tutte_concluse:
+            nuovo_stato = 'vinta'
+        else:
+            nuovo_stato = 'in attesa'
+            
+        if vecchio_stato != nuovo_stato:
+            schedina['stato_schedina'] = nuovo_stato
             modificato = True
 
     if modificato:
