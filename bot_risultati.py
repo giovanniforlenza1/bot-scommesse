@@ -47,13 +47,12 @@ def aggiorna_risultati():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
         
-    schedine_in_attesa = [s for s in db.get('schedine', []) if s['stato_schedina'] == 'in attesa']
+    schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') == 'in attesa']
     
     if not schedine_in_attesa:
         print("Nessuna schedina in attesa da aggiornare.")
         return
         
-    # Raccogliamo i risultati degli ultimi 3 giorni per coprire i ritardi
     risultati_api = []
     for camp in CAMPIONATI:
         try:
@@ -67,43 +66,39 @@ def aggiorna_risultati():
     modificato = False
     
     for schedina in schedine_in_attesa:
-        # L'API non copre cartellini e angoli, saltiamo Beta che andrà chiusa a mano
-        if schedina['modello'] == 'beta':
+        # Usiamo .get() per bypassare eventuali vecchie schedine prive di etichetta senza far crashare lo script
+        if schedina.get('modello') == 'beta':
             continue 
             
         tutte_concluse = True
         almeno_una_persa = False
         
-        for p in schedina['partite']:
-            if p['stato'] != 'in attesa':
-                if p['stato'] == 'persa': almeno_una_persa = True
+        for p in schedina.get('partite', []):
+            if p.get('stato') != 'in attesa':
+                if p.get('stato') == 'persa': almeno_una_persa = True
                 continue
                 
-            # Cerchiamo il match nei risultati
             match_trovato = False
             for r in risultati_api:
-                if not r['completed'] or not r.get('scores'): continue
+                if not r.get('completed') or not r.get('scores'): continue
                 
-                casa_ita = traduci_squadra(r['home_team'])
-                trasf_ita = traduci_squadra(r['away_team'])
+                casa_ita = traduci_squadra(r.get('home_team', ''))
+                trasf_ita = traduci_squadra(r.get('away_team', ''))
                 
-                if p['squadra_casa'] == casa_ita and p['squadra_trasferta'] == trasf_ita:
+                if p.get('squadra_casa') == casa_ita and p.get('squadra_trasferta') == trasf_ita:
                     match_trovato = True
-                    # Estraiamo i gol
                     gol_casa, gol_trasf = 0, 0
                     for score in r['scores']:
-                        if score['name'] == r['home_team']: gol_casa = int(score['score'])
-                        if score['name'] == r['away_team']: gol_trasf = int(score['score'])
+                        if score.get('name') == r.get('home_team'): gol_casa = int(score.get('score', 0))
+                        if score.get('name') == r.get('away_team'): gol_trasf = int(score.get('score', 0))
                         
                     p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
                     
-                    # Definiamo l'esito reale
                     if gol_casa > gol_trasf: esito_reale = f"vittoria {casa_ita.lower()}"
                     elif gol_trasf > gol_casa: esito_reale = f"vittoria {trasf_ita.lower()}"
                     else: esito_reale = "pareggio"
                     
-                    # Confrontiamo pronostico ed esito
-                    if p['pronostico'].lower() == esito_reale:
+                    if p.get('pronostico', '').lower() == esito_reale:
                         p['stato'] = 'vinta'
                     else:
                         p['stato'] = 'persa'
@@ -112,10 +107,9 @@ def aggiorna_risultati():
                     modificato = True
                     break
             
-            if not match_trovato or p['stato'] == 'in attesa':
+            if not match_trovato or p.get('stato') == 'in attesa':
                 tutte_concluse = False
                 
-        # Chiudiamo la schedina intera se tutte le partite sono state definite
         if tutte_concluse or almeno_una_persa:
             schedina['stato_schedina'] = 'persa' if almeno_una_persa else 'vinta'
             modificato = True
