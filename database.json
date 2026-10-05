@@ -888,6 +888,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "bb7a272f",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.73,
+            "ritorno_potenziale": 17.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Croazia",
+                    "squadra_trasferta": "Spagna",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.73,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "63fac6db",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.79,
+            "ritorno_potenziale": 17.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Montenegro",
+                    "squadra_trasferta": "Armenia",
+                    "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                    "quota": 1.79,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "b8732e70",
+            "modello": "beta",
+            "data_creazione": "05/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.76,
+            "ritorno_potenziale": 17.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Belgio",
+                    "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
+                    "quota": 1.76,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
