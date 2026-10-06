@@ -945,6 +945,49 @@
                     "risultato_reale": "3"
                 }
             ]
+        },
+        {
+            "id": "9e3eb567",
+            "modello": "alpha",
+            "data_creazione": "06/10/2026",
+            "importo": 10.0,
+            "quota_totale": 5.46,
+            "ritorno_potenziale": 54.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Belgio",
+                    "pronostico": "vittoria Francia",
+                    "quota": 1.47,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Montenegro",
+                    "squadra_trasferta": "Armenia",
+                    "pronostico": "vittoria Montenegro",
+                    "quota": 1.48,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Cyprus",
+                    "squadra_trasferta": "Latvia",
+                    "pronostico": "vittoria Cyprus",
+                    "quota": 1.55,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Estonia",
+                    "squadra_trasferta": "Iceland",
+                    "pronostico": "vittoria Iceland",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
