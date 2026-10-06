@@ -1,45 +1,13 @@
 {
-    "ultimo_aggiornamento": "2026-10-05 13:02",
+    "ultimo_aggiornamento": "2026-10-06 12:56",
     "analisi": [
-        {
-            "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
-            "match": "Francia - Belgio",
-            "data": "2026-10-05T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Francia",
-            "quota_valore_minima": 1.52,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Francia del 68.3%. La simulazione genera una quota equa di @1.46. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.52."
-        },
-        {
-            "id_partita": "0061a41775516b876960b60e18dee634",
-            "match": "Montenegro - Armenia",
-            "data": "2026-10-05T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Montenegro",
-            "quota_valore_minima": 1.55,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Montenegro del 67.1%. La simulazione genera una quota equa di @1.49. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.55."
-        },
-        {
-            "id_partita": "d25e4cefbf1b47ae2ee43f7c70f0c1f2",
-            "match": "Cipro - Lettonia",
-            "data": "2026-10-05T16:00:00Z",
-            "consiglio_algoritmo": "vittoria Cipro",
-            "quota_valore_minima": 1.58,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Cipro del 65.8%. La simulazione genera una quota equa di @1.52. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.58."
-        },
         {
             "id_partita": "2718bb0aea7bb7aa60419612ff9341ff",
             "match": "Estonia - Islanda",
             "data": "2026-10-06T18:45:00Z",
             "consiglio_algoritmo": "vittoria Islanda",
-            "quota_valore_minima": 1.68,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Islanda del 61.8%. La simulazione genera una quota equa di @1.62. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.68."
-        },
-        {
-            "id_partita": "e979f252ee424cd29028d8f8aa21934a",
-            "match": "Romania - Svezia",
-            "data": "2026-10-05T18:45:00Z",
-            "consiglio_algoritmo": "vittoria Svezia",
-            "quota_valore_minima": 1.81,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Svezia del 57.6%. La simulazione genera una quota equa di @1.74. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.81."
+            "quota_valore_minima": 1.62,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Islanda del 64.0%. La simulazione genera una quota equa di @1.56. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.62."
         },
         {
             "id_partita": "bc11b98f6ba1da1f5d5d051fd14cd197",
