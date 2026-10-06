@@ -396,8 +396,8 @@
                     "pronostico": "vittoria Italia",
                     "quota": 1.5,
                     "score": 0.547187058530235,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -519,8 +519,8 @@
                     "quota": 1.61,
                     "bookmaker": "Betfair",
                     "score": 0.0,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 }
             ]
         },
@@ -763,23 +763,23 @@
             "importo": 10.0,
             "quota_totale": 5.46,
             "ritorno_potenziale": 54.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Francia",
                     "squadra_trasferta": "Belgio",
                     "pronostico": "vittoria Francia",
                     "quota": 1.47,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 },
                 {
                     "squadra_casa": "Montenegro",
                     "squadra_trasferta": "Armenia",
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.48,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 },
                 {
                     "squadra_casa": "Cyprus",
@@ -817,8 +817,8 @@
                     "quota": 1.6,
                     "bookmaker": "Betfair",
                     "score": 0.020000000000000018,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
@@ -829,8 +829,8 @@
                     "quota": 1.53,
                     "bookmaker": "Betfair",
                     "score": 0.010000000000000009,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 },
                 {
                     "id_partita": "bc11b98f6ba1da1f5d5d051fd14cd197",
@@ -853,23 +853,23 @@
             "importo": 10.0,
             "quota_totale": 5.46,
             "ritorno_potenziale": 54.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Francia",
                     "squadra_trasferta": "Belgio",
                     "pronostico": "vittoria Francia",
                     "quota": 1.47,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 },
                 {
                     "squadra_casa": "Montenegro",
                     "squadra_trasferta": "Armenia",
                     "pronostico": "vittoria Montenegro",
                     "quota": 1.48,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 },
                 {
                     "squadra_casa": "Cyprus",
