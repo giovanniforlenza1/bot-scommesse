@@ -786,8 +786,8 @@
                     "squadra_trasferta": "Latvia",
                     "pronostico": "vittoria Cyprus",
                     "quota": 1.55,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "squadra_casa": "Estonia",
