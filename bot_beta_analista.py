@@ -5,20 +5,18 @@ import math
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
-
 CAMPIONATI = [
     'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl', 
     'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
 ]
 
-# Il "DNA" dei campionati
+# Il "DNA" dei campionati ricalibrato
 MOLTIPLICATORI_LEGA = {
     'soccer_uefa_nations_league': {'cartellini': 1.05, 'angoli': 0.95}, 
-    'soccer_italy_serie_a': {'cartellini': 1.15, 'angoli': 0.95},       
+    'soccer_italy_serie_a': {'cartellini': 1.15, 'angoli': 0.95},        
     'soccer_epl': {'cartellini': 0.80, 'angoli': 1.20},                 
-    'soccer_spain_la_liga': {'cartellini': 1.25, 'angoli': 0.90},       
+    'soccer_spain_la_liga': {'cartellini': 1.25, 'angoli': 0.90},        
     'soccer_germany_bundesliga': {'cartellini': 0.90, 'angoli': 1.10},  
     'soccer_france_ligue_one': {'cartellini': 1.10, 'angoli': 1.00},    
     'soccer_uefa_champs_league': {'cartellini': 0.95, 'angoli': 1.05},  
@@ -50,6 +48,32 @@ TRADUZIONI_NAZIONALI = {
 def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
+def esegui_richiesta_api(url_template):
+    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
+    if not chiavi: 
+        print("Nessuna chiave API trovata.")
+        return None
+        
+    for chiave in chiavi:
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=10)
+            if res.status_code == 200:
+                return res.json()
+            elif res.status_code == 429:
+                print(f"Chiave {chiave[:4]}... esaurita (429). Passo alla successiva.")
+                continue
+            elif res.status_code == 401:
+                print(f"Chiave {chiave[:4]}... non valida (401). Passo alla successiva.")
+                continue
+            else:
+                print(f"Errore {res.status_code} con chiave {chiave[:4]}...")
+        except Exception as e:
+            print(f"Eccezione connessione API: {e}")
+            
+    print("Tutte le chiavi API a disposizione sono esaurite o bloccate.")
+    return None
+
 def calcola_quota_reale(quote):
     prob_implicita = sum(1 / q for q in quote) 
     prob_reali = [(1 / q) / prob_implicita for q in quote]
@@ -72,16 +96,15 @@ def calcola_kelly(prob_vincita, quota_offerta):
 def genera_analisi_esotica():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
-    limite_temporale = oggi + timedelta(days=2)
+    limite_temporale = oggi + timedelta(days=4)
     
     database_beta = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "segnali": []}
     
     for camp in CAMPIONATI:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
-        res = requests.get(url, timeout=10)
+        url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h"
+        matches = esegui_richiesta_api(url_template)
         
-        if res.status_code != 200: continue
-        matches = res.json()
+        if not matches: continue
         
         moltiplicatori = MOLTIPLICATORI_LEGA.get(camp, {'cartellini': 1.0, 'angoli': 1.0})
         
@@ -107,41 +130,43 @@ def genera_analisi_esotica():
             away_ita = traduci_squadra(m['away_team'])
             
             tensione_match = prob_reali[1] / 0.35 
-            cartellini_attesi = (3.5 + (tensione_match * 2.5)) * moltiplicatori['cartellini']
-            prob_over_4_5_cards = poisson_over_prob(cartellini_attesi, 4.5)
+            cartellini_attesi = (3.0 + (tensione_match * 2.0)) * moltiplicatori['cartellini']
+            # Abbassato a Over 3.5 per evitare di perdere le partite per un solo cartellino
+            prob_over_3_5_cards = poisson_over_prob(cartellini_attesi, 3.5)
             
             squilibrio = abs(prob_reali[0] - prob_reali[2])
-            angoli_attesi = (8.5 + (squilibrio * 4.0)) * moltiplicatori['angoli']
-            prob_over_9_5_corners = poisson_over_prob(angoli_attesi, 9.5)
+            angoli_attesi = (8.0 + (squilibrio * 4.0)) * moltiplicatori['angoli']
+            # Abbassato a Over 8.5 per intercettare i corner persi di misura
+            prob_over_8_5_corners = poisson_over_prob(angoli_attesi, 8.5)
             
-            # Valutazione Cartellini con quota minima 1.70
-            if prob_over_4_5_cards > 0.55:
-                quota_equa = round((1 / prob_over_4_5_cards) * 1.05, 2) 
-                if quota_equa >= 1.70:
-                    stake_suggerito = calcola_kelly(prob_over_4_5_cards, quota_equa)
+            # Valutazione Cartellini con quota minima ottimizzata
+            if prob_over_3_5_cards > 0.52:
+                quota_equa = round((1 / prob_over_3_5_cards) * 1.05, 2) 
+                if quota_equa >= 1.55:
+                    stake_suggerito = calcola_kelly(prob_over_3_5_cards, quota_equa)
                     if stake_suggerito > 0:
                         database_beta["segnali"].append({
                             "match": f"{home_ita} - {away_ita}",
                             "data": data_partita.strftime("%d/%m %H:%M"),
                             "mercato": "Cartellini",
-                            "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
-                            "probabilita": round(prob_over_4_5_cards * 100, 1),
+                            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+                            "probabilita": round(prob_over_3_5_cards * 100, 1),
                             "quota_ingresso_minima": quota_equa,
                             "stake_cassa_perc": stake_suggerito
                         })
                     
-            # Valutazione Angoli con quota minima 1.70
-            if prob_over_9_5_corners > 0.55:
-                quota_equa = round((1 / prob_over_9_5_corners) * 1.05, 2)
-                if quota_equa >= 1.70:
-                    stake_suggerito = calcola_kelly(prob_over_9_5_corners, quota_equa)
+            # Valutazione Angoli con quota minima ottimizzata
+            if prob_over_8_5_corners > 0.52:
+                quota_equa = round((1 / prob_over_8_5_corners) * 1.05, 2)
+                if quota_equa >= 1.55:
+                    stake_suggerito = calcola_kelly(prob_over_8_5_corners, quota_equa)
                     if stake_suggerito > 0:
                         database_beta["segnali"].append({
                             "match": f"{home_ita} - {away_ita}",
                             "data": data_partita.strftime("%d/%m %H:%M"),
                             "mercato": "Calci d'Angolo",
-                            "pronostico": "Over 9.5 Calci d'Angolo",
-                            "probabilita": round(prob_over_9_5_corners * 100, 1),
+                            "pronostico": "Over 8.5 Calci d'Angolo",
+                            "probabilita": round(prob_over_8_5_corners * 100, 1),
                             "quota_ingresso_minima": quota_equa,
                             "stake_cassa_perc": stake_suggerito
                         })
@@ -150,6 +175,8 @@ def genera_analisi_esotica():
     
     with open('database_beta.json', 'w', encoding='utf-8') as f:
         json.dump(database_beta, f, indent=4, ensure_ascii=False)
+        
+    print(f"Modello Beta completato: salvati {len(database_beta['segnali'])} segnali statistici.")
 
 if __name__ == "__main__":
     genera_analisi_esotica()
