@@ -37,8 +37,15 @@ TRADUZIONI_NAZIONALI = {
 def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
+def confronta_squadre(sq_db, sq_api):
+    if not sq_db or not sq_api: return False
+    s1 = str(sq_db).lower().strip()
+    s2_eng = str(sq_api).lower().strip()
+    s2_ita = traduci_squadra(str(sq_api)).lower().strip()
+    return s1 == s2_eng or s1 == s2_ita
+
 def aggiorna_risultati():
-    print("Avvio Arbitro SBR: Controllo e auto-guarigione in corso...")
+    print("Avvio Arbitro SBR: controllo e auto-guarigione in corso...")
     
     if not os.path.exists('database.json'):
         print("Nessun database trovato.")
@@ -49,7 +56,6 @@ def aggiorna_risultati():
         
     modificato = False
     
-    # FASE 1: Auto-guarigione dei risultati già scritti nel database (corregge i falsi negativi del passato)
     for schedina in db.get('schedine', []):
         if schedina.get('modello') == 'beta':
             continue
@@ -57,16 +63,15 @@ def aggiorna_risultati():
         for p in schedina.get('partite', []):
             if p.get('risultato_reale') and '-' in p['risultato_reale']:
                 try:
-                    # estrapola i gol dalla stringa (es: "2-1")
                     risultato_pulito = p['risultato_reale'].replace('[', '').replace(']', '').strip()
                     gol_casa, gol_trasf = map(int, risultato_pulito.split('-'))
                     pron_pulito = str(p.get('pronostico', '')).lower().strip()
-                    c_ita = str(p.get('squadra_casa', '')).lower().strip()
-                    t_ita = str(p.get('squadra_trasferta', '')).lower().strip()
+                    c_db = str(p.get('squadra_casa', '')).lower().strip()
+                    t_db = str(p.get('squadra_trasferta', '')).lower().strip()
                     
                     vinta = False
-                    if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_ita}"): vinta = True
-                    elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_ita}"): vinta = True
+                    if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_db}"): vinta = True
+                    elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_db}"): vinta = True
                     elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
                     
                     nuovo_stato_partita = 'vinta' if vinta else 'persa'
@@ -76,7 +81,6 @@ def aggiorna_risultati():
                 except:
                     pass
                     
-    # FASE 2: Ricerca nuovi risultati per le partite ancora "in attesa" tramite le API
     schedine_in_attesa = [s for s in db.get('schedine', []) if s.get('stato_schedina') in ['in attesa', 'persa']]
     
     if schedine_in_attesa:
@@ -99,10 +103,7 @@ def aggiorna_risultati():
                 for r in risultati_api:
                     if not r.get('completed') or not r.get('scores'): continue
                     
-                    casa_ita = traduci_squadra(r.get('home_team', ''))
-                    trasf_ita = traduci_squadra(r.get('away_team', ''))
-                    
-                    if p.get('squadra_casa') == casa_ita and p.get('squadra_trasferta') == trasf_ita:
+                    if confronta_squadre(p.get('squadra_casa'), r.get('home_team')) and confronta_squadre(p.get('squadra_trasferta'), r.get('away_team')):
                         gol_casa, gol_trasf = 0, 0
                         for score in r['scores']:
                             if score.get('name') == r.get('home_team'): gol_casa = int(score.get('score', 0))
@@ -111,19 +112,18 @@ def aggiorna_risultati():
                         p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
                         
                         pron_pulito = str(p.get('pronostico', '')).lower().strip()
-                        c_ita = casa_ita.lower()
-                        t_ita = trasf_ita.lower()
+                        c_db = str(p.get('squadra_casa', '')).lower().strip()
+                        t_db = str(p.get('squadra_trasferta', '')).lower().strip()
                         
                         vinta = False
-                        if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_ita}"): vinta = True
-                        elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_ita}"): vinta = True
+                        if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_db}"): vinta = True
+                        elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_db}"): vinta = True
                         elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
                         
                         p['stato'] = 'vinta' if vinta else 'persa'
                         modificato = True
                         break
                         
-    # FASE 3: Ricalcolo globale dello stato delle schedine
     for schedina in db.get('schedine', []):
         if schedina.get('modello') == 'beta': continue
         
