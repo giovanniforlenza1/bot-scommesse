@@ -1144,6 +1144,143 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "9a3edea7",
+            "modello": "alpha",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 7.85,
+            "ritorno_potenziale": 78.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Frosinone",
+                    "pronostico": "vittoria Napoli",
+                    "quota": 1.44,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "vittoria Lazio",
+                    "quota": 1.57,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "AC Milan",
+                    "pronostico": "vittoria AC Milan",
+                    "quota": 1.8,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Lecce",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "vittoria Bologna",
+                    "quota": 1.93,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "3818e16e",
+            "modello": "alpha",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.16,
+            "ritorno_potenziale": 61.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Real Madrid",
+                    "squadra_trasferta": "Villarreal",
+                    "pronostico": "vittoria Real Madrid",
+                    "quota": 1.33,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Real Betis",
+                    "squadra_trasferta": "CA Osasuna",
+                    "pronostico": "vittoria Real Betis",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Real Sociedad",
+                    "squadra_trasferta": "Deportivo La Coruña",
+                    "pronostico": "vittoria Real Sociedad",
+                    "quota": 1.63,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Alavés",
+                    "squadra_trasferta": "Atlético Madrid",
+                    "pronostico": "vittoria Atlético Madrid",
+                    "quota": 1.82,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "88a804e9",
+            "modello": "alpha",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 7.7,
+            "ritorno_potenziale": 77.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Borussia Dortmund",
+                    "squadra_trasferta": "Werder Bremen",
+                    "pronostico": "vittoria Borussia Dortmund",
+                    "quota": 1.35,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "TSG Hoffenheim",
+                    "squadra_trasferta": "Hamburger SV",
+                    "pronostico": "vittoria TSG Hoffenheim",
+                    "quota": 1.42,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "Eintracht Frankfurt",
+                    "pronostico": "vittoria RB Leipzig",
+                    "quota": 1.54,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "SC Paderborn",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "pronostico": "vittoria VfB Stuttgart",
+                    "quota": 1.59,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "SC Freiburg",
+                    "squadra_trasferta": "FC Schalke 04",
+                    "pronostico": "vittoria SC Freiburg",
+                    "quota": 1.64,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
