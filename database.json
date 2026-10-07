@@ -945,6 +945,111 @@
                     "risultato_reale": "3"
                 }
             ]
+        },
+        {
+            "id": "f4b9de7c",
+            "modello": "omega",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 16.66,
+            "ritorno_potenziale": 166.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter Milan",
+                    "pronostico": "vittoria Bologna",
+                    "quota": 6.6,
+                    "bookmaker": "Betfair",
+                    "score": 4.609999999999999,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "c0f72699f32ec193b64fd54092fe268d",
+                    "data": "11/10 15:00",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "vittoria Lazio",
+                    "quota": 1.65,
+                    "bookmaker": "Betfair",
+                    "score": 0.05999999999999983,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "40c1bd70fee927f9bfa8901edab02b48",
+                    "data": "10/10 20:45",
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Frosinone",
+                    "pronostico": "vittoria Napoli",
+                    "quota": 1.53,
+                    "bookmaker": "Betfair",
+                    "score": 0.020000000000000018,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "bebcc344",
+            "modello": "omega",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.91,
+            "ritorno_potenziale": 19.1,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3869391e3dbdcaa74153b11df56a3fe5",
+                    "data": "10/10 16:15",
+                    "squadra_casa": "Alavés",
+                    "squadra_trasferta": "Atlético Madrid",
+                    "pronostico": "vittoria Atlético Madrid",
+                    "quota": 1.91,
+                    "bookmaker": "Betfair",
+                    "score": 0.010000000000000009,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "808b6470",
+            "modello": "omega",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 4.83,
+            "ritorno_potenziale": 48.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
+                    "data": "13/10 21:00",
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "PSV Eindhoven",
+                    "pronostico": "vittoria RB Leipzig",
+                    "quota": 2.1,
+                    "bookmaker": "Betfair",
+                    "score": 0.4700000000000002,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a9c22e08b395ee5753c8a65bc0eb97cf",
+                    "data": "13/10 21:00",
+                    "squadra_casa": "Atlético Madrid",
+                    "squadra_trasferta": "Manchester United",
+                    "pronostico": "vittoria Atlético Madrid",
+                    "quota": 2.3,
+                    "bookmaker": "Betfair",
+                    "score": 0.3999999999999999,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
