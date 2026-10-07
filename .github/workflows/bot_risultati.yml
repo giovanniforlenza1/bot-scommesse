@@ -23,7 +23,7 @@ jobs:
 
       - name: Lancia Bot Risultati
         env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          ODDS_API_KEY: ${{ secrets.API_KEY_ARBITRO }}
         run: python bot_risultati.py
 
       - name: Pubblica sul sito web
