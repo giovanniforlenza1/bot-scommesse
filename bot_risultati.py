@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import re
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -34,15 +35,16 @@ TRADUZIONI_NAZIONALI = {
     "Andorra": "Andorra", "Malta": "Malta", "Azerbaijan": "Azerbaigian"
 }
 
-def traduci_squadra(nome):
-    return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
+def normalizza(testo):
+    if not testo: return ""
+    return re.sub(r'[^a-z0-9]', '', str(testo).lower())
 
 def confronta_squadre(sq_db, sq_api):
     if not sq_db or not sq_api: return False
-    s1 = str(sq_db).lower().strip()
-    s2_eng = str(sq_api).lower().strip()
-    s2_ita = traduci_squadra(str(sq_api)).lower().strip()
-    return s1 == s2_eng or s1 == s2_ita
+    s1 = normalizza(sq_db)
+    s2_eng = normalizza(sq_api)
+    s2_ita = normalizza(TRADUZIONI_NAZIONALI.get(str(sq_api).strip(), str(sq_api)))
+    return s1 in s2_eng or s2_eng in s1 or s1 in s2_ita or s2_ita in s1
 
 def aggiorna_risultati():
     print("Avvio Arbitro SBR: controllo e auto-guarigione in corso...")
@@ -56,6 +58,7 @@ def aggiorna_risultati():
         
     modificato = False
     
+    # auto-guarigione tramite lettura del marcatore già registrato
     for schedina in db.get('schedine', []):
         if schedina.get('modello') == 'beta':
             continue
@@ -65,13 +68,13 @@ def aggiorna_risultati():
                 try:
                     risultato_pulito = p['risultato_reale'].replace('[', '').replace(']', '').strip()
                     gol_casa, gol_trasf = map(int, risultato_pulito.split('-'))
-                    pron_pulito = str(p.get('pronostico', '')).lower().strip()
-                    c_db = str(p.get('squadra_casa', '')).lower().strip()
-                    t_db = str(p.get('squadra_trasferta', '')).lower().strip()
+                    pron_pulito = normalizza(p.get('pronostico', ''))
+                    c_db = normalizza(p.get('squadra_casa', ''))
+                    t_db = normalizza(p.get('squadra_trasferta', ''))
                     
                     vinta = False
-                    if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_db}"): vinta = True
-                    elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_db}"): vinta = True
+                    if gol_casa > gol_trasf and (pron_pulito == "1" or f"vittoria{c_db}" in pron_pulito): vinta = True
+                    elif gol_trasf > gol_casa and (pron_pulito == "2" or f"vittoria{t_db}" in pron_pulito): vinta = True
                     elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
                     
                     nuovo_stato_partita = 'vinta' if vinta else 'persa'
@@ -91,8 +94,12 @@ def aggiorna_risultati():
                 res = requests.get(url, timeout=10)
                 if res.status_code == 200:
                     risultati_api.extend(res.json())
+                elif res.status_code == 429:
+                    print(f"!!! ATTENZIONE !!! limite chiamate api superato per {camp} (Errore 429).")
+                elif res.status_code == 401:
+                    print(f"!!! ATTENZIONE !!! chiave api non valida o scaduta (Errore 401).")
             except Exception as e:
-                print(f"Errore caricamento {camp}: {e}")
+                print(f"Errore di connessione per {camp}: {e}")
                 
         for schedina in schedine_in_attesa:
             if schedina.get('modello') == 'beta': continue
@@ -100,29 +107,35 @@ def aggiorna_risultati():
             for p in schedina.get('partite', []):
                 if p.get('stato') != 'in attesa': continue
                 
+                match_trovato = False
                 for r in risultati_api:
                     if not r.get('completed') or not r.get('scores'): continue
                     
                     if confronta_squadre(p.get('squadra_casa'), r.get('home_team')) and confronta_squadre(p.get('squadra_trasferta'), r.get('away_team')):
+                        match_trovato = True
                         gol_casa, gol_trasf = 0, 0
                         for score in r['scores']:
-                            if score.get('name') == r.get('home_team'): gol_casa = int(score.get('score', 0))
-                            if score.get('name') == r.get('away_team'): gol_trasf = int(score.get('score', 0))
+                            if normalizza(score.get('name')) == normalizza(r.get('home_team')): gol_casa = int(score.get('score', 0))
+                            if normalizza(score.get('name')) == normalizza(r.get('away_team')): gol_trasf = int(score.get('score', 0))
                             
                         p['risultato_reale'] = f"{gol_casa}-{gol_trasf}"
                         
-                        pron_pulito = str(p.get('pronostico', '')).lower().strip()
-                        c_db = str(p.get('squadra_casa', '')).lower().strip()
-                        t_db = str(p.get('squadra_trasferta', '')).lower().strip()
+                        pron_pulito = normalizza(p.get('pronostico', ''))
+                        c_db = normalizza(p.get('squadra_casa', ''))
+                        t_db = normalizza(p.get('squadra_trasferta', ''))
                         
                         vinta = False
-                        if gol_casa > gol_trasf and (pron_pulito == "1" or pron_pulito == f"vittoria {c_db}"): vinta = True
-                        elif gol_trasf > gol_casa and (pron_pulito == "2" or pron_pulito == f"vittoria {t_db}"): vinta = True
+                        if gol_casa > gol_trasf and (pron_pulito == "1" or f"vittoria{c_db}" in pron_pulito): vinta = True
+                        elif gol_trasf > gol_casa and (pron_pulito == "2" or f"vittoria{t_db}" in pron_pulito): vinta = True
                         elif gol_casa == gol_trasf and (pron_pulito == "x" or pron_pulito == "pareggio"): vinta = True
                         
                         p['stato'] = 'vinta' if vinta else 'persa'
                         modificato = True
+                        print(f"Trovata e aggiornata: {p['squadra_casa']} - {p['squadra_trasferta']} ({gol_casa}-{gol_trasf}) -> {p['stato']}")
                         break
+                        
+                if not match_trovato:
+                    print(f"Non trovata nell'api: {p.get('squadra_casa')} - {p.get('squadra_trasferta')}")
                         
     for schedina in db.get('schedine', []):
         if schedina.get('modello') == 'beta': continue
