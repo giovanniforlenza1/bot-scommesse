@@ -440,8 +440,8 @@
                     "pronostico": "Over 2.5",
                     "quota": 2.32,
                     "score": 0.6699999999999999,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
@@ -794,8 +794,8 @@
                     "squadra_trasferta": "Iceland",
                     "pronostico": "vittoria Iceland",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
@@ -876,16 +876,16 @@
                     "squadra_trasferta": "Latvia",
                     "pronostico": "vittoria Cyprus",
                     "quota": 1.55,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "squadra_casa": "Estonia",
                     "squadra_trasferta": "Iceland",
                     "pronostico": "vittoria Iceland",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
