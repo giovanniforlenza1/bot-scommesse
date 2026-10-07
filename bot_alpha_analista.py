@@ -20,6 +20,46 @@ TRADUZIONI_NAZIONALI = {
     "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia"
 }
 
+TRADUZIONI_SQUADRE = {
+    "Inter Milan": "Inter",
+    "AC Milan": "Milan",
+    "AS Roma": "Roma",
+    "SSC Napoli": "Napoli",
+    "SS Lazio": "Lazio",
+    "Juventus FC": "Juventus",
+    "Hellas Verona": "Verona",
+    "Bologna FC": "Bologna",
+    "Fiorentina": "Fiorentina",
+    "Torino FC": "Torino",
+    "Genoa CFC": "Genoa",
+    "Empoli FC": "Empoli",
+    "Udinese Calcio": "Udinese",
+    "Venezia FC": "Venezia",
+    "Parma Calcio 1913": "Parma",
+    "Como 1907": "Como",
+    "Manchester Utd": "Manchester United",
+    "Nott'm Forest": "Nottingham Forest",
+    "Spurs": "Tottenham",
+    "Newcastle Utd": "Newcastle",
+    "Paris Saint Germain": "PSG",
+    "Bayern Munich": "Bayern Monaco",
+    "Bayer Leverkusen": "Bayer Leverkusen",
+    "Real Betis": "Betis Siviglia",
+    "Real Sociedad": "Real Sociedad",
+    "Athletic Club": "Athletic Bilbao"
+}
+
+def traduci_squadra(nome):
+    nome_pulito = nome.strip()
+    
+    if nome_pulito in TRADUZIONI_NAZIONALI:
+        return TRADUZIONI_NAZIONALI[nome_pulito]
+        
+    if nome_pulito in TRADUZIONI_SQUADRE:
+        return TRADUZIONI_SQUADRE[nome_pulito]
+        
+    # rimozione automatica di suffissi inutili se il team non è nel dizionario
+    return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
 def traduci_squadra(nome):
     return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
