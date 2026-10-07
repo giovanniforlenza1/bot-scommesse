@@ -725,15 +725,15 @@
             "importo": 10.0,
             "quota_totale": 1.53,
             "ritorno_potenziale": 15.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Luxembourg",
                     "squadra_trasferta": "Bulgaria",
                     "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
                     "quota": 1.53,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "4"
                 }
             ]
         },
