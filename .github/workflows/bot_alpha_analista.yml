@@ -23,7 +23,7 @@ jobs:
 
       - name: Lancia Analista Alpha
         env:
-          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          ODDS_API_KEY: ${{ secrets.API_KEY_ALPHA }}
         run: python bot_alpha_analista.py
 
       - name: Salva database analista
