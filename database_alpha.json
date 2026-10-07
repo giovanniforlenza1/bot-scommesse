@@ -1,9 +1,93 @@
 {
-    "ultimo_aggiornamento": "2026-10-07 17:38",
+    "ultimo_aggiornamento": "2026-10-07 19:21",
     "schedine": [
         {
+            "lega": "soccer_italy_serie_a",
+            "quota_totale": 7.85,
+            "partite": [
+                {
+                    "match": "Napoli - Frosinone",
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Frosinone",
+                    "data": "10/10 20:45",
+                    "pronostico": "vittoria Napoli",
+                    "quota": 1.44,
+                    "probabilita": 65.7
+                },
+                {
+                    "match": "Lazio - Monza",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Monza",
+                    "data": "11/10 15:00",
+                    "pronostico": "vittoria Lazio",
+                    "quota": 1.57,
+                    "probabilita": 60.2
+                },
+                {
+                    "match": "Sassuolo - AC Milan",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "AC Milan",
+                    "data": "11/10 18:00",
+                    "pronostico": "vittoria AC Milan",
+                    "quota": 1.8,
+                    "probabilita": 52.5
+                },
+                {
+                    "match": "Lecce - Bologna",
+                    "squadra_casa": "Lecce",
+                    "squadra_trasferta": "Bologna",
+                    "data": "11/10 15:00",
+                    "pronostico": "vittoria Bologna",
+                    "quota": 1.93,
+                    "probabilita": 49.1
+                }
+            ]
+        },
+        {
+            "lega": "soccer_spain_la_liga",
+            "quota_totale": 6.16,
+            "partite": [
+                {
+                    "match": "Real Madrid - Villarreal",
+                    "squadra_casa": "Real Madrid",
+                    "squadra_trasferta": "Villarreal",
+                    "data": "10/10 21:00",
+                    "pronostico": "vittoria Real Madrid",
+                    "quota": 1.33,
+                    "probabilita": 71.5
+                },
+                {
+                    "match": "Real Betis - CA Osasuna",
+                    "squadra_casa": "Real Betis",
+                    "squadra_trasferta": "CA Osasuna",
+                    "data": "11/10 18:30",
+                    "pronostico": "vittoria Real Betis",
+                    "quota": 1.56,
+                    "probabilita": 60.8
+                },
+                {
+                    "match": "Real Sociedad - Deportivo La Coruña",
+                    "squadra_casa": "Real Sociedad",
+                    "squadra_trasferta": "Deportivo La Coruña",
+                    "data": "11/10 16:15",
+                    "pronostico": "vittoria Real Sociedad",
+                    "quota": 1.63,
+                    "probabilita": 58.2
+                },
+                {
+                    "match": "Alavés - Atlético Madrid",
+                    "squadra_casa": "Alavés",
+                    "squadra_trasferta": "Atlético Madrid",
+                    "data": "10/10 16:15",
+                    "pronostico": "vittoria Atlético Madrid",
+                    "quota": 1.82,
+                    "probabilita": 52.1
+                }
+            ]
+        },
+        {
             "lega": "soccer_germany_bundesliga",
-            "quota_totale": 7.6,
+            "quota_totale": 7.7,
             "partite": [
                 {
                     "match": "Borussia Dortmund - Werder Bremen",
@@ -12,7 +96,7 @@
                     "data": "09/10 20:30",
                     "pronostico": "vittoria Borussia Dortmund",
                     "quota": 1.35,
-                    "probabilita": 70.0
+                    "probabilita": 70.4
                 },
                 {
                     "match": "TSG Hoffenheim - Hamburger SV",
@@ -29,8 +113,8 @@
                     "squadra_trasferta": "Eintracht Frankfurt",
                     "data": "10/10 18:30",
                     "pronostico": "vittoria RB Leipzig",
-                    "quota": 1.53,
-                    "probabilita": 61.7
+                    "quota": 1.54,
+                    "probabilita": 61.5
                 },
                 {
                     "match": "SC Paderborn - VfB Stuttgart",
@@ -47,50 +131,8 @@
                     "squadra_trasferta": "FC Schalke 04",
                     "data": "11/10 17:30",
                     "pronostico": "vittoria SC Freiburg",
-                    "quota": 1.63,
+                    "quota": 1.64,
                     "probabilita": 57.8
-                }
-            ]
-        },
-        {
-            "lega": "soccer_france_ligue_one",
-            "quota_totale": 6.29,
-            "partite": [
-                {
-                    "match": "Lille - Le Havre",
-                    "squadra_casa": "Lille",
-                    "squadra_trasferta": "Le Havre",
-                    "data": "10/10 17:15",
-                    "pronostico": "vittoria Lille",
-                    "quota": 1.42,
-                    "probabilita": 66.3
-                },
-                {
-                    "match": "Rennes - Auxerre",
-                    "squadra_casa": "Rennes",
-                    "squadra_trasferta": "Auxerre",
-                    "data": "11/10 17:15",
-                    "pronostico": "vittoria Rennes",
-                    "quota": 1.43,
-                    "probabilita": 66.2
-                },
-                {
-                    "match": "AS Monaco - Toulouse",
-                    "squadra_casa": "AS Monaco",
-                    "squadra_trasferta": "Toulouse",
-                    "data": "10/10 20:45",
-                    "pronostico": "vittoria AS Monaco",
-                    "quota": 1.58,
-                    "probabilita": 59.9
-                },
-                {
-                    "match": "Brest - Angers",
-                    "squadra_casa": "Brest",
-                    "squadra_trasferta": "Angers",
-                    "data": "10/10 20:45",
-                    "pronostico": "vittoria Brest",
-                    "quota": 1.96,
-                    "probabilita": 48.1
                 }
             ]
         }
