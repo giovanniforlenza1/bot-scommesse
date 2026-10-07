@@ -507,8 +507,8 @@
                     "quota": 1.95,
                     "bookmaker": "Betfair",
                     "score": 0.32000000000000006,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "6619e1fedfdf11ec54f2ff721efd209f",
@@ -554,8 +554,8 @@
                     "quota": 1.56,
                     "bookmaker": "Betfair",
                     "score": 0.040000000000000036,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
