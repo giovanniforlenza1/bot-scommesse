@@ -1050,6 +1050,100 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "ef6b38b6",
+            "modello": "alpha",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 7.6,
+            "ritorno_potenziale": 76.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Borussia Dortmund",
+                    "squadra_trasferta": "Werder Bremen",
+                    "pronostico": "vittoria Borussia Dortmund",
+                    "quota": 1.35,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "TSG Hoffenheim",
+                    "squadra_trasferta": "Hamburger SV",
+                    "pronostico": "vittoria TSG Hoffenheim",
+                    "quota": 1.42,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "Eintracht Frankfurt",
+                    "pronostico": "vittoria RB Leipzig",
+                    "quota": 1.53,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "SC Paderborn",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "pronostico": "vittoria VfB Stuttgart",
+                    "quota": 1.59,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "SC Freiburg",
+                    "squadra_trasferta": "FC Schalke 04",
+                    "pronostico": "vittoria SC Freiburg",
+                    "quota": 1.63,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "5136fcc9",
+            "modello": "alpha",
+            "data_creazione": "07/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.29,
+            "ritorno_potenziale": 62.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Lille",
+                    "squadra_trasferta": "Le Havre",
+                    "pronostico": "vittoria Lille",
+                    "quota": 1.42,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Rennes",
+                    "squadra_trasferta": "Auxerre",
+                    "pronostico": "vittoria Rennes",
+                    "quota": 1.43,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "AS Monaco",
+                    "squadra_trasferta": "Toulouse",
+                    "pronostico": "vittoria AS Monaco",
+                    "quota": 1.58,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Brest",
+                    "squadra_trasferta": "Angers",
+                    "pronostico": "vittoria Brest",
+                    "quota": 1.96,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
