@@ -1,4 +1,98 @@
 {
-    "ultimo_aggiornamento": "2026-10-06 18:35",
-    "schedine": []
+    "ultimo_aggiornamento": "2026-10-07 17:38",
+    "schedine": [
+        {
+            "lega": "soccer_germany_bundesliga",
+            "quota_totale": 7.6,
+            "partite": [
+                {
+                    "match": "Borussia Dortmund - Werder Bremen",
+                    "squadra_casa": "Borussia Dortmund",
+                    "squadra_trasferta": "Werder Bremen",
+                    "data": "09/10 20:30",
+                    "pronostico": "vittoria Borussia Dortmund",
+                    "quota": 1.35,
+                    "probabilita": 70.0
+                },
+                {
+                    "match": "TSG Hoffenheim - Hamburger SV",
+                    "squadra_casa": "TSG Hoffenheim",
+                    "squadra_trasferta": "Hamburger SV",
+                    "data": "10/10 15:30",
+                    "pronostico": "vittoria TSG Hoffenheim",
+                    "quota": 1.42,
+                    "probabilita": 66.7
+                },
+                {
+                    "match": "RB Leipzig - Eintracht Frankfurt",
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "Eintracht Frankfurt",
+                    "data": "10/10 18:30",
+                    "pronostico": "vittoria RB Leipzig",
+                    "quota": 1.53,
+                    "probabilita": 61.7
+                },
+                {
+                    "match": "SC Paderborn - VfB Stuttgart",
+                    "squadra_casa": "SC Paderborn",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "data": "10/10 15:30",
+                    "pronostico": "vittoria VfB Stuttgart",
+                    "quota": 1.59,
+                    "probabilita": 59.7
+                },
+                {
+                    "match": "SC Freiburg - FC Schalke 04",
+                    "squadra_casa": "SC Freiburg",
+                    "squadra_trasferta": "FC Schalke 04",
+                    "data": "11/10 17:30",
+                    "pronostico": "vittoria SC Freiburg",
+                    "quota": 1.63,
+                    "probabilita": 57.8
+                }
+            ]
+        },
+        {
+            "lega": "soccer_france_ligue_one",
+            "quota_totale": 6.29,
+            "partite": [
+                {
+                    "match": "Lille - Le Havre",
+                    "squadra_casa": "Lille",
+                    "squadra_trasferta": "Le Havre",
+                    "data": "10/10 17:15",
+                    "pronostico": "vittoria Lille",
+                    "quota": 1.42,
+                    "probabilita": 66.3
+                },
+                {
+                    "match": "Rennes - Auxerre",
+                    "squadra_casa": "Rennes",
+                    "squadra_trasferta": "Auxerre",
+                    "data": "11/10 17:15",
+                    "pronostico": "vittoria Rennes",
+                    "quota": 1.43,
+                    "probabilita": 66.2
+                },
+                {
+                    "match": "AS Monaco - Toulouse",
+                    "squadra_casa": "AS Monaco",
+                    "squadra_trasferta": "Toulouse",
+                    "data": "10/10 20:45",
+                    "pronostico": "vittoria AS Monaco",
+                    "quota": 1.58,
+                    "probabilita": 59.9
+                },
+                {
+                    "match": "Brest - Angers",
+                    "squadra_casa": "Brest",
+                    "squadra_trasferta": "Angers",
+                    "data": "10/10 20:45",
+                    "pronostico": "vittoria Brest",
+                    "quota": 1.96,
+                    "probabilita": 48.1
+                }
+            ]
+        }
+    ]
 }
