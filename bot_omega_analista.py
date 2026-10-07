@@ -6,8 +6,6 @@ from zoneinfo import ZoneInfo
 # L'importazione che fonde l'Analista con il nuovo Simulatore
 from bot_simulatore_montecarlo import simula_partita_montecarlo
 
-ODDS_API_KEY = os.environ.get("ODDS_API_KEY")
-
 CAMPIONATI = [
     'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
     'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
@@ -40,6 +38,32 @@ def calcola_quota_reale(quote):
     quote_reali = [1 / p for p in prob_reali]
     return quote_reali, prob_reali, prob_implicita
 
+def esegui_richiesta_api(url_template):
+    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
+    if not chiavi: 
+        print("Nessuna chiave API trovata.")
+        return None
+        
+    for chiave in chiavi:
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=10)
+            if res.status_code == 200:
+                return res.json()
+            elif res.status_code == 429:
+                print(f"Chiave {chiave[:4]}... esaurita (429). passo alla successiva.")
+                continue
+            elif res.status_code == 401:
+                print(f"Chiave {chiave[:4]}... non valida (401). passo alla successiva.")
+                continue
+            else:
+                print(f"Errore {res.status_code} con chiave {chiave[:4]}...")
+        except Exception as e:
+            print(f"Eccezione connessione API: {e}")
+            
+    print("Tutte le chiavi API a disposizione sono esaurite o bloccate.")
+    return None
+
 def genera_analisi_quantitativa():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
@@ -50,11 +74,10 @@ def genera_analisi_quantitativa():
     print("Avvio Modello Omega: Analisi Mercato + Simulazione Monte Carlo...")
     
     for camp in CAMPIONATI:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
-        res = requests.get(url, timeout=10)
+        url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h"
+        matches = esegui_richiesta_api(url_template)
         
-        if res.status_code != 200: continue
-        matches = res.json()
+        if not matches: continue
         
         for m in matches:
             data_partita_utc = datetime.strptime(m['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC"))
