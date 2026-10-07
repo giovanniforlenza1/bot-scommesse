@@ -806,7 +806,7 @@
             "importo": 10.0,
             "quota_totale": 4.46,
             "ritorno_potenziale": 44.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "d25e4cefbf1b47ae2ee43f7c70f0c1f2",
