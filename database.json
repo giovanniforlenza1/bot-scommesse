@@ -744,15 +744,15 @@
             "importo": 10.0,
             "quota_totale": 1.53,
             "ritorno_potenziale": 15.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Belarus",
                     "squadra_trasferta": "Finland",
                     "pronostico": "Over 4.5 Cartellini Gialli/Rossi",
                     "quota": 1.53,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6"
                 }
             ]
         },
@@ -896,15 +896,15 @@
             "importo": 10.0,
             "quota_totale": 1.73,
             "ritorno_potenziale": 17.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Croazia",
                     "squadra_trasferta": "Spagna",
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.73,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "9"
                 }
             ]
         },
