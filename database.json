@@ -496,7 +496,7 @@
             "importo": 10.0,
             "quota_totale": 3.14,
             "ritorno_potenziale": 31.4,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "5d9aac1a239e87ecc555aba2fe4426cf",
@@ -531,7 +531,7 @@
             "importo": 10.0,
             "quota_totale": 2.75,
             "ritorno_potenziale": 27.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "048b8e582376b00f3acbaaf879ec05ec",
@@ -601,7 +601,7 @@
             "importo": 10.0,
             "quota_totale": 2.7,
             "ritorno_potenziale": 27.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "048b8e582376b00f3acbaaf879ec05ec",
@@ -624,8 +624,8 @@
                     "quota": 1.54,
                     "bookmaker": "Betfair",
                     "score": 0.020000000000000018,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -636,15 +636,15 @@
             "importo": 10.0,
             "quota_totale": 1.42,
             "ritorno_potenziale": 14.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Svizzera",
                     "squadra_trasferta": "North Macedonia",
                     "pronostico": "1",
                     "quota": 1.1,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Olanda",
@@ -659,8 +659,8 @@
                     "squadra_trasferta": "Czech Republic",
                     "pronostico": "1",
                     "quota": 1.14,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 }
             ]
         },
@@ -841,8 +841,8 @@
                     "quota": 1.82,
                     "bookmaker": "Betfair",
                     "score": 0.010000000000000009,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
