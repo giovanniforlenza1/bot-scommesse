@@ -25,7 +25,7 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
-          ODDS_API_KEY: ${{ secrets.API_FOOTBALL_BETA_KEY }}
+          ODDS_API_KEY: ${{ secrets.API_FOOTBALL_KEY }}
         run: python bot_beta_cecchino.py
 
       - name: Salva database principale
