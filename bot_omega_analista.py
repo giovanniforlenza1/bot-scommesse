@@ -3,7 +3,6 @@ import json
 import os
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-# L'importazione che fonde l'Analista con il nuovo Simulatore
 from bot_simulatore_montecarlo import simula_partita_montecarlo
 
 CAMPIONATI = [
@@ -20,57 +19,28 @@ TRADUZIONI_NAZIONALI = {
     "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
     "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
     "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
-    "Kazakhstan": "Kazakistan", "Moldova": "Moldavia", "Cyprus": "Cipro",
-    "Armenia": "Armenia", "Latvia": "Lettonia", "Montenegro": "Montenegro",
-    "Georgia": "Georgia", "Ukraine": "Ucraina", "Northern Ireland": "Irlanda del Nord",
-    "Romania": "Romania", "Bosnia & Herzegovina": "Bosnia Erzegovina",
-    "Faroe Islands": "Isole Faroe", "Slovakia": "Slovacchia", "Finland": "Finlandia",
-    "Belarus": "Bielorussia", "San Marino": "San Marino", "Iceland": "Islanda",
-    "Bulgaria": "Bulgaria", "Estonia": "Estonia", "Luxembourg": "Lussemburgo"
+    "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord"
 }
 
 TRADUZIONI_SQUADRE = {
-    "Inter Milan": "Inter",
-    "AC Milan": "Milan",
-    "AS Roma": "Roma",
-    "SSC Napoli": "Napoli",
-    "SS Lazio": "Lazio",
-    "Juventus FC": "Juventus",
-    "Hellas Verona": "Verona",
-    "Bologna FC": "Bologna",
-    "Fiorentina": "Fiorentina",
-    "Torino FC": "Torino",
-    "Genoa CFC": "Genoa",
-    "Empoli FC": "Empoli",
-    "Udinese Calcio": "Udinese",
-    "Venezia FC": "Venezia",
-    "Parma Calcio 1913": "Parma",
-    "Como 1907": "Como",
-    "Manchester Utd": "Manchester United",
-    "Nott'm Forest": "Nottingham Forest",
-    "Spurs": "Tottenham",
-    "Newcastle Utd": "Newcastle",
-    "Paris Saint Germain": "PSG",
-    "Bayern Munich": "Bayern Monaco",
-    "Bayer Leverkusen": "Bayer Leverkusen",
-    "Real Betis": "Betis Siviglia",
-    "Real Sociedad": "Real Sociedad",
+    "Inter Milan": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
+    "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "Juventus FC": "Juventus",
+    "Hellas Verona": "Verona", "Bologna FC": "Bologna", "Fiorentina": "Fiorentina",
+    "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
+    "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma",
+    "Como 1907": "Como", "Manchester Utd": "Manchester United",
+    "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham",
+    "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG",
+    "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen",
+    "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
     "Athletic Club": "Athletic Bilbao"
 }
 
 def traduci_squadra(nome):
     nome_pulito = nome.strip()
-    
-    if nome_pulito in TRADUZIONI_NAZIONALI:
-        return TRADUZIONI_NAZIONALI[nome_pulito]
-        
-    if nome_pulito in TRADUZIONI_SQUADRE:
-        return TRADUZIONI_SQUADRE[nome_pulito]
-        
-    # rimozione automatica di suffissi inutili se il team non è nel dizionario
+    if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
+    if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
-def traduci_squadra(nome):
-    return TRADUZIONI_NAZIONALI.get(nome.strip(), nome.strip())
 
 def calcola_quota_reale(quote):
     prob_implicita = sum(1 / q for q in quote) 
@@ -96,8 +66,6 @@ def esegui_richiesta_api(url_template):
             elif res.status_code == 401:
                 print(f"Chiave {chiave[:4]}... non valida (401). passo alla successiva.")
                 continue
-            else:
-                print(f"Errore {res.status_code} con chiave {chiave[:4]}...")
         except Exception as e:
             print(f"Eccezione connessione API: {e}")
             
@@ -107,6 +75,7 @@ def esegui_richiesta_api(url_template):
 def genera_analisi_quantitativa():
     fuso = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso)
+    # IL FRENO PER L'ANALISTA: Scansiona il mercato solo fino a 4 giorni da oggi
     limite_temporale = oggi + timedelta(days=4)
     
     database_analisi = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "analisi": []}
@@ -122,6 +91,8 @@ def genera_analisi_quantitativa():
         for m in matches:
             data_partita_utc = datetime.strptime(m['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC"))
             data_partita_ita = data_partita_utc.astimezone(fuso)
+            
+            # Blocco temporale effettivo
             if data_partita_ita > limite_temporale: continue
             
             q_1_list, q_x_list, q_2_list = [], [], []
@@ -144,11 +115,9 @@ def genera_analisi_quantitativa():
             home_ita = traduci_squadra(m['home_team'])
             away_ita = traduci_squadra(m['away_team'])
             
-            # Traduciamo le probabilità in forza d'attacco (xG stimati) per il simulatore
             xg_casa = prob_reali[0] * 2.5
             xg_trasferta = prob_reali[2] * 2.5
             
-            # Lanciamo il motore Monte Carlo su 10.000 universi paralleli
             esito_montecarlo = simula_partita_montecarlo(
                 gol_fatti_casa=xg_casa, gol_subiti_casa=xg_trasferta, 
                 gol_fatti_trasferta=xg_trasferta, gol_subiti_trasferta=xg_casa, 
@@ -156,7 +125,6 @@ def genera_analisi_quantitativa():
                 num_simulazioni=10000
             )
             
-            # Uniamo i dati: la probabilità della simulazione e la quota del mercato
             miglior_prob = max(esito_montecarlo['prob_1'], esito_montecarlo['prob_x'], esito_montecarlo['prob_2'])
             
             if miglior_prob == esito_montecarlo['prob_1']:
@@ -169,10 +137,8 @@ def genera_analisi_quantitativa():
                 pronostico_str = "pareggio"
                 quota_pura_fiera = round(1 / esito_montecarlo['prob_x'], 2) if esito_montecarlo['prob_x'] > 0 else 0
                 
-            # Applichiamo il vantaggio matematico sulla quota fiera calcolata da Monte Carlo
             quota_valore_richiesta = round(quota_pura_fiera * 1.04, 2)
             
-            # Filtro rigido: accettiamo solo quote finali comprese tra 1.50 e 2.00
             if not (1.50 <= quota_valore_richiesta <= 2.00):
                 continue
             
