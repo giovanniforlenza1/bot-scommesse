@@ -1281,6 +1281,56 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "5f1bee93",
+            "modello": "omega",
+            "data_creazione": "08/10/2026",
+            "importo": 10.0,
+            "quota_totale": 18.62,
+            "ritorno_potenziale": 186.2,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "vittoria Bologna",
+                    "quota": 6.6,
+                    "bookmaker": "Betfair",
+                    "score": 4.619999999999999,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4c4026e2782f09d6f0ff2bde2a390513",
+                    "data": "18/10 20:45",
+                    "squadra_casa": "Juventus",
+                    "squadra_trasferta": "Lazio",
+                    "pronostico": "vittoria Juventus",
+                    "quota": 1.72,
+                    "bookmaker": "Betfair",
+                    "score": 0.1499999999999999,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "407f7d03157d1dfad384876e6a6bc910",
+                    "data": "11/10 20:45",
+                    "squadra_casa": "Cagliari",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "vittoria Juventus",
+                    "quota": 1.64,
+                    "bookmaker": "Betfair",
+                    "score": 0.06999999999999984,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
