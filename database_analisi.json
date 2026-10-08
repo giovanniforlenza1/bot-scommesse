@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-10-08 17:05",
+    "ultimo_aggiornamento": "2026-10-08 17:15",
     "analisi": [
         {
             "id_partita": "40c1bd70fee927f9bfa8901edab02b48",
@@ -7,7 +7,7 @@
             "data": "2026-10-10T18:45:00Z",
             "consiglio_algoritmo": "vittoria Napoli",
             "quota_valore_minima": 1.5,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Napoli del 69.6%. La simulazione genera una quota equa di @1.44. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.5."
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Napoli del 69.4%. La simulazione genera una quota equa di @1.44. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.5."
         },
         {
             "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -15,7 +15,15 @@
             "data": "2026-10-11T18:45:00Z",
             "consiglio_algoritmo": "vittoria Juventus",
             "quota_valore_minima": 1.57,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Juventus del 66.2%. La simulazione genera una quota equa di @1.51. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.57."
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Juventus del 66.4%. La simulazione genera una quota equa di @1.51. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.57."
+        },
+        {
+            "id_partita": "984691837d31fd0c59c088f377f55f75",
+            "match": "Real Betis - CA Osasuna",
+            "data": "2026-10-11T16:30:00Z",
+            "consiglio_algoritmo": "vittoria Real Betis",
+            "quota_valore_minima": 1.59,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Real Betis del 65.5%. La simulazione genera una quota equa di @1.53. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.59."
         },
         {
             "id_partita": "c0f72699f32ec193b64fd54092fe268d",
@@ -23,95 +31,95 @@
             "data": "2026-10-11T13:00:00Z",
             "consiglio_algoritmo": "vittoria Lazio",
             "quota_valore_minima": 1.61,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Lazio del 64.6%. La simulazione genera una quota equa di @1.55. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.61."
-        },
-        {
-            "id_partita": "984691837d31fd0c59c088f377f55f75",
-            "match": "Real Betis - CA Osasuna",
-            "data": "2026-10-11T16:30:00Z",
-            "consiglio_algoritmo": "vittoria Real Betis",
-            "quota_valore_minima": 1.62,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Real Betis del 64.2%. La simulazione genera una quota equa di @1.56. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.62."
-        },
-        {
-            "id_partita": "01cb7a67c8ae71201ec27297455fc0e8",
-            "match": "RB Leipzig - Eintracht Frankfurt",
-            "data": "2026-10-10T16:30:00Z",
-            "consiglio_algoritmo": "vittoria RB Leipzig",
-            "quota_valore_minima": 1.62,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria RB Leipzig del 64.0%. La simulazione genera una quota equa di @1.56. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.62."
-        },
-        {
-            "id_partita": "2997b68cc93f62d8a1dee9f06bedbefd",
-            "match": "Real Sociedad - Deportivo La Coruña",
-            "data": "2026-10-11T14:15:00Z",
-            "consiglio_algoritmo": "vittoria Real Sociedad",
-            "quota_valore_minima": 1.66,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Real Sociedad del 62.7%. La simulazione genera una quota equa di @1.6. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.66."
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Lazio del 64.7%. La simulazione genera una quota equa di @1.55. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.61."
         },
         {
             "id_partita": "c2c64ebfc5810226f807c1920d580392",
             "match": "AS Monaco - Toulouse",
             "data": "2026-10-10T18:45:00Z",
             "consiglio_algoritmo": "vittoria AS Monaco",
-            "quota_valore_minima": 1.66,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria AS Monaco del 62.7%. La simulazione genera una quota equa di @1.6. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.66."
+            "quota_valore_minima": 1.62,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria AS Monaco del 64.2%. La simulazione genera una quota equa di @1.56. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.62."
+        },
+        {
+            "id_partita": "01cb7a67c8ae71201ec27297455fc0e8",
+            "match": "RB Leipzig - Eintracht Frankfurt",
+            "data": "2026-10-10T16:30:00Z",
+            "consiglio_algoritmo": "vittoria RB Leipzig",
+            "quota_valore_minima": 1.63,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria RB Leipzig del 63.8%. La simulazione genera una quota equa di @1.57. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.63."
         },
         {
             "id_partita": "9aade3e736c3d113dab19e641c43e272",
             "match": "SC Paderborn - VfB Stuttgart",
             "data": "2026-10-10T13:30:00Z",
             "consiglio_algoritmo": "vittoria VfB Stuttgart",
+            "quota_valore_minima": 1.66,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria VfB Stuttgart del 62.6%. La simulazione genera una quota equa di @1.6. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.66."
+        },
+        {
+            "id_partita": "2997b68cc93f62d8a1dee9f06bedbefd",
+            "match": "Real Sociedad - Deportivo La Coruña",
+            "data": "2026-10-11T14:15:00Z",
+            "consiglio_algoritmo": "vittoria Real Sociedad",
             "quota_valore_minima": 1.67,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria VfB Stuttgart del 62.2%. La simulazione genera una quota equa di @1.61. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.67."
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Real Sociedad del 62.0%. La simulazione genera una quota equa di @1.61. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.67."
         },
         {
             "id_partita": "eaf509fb37413b7d055cd394667792b3",
             "match": "SC Freiburg - FC Schalke 04",
             "data": "2026-10-11T15:30:00Z",
             "consiglio_algoritmo": "vittoria SC Freiburg",
-            "quota_valore_minima": 1.68,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria SC Freiburg del 61.6%. La simulazione genera una quota equa di @1.62. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.68."
+            "quota_valore_minima": 1.72,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria SC Freiburg del 60.7%. La simulazione genera una quota equa di @1.65. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.72."
         },
         {
             "id_partita": "45d4a466e32cd2b4ea535207923ceaf5",
             "match": "Chelsea - Bournemouth",
             "data": "2026-10-10T14:00:00Z",
             "consiglio_algoritmo": "vittoria Chelsea",
-            "quota_valore_minima": 1.79,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Chelsea del 58.2%. La simulazione genera una quota equa di @1.72. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.79."
+            "quota_valore_minima": 1.78,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Chelsea del 58.5%. La simulazione genera una quota equa di @1.71. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.78."
         },
         {
             "id_partita": "22c9b2c43cbe1334381269550dab78e6",
             "match": "Manchester United - Tottenham Hotspur",
             "data": "2026-10-10T16:30:00Z",
             "consiglio_algoritmo": "vittoria Manchester United",
-            "quota_valore_minima": 1.8,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Manchester United del 57.9%. La simulazione genera una quota equa di @1.73. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.8."
+            "quota_valore_minima": 1.78,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Manchester United del 58.3%. La simulazione genera una quota equa di @1.71. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.78."
         },
         {
             "id_partita": "3869391e3dbdcaa74153b11df56a3fe5",
             "match": "Alavés - Atlético Madrid",
             "data": "2026-10-10T14:15:00Z",
             "consiglio_algoritmo": "vittoria Atlético Madrid",
-            "quota_valore_minima": 1.86,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Atlético Madrid del 55.9%. La simulazione genera una quota equa di @1.79. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.86."
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Atlético Madrid del 54.9%. La simulazione genera una quota equa di @1.82. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.89."
         },
         {
             "id_partita": "1cf64166dda1e0da8b325161deb39662",
             "match": "Sassuolo - AC Milan",
             "data": "2026-10-11T16:00:00Z",
             "consiglio_algoritmo": "vittoria AC Milan",
-            "quota_valore_minima": 1.87,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria AC Milan del 55.4%. La simulazione genera una quota equa di @1.8. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.87."
+            "quota_valore_minima": 1.91,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria AC Milan del 54.4%. La simulazione genera una quota equa di @1.84. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.91."
         },
         {
             "id_partita": "946716d7e5e52822f08be8cb95193d9d",
             "match": "Lecce - Bologna",
             "data": "2026-10-11T13:00:00Z",
             "consiglio_algoritmo": "vittoria Bologna",
-            "quota_valore_minima": 1.98,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Bologna del 52.6%. La simulazione genera una quota equa di @1.9. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.98."
+            "quota_valore_minima": 2.0,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Bologna del 52.0%. La simulazione genera una quota equa di @1.92. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @2.0."
+        },
+        {
+            "id_partita": "cb7067ac191abf32ad49dad45e46f639",
+            "match": "Troyes - Marseille",
+            "data": "2026-10-11T18:45:00Z",
+            "consiglio_algoritmo": "vittoria Marseille",
+            "quota_valore_minima": 2.0,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Marseille del 52.1%. La simulazione genera una quota equa di @1.92. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @2.0."
         }
     ]
 }
