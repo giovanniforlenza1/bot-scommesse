@@ -2,7 +2,7 @@ import requests
 import json
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
@@ -74,8 +74,11 @@ def salva_database_principale(db):
 
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
-    db_analisi = carica_database_analisi()
+    oggi = datetime.now(fuso_italia)
+    # IL DOPPIO MURO: Il Cecchino ignora fisicamente qualsiasi quota oltre i 4 giorni
+    limite_temporale = oggi + timedelta(days=4)
     
+    db_analisi = carica_database_analisi()
     if not db_analisi or not db_analisi.get('analisi'): return
         
     candidati_valore = []
@@ -86,6 +89,12 @@ def esegui_cecchino():
         if not partite_live: continue
             
         for p_live in partite_live:
+            data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
+            
+            # Barriera insormontabile
+            if data_ita > limite_temporale:
+                continue
+
             nome_casa_ita = traduci_squadra(p_live['home_team'])
             nome_trasf_ita = traduci_squadra(p_live['away_team'])
             analisi_match = next((a for a in db_analisi['analisi'] if nome_casa_ita in a['match']), None)
@@ -116,7 +125,6 @@ def esegui_cecchino():
                             book_vincente = book.get('title', '')
                             
             if miglior_quota >= quota_minima:
-                data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
                 candidati_valore.append({
                     'id_partita': p_live['id'],
                     'data': data_ita.strftime("%d/%m %H:%M"),
@@ -131,9 +139,10 @@ def esegui_cecchino():
                     'risultato_reale': ''
                 })
                 
-    if not candidati_valore: return
+    if not candidati_valore: 
+        print("Nessuna giocata valida trovata nei prossimi 4 giorni.")
+        return
     
-    # ordinamento vitale: priorità 0 per la Serie A, poi si ordina per score matematico
     finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:3]
     
     quota_totale = 1.0
@@ -146,7 +155,7 @@ def esegui_cecchino():
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
         'modello': 'omega',
-        'data_creazione': datetime.now(fuso_italia).strftime("%d/%m/%Y"),
+        'data_creazione': oggi.strftime("%d/%m/%Y"),
         'importo': 10.0,
         'quota_totale': quota_totale,
         'ritorno_potenziale': round(10.0 * quota_totale, 2),
@@ -155,14 +164,14 @@ def esegui_cecchino():
     })
     
     msg = "**MODELLO OMEGA**\n\n"
-    msg += "**schedina quantitativa.**\n\n"
-    msg += f"📊 **quota totale**: {quota_totale}\n"
-    msg += f"💰 **stake simulato**: 10.0€\n\n"
+    msg += "**Schedina quantitativa.**\n\n"
+    msg += f"📊 **Quota totale**: {quota_totale}\n"
+    msg += f"💰 **Stake simulato**: 10.0€\n\n"
     
     for c in finalisti:
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n"
-        msg += f"🎯 **giocata**: {c['pronostico'].lower()} (@{c['quota']})\n"
-        msg += f"🏦 **bookmaker**: {c['bookmaker']}\n\n"
+        msg += f"🎯 **Giocata**: {c['pronostico'].lower()} (@{c['quota']})\n"
+        msg += f"🏦 **Bookmaker**: {c['bookmaker']}\n\n"
         
     msg += "**#TradingSportivo #ValueBetting #ScommesseSportive**"
     
