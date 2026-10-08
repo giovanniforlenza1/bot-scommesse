@@ -1,9 +1,9 @@
 {
-    "ultimo_aggiornamento": "2026-10-07 19:21",
+    "ultimo_aggiornamento": "2026-10-08 19:17",
     "schedine": [
         {
-            "lega": "soccer_italy_serie_a",
-            "quota_totale": 7.85,
+            "lega": "MIX PRIORITÀ SERIE A",
+            "quota_totale": 7.88,
             "partite": [
                 {
                     "match": "Napoli - Frosinone",
@@ -11,8 +11,9 @@
                     "squadra_trasferta": "Frosinone",
                     "data": "10/10 20:45",
                     "pronostico": "vittoria Napoli",
-                    "quota": 1.44,
-                    "probabilita": 65.7
+                    "quota": 1.45,
+                    "probabilita": 65.6,
+                    "lega": "soccer_italy_serie_a"
                 },
                 {
                     "match": "Lazio - Monza",
@@ -20,17 +21,19 @@
                     "squadra_trasferta": "Monza",
                     "data": "11/10 15:00",
                     "pronostico": "vittoria Lazio",
-                    "quota": 1.57,
-                    "probabilita": 60.2
+                    "quota": 1.58,
+                    "probabilita": 59.8,
+                    "lega": "soccer_italy_serie_a"
                 },
                 {
-                    "match": "Sassuolo - AC Milan",
+                    "match": "Sassuolo - Milan",
                     "squadra_casa": "Sassuolo",
-                    "squadra_trasferta": "AC Milan",
+                    "squadra_trasferta": "Milan",
                     "data": "11/10 18:00",
-                    "pronostico": "vittoria AC Milan",
+                    "pronostico": "vittoria Milan",
                     "quota": 1.8,
-                    "probabilita": 52.5
+                    "probabilita": 52.6,
+                    "lega": "soccer_italy_serie_a"
                 },
                 {
                     "match": "Lecce - Bologna",
@@ -38,101 +41,9 @@
                     "squadra_trasferta": "Bologna",
                     "data": "11/10 15:00",
                     "pronostico": "vittoria Bologna",
-                    "quota": 1.93,
-                    "probabilita": 49.1
-                }
-            ]
-        },
-        {
-            "lega": "soccer_spain_la_liga",
-            "quota_totale": 6.16,
-            "partite": [
-                {
-                    "match": "Real Madrid - Villarreal",
-                    "squadra_casa": "Real Madrid",
-                    "squadra_trasferta": "Villarreal",
-                    "data": "10/10 21:00",
-                    "pronostico": "vittoria Real Madrid",
-                    "quota": 1.33,
-                    "probabilita": 71.5
-                },
-                {
-                    "match": "Real Betis - CA Osasuna",
-                    "squadra_casa": "Real Betis",
-                    "squadra_trasferta": "CA Osasuna",
-                    "data": "11/10 18:30",
-                    "pronostico": "vittoria Real Betis",
-                    "quota": 1.56,
-                    "probabilita": 60.8
-                },
-                {
-                    "match": "Real Sociedad - Deportivo La Coruña",
-                    "squadra_casa": "Real Sociedad",
-                    "squadra_trasferta": "Deportivo La Coruña",
-                    "data": "11/10 16:15",
-                    "pronostico": "vittoria Real Sociedad",
-                    "quota": 1.63,
-                    "probabilita": 58.2
-                },
-                {
-                    "match": "Alavés - Atlético Madrid",
-                    "squadra_casa": "Alavés",
-                    "squadra_trasferta": "Atlético Madrid",
-                    "data": "10/10 16:15",
-                    "pronostico": "vittoria Atlético Madrid",
-                    "quota": 1.82,
-                    "probabilita": 52.1
-                }
-            ]
-        },
-        {
-            "lega": "soccer_germany_bundesliga",
-            "quota_totale": 7.7,
-            "partite": [
-                {
-                    "match": "Borussia Dortmund - Werder Bremen",
-                    "squadra_casa": "Borussia Dortmund",
-                    "squadra_trasferta": "Werder Bremen",
-                    "data": "09/10 20:30",
-                    "pronostico": "vittoria Borussia Dortmund",
-                    "quota": 1.35,
-                    "probabilita": 70.4
-                },
-                {
-                    "match": "TSG Hoffenheim - Hamburger SV",
-                    "squadra_casa": "TSG Hoffenheim",
-                    "squadra_trasferta": "Hamburger SV",
-                    "data": "10/10 15:30",
-                    "pronostico": "vittoria TSG Hoffenheim",
-                    "quota": 1.42,
-                    "probabilita": 66.7
-                },
-                {
-                    "match": "RB Leipzig - Eintracht Frankfurt",
-                    "squadra_casa": "RB Leipzig",
-                    "squadra_trasferta": "Eintracht Frankfurt",
-                    "data": "10/10 18:30",
-                    "pronostico": "vittoria RB Leipzig",
-                    "quota": 1.54,
-                    "probabilita": 61.5
-                },
-                {
-                    "match": "SC Paderborn - VfB Stuttgart",
-                    "squadra_casa": "SC Paderborn",
-                    "squadra_trasferta": "VfB Stuttgart",
-                    "data": "10/10 15:30",
-                    "pronostico": "vittoria VfB Stuttgart",
-                    "quota": 1.59,
-                    "probabilita": 59.7
-                },
-                {
-                    "match": "SC Freiburg - FC Schalke 04",
-                    "squadra_casa": "SC Freiburg",
-                    "squadra_trasferta": "FC Schalke 04",
-                    "data": "11/10 17:30",
-                    "pronostico": "vittoria SC Freiburg",
-                    "quota": 1.64,
-                    "probabilita": 57.8
+                    "quota": 1.91,
+                    "probabilita": 49.6,
+                    "lega": "soccer_italy_serie_a"
                 }
             ]
         }
