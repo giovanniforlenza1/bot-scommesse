@@ -1617,6 +1617,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "32500354",
+            "modello": "beta",
+            "data_creazione": "09/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Rennes",
+                    "squadra_trasferta": "Auxerre",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "335f1307",
+            "modello": "beta",
+            "data_creazione": "09/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Sunderland",
+                    "squadra_trasferta": "Brighton and Hove Albion",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "5e4b0be2",
+            "modello": "beta",
+            "data_creazione": "09/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Liverpool",
+                    "squadra_trasferta": "Manchester City",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
