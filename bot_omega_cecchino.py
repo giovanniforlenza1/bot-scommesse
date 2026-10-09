@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-CHAT_ID = os.environ.get("CHAT_ID")
+# Usa il canale dedicato a Omega se esiste, altrimenti ripiega su quello standard
+OMEGA_CHAT_ID = os.environ.get("OMEGA_CHAT_ID") or os.environ.get("CHAT_ID")
 
 campionati = [
     'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
