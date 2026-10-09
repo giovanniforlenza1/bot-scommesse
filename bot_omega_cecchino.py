@@ -73,6 +73,17 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f: 
         json.dump(db, f, indent=4, ensure_ascii=False)
 
+def invia_messaggio_protezione():
+    msg = (
+        "**⚠️ AVVISO DAL SISTEMA: PROTEZIONE CASSA (CROLLO QUOTE)**\n\n"
+        "L'Analista quantitativo aveva individuato partite con un potenziale vantaggio statistico. "
+        "Tuttavia, al momento della verifica finale, i bookmaker hanno corretto i mercati abbassando le quote sotto la nostra soglia minima di valore.\n\n"
+        "Il Modello Omega è programmato per scovare probabilità nascoste e piazzare il colpo solo se il mercato offre un valore reale. "
+        "Se il vantaggio matematico svanisce prima dell'esecuzione, il bot blocca le operazioni per proteggere il capitale.\n\n"
+        "Non forziamo mai le giocate: si entra a mercato solo ed esclusivamente alle nostre condizioni."
+    )
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "Markdown"})
+
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -92,7 +103,6 @@ def esegui_cecchino():
         for p_live in partite_live:
             data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
             
-            # Barriera insormontabile
             if data_ita > limite_temporale:
                 continue
 
@@ -140,8 +150,10 @@ def esegui_cecchino():
                     'risultato_reale': ''
                 })
                 
+    # Se le quote sono crollate e non ci sono candidati, invia il messaggio di protezione
     if not candidati_valore: 
-        print("Nessuna giocata valida trovata nei prossimi 4 giorni.")
+        print("Crollo quote: nessun candidato sopravvissuto. Invio messaggio Telegram.")
+        invia_messaggio_protezione()
         return
     
     finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:3]
@@ -150,7 +162,11 @@ def esegui_cecchino():
     for c in finalisti: quota_totale *= c['quota']
     quota_totale = round(quota_totale, 2)
     
-    if quota_totale < 1.50: return
+    # Se la schedina unita non arriva a 1.50, annulla tutto e invia il messaggio di protezione
+    if quota_totale < 1.50: 
+        print("Crollo quote: totalizzatore sotto 1.50. Invio messaggio Telegram.")
+        invia_messaggio_protezione()
+        return
         
     db_principale = carica_database_principale()
     db_principale['schedine'].append({
