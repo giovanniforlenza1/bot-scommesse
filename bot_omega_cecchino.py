@@ -176,7 +176,7 @@ def esegui_cecchino():
         
     msg += "**#TradingSportivo #ValueBetting #ScommesseSportive**"
     
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "Markdown"})
     salva_database_principale(db_principale)
 
 if __name__ == "__main__":
