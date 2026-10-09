@@ -14,7 +14,7 @@
             --alabaster-grey: #CDD7D6;
             --khaki-beige: #B3A394;
             --white: #FFFFFF;
-            
+
             --bg-body: #f4f6f6;
             --text-main: #102542;
             --text-muted: #5c6b7d;
@@ -33,7 +33,7 @@
         .nav-btn { background-color: var(--vibrant-coral); color: var(--white); padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
         .nav-btn:hover { opacity: 0.9; }
         .spacer { height: 70px; }
-        
+
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
 
         .models-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; align-items: start; }
@@ -48,15 +48,15 @@
         .badge { font-size: 10px; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.5px; }
 
         .dashboard-header { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid var(--border-solid); display: flex; flex-direction: column; gap: 20px; }
-        
+
         .model-selector { display: flex; gap: 10px; border-bottom: 1px solid var(--border-solid); padding-bottom: 20px; }
         .model-tab { flex: 1; padding: 12px; text-align: center; font-weight: 700; font-size: 14px; color: var(--text-muted); background: var(--alabaster-grey); border-radius: 8px; cursor: pointer; transition: all 0.2s; border: none; text-transform: uppercase; }
         .model-tab:hover { background: #e2e8e8; }
-        
+
         .model-tab.tab-alpha.active { background: #102542; color: var(--white); }
         .model-tab.tab-beta.active { background: var(--khaki-beige); color: var(--white); }
         .model-tab.tab-omega.active { background: var(--vibrant-coral); color: var(--white); }
-        
+
         .status-selector { display: flex; gap: 10px; flex-wrap: wrap; }
         .status-btn { background: transparent; border: 1px solid var(--khaki-beige); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
         .status-btn:hover { border-color: #102542; color: #102542; }
@@ -79,7 +79,6 @@
         .t-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
         .t-status.vinta { background-color: #dcfce7; color: var(--success); }
         .t-status.persa { background-color: #fee2e2; color: var(--danger); }
-        .t-status.attesa { background-color: var(--alabaster-grey); color: var(--text-muted); }
 
         .match-row { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); }
         .match-row:last-child { border-bottom: none; }
@@ -157,7 +156,6 @@
                 <button class="status-btn active" onclick="selezionaFiltro('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
                 <button class="status-btn" onclick="selezionaFiltro('vinta', this)">Vinte (<span id="count-vinte">0</span>)</button>
                 <button class="status-btn" onclick="selezionaFiltro('persa', this)">Perse (<span id="count-perse">0</span>)</button>
-                <button class="status-btn" onclick="selezionaFiltro('in attesa', this)">In Attesa (<span id="count-attesa">0</span>)</button>
             </div>
         </div>
 
@@ -222,7 +220,7 @@
             });
 
             let capitale = 200.0;
-            let vinte = 0, perse = 0, inAttesa = 0, totalePuntato = 0;
+            let vinte = 0, perse = 0, totalePuntato = 0;
             let labelsGrafico = ['Start'];
             let puntiCassa = [200.0];
 
@@ -234,8 +232,6 @@
                 } else if (sc.stato_schedina === 'persa') {
                     capitale -= sc.importo;
                     perse++;
-                } else {
-                    inAttesa++;
                 }
                 labelsGrafico.push(sc.data_creazione);
                 puntiCassa.push(Number(capitale.toFixed(2)));
@@ -244,11 +240,10 @@
             document.getElementById('count-tutte').innerText = schedineModello.length;
             document.getElementById('count-vinte').innerText = vinte;
             document.getElementById('count-perse').innerText = perse;
-            document.getElementById('count-attesa').innerText = inAttesa;
 
             let profittoNetto = capitale - 200.0;
             document.getElementById('capitale').innerText = capitale.toFixed(2) + ' €';
-            
+
             let elProfitto = document.getElementById('profitto');
             elProfitto.innerText = (profittoNetto > 0 ? '+' : '') + profittoNetto.toFixed(2) + ' €';
             elProfitto.className = 'stat-value ' + (profittoNetto > 0 ? 'profit' : (profittoNetto < 0 ? 'negative' : ''));
@@ -279,8 +274,8 @@
             }
 
             schedineFiltrate.forEach(sc => {
-                let classStamp = sc.stato_schedina === 'vinta' ? 'vinta' : (sc.stato_schedina === 'persa' ? 'persa' : 'attesa');
-                
+                let classStamp = sc.stato_schedina === 'vinta' ? 'vinta' : 'persa';
+
                 let matchesHTML = sc.partite.map(p => {
                     let icon = p.stato === 'vinta' ? '✓' : (p.stato === 'persa' ? '✗' : '⏱');
                     let color = p.stato === 'vinta' ? 'var(--success)' : (p.stato === 'persa' ? 'var(--danger)' : 'var(--text-muted)');
@@ -317,7 +312,7 @@
         function renderizzaGrafico(labels, data) {
             const ctx = document.getElementById('equityChart').getContext('2d');
             if (chartIstanza) chartIstanza.destroy();
-            
+
             let lineColor = '#102542'; 
             if(modelloAttuale === 'beta') lineColor = '#B3A394'; 
             if(modelloAttuale === 'omega') lineColor = '#F87060'; 
@@ -354,6 +349,9 @@
         fetch(urlFresco)
             .then(res => res.json())
             .then(data => {
+                // FILTRO INVISIBILITÀ: Scarta in automatico tutte le giocate non ancora concluse
+                data.schedine = data.schedine.filter(sc => sc.stato_schedina !== 'in attesa');
+                
                 databaseGlobale = data;
                 aggiornaDashboard();
             })
