@@ -1,4 +1,275 @@
 {
-    "ultimo_aggiornamento": "2026-10-09 17:02",
-    "segnali": []
+    "ultimo_aggiornamento": "2026-10-09 20:41",
+    "segnali": [
+        {
+            "match": "Rennes - Auxerre",
+            "data": "11/10 17:15",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 67.5,
+            "quota_ingresso_minima": 1.56,
+            "stake_cassa_perc": 2.4
+        },
+        {
+            "match": "Sunderland - Brighton and Hove Albion",
+            "data": "10/10 16:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 67.4,
+            "quota_ingresso_minima": 1.56,
+            "stake_cassa_perc": 2.3
+        },
+        {
+            "match": "Liverpool - Manchester City",
+            "data": "11/10 17:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 67.3,
+            "quota_ingresso_minima": 1.56,
+            "stake_cassa_perc": 2.2
+        },
+        {
+            "match": "Lille - Le Havre",
+            "data": "10/10 17:15",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 66.7,
+            "quota_ingresso_minima": 1.57,
+            "stake_cassa_perc": 2.1
+        },
+        {
+            "match": "Rennes - Auxerre",
+            "data": "11/10 17:15",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 65.9,
+            "quota_ingresso_minima": 1.59,
+            "stake_cassa_perc": 2.1
+        },
+        {
+            "match": "Aston Villa - Brentford",
+            "data": "10/10 16:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 62.9,
+            "quota_ingresso_minima": 1.67,
+            "stake_cassa_perc": 1.9
+        },
+        {
+            "match": "Crystal Palace - Nottingham Forest",
+            "data": "11/10 15:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 62.9,
+            "quota_ingresso_minima": 1.67,
+            "stake_cassa_perc": 1.9
+        },
+        {
+            "match": "AS Monaco - Toulouse",
+            "data": "10/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 62.6,
+            "quota_ingresso_minima": 1.68,
+            "stake_cassa_perc": 1.9
+        },
+        {
+            "match": "Ipswich Town - Fulham",
+            "data": "10/10 16:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 63.8,
+            "quota_ingresso_minima": 1.64,
+            "stake_cassa_perc": 1.8
+        },
+        {
+            "match": "Barcelona - Getafe",
+            "data": "10/10 18:30",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 62.1,
+            "quota_ingresso_minima": 1.69,
+            "stake_cassa_perc": 1.8
+        },
+        {
+            "match": "1. FC Köln - Borussia Monchengladbach",
+            "data": "11/10 15:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 61.5,
+            "quota_ingresso_minima": 1.71,
+            "stake_cassa_perc": 1.8
+        },
+        {
+            "match": "Sabah FK - Slavia Praha",
+            "data": "13/10 18:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 60.8,
+            "quota_ingresso_minima": 1.73,
+            "stake_cassa_perc": 1.8
+        },
+        {
+            "match": "Inter Milan - Parma",
+            "data": "10/10 18:00",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 59.4,
+            "quota_ingresso_minima": 1.77,
+            "stake_cassa_perc": 1.7
+        },
+        {
+            "match": "Napoli - Frosinone",
+            "data": "10/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 61.3,
+            "quota_ingresso_minima": 1.71,
+            "stake_cassa_perc": 1.7
+        },
+        {
+            "match": "RC Lens - Sporting Lisbon",
+            "data": "13/10 18:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 61.0,
+            "quota_ingresso_minima": 1.72,
+            "stake_cassa_perc": 1.7
+        },
+        {
+            "match": "Lazio - Monza",
+            "data": "11/10 15:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 57.2,
+            "quota_ingresso_minima": 1.84,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "Atalanta BC - Venezia",
+            "data": "12/10 18:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 57.8,
+            "quota_ingresso_minima": 1.82,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "Real Madrid - Villarreal",
+            "data": "10/10 21:00",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 57.5,
+            "quota_ingresso_minima": 1.83,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "FSV Mainz 05 - Bayer Leverkusen",
+            "data": "10/10 15:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 58.2,
+            "quota_ingresso_minima": 1.81,
+            "stake_cassa_perc": 1.6
+        },
+        {
+            "match": "Cagliari - Juventus",
+            "data": "11/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 58.6,
+            "quota_ingresso_minima": 1.79,
+            "stake_cassa_perc": 1.5
+        },
+        {
+            "match": "Union Berlin - Elversberg",
+            "data": "10/10 15:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 55.7,
+            "quota_ingresso_minima": 1.89,
+            "stake_cassa_perc": 1.5
+        },
+        {
+            "match": "Sabah FK - Slavia Praha",
+            "data": "13/10 18:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 58.2,
+            "quota_ingresso_minima": 1.8,
+            "stake_cassa_perc": 1.5
+        },
+        {
+            "match": "FSV Mainz 05 - Bayer Leverkusen",
+            "data": "10/10 15:30",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 55.9,
+            "quota_ingresso_minima": 1.88,
+            "stake_cassa_perc": 1.4
+        },
+        {
+            "match": "Union Berlin - Elversberg",
+            "data": "10/10 15:30",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 56.7,
+            "quota_ingresso_minima": 1.85,
+            "stake_cassa_perc": 1.4
+        },
+        {
+            "match": "1. FC Köln - Borussia Monchengladbach",
+            "data": "11/10 15:30",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 56.0,
+            "quota_ingresso_minima": 1.87,
+            "stake_cassa_perc": 1.4
+        },
+        {
+            "match": "SC Freiburg - FC Schalke 04",
+            "data": "11/10 17:30",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 55.1,
+            "quota_ingresso_minima": 1.91,
+            "stake_cassa_perc": 1.4
+        },
+        {
+            "match": "Real Betis - CA Osasuna",
+            "data": "11/10 18:30",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 52.8,
+            "quota_ingresso_minima": 1.99,
+            "stake_cassa_perc": 1.3
+        },
+        {
+            "match": "Troyes - Marseille",
+            "data": "11/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 54.3,
+            "quota_ingresso_minima": 1.93,
+            "stake_cassa_perc": 1.3
+        },
+        {
+            "match": "Brest - Angers",
+            "data": "10/10 20:45",
+            "mercato": "Calci d'Angolo",
+            "pronostico": "Over 8.5 Calci d'Angolo",
+            "probabilita": 52.7,
+            "quota_ingresso_minima": 1.99,
+            "stake_cassa_perc": 1.2
+        },
+        {
+            "match": "Paris Saint Germain - Le Mans FC",
+            "data": "10/10 20:45",
+            "mercato": "Cartellini",
+            "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+            "probabilita": 52.4,
+            "quota_ingresso_minima": 2.0,
+            "stake_cassa_perc": 1.2
+        }
+    ]
 }
