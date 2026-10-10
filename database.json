@@ -1945,15 +1945,15 @@
             "importo": 10.0,
             "quota_totale": 1.55,
             "ritorno_potenziale": 15.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Ipswich Town",
                     "squadra_trasferta": "Fulham",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.55,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "7"
                 }
             ]
         },
