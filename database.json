@@ -1850,6 +1850,49 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "eead4548",
+            "modello": "alpha",
+            "data_creazione": "10/10/2026",
+            "importo": 10.0,
+            "quota_totale": 5.71,
+            "ritorno_potenziale": 57.1,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Frosinone",
+                    "pronostico": "vittoria Napoli",
+                    "quota": 1.44,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Cagliari",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "vittoria Juventus",
+                    "quota": 1.57,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Atalanta BC",
+                    "squadra_trasferta": "Venezia",
+                    "pronostico": "vittoria Atalanta BC",
+                    "quota": 1.57,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "vittoria Lazio",
+                    "quota": 1.61,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
