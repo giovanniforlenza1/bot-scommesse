@@ -452,7 +452,7 @@
             "importo": 10.0,
             "quota_totale": 22.56,
             "ritorno_potenziale": 225.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "380b8f24ec5430fb545a7490c1017285",
@@ -462,8 +462,8 @@
                     "pronostico": "vittoria Sunderland",
                     "quota": 3.05,
                     "score": 1.4299999999999997,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "id_partita": "6dbab232dd8d2aed0cb1d6f7978fb7b1",
@@ -484,8 +484,8 @@
                     "pronostico": "vittoria Aston Villa",
                     "quota": 2.74,
                     "score": 0.8500000000000003,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-2"
                 }
             ]
         },
@@ -1000,7 +1000,7 @@
             "importo": 10.0,
             "quota_totale": 1.91,
             "ritorno_potenziale": 19.1,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "3869391e3dbdcaa74153b11df56a3fe5",
@@ -1011,8 +1011,8 @@
                     "quota": 1.91,
                     "bookmaker": "Betfair",
                     "score": 0.010000000000000009,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -1073,8 +1073,8 @@
                     "squadra_trasferta": "Hamburger SV",
                     "pronostico": "vittoria TSG Hoffenheim",
                     "quota": 1.42,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-3"
                 },
                 {
                     "squadra_casa": "RB Leipzig",
@@ -1089,8 +1089,8 @@
                     "squadra_trasferta": "VfB Stuttgart",
                     "pronostico": "vittoria VfB Stuttgart",
                     "quota": 1.59,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "squadra_casa": "SC Freiburg",
@@ -1226,8 +1226,8 @@
                     "squadra_trasferta": "Atlético Madrid",
                     "pronostico": "vittoria Atlético Madrid",
                     "quota": 1.82,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
