@@ -1,9 +1,9 @@
 {
-    "ultimo_aggiornamento": "2026-10-10 12:55",
+    "ultimo_aggiornamento": "2026-10-10 17:47",
     "schedine": [
         {
             "lega": "MIX PRIORITÀ SERIE A",
-            "quota_totale": 5.71,
+            "quota_totale": 5.95,
             "partite": [
                 {
                     "match": "Napoli - Frosinone",
@@ -11,8 +11,18 @@
                     "squadra_trasferta": "Frosinone",
                     "data": "10/10 20:45",
                     "pronostico": "vittoria Napoli",
-                    "quota": 1.44,
-                    "probabilita": 66.0,
+                    "quota": 1.51,
+                    "probabilita": 62.8,
+                    "lega": "soccer_italy_serie_a"
+                },
+                {
+                    "match": "Atalanta BC - Venezia",
+                    "squadra_casa": "Atalanta BC",
+                    "squadra_trasferta": "Venezia",
+                    "data": "12/10 18:30",
+                    "pronostico": "vittoria Atalanta BC",
+                    "quota": 1.56,
+                    "probabilita": 60.6,
                     "lega": "soccer_italy_serie_a"
                 },
                 {
@@ -26,23 +36,13 @@
                     "lega": "soccer_italy_serie_a"
                 },
                 {
-                    "match": "Atalanta BC - Venezia",
-                    "squadra_casa": "Atalanta BC",
-                    "squadra_trasferta": "Venezia",
-                    "data": "12/10 18:30",
-                    "pronostico": "vittoria Atalanta BC",
-                    "quota": 1.57,
-                    "probabilita": 60.5,
-                    "lega": "soccer_italy_serie_a"
-                },
-                {
                     "match": "Lazio - Monza",
                     "squadra_casa": "Lazio",
                     "squadra_trasferta": "Monza",
                     "data": "11/10 15:00",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.61,
-                    "probabilita": 59.0,
+                    "probabilita": 58.9,
                     "lega": "soccer_italy_serie_a"
                 }
             ]
