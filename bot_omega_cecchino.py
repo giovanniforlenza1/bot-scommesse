@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-# Usa il canale dedicato a Omega se esiste, altrimenti ripiega su quello standard
 OMEGA_CHAT_ID = os.environ.get("OMEGA_CHAT_ID") or os.environ.get("CHAT_ID")
 
 campionati = [
@@ -87,7 +86,6 @@ def invia_messaggio_protezione():
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    # IL DOPPIO MURO: Il Cecchino ignora fisicamente qualsiasi quota oltre i 4 giorni
     limite_temporale = oggi + timedelta(days=4)
     
     db_analisi = carica_database_analisi()
@@ -150,19 +148,18 @@ def esegui_cecchino():
                     'risultato_reale': ''
                 })
                 
-    # Se le quote sono crollate e non ci sono candidati, invia il messaggio di protezione
     if not candidati_valore: 
         print("Crollo quote: nessun candidato sopravvissuto. Invio messaggio Telegram.")
         invia_messaggio_protezione()
         return
     
-    finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:3]
+    # MODIFICA: Aggrega fino a 5 partite dando sempre priorità alla Serie A
+    finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:5]
     
     quota_totale = 1.0
     for c in finalisti: quota_totale *= c['quota']
     quota_totale = round(quota_totale, 2)
     
-    # Se la schedina unita non arriva a 1.50, annulla tutto e invia il messaggio di protezione
     if quota_totale < 1.50: 
         print("Crollo quote: totalizzatore sotto 1.50. Invio messaggio Telegram.")
         invia_messaggio_protezione()
