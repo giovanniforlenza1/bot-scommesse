@@ -1644,14 +1644,14 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Sunderland",
                     "squadra_trasferta": "Brighton and Hove Albion",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
+                    "stato": "vinta",
                     "risultato_reale": ""
                 }
             ]
@@ -1977,14 +1977,14 @@
             "importo": 10.0,
             "quota_totale": 1.55,
             "ritorno_potenziale": 15.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Sunderland",
                     "squadra_trasferta": "Brighton and Hove Albion",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.55,
-                    "stato": "in attesa",
+                    "stato": "vinta",
                     "risultato_reale": ""
                 }
             ]
