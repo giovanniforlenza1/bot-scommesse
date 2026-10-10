@@ -153,8 +153,8 @@ def esegui_cecchino():
         invia_messaggio_protezione()
         return
     
-    # MODIFICA: Aggrega fino a 5 partite dando sempre priorità alla Serie A
-    finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:5]
+    # RIPRISTINATO: Limite massimo a 3 partite per contenere la varianza
+    finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:3]
     
     quota_totale = 1.0
     for c in finalisti: quota_totale *= c['quota']
