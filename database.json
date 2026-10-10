@@ -1893,6 +1893,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "43a0bcb4",
+            "modello": "beta",
+            "data_creazione": "10/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 15.7,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Lille",
+                    "squadra_trasferta": "Le Havre",
+                    "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+                    "quota": 1.57,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "02d4c5c5",
+            "modello": "beta",
+            "data_creazione": "10/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Liverpool",
+                    "squadra_trasferta": "Manchester City",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "4e2085d1",
+            "modello": "beta",
+            "data_creazione": "10/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Lille",
+                    "squadra_trasferta": "Le Havre",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
