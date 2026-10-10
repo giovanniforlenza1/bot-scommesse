@@ -988,8 +988,8 @@
                     "quota": 1.53,
                     "bookmaker": "Betfair",
                     "score": 0.020000000000000018,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 }
             ]
         },
@@ -1081,8 +1081,8 @@
                     "squadra_trasferta": "Eintracht Frankfurt",
                     "pronostico": "vittoria RB Leipzig",
                     "quota": 1.53,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6-0"
                 },
                 {
                     "squadra_casa": "SC Paderborn",
@@ -1109,15 +1109,15 @@
             "importo": 10.0,
             "quota_totale": 6.29,
             "ritorno_potenziale": 62.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Lille",
                     "squadra_trasferta": "Le Havre",
                     "pronostico": "vittoria Lille",
                     "quota": 1.42,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "squadra_casa": "Rennes",
@@ -1132,16 +1132,16 @@
                     "squadra_trasferta": "Toulouse",
                     "pronostico": "vittoria AS Monaco",
                     "quota": 1.58,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-2"
                 },
                 {
                     "squadra_casa": "Brest",
                     "squadra_trasferta": "Angers",
                     "pronostico": "vittoria Brest",
                     "quota": 1.96,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5-1"
                 }
             ]
         },
@@ -1159,8 +1159,8 @@
                     "squadra_trasferta": "Frosinone",
                     "pronostico": "vittoria Napoli",
                     "quota": 1.44,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Lazio",
@@ -1202,8 +1202,8 @@
                     "squadra_trasferta": "Villarreal",
                     "pronostico": "vittoria Real Madrid",
                     "quota": 1.33,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "squadra_casa": "Real Betis",
@@ -1295,8 +1295,8 @@
                     "squadra_trasferta": "Frosinone",
                     "pronostico": "vittoria Napoli",
                     "quota": 1.45,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Lazio",
@@ -1388,8 +1388,8 @@
                     "squadra_trasferta": "Frosinone",
                     "pronostico": "vittoria Napoli",
                     "quota": 1.44,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Atalanta BC",
@@ -1814,8 +1814,8 @@
                     "squadra_trasferta": "Frosinone",
                     "pronostico": "vittoria Napoli",
                     "quota": 1.44,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Cagliari",
@@ -1971,8 +1971,8 @@
                     "squadra_trasferta": "Frosinone",
                     "pronostico": "vittoria Napoli",
                     "quota": 1.51,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "squadra_casa": "Atalanta BC",
