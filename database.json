@@ -976,8 +976,8 @@
                     "quota": 1.65,
                     "bookmaker": "Betfair",
                     "score": 0.05999999999999983,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "40c1bd70fee927f9bfa8901edab02b48",
@@ -1167,8 +1167,8 @@
                     "squadra_trasferta": "Monza",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.57,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "squadra_casa": "Sassuolo",
@@ -1183,8 +1183,8 @@
                     "squadra_trasferta": "Bologna",
                     "pronostico": "vittoria Bologna",
                     "quota": 1.93,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -1218,8 +1218,8 @@
                     "squadra_trasferta": "Deportivo La Coruña",
                     "pronostico": "vittoria Real Sociedad",
                     "quota": 1.63,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-2"
                 },
                 {
                     "squadra_casa": "Alavés",
@@ -1263,8 +1263,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.04999999999999982,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "946716d7e5e52822f08be8cb95193d9d",
@@ -1276,8 +1276,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.030000000000000027,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -1303,8 +1303,8 @@
                     "squadra_trasferta": "Monza",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.58,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "squadra_casa": "Sassuolo",
@@ -1319,8 +1319,8 @@
                     "squadra_trasferta": "Bologna",
                     "pronostico": "vittoria Bologna",
                     "quota": 1.91,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -1369,8 +1369,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.04999999999999982,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -1412,8 +1412,8 @@
                     "squadra_trasferta": "Monza",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.6,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -1436,8 +1436,8 @@
                     "bookmaker": "Unibet (SE)",
                     "score": 0.05999999999999983,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -1486,8 +1486,8 @@
                     "bookmaker": "Unibet (SE)",
                     "score": 0.05999999999999983,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -1512,8 +1512,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.010000000000000009,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -1549,8 +1549,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.050000000000000044,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "1cf64166dda1e0da8b325161deb39662",
@@ -1643,8 +1643,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.08000000000000007,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -1669,8 +1669,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.030000000000000027,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -1693,8 +1693,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.08000000000000007,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -1719,8 +1719,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.030000000000000027,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "1cf64166dda1e0da8b325161deb39662",
@@ -1769,8 +1769,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.07000000000000006,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "407f7d03157d1dfad384876e6a6bc910",
@@ -1795,8 +1795,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.030000000000000027,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -1838,8 +1838,8 @@
                     "squadra_trasferta": "Monza",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.61,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -1995,8 +1995,8 @@
                     "squadra_trasferta": "Monza",
                     "pronostico": "vittoria Lazio",
                     "quota": 1.61,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -2032,8 +2032,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.050000000000000044,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "946716d7e5e52822f08be8cb95193d9d",
@@ -2045,8 +2045,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.030000000000000027,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
