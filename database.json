@@ -2106,6 +2106,49 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "13061247",
+            "modello": "alpha",
+            "data_creazione": "11/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.04,
+            "ritorno_potenziale": 60.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Atalanta BC",
+                    "squadra_trasferta": "Venezia",
+                    "pronostico": "vittoria Atalanta BC",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Cagliari",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "vittoria Juventus",
+                    "quota": 1.58,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Milan",
+                    "pronostico": "vittoria Milan",
+                    "quota": 1.93,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Club Brugge",
+                    "pronostico": "vittoria Inter",
+                    "quota": 1.27,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
