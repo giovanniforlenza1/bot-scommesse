@@ -1574,15 +1574,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Rennes",
                     "squadra_trasferta": "Auxerre",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "17"
                 }
             ]
         },
@@ -2057,15 +2057,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Rennes",
                     "squadra_trasferta": "Auxerre",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "17"
                 }
             ]
         },
