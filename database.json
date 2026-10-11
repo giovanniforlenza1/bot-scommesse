@@ -2095,15 +2095,15 @@
             "importo": 10.0,
             "quota_totale": 1.6,
             "ritorno_potenziale": 16.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Nice",
                     "squadra_trasferta": "Strasbourg",
                     "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
                     "quota": 1.6,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2"
                 }
             ]
         },
