@@ -2049,6 +2049,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "89f34e9e",
+            "modello": "beta",
+            "data_creazione": "11/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Rennes",
+                    "squadra_trasferta": "Auxerre",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "2ff5edae",
+            "modello": "beta",
+            "data_creazione": "11/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 15.7,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Lecce",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+                    "quota": 1.57,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "c27c3e8d",
+            "modello": "beta",
+            "data_creazione": "11/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.6,
+            "ritorno_potenziale": 16.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Nice",
+                    "squadra_trasferta": "Strasbourg",
+                    "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
+                    "quota": 1.6,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
