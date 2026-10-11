@@ -1888,15 +1888,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Lille",
                     "squadra_trasferta": "Le Havre",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "9"
                 }
             ]
         },
@@ -1907,15 +1907,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Lille",
                     "squadra_trasferta": "Le Havre",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "9"
                 }
             ]
         },
