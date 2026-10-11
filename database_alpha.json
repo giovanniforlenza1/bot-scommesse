@@ -1,20 +1,10 @@
 {
-    "ultimo_aggiornamento": "2026-10-10 17:47",
+    "ultimo_aggiornamento": "2026-10-11 18:11",
     "schedine": [
         {
             "lega": "MIX PRIORITÀ SERIE A",
-            "quota_totale": 5.95,
+            "quota_totale": 6.04,
             "partite": [
-                {
-                    "match": "Napoli - Frosinone",
-                    "squadra_casa": "Napoli",
-                    "squadra_trasferta": "Frosinone",
-                    "data": "10/10 20:45",
-                    "pronostico": "vittoria Napoli",
-                    "quota": 1.51,
-                    "probabilita": 62.8,
-                    "lega": "soccer_italy_serie_a"
-                },
                 {
                     "match": "Atalanta BC - Venezia",
                     "squadra_casa": "Atalanta BC",
@@ -22,7 +12,7 @@
                     "data": "12/10 18:30",
                     "pronostico": "vittoria Atalanta BC",
                     "quota": 1.56,
-                    "probabilita": 60.6,
+                    "probabilita": 60.7,
                     "lega": "soccer_italy_serie_a"
                 },
                 {
@@ -31,19 +21,29 @@
                     "squadra_trasferta": "Juventus",
                     "data": "11/10 20:45",
                     "pronostico": "vittoria Juventus",
-                    "quota": 1.57,
-                    "probabilita": 60.5,
+                    "quota": 1.58,
+                    "probabilita": 60.1,
                     "lega": "soccer_italy_serie_a"
                 },
                 {
-                    "match": "Lazio - Monza",
-                    "squadra_casa": "Lazio",
-                    "squadra_trasferta": "Monza",
-                    "data": "11/10 15:00",
-                    "pronostico": "vittoria Lazio",
-                    "quota": 1.61,
-                    "probabilita": 58.9,
+                    "match": "Sassuolo - Milan",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Milan",
+                    "data": "11/10 18:00",
+                    "pronostico": "vittoria Milan",
+                    "quota": 1.93,
+                    "probabilita": 48.5,
                     "lega": "soccer_italy_serie_a"
+                },
+                {
+                    "match": "Inter - Club Brugge",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Club Brugge",
+                    "data": "13/10 21:00",
+                    "pronostico": "vittoria Inter",
+                    "quota": 1.27,
+                    "probabilita": 75.1,
+                    "lega": "soccer_uefa_champs_league"
                 }
             ]
         }
