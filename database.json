@@ -2306,6 +2306,43 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "1d6c4f73",
+            "modello": "omega",
+            "data_creazione": "12/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.64,
+            "ritorno_potenziale": 66.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "f4a28510bb0c835280a2aca709c19d50",
+                    "data": "12/10 20:46",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Udinese",
+                    "pronostico": "vittoria Torino",
+                    "quota": 3.75,
+                    "bookmaker": "Betfair",
+                    "score": 1.96,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
+                    "data": "15/10 18:45",
+                    "squadra_casa": "Lech Poznań",
+                    "squadra_trasferta": "Bayer Leverkusen",
+                    "pronostico": "vittoria Bayer Leverkusen",
+                    "quota": 1.77,
+                    "bookmaker": "Betfair",
+                    "score": 0.030000000000000027,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
