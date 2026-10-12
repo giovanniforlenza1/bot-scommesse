@@ -2256,6 +2256,56 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "89731108",
+            "modello": "omega",
+            "data_creazione": "12/10/2026",
+            "importo": 10.0,
+            "quota_totale": 5.87,
+            "ritorno_potenziale": 58.7,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
+                    "data": "14/10 21:00",
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Fenerbahce",
+                    "pronostico": "vittoria Aston Villa",
+                    "quota": 1.71,
+                    "bookmaker": "Unibet (NL)",
+                    "score": 0.010000000000000009,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
+                    "data": "15/10 18:45",
+                    "squadra_casa": "Lech Poznań",
+                    "squadra_trasferta": "Bayer Leverkusen",
+                    "pronostico": "vittoria Bayer Leverkusen",
+                    "quota": 1.77,
+                    "bookmaker": "Betfair",
+                    "score": 0.010000000000000009,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3957ec8d52653fa1c852825bea985fb7",
+                    "data": "15/10 21:00",
+                    "squadra_casa": "NEC Nijmegen",
+                    "squadra_trasferta": "PFC Levski Sofia",
+                    "pronostico": "vittoria NEC Nijmegen",
+                    "quota": 1.94,
+                    "bookmaker": "Betfair",
+                    "score": 0.0,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
