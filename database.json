@@ -2393,6 +2393,63 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "a1c69ab4",
+            "modello": "beta",
+            "data_creazione": "13/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.55,
+            "ritorno_potenziale": 15.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Werder Bremen",
+                    "squadra_trasferta": "SC Paderborn",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.55,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "3235ea96",
+            "modello": "beta",
+            "data_creazione": "13/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Fenerbahce",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "bb8fc2d3",
+            "modello": "beta",
+            "data_creazione": "13/10/2026",
+            "importo": 10.0,
+            "quota_totale": 1.56,
+            "ritorno_potenziale": 15.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "squadra_casa": "Hamburger SV",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.56,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
