@@ -1,53 +1,45 @@
 {
-    "ultimo_aggiornamento": "2026-10-12 21:29",
+    "ultimo_aggiornamento": "2026-10-13 10:48",
     "analisi": [
+        {
+            "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
+            "match": "RB Leipzig - PSV Eindhoven",
+            "data": "2026-10-13T19:00:00Z",
+            "consiglio_algoritmo": "vittoria RB Leipzig",
+            "quota_valore_minima": 1.68,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria RB Leipzig del 61.6%. La simulazione genera una quota equa di @1.62. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.68."
+        },
         {
             "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
             "match": "Aston Villa - Fenerbahce",
             "data": "2026-10-14T19:00:00Z",
             "consiglio_algoritmo": "vittoria Aston Villa",
-            "quota_valore_minima": 1.72,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Aston Villa del 60.7%. La simulazione genera una quota equa di @1.65. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.72."
+            "quota_valore_minima": 1.71,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Aston Villa del 60.9%. La simulazione genera una quota equa di @1.64. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.71."
         },
         {
             "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
             "match": "Lech Poznań - Bayer Leverkusen",
             "data": "2026-10-15T16:45:00Z",
             "consiglio_algoritmo": "vittoria Bayer Leverkusen",
-            "quota_valore_minima": 1.74,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Bayer Leverkusen del 60.0%. La simulazione genera una quota equa di @1.67. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.74."
-        },
-        {
-            "id_partita": "f4a28510bb0c835280a2aca709c19d50",
-            "match": "Torino - Udinese",
-            "data": "2026-10-12T18:46:00Z",
-            "consiglio_algoritmo": "vittoria Torino",
-            "quota_valore_minima": 1.79,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Torino del 58.0%. La simulazione genera una quota equa di @1.72. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.79."
-        },
-        {
-            "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
-            "match": "RB Leipzig - PSV Eindhoven",
-            "data": "2026-10-13T19:00:00Z",
-            "consiglio_algoritmo": "vittoria RB Leipzig",
-            "quota_valore_minima": 1.85,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria RB Leipzig del 56.3%. La simulazione genera una quota equa di @1.78. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.85."
+            "quota_valore_minima": 1.75,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Bayer Leverkusen del 59.7%. La simulazione genera una quota equa di @1.68. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.75."
         },
         {
             "id_partita": "431fc65e67cd737bceb5827118d3f7eb",
             "match": "Salzburg - Milan",
             "data": "2026-10-15T16:45:00Z",
             "consiglio_algoritmo": "vittoria Milan",
-            "quota_valore_minima": 1.93,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Milan del 53.7%. La simulazione genera una quota equa di @1.86. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.93."
+            "quota_valore_minima": 1.89,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Milan del 54.9%. La simulazione genera una quota equa di @1.82. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.89."
         },
         {
             "id_partita": "3957ec8d52653fa1c852825bea985fb7",
             "match": "NEC Nijmegen - PFC Levski Sofia",
             "data": "2026-10-15T19:00:00Z",
             "consiglio_algoritmo": "vittoria NEC Nijmegen",
-            "quota_valore_minima": 1.94,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria NEC Nijmegen del 53.5%. La simulazione genera una quota equa di @1.87. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.94."
+            "quota_valore_minima": 1.96,
+            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria NEC Nijmegen del 53.3%. La simulazione genera una quota equa di @1.88. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.96."
         }
     ]
 }
