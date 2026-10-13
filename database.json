@@ -2343,6 +2343,56 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "a66c58d3",
+            "modello": "omega",
+            "data_creazione": "13/10/2026",
+            "importo": 10.0,
+            "quota_totale": 5.08,
+            "ritorno_potenziale": 50.8,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
+                    "data": "15/10 18:45",
+                    "squadra_casa": "Lech Poznań",
+                    "squadra_trasferta": "Bayer Leverkusen",
+                    "pronostico": "vittoria Bayer Leverkusen",
+                    "quota": 1.77,
+                    "bookmaker": "Betfair",
+                    "score": 0.020000000000000018,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
+                    "data": "13/10 21:00",
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "PSV Eindhoven",
+                    "pronostico": "vittoria RB Leipzig",
+                    "quota": 1.68,
+                    "bookmaker": "Betfair",
+                    "score": 0.0,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
+                    "data": "14/10 21:00",
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Fenerbahce",
+                    "pronostico": "vittoria Aston Villa",
+                    "quota": 1.71,
+                    "bookmaker": "Unibet (SE)",
+                    "score": 0.0,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
