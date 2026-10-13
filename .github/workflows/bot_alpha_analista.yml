@@ -28,8 +28,10 @@ jobs:
 
       - name: Salva database analista
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add database_alpha.json
-          git commit -m "Aggiornamento Database Analista Alpha" || echo "Nessuna modifica"
-          git push
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m "Aggiornamento Database" || echo "Nessuna modifica"
+        git pull --rebase origin main
+        git push
+
