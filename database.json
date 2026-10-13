@@ -2450,6 +2450,56 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "5fb899b6",
+            "modello": "omega",
+            "data_creazione": "13/10/2026",
+            "importo": 10.0,
+            "quota_totale": 5.35,
+            "ritorno_potenziale": 53.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "vittoria Inter",
+                    "quota": 1.64,
+                    "bookmaker": "Betfair",
+                    "score": 0.019999999999999796,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a9c22e08b395ee5753c8a65bc0eb97cf",
+                    "data": "13/10 21:00",
+                    "squadra_casa": "Atlético Madrid",
+                    "squadra_trasferta": "Manchester United",
+                    "pronostico": "vittoria Atlético Madrid",
+                    "quota": 1.94,
+                    "bookmaker": "Betfair",
+                    "score": 0.11999999999999988,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
+                    "data": "14/10 21:00",
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Fenerbahce",
+                    "pronostico": "vittoria Aston Villa",
+                    "quota": 1.68,
+                    "bookmaker": "Betfair",
+                    "score": 0.030000000000000027,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
