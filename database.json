@@ -2326,8 +2326,8 @@
                     "bookmaker": "Betfair",
                     "score": 1.96,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
