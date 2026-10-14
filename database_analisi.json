@@ -1,6 +1,6 @@
 {
-    "ultimo_aggiornamento": "14/10/2026 10:19",
-    "totale_partite_analizzate": 54,
+    "ultimo_aggiornamento": "14/10/2026 16:46",
+    "totale_partite_analizzate": 62,
     "analisi": [
         {
             "id_partita": "907639dade64cca45d1ab639195d201e",
@@ -18,7 +18,7 @@
             "data": "17/10 18:00",
             "match": "Bologna - Inter",
             "consiglio_algoritmo": "Vittoria Inter",
-            "probabilita_reale": 61.1,
+            "probabilita_reale": 60.9,
             "quota_equa": 1.64,
             "quota_valore_minima": 1.68
         },
@@ -28,9 +28,29 @@
             "data": "17/10 20:45",
             "match": "Roma - Genoa",
             "consiglio_algoritmo": "Vittoria Roma",
-            "probabilita_reale": 69.8,
-            "quota_equa": 1.43,
+            "probabilita_reale": 69.6,
+            "quota_equa": 1.44,
             "quota_valore_minima": 1.47
+        },
+        {
+            "id_partita": "367da93aa21a1e13eeafb94fd2263c75",
+            "lega": "soccer_italy_serie_a",
+            "data": "18/10 12:30",
+            "match": "Udinese - Lecce",
+            "consiglio_algoritmo": "Vittoria Udinese",
+            "probabilita_reale": 51.7,
+            "quota_equa": 1.93,
+            "quota_valore_minima": 1.98
+        },
+        {
+            "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
+            "lega": "soccer_italy_serie_a",
+            "data": "18/10 15:00",
+            "match": "Fiorentina - Como",
+            "consiglio_algoritmo": "Vittoria Como",
+            "probabilita_reale": 46.5,
+            "quota_equa": 2.15,
+            "quota_valore_minima": 2.21
         },
         {
             "id_partita": "9a691aeace75a589f2f920824522c830",
@@ -38,8 +58,8 @@
             "data": "16/10 20:30",
             "match": "Verona - US Catanzaro 1929",
             "consiglio_algoritmo": "Vittoria Verona",
-            "probabilita_reale": 54.1,
-            "quota_equa": 1.85,
+            "probabilita_reale": 54.4,
+            "quota_equa": 1.84,
             "quota_valore_minima": 1.89
         },
         {
@@ -48,9 +68,9 @@
             "data": "17/10 15:00",
             "match": "Ascoli - Empoli",
             "consiglio_algoritmo": "Vittoria Ascoli",
-            "probabilita_reale": 53.9,
-            "quota_equa": 1.85,
-            "quota_valore_minima": 1.9
+            "probabilita_reale": 53.7,
+            "quota_equa": 1.86,
+            "quota_valore_minima": 1.91
         },
         {
             "id_partita": "629c785b753d46923b73fe4de3122507",
@@ -58,9 +78,9 @@
             "data": "17/10 15:00",
             "match": "Benevento - Vicenza",
             "consiglio_algoritmo": "Vittoria Benevento",
-            "probabilita_reale": 48.5,
-            "quota_equa": 2.06,
-            "quota_valore_minima": 2.11
+            "probabilita_reale": 48.7,
+            "quota_equa": 2.05,
+            "quota_valore_minima": 2.1
         },
         {
             "id_partita": "0531b53481eb5516d08217895a651bd3",
@@ -68,8 +88,8 @@
             "data": "17/10 15:00",
             "match": "Carrarese - Modena",
             "consiglio_algoritmo": "Vittoria Modena",
-            "probabilita_reale": 53.8,
-            "quota_equa": 1.86,
+            "probabilita_reale": 54.0,
+            "quota_equa": 1.85,
             "quota_valore_minima": 1.9
         },
         {
@@ -78,7 +98,7 @@
             "data": "17/10 16:00",
             "match": "Fulham - Hull City",
             "consiglio_algoritmo": "Vittoria Fulham",
-            "probabilita_reale": 57.0,
+            "probabilita_reale": 57.1,
             "quota_equa": 1.75,
             "quota_valore_minima": 1.8
         },
@@ -88,9 +108,29 @@
             "data": "17/10 16:00",
             "match": "Manchester City - Ipswich Town",
             "consiglio_algoritmo": "Vittoria Manchester City",
-            "probabilita_reale": 79.2,
-            "quota_equa": 1.26,
-            "quota_valore_minima": 1.29
+            "probabilita_reale": 78.4,
+            "quota_equa": 1.28,
+            "quota_valore_minima": 1.31
+        },
+        {
+            "id_partita": "dfd5d6648be46426e418801584d46a68",
+            "lega": "soccer_epl",
+            "data": "18/10 15:00",
+            "match": "Bournemouth - Sunderland",
+            "consiglio_algoritmo": "Vittoria Bournemouth",
+            "probabilita_reale": 47.1,
+            "quota_equa": 2.12,
+            "quota_valore_minima": 2.17
+        },
+        {
+            "id_partita": "9fc08b390a49c4434f7cf631a0bb88fb",
+            "lega": "soccer_epl",
+            "data": "18/10 15:00",
+            "match": "Brighton and Hove Albion - Crystal Palace",
+            "consiglio_algoritmo": "Vittoria Brighton and Hove Albion",
+            "probabilita_reale": 62.7,
+            "quota_equa": 1.59,
+            "quota_valore_minima": 1.63
         },
         {
             "id_partita": "35d7cc4a96b152b4a31b0b151cb70feb",
@@ -98,9 +138,9 @@
             "data": "14/10 20:45",
             "match": "Queens Park Rangers - Derby County",
             "consiglio_algoritmo": "Vittoria Queens Park Rangers",
-            "probabilita_reale": 59.1,
-            "quota_equa": 1.69,
-            "quota_valore_minima": 1.74
+            "probabilita_reale": 57.9,
+            "quota_equa": 1.73,
+            "quota_valore_minima": 1.77
         },
         {
             "id_partita": "b6f4ecaf15915781326083408fba0e52",
@@ -108,9 +148,9 @@
             "data": "14/10 21:00",
             "match": "Lincoln City - West Ham United",
             "consiglio_algoritmo": "Vittoria West Ham United",
-            "probabilita_reale": 55.9,
-            "quota_equa": 1.79,
-            "quota_valore_minima": 1.83
+            "probabilita_reale": 57.7,
+            "quota_equa": 1.73,
+            "quota_valore_minima": 1.78
         },
         {
             "id_partita": "fbbd46f088071f0f022dce6850bcfa80",
@@ -118,9 +158,9 @@
             "data": "17/10 13:30",
             "match": "Middlesbrough - Cardiff City",
             "consiglio_algoritmo": "Vittoria Middlesbrough",
-            "probabilita_reale": 63.4,
-            "quota_equa": 1.58,
-            "quota_valore_minima": 1.62
+            "probabilita_reale": 62.7,
+            "quota_equa": 1.6,
+            "quota_valore_minima": 1.64
         },
         {
             "id_partita": "1d647c4a829133678cfb3a0425b1cd16",
@@ -138,9 +178,9 @@
             "data": "17/10 16:00",
             "match": "Birmingham City - Queens Park Rangers",
             "consiglio_algoritmo": "Vittoria Birmingham City",
-            "probabilita_reale": 46.9,
-            "quota_equa": 2.13,
-            "quota_valore_minima": 2.19
+            "probabilita_reale": 47.5,
+            "quota_equa": 2.1,
+            "quota_valore_minima": 2.16
         },
         {
             "id_partita": "37d564daa14e4724b53830d610cf5868",
@@ -148,9 +188,9 @@
             "data": "17/10 16:00",
             "match": "West Bromwich Albion - Blackburn Rovers",
             "consiglio_algoritmo": "Vittoria West Bromwich Albion",
-            "probabilita_reale": 50.3,
-            "quota_equa": 1.99,
-            "quota_valore_minima": 2.04
+            "probabilita_reale": 50.6,
+            "quota_equa": 1.98,
+            "quota_valore_minima": 2.03
         },
         {
             "id_partita": "899f15da06998732d951a91ed8f5e32f",
@@ -158,8 +198,8 @@
             "data": "17/10 16:00",
             "match": "Southampton - Bolton Wanderers",
             "consiglio_algoritmo": "Vittoria Southampton",
-            "probabilita_reale": 65.9,
-            "quota_equa": 1.52,
+            "probabilita_reale": 66.3,
+            "quota_equa": 1.51,
             "quota_valore_minima": 1.55
         },
         {
@@ -168,9 +208,9 @@
             "data": "17/10 16:00",
             "match": "Norwich City - Portsmouth",
             "consiglio_algoritmo": "Vittoria Norwich City",
-            "probabilita_reale": 56.1,
+            "probabilita_reale": 56.3,
             "quota_equa": 1.78,
-            "quota_valore_minima": 1.83
+            "quota_valore_minima": 1.82
         },
         {
             "id_partita": "33ad80e4f2bfa519396049639fd4d31a",
@@ -188,9 +228,9 @@
             "data": "16/10 21:00",
             "match": "Deportivo La Coruña - Levante",
             "consiglio_algoritmo": "Vittoria Deportivo La Coruña",
-            "probabilita_reale": 47.0,
-            "quota_equa": 2.13,
-            "quota_valore_minima": 2.18
+            "probabilita_reale": 46.5,
+            "quota_equa": 2.15,
+            "quota_valore_minima": 2.21
         },
         {
             "id_partita": "6436925dd15916d7041ba32b60000d48",
@@ -198,9 +238,9 @@
             "data": "17/10 14:00",
             "match": "Espanyol - Atlético Madrid",
             "consiglio_algoritmo": "Vittoria Atlético Madrid",
-            "probabilita_reale": 55.7,
-            "quota_equa": 1.8,
-            "quota_valore_minima": 1.84
+            "probabilita_reale": 54.9,
+            "quota_equa": 1.82,
+            "quota_valore_minima": 1.87
         },
         {
             "id_partita": "aef660734585649651415961a9d177c6",
@@ -208,9 +248,9 @@
             "data": "17/10 16:15",
             "match": "Villarreal - Elche CF",
             "consiglio_algoritmo": "Vittoria Villarreal",
-            "probabilita_reale": 67.6,
-            "quota_equa": 1.48,
-            "quota_valore_minima": 1.52
+            "probabilita_reale": 67.1,
+            "quota_equa": 1.49,
+            "quota_valore_minima": 1.53
         },
         {
             "id_partita": "846e496fc232b2fc20214754836727d0",
@@ -218,9 +258,19 @@
             "data": "17/10 18:30",
             "match": "Betis Siviglia - Barcelona",
             "consiglio_algoritmo": "Vittoria Barcelona",
-            "probabilita_reale": 67.2,
+            "probabilita_reale": 67.1,
             "quota_equa": 1.49,
             "quota_valore_minima": 1.53
+        },
+        {
+            "id_partita": "1f566f17c50fe5162724ec2863d2207b",
+            "lega": "soccer_spain_la_liga",
+            "data": "18/10 14:00",
+            "match": "CA Osasuna - Real Racing Club de Santander",
+            "consiglio_algoritmo": "Vittoria CA Osasuna",
+            "probabilita_reale": 48.4,
+            "quota_equa": 2.07,
+            "quota_valore_minima": 2.12
         },
         {
             "id_partita": "947bd5d924835af090d9cdc7bbdf10f6",
@@ -228,9 +278,9 @@
             "data": "16/10 20:30",
             "match": "Eintracht Frankfurt - 1. Köln",
             "consiglio_algoritmo": "Vittoria Eintracht Frankfurt",
-            "probabilita_reale": 49.3,
-            "quota_equa": 2.03,
-            "quota_valore_minima": 2.08
+            "probabilita_reale": 48.9,
+            "quota_equa": 2.04,
+            "quota_valore_minima": 2.1
         },
         {
             "id_partita": "d8eac776adb07b0e7f01d8736d097291",
@@ -238,9 +288,9 @@
             "data": "17/10 15:30",
             "match": "Union Berlin - Borussia Dortmund",
             "consiglio_algoritmo": "Vittoria Borussia Dortmund",
-            "probabilita_reale": 58.4,
-            "quota_equa": 1.71,
-            "quota_valore_minima": 1.75
+            "probabilita_reale": 59.3,
+            "quota_equa": 1.69,
+            "quota_valore_minima": 1.73
         },
         {
             "id_partita": "221916b8b36706ec52aa655a64e5f1d2",
@@ -248,9 +298,9 @@
             "data": "17/10 15:30",
             "match": "Hamburger SV - VfB Stuttgart",
             "consiglio_algoritmo": "Vittoria VfB Stuttgart",
-            "probabilita_reale": 53.8,
-            "quota_equa": 1.86,
-            "quota_valore_minima": 1.9
+            "probabilita_reale": 54.2,
+            "quota_equa": 1.84,
+            "quota_valore_minima": 1.89
         },
         {
             "id_partita": "9a422e1aad1053828eaf629a58d901de",
@@ -258,8 +308,8 @@
             "data": "17/10 15:30",
             "match": "Werder Bremen - SC Paderborn",
             "consiglio_algoritmo": "Vittoria Werder Bremen",
-            "probabilita_reale": 55.1,
-            "quota_equa": 1.82,
+            "probabilita_reale": 55.2,
+            "quota_equa": 1.81,
             "quota_valore_minima": 1.86
         },
         {
@@ -268,9 +318,19 @@
             "data": "17/10 18:30",
             "match": "Bayern Monaco - RB Leipzig",
             "consiglio_algoritmo": "Vittoria Bayern Monaco",
-            "probabilita_reale": 78.2,
+            "probabilita_reale": 78.4,
             "quota_equa": 1.28,
             "quota_valore_minima": 1.31
+        },
+        {
+            "id_partita": "096d800bcc95c547ef592cbef624d080",
+            "lega": "soccer_germany_bundesliga",
+            "data": "18/10 15:30",
+            "match": "Bayer Leverkusen - SC Freiburg",
+            "consiglio_algoritmo": "Vittoria Bayer Leverkusen",
+            "probabilita_reale": 55.4,
+            "quota_equa": 1.8,
+            "quota_valore_minima": 1.85
         },
         {
             "id_partita": "f3034246520a2ee4ff0ac0d5074966f8",
@@ -278,8 +338,8 @@
             "data": "17/10 17:15",
             "match": "Strasbourg - PSG",
             "consiglio_algoritmo": "Vittoria PSG",
-            "probabilita_reale": 67.3,
-            "quota_equa": 1.49,
+            "probabilita_reale": 67.4,
+            "quota_equa": 1.48,
             "quota_valore_minima": 1.52
         },
         {
@@ -288,9 +348,9 @@
             "data": "17/10 20:45",
             "match": "Lille - Brest",
             "consiglio_algoritmo": "Vittoria Lille",
-            "probabilita_reale": 53.6,
-            "quota_equa": 1.87,
-            "quota_valore_minima": 1.91
+            "probabilita_reale": 53.3,
+            "quota_equa": 1.88,
+            "quota_valore_minima": 1.92
         },
         {
             "id_partita": "b077aa049133c0358bcd643bfee48da3",
@@ -308,8 +368,8 @@
             "data": "16/10 20:00",
             "match": "Heerenveen - Excelsior",
             "consiglio_algoritmo": "Vittoria Heerenveen",
-            "probabilita_reale": 58.0,
-            "quota_equa": 1.72,
+            "probabilita_reale": 57.9,
+            "quota_equa": 1.73,
             "quota_valore_minima": 1.77
         },
         {
@@ -318,9 +378,9 @@
             "data": "17/10 16:30",
             "match": "ADO Den Haag - PSV Eindhoven",
             "consiglio_algoritmo": "Vittoria PSV Eindhoven",
-            "probabilita_reale": 74.2,
-            "quota_equa": 1.35,
-            "quota_valore_minima": 1.38
+            "probabilita_reale": 74.7,
+            "quota_equa": 1.34,
+            "quota_valore_minima": 1.37
         },
         {
             "id_partita": "d9b03d772e9b039441049be8b83290e6",
@@ -328,9 +388,9 @@
             "data": "17/10 20:00",
             "match": "SC Telstar - Feyenoord",
             "consiglio_algoritmo": "Vittoria Feyenoord",
-            "probabilita_reale": 70.8,
+            "probabilita_reale": 71.1,
             "quota_equa": 1.41,
-            "quota_valore_minima": 1.45
+            "quota_valore_minima": 1.44
         },
         {
             "id_partita": "fc96145ee5d186e331503870bfef8020",
@@ -343,14 +403,34 @@
             "quota_valore_minima": 1.74
         },
         {
-            "id_partita": "5d6f9accd6f79ae4216dfd29ccc342b2",
-            "lega": "soccer_uefa_champs_league",
-            "data": "14/10 18:45",
-            "match": "Feyenoord - Como",
-            "consiglio_algoritmo": "Vittoria Como",
-            "probabilita_reale": 48.2,
-            "quota_equa": 2.07,
-            "quota_valore_minima": 2.13
+            "id_partita": "4568ee08a32d34347100042cc7868839",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "18/10 12:15",
+            "match": "FC Zwolle - Go Ahead Eagles",
+            "consiglio_algoritmo": "Vittoria Go Ahead Eagles",
+            "probabilita_reale": 48.7,
+            "quota_equa": 2.05,
+            "quota_valore_minima": 2.11
+        },
+        {
+            "id_partita": "a46c19cc6ee20067da4e68356f247bfb",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "18/10 14:30",
+            "match": "SC Cambuur - AZ Alkmaar",
+            "consiglio_algoritmo": "Vittoria AZ Alkmaar",
+            "probabilita_reale": 65.5,
+            "quota_equa": 1.53,
+            "quota_valore_minima": 1.57
+        },
+        {
+            "id_partita": "1c871e0acb43e1baa366e05f9e8271c4",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "18/10 16:45",
+            "match": "Groningen - Ajax",
+            "consiglio_algoritmo": "Vittoria Ajax",
+            "probabilita_reale": 52.5,
+            "quota_equa": 1.9,
+            "quota_valore_minima": 1.95
         },
         {
             "id_partita": "2903ee092f7e08c549b130a3d394ac3c",
@@ -358,9 +438,9 @@
             "data": "14/10 18:45",
             "match": "LASK - Liverpool",
             "consiglio_algoritmo": "Vittoria Liverpool",
-            "probabilita_reale": 69.1,
-            "quota_equa": 1.45,
-            "quota_valore_minima": 1.48
+            "probabilita_reale": 70.6,
+            "quota_equa": 1.42,
+            "quota_valore_minima": 1.45
         },
         {
             "id_partita": "d4ef112438afa4c2cdbbfc9376a009c9",
@@ -368,9 +448,9 @@
             "data": "14/10 21:00",
             "match": "Roma - Real Madrid",
             "consiglio_algoritmo": "Vittoria Real Madrid",
-            "probabilita_reale": 49.4,
-            "quota_equa": 2.02,
-            "quota_valore_minima": 2.07
+            "probabilita_reale": 50.3,
+            "quota_equa": 1.99,
+            "quota_valore_minima": 2.04
         },
         {
             "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
@@ -378,9 +458,9 @@
             "data": "14/10 21:00",
             "match": "Aston Villa - Fenerbahce",
             "consiglio_algoritmo": "Vittoria Aston Villa",
-            "probabilita_reale": 56.8,
-            "quota_equa": 1.76,
-            "quota_valore_minima": 1.8
+            "probabilita_reale": 58.5,
+            "quota_equa": 1.71,
+            "quota_valore_minima": 1.75
         },
         {
             "id_partita": "5a1a6a04c5561897741105e30d5d7ec4",
@@ -388,9 +468,9 @@
             "data": "14/10 21:00",
             "match": "Manchester City - PSG",
             "consiglio_algoritmo": "Vittoria Manchester City",
-            "probabilita_reale": 47.2,
-            "quota_equa": 2.12,
-            "quota_valore_minima": 2.17
+            "probabilita_reale": 47.7,
+            "quota_equa": 2.1,
+            "quota_valore_minima": 2.15
         },
         {
             "id_partita": "4c7f87780ae5ab8bec9e83d6d6ec9909",
@@ -400,7 +480,7 @@
             "consiglio_algoritmo": "Vittoria Betis Siviglia",
             "probabilita_reale": 46.9,
             "quota_equa": 2.13,
-            "quota_valore_minima": 2.18
+            "quota_valore_minima": 2.19
         },
         {
             "id_partita": "d7576351b8cb2396e32cc3de0446f3de",
@@ -408,9 +488,9 @@
             "data": "14/10 21:00",
             "match": "ŠK Slovan Bratislava - VfB Stuttgart",
             "consiglio_algoritmo": "Vittoria VfB Stuttgart",
-            "probabilita_reale": 73.9,
-            "quota_equa": 1.35,
-            "quota_valore_minima": 1.39
+            "probabilita_reale": 69.5,
+            "quota_equa": 1.44,
+            "quota_valore_minima": 1.48
         },
         {
             "id_partita": "431fc65e67cd737bceb5827118d3f7eb",
@@ -418,9 +498,9 @@
             "data": "15/10 18:45",
             "match": "Salzburg - Milan",
             "consiglio_algoritmo": "Vittoria Milan",
-            "probabilita_reale": 52.0,
-            "quota_equa": 1.92,
-            "quota_valore_minima": 1.97
+            "probabilita_reale": 47.2,
+            "quota_equa": 2.12,
+            "quota_valore_minima": 2.17
         },
         {
             "id_partita": "571499e2d0a5fccc92b7801aa4d6c124",
@@ -428,9 +508,9 @@
             "data": "15/10 18:45",
             "match": "AZ Alkmaar - Hapoel Be'er Sheva",
             "consiglio_algoritmo": "Vittoria AZ Alkmaar",
-            "probabilita_reale": 73.8,
+            "probabilita_reale": 74.2,
             "quota_equa": 1.35,
-            "quota_valore_minima": 1.39
+            "quota_valore_minima": 1.38
         },
         {
             "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
@@ -438,9 +518,9 @@
             "data": "15/10 18:45",
             "match": "Lech Poznań - Bayer Leverkusen",
             "consiglio_algoritmo": "Vittoria Bayer Leverkusen",
-            "probabilita_reale": 57.6,
-            "quota_equa": 1.74,
-            "quota_valore_minima": 1.78
+            "probabilita_reale": 57.9,
+            "quota_equa": 1.73,
+            "quota_valore_minima": 1.77
         },
         {
             "id_partita": "fad99d69743794a14fe2961d8fb9e8f2",
@@ -448,8 +528,8 @@
             "data": "15/10 18:45",
             "match": "Sparta Prague - Lillestrom",
             "consiglio_algoritmo": "Vittoria Sparta Prague",
-            "probabilita_reale": 71.4,
-            "quota_equa": 1.4,
+            "probabilita_reale": 71.2,
+            "quota_equa": 1.41,
             "quota_valore_minima": 1.44
         },
         {
@@ -458,7 +538,7 @@
             "data": "15/10 18:45",
             "match": "Torreense - Sunderland",
             "consiglio_algoritmo": "Vittoria Sunderland",
-            "probabilita_reale": 68.9,
+            "probabilita_reale": 69.0,
             "quota_equa": 1.45,
             "quota_valore_minima": 1.49
         },
@@ -469,7 +549,7 @@
             "match": "Dinamo Zagreb - Anderlecht",
             "consiglio_algoritmo": "Vittoria Dinamo Zagreb",
             "probabilita_reale": 47.3,
-            "quota_equa": 2.12,
+            "quota_equa": 2.11,
             "quota_valore_minima": 2.17
         },
         {
@@ -478,7 +558,7 @@
             "data": "15/10 21:00",
             "match": "Benfica - Celtic",
             "consiglio_algoritmo": "Vittoria Benfica",
-            "probabilita_reale": 76.8,
+            "probabilita_reale": 76.9,
             "quota_equa": 1.3,
             "quota_valore_minima": 1.33
         },
@@ -488,8 +568,8 @@
             "data": "15/10 21:00",
             "match": "TSG Hoffenheim - Besiktas JK",
             "consiglio_algoritmo": "Vittoria TSG Hoffenheim",
-            "probabilita_reale": 48.7,
-            "quota_equa": 2.05,
+            "probabilita_reale": 48.6,
+            "quota_equa": 2.06,
             "quota_valore_minima": 2.11
         },
         {
@@ -508,9 +588,9 @@
             "data": "15/10 21:00",
             "match": "Jagiellonia Białystok - FC Ararat-Armenia",
             "consiglio_algoritmo": "Vittoria Jagiellonia Białystok",
-            "probabilita_reale": 68.7,
+            "probabilita_reale": 68.4,
             "quota_equa": 1.46,
-            "quota_valore_minima": 1.49
+            "quota_valore_minima": 1.5
         },
         {
             "id_partita": "3d74f2cf08612874adfb17130fd73f25",
@@ -518,8 +598,8 @@
             "data": "15/10 21:00",
             "match": "Ferencváros TC - Viktoria Plzeň",
             "consiglio_algoritmo": "Vittoria Ferencváros TC",
-            "probabilita_reale": 49.2,
-            "quota_equa": 2.03,
+            "probabilita_reale": 49.0,
+            "quota_equa": 2.04,
             "quota_valore_minima": 2.09
         },
         {
@@ -528,9 +608,9 @@
             "data": "15/10 21:00",
             "match": "NEC Nijmegen - PFC Levski Sofia",
             "consiglio_algoritmo": "Vittoria NEC Nijmegen",
-            "probabilita_reale": 53.8,
-            "quota_equa": 1.86,
-            "quota_valore_minima": 1.91
+            "probabilita_reale": 50.9,
+            "quota_equa": 1.96,
+            "quota_valore_minima": 2.01
         },
         {
             "id_partita": "9b2bf9bed21283dcad774dd5be7ba1da",
@@ -538,9 +618,9 @@
             "data": "15/10 21:00",
             "match": "Rennes - OFI Crete",
             "consiglio_algoritmo": "Vittoria Rennes",
-            "probabilita_reale": 77.3,
+            "probabilita_reale": 77.6,
             "quota_equa": 1.29,
-            "quota_valore_minima": 1.33
+            "quota_valore_minima": 1.32
         }
     ]
 }
