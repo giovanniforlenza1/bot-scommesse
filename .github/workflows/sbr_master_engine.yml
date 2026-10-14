@@ -1,0 +1,66 @@
+name: SBR Master Engine - 10 AM
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+jobs:
+  avvia_modelli_sbr:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Configura Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Installa dipendenze
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests tzdata
+
+    - name: 1. Esecuzione Modello OMEGA (Analista)
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        OMEGA_CHAT_ID: ${{ secrets.OMEGA_CHAT_ID }}
+        ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      run: python bot_omega_analista.py
+
+    - name: Attesa sincronizzazione database (50s)
+      run: sleep 50
+
+    - name: 2. Esecuzione Modello OMEGA (Cecchino)
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        OMEGA_CHAT_ID: ${{ secrets.OMEGA_CHAT_ID }}
+        ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      run: python bot_omega_cecchino.py
+
+    - name: 3. Esecuzione Modello ALPHA
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      run: python bot_alpha_analista.py
+
+    - name: 4. Esecuzione Modello BETA
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+      run: python bot_beta.py
+
+    - name: Sincronizzazione e Salvataggio Unificato
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m "SBR Master Update ore 10:00" || echo "Nessuna modifica"
+        git pull --rebase origin main
+        git push
