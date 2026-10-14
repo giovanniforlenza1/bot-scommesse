@@ -1023,7 +1023,7 @@
             "importo": 10.0,
             "quota_totale": 4.83,
             "ritorno_potenziale": 48.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
@@ -1034,8 +1034,8 @@
                     "quota": 2.1,
                     "bookmaker": "Betfair",
                     "score": 0.4700000000000002,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "a9c22e08b395ee5753c8a65bc0eb97cf",
@@ -1046,8 +1046,8 @@
                     "quota": 2.3,
                     "bookmaker": "Betfair",
                     "score": 0.3999999999999999,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -2145,8 +2145,8 @@
                     "squadra_trasferta": "Club Brugge",
                     "pronostico": "vittoria Inter",
                     "quota": 1.27,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "3-4"
                 }
             ]
         },
@@ -2376,8 +2376,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.0,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
@@ -2483,8 +2483,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.11999999999999988,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
