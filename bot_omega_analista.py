@@ -1,14 +1,17 @@
 import requests
 import json
 import os
+import random
+import math
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from bot_simulatore_montecarlo import simula_partita_montecarlo
 
-CAMPIONATI = [
-    'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
+# Lista espansa con leghe di seconda fascia ad alta inefficienza
+campionati = [
+    'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
     'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
+    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga',
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
 TRADUZIONI_NAZIONALI = {
@@ -42,128 +45,147 @@ def traduci_squadra(nome):
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
 
-def calcola_quota_reale(quote):
-    prob_implicita = sum(1 / q for q in quote) 
-    prob_reali = [(1 / q) / prob_implicita for q in quote]
-    quote_reali = [1 / p for p in prob_reali]
-    return quote_reali, prob_reali, prob_implicita
-
 def esegui_richiesta_api(url_template):
     chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi: 
-        print("Nessuna chiave API trovata.")
-        return None
-        
+    if not chiavi: return None
     for chiave in chiavi:
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=10)
-            if res.status_code == 200:
-                return res.json()
-            elif res.status_code == 429:
-                print(f"Chiave {chiave[:4]}... esaurita (429). passo alla successiva.")
-                continue
-            elif res.status_code == 401:
-                print(f"Chiave {chiave[:4]}... non valida (401). passo alla successiva.")
-                continue
-        except Exception as e:
-            print(f"Eccezione connessione API: {e}")
-            
-    print("Tutte le chiavi API a disposizione sono esaurite o bloccate.")
+            if res.status_code == 200: return res.json()
+        except: pass
     return None
 
-def genera_analisi_quantitativa():
-    fuso = ZoneInfo("Europe/Rome")
-    oggi = datetime.now(fuso)
-    # IL FRENO PER L'ANALISTA: Scansiona il mercato solo fino a 4 giorni da oggi
+def poisson_random(lmbda):
+    L = math.exp(-lmbda)
+    k = 0
+    p = 1.0
+    while p > L:
+        k += 1
+        p *= random.random()
+    return k - 1
+
+def simulazione_monte_carlo_dixon_coles(prob_1, prob_x, prob_2, n_sim=10000):
+    # Stima dei gol attesi (xG) impliciti dalle probabilità depurate
+    xg_casa = max(0.4, (prob_1 * 2.6) + (prob_x * 0.85))
+    xg_trasf = max(0.3, (prob_2 * 2.5) + (prob_x * 0.85))
+    
+    vitt_1, pareggi, vitt_2 = 0, 0, 0
+    
+    for _ in range(n_sim):
+        gol_c = poisson_random(xg_casa)
+        gol_t = poisson_random(xg_trasf)
+        
+        # Correzione tattica Dixon-Coles: aumenta l'attrito sui risultati bassi (0-0, 1-1)
+        if (gol_c == 1 and gol_t == 0) or (gol_c == 0 and gol_t == 1):
+            if random.random() < 0.065: # 6.5% di conversione in pareggio bloccato
+                gol_c = gol_t
+                
+        if gol_c > gol_t: vitt_1 += 1
+        elif gol_c == gol_t: pareggi += 1
+        else: vitt_2 += 1
+        
+    # Media pesata tra De-vigging Sharp (70%) e Simulazione Tattica Monte Carlo (30%)
+    p1_finale = (prob_1 * 0.70) + ((vitt_1 / n_sim) * 0.30)
+    px_finale = (prob_x * 0.70) + ((pareggi / n_sim) * 0.30)
+    p2_finale = (prob_2 * 0.70) + ((vitt_2 / n_sim) * 0.30)
+    
+    return p1_finale, px_finale, p2_finale
+
+def esegui_analista():
+    fuso_italia = ZoneInfo("Europe/Rome")
+    oggi = datetime.now(fuso_italia)
     limite_temporale = oggi + timedelta(days=4)
     
-    database_analisi = {"ultimo_aggiornamento": oggi.strftime("%Y-%m-%d %H:%M"), "analisi": []}
+    risultati_analisi = []
     
-    print("Avvio Modello Omega: Analisi Mercato + Simulazione Monte Carlo...")
-    
-    for camp in CAMPIONATI:
+    for camp in campionati:
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h"
-        matches = esegui_richiesta_api(url_template)
+        partite = esegui_richiesta_api(url_template)
+        if not partite: continue
         
-        if not matches: continue
-        
-        for m in matches:
-            data_partita_utc = datetime.strptime(m['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC"))
-            data_partita_ita = data_partita_utc.astimezone(fuso)
-            
-            # Blocco temporale effettivo
-            if data_partita_ita > limite_temporale: continue
-            
-            q_1_list, q_x_list, q_2_list = [], [], []
-            for book in m.get('bookmakers', []):
-                for market in book.get('markets', []):
-                    if market['key'] == 'h2h':
-                        for out in market['outcomes']:
-                            if out['name'] == m['home_team']: q_1_list.append(out['price'])
-                            elif out['name'] == m['away_team']: q_2_list.append(out['price'])
-                            elif out['name'] == 'Draw': q_x_list.append(out['price'])
-                            
-            if not q_1_list or not q_x_list or not q_2_list: continue
-            
-            avg_1 = sum(q_1_list) / len(q_1_list)
-            avg_x = sum(q_x_list) / len(q_x_list)
-            avg_2 = sum(q_2_list) / len(q_2_list)
-            
-            quote_reali, prob_reali, aggio = calcola_quota_reale([avg_1, avg_x, avg_2])
-            
-            home_ita = traduci_squadra(m['home_team'])
-            away_ita = traduci_squadra(m['away_team'])
-            
-            xg_casa = prob_reali[0] * 2.5
-            xg_trasferta = prob_reali[2] * 2.5
-            
-            esito_montecarlo = simula_partita_montecarlo(
-                gol_fatti_casa=xg_casa, gol_subiti_casa=xg_trasferta, 
-                gol_fatti_trasferta=xg_trasferta, gol_subiti_trasferta=xg_casa, 
-                modulo_casa="equilibrato", modulo_trasferta="equilibrato", 
-                num_simulazioni=10000
-            )
-            
-            miglior_prob = max(esito_montecarlo['prob_1'], esito_montecarlo['prob_x'], esito_montecarlo['prob_2'])
-            
-            if miglior_prob == esito_montecarlo['prob_1']:
-                pronostico_str = f"vittoria {home_ita}"
-                quota_pura_fiera = round(1 / esito_montecarlo['prob_1'], 2) if esito_montecarlo['prob_1'] > 0 else 0
-            elif miglior_prob == esito_montecarlo['prob_2']:
-                pronostico_str = f"vittoria {away_ita}"
-                quota_pura_fiera = round(1 / esito_montecarlo['prob_2'], 2) if esito_montecarlo['prob_2'] > 0 else 0
-            else:
-                pronostico_str = "pareggio"
-                quota_pura_fiera = round(1 / esito_montecarlo['prob_x'], 2) if esito_montecarlo['prob_x'] > 0 else 0
-                
-            quota_valore_richiesta = round(quota_pura_fiera * 1.04, 2)
-            
-            if not (1.50 <= quota_valore_richiesta <= 2.00):
+        for p in partite:
+            data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
+            if data_ita < oggi or data_ita > limite_temporale:
                 continue
+                
+            casa_orig = p['home_team']
+            trasf_orig = p['away_team']
+            casa_ita = traduci_squadra(casa_orig)
+            trasf_ita = traduci_squadra(trasf_orig)
             
-            testo_report = (
-                f"Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, "
-                f"l'algoritmo rileva una probabilità di {pronostico_str} del {round(miglior_prob*100, 1)}%. "
-                f"La simulazione genera una quota equa di @{quota_pura_fiera}. Il Cecchino ha l'ordine di "
-                f"piazzare la giocata solo se il mercato copre la Value Bet minima di @{quota_valore_richiesta}."
-            )
+            quote_1, quote_x, quote_2 = [], [], []
+            pinnacle_1, pinnacle_x, pinnacle_2 = None, None, None
             
-            database_analisi["analisi"].append({
-                "id_partita": m['id'],
-                "match": f"{home_ita} - {away_ita}",
-                "data": m['commence_time'],
-                "consiglio_algoritmo": pronostico_str,
-                "quota_valore_minima": quota_valore_richiesta,
-                "report_testuale": testo_report
+            for book in p.get('bookmakers', []):
+                is_pinnacle = 'pinnacle' in book.get('key', '').lower()
+                for m in book.get('markets', []):
+                    if m.get('key') == 'h2h':
+                        q1, qx, q2 = None, None, None
+                        for out in m.get('outcomes', []):
+                            if out['name'] == casa_orig: q1 = out['price']
+                            elif out['name'] == trasf_orig: q2 = out['price']
+                            elif out['name'].lower() == 'draw': qx = out['price']
+                        if q1 and qx and q2:
+                            quote_1.append(q1); quote_x.append(qx); quote_2.append(q2)
+                            if is_pinnacle:
+                                pinnacle_1, pinnacle_x, pinnacle_2 = q1, qx, q2
+                                
+            if len(quote_1) < 2: continue
+            
+            # Usa Pinnacle come riferimento Sharp se presente, altrimenti la media di mercato
+            rif_1 = pinnacle_1 if pinnacle_1 else (sum(quote_1) / len(quote_1))
+            rif_x = pinnacle_x if pinnacle_x else (sum(quote_x) / len(quote_x))
+            rif_2 = pinnacle_2 if pinnacle_2 else (sum(quote_2) / len(quote_2))
+            
+            # Purificazione del mercato (De-vigging)
+            aggio_totale = (1/rif_1) + (1/rif_x) + (1/rif_2)
+            prob_pura_1 = (1/rif_1) / aggio_totale
+            prob_pura_x = (1/rif_x) / aggio_totale
+            prob_pura_2 = (1/rif_2) / aggio_totale
+            
+            # Simulazione Monte Carlo 10.000 cicli con filtro Dixon-Coles
+            mc_1, mc_x, mc_2 = simulazione_monte_carlo_dixon_coles(prob_pura_1, prob_pura_x, prob_pura_2, 10000)
+            
+            opzioni = [
+                (f"Vittoria {casa_ita}", mc_1),
+                ("Pareggio", mc_x),
+                (f"Vittoria {trasf_ita}", mc_2)
+            ]
+            # Ordina per probabilità maggiore
+            opzioni.sort(key=lambda x: x[1], reverse=True)
+            scelta_migliore, prob_stimata = opzioni[0]
+            
+            # Filtro confidenza: scarta partite troppo caotiche (probabilità < 46%)
+            if prob_stimata < 0.46:
+                continue
+                
+            quota_equa = 1.0 / prob_stimata
+            # Margine di valore richiesto: +2.5% sopra la quota equa reale
+            quota_valore_minima = round(quota_equa * 1.025, 2)
+            
+            if quota_valore_minima < 1.18: continue
+            
+            risultati_analisi.append({
+                'id_partita': p['id'],
+                'lega': camp,
+                'data': data_ita.strftime("%d/%m %H:%M"),
+                'match': f"{casa_ita} - {trasf_ita}",
+                'consiglio_algoritmo': scelta_migliore,
+                'probabilita_reale': round(prob_stimata * 100, 1),
+                'quota_equa': round(quota_equa, 2),
+                'quota_valore_minima': quota_valore_minima
             })
-
-    database_analisi["analisi"] = sorted(database_analisi["analisi"], key=lambda x: x["quota_valore_minima"])
+            
+    db_out = {
+        'ultimo_aggiornamento': oggi.strftime("%d/%m/%Y %H:%M"),
+        'totale_partite_analizzate': len(risultati_analisi),
+        'analisi': risultati_analisi
+    }
     
     with open('database_analisi.json', 'w', encoding='utf-8') as f:
-        json.dump(database_analisi, f, indent=4, ensure_ascii=False)
-        
-    print(f"Modello Omega completato: salvate {len(database_analisi['analisi'])} partite validate da Monte Carlo.")
+        json.dump(db_out, f, indent=4, ensure_ascii=False)
+    print(f"Omega Analista completato: {len(risultati_analisi)} match salvati.")
 
 if __name__ == "__main__":
-    genera_analisi_quantitativa()
+    esegui_analista()
