@@ -9,12 +9,13 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 OMEGA_CHAT_ID = os.environ.get("OMEGA_CHAT_ID") or os.environ.get("CHAT_ID")
 
 campionati = [
-    'soccer_uefa_nations_league', 'soccer_italy_serie_a', 'soccer_epl',
+    'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
     'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
+    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga',
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
-siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Betfair', 'William Hill', 'Unibet']
+siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Betfair', 'William Hill', 'Unibet', 'Marathonbet', '888sport']
 
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
@@ -90,6 +91,10 @@ def esegui_cecchino():
     
     db_analisi = carica_database_analisi()
     if not db_analisi or not db_analisi.get('analisi'): return
+    
+    db_principale = carica_database_principale()
+    # Evita di rigiocare partite già inserite oggi
+    id_gia_giocati = {p['id_partita'] for s in db_principale['schedine'] if s.get('modello') == 'omega' and s.get('stato_schedina') == 'in attesa' for p in s.get('partite', [])}
         
     candidati_valore = []
     
@@ -99,10 +104,9 @@ def esegui_cecchino():
         if not partite_live: continue
             
         for p_live in partite_live:
+            if p_live['id'] in id_gia_giocati: continue
             data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            
-            if data_ita > limite_temporale:
-                continue
+            if data_ita > limite_temporale or data_ita < oggi: continue
 
             nome_casa_ita = traduci_squadra(p_live['home_team'])
             nome_trasf_ita = traduci_squadra(p_live['away_team'])
@@ -142,45 +146,59 @@ def esegui_cecchino():
                     'pronostico': pronostico_richiesto,
                     'quota': miglior_quota,
                     'bookmaker': book_vincente,
-                    'score': miglior_quota - quota_minima,
+                    'score': round(miglior_quota - quota_minima, 3),
                     'lega': camp,
                     'stato': 'in attesa',
                     'risultato_reale': ''
                 })
                 
     if not candidati_valore: 
-        print("Crollo quote: nessun candidato sopravvissuto. Invio messaggio Telegram.")
         invia_messaggio_protezione()
         return
     
-    # RIPRISTINATO: Limite massimo a 3 partite per contenere la varianza
-    finalisti = sorted(candidati_valore, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))[:3]
+    # Ordina dando priorità a Serie A/B e al maggior vantaggio matematico (score)
+    ordinati = sorted(candidati_valore, key=lambda x: (0 if 'italy' in x['lega'] else 1, -x['score']))
     
-    quota_totale = 1.0
-    for c in finalisti: quota_totale *= c['quota']
-    quota_totale = round(quota_totale, 2)
+    # LOGICA INTELLIGENTE: Se il primo candidato è già >= 1.65 con forte valore, gioca in SINGOLA SECCA
+    if ordinati[0]['quota'] >= 1.65 and ordinati[0]['score'] >= 0.05:
+        finalisti = [ordinati[0]]
+        tipo_giocata = "Colpo Mirato in Singola."
+    else:
+        # Altrimenti costruisce la multipla stretta (max 3 match) appena supera 1.50
+        finalisti = []
+        q_temp = 1.0
+        for cand in ordinati[:3]:
+            finalisti.append(cand)
+            q_temp *= cand['quota']
+            if q_temp >= 1.60 and len(finalisti) >= 2:
+                break
+        tipo_giocata = "Schedina quantitativa."
+    
+    quota_totale = round(q_temp if len(finalisti) > 1 else finalisti[0]['quota'], 2)
     
     if quota_totale < 1.50: 
-        print("Crollo quote: totalizzatore sotto 1.50. Invio messaggio Telegram.")
         invia_messaggio_protezione()
         return
         
-    db_principale = carica_database_principale()
+    # Calcolo Stake Dinamico (Kelly Frazionato) basato sul valore medio estratto
+    vantaggio_medio = sum(c['score'] for c in finalisti) / len(finalisti)
+    stake_consigliato = round(min(22.0, max(10.0, 10.0 + (vantaggio_medio * 45))), 1)
+    
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
         'modello': 'omega',
         'data_creazione': oggi.strftime("%d/%m/%Y"),
-        'importo': 10.0,
+        'importo': stake_consigliato,
         'quota_totale': quota_totale,
-        'ritorno_potenziale': round(10.0 * quota_totale, 2),
+        'ritorno_potenziale': round(stake_consigliato * quota_totale, 2),
         'stato_schedina': 'in attesa',
         'partite': finalisti
     })
     
     msg = "**MODELLO OMEGA**\n\n"
-    msg += "**Schedina quantitativa.**\n\n"
+    msg += f"**{tipo_giocata}**\n\n"
     msg += f"📊 **Quota totale**: {quota_totale}\n"
-    msg += f"💰 **Stake simulato**: 10.0€\n\n"
+    msg += f"💰 **Stake Kelly**: {stake_consigliato}€\n\n"
     
     for c in finalisti:
         msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n"
