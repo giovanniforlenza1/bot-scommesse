@@ -2500,6 +2500,51 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "1c0f08d6",
+            "modello": "omega",
+            "data_creazione": "14/10/2026",
+            "importo": 12.7,
+            "quota_totale": 1.95,
+            "ritorno_potenziale": 24.76,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "9a691aeace75a589f2f920824522c830",
+                    "data": "16/10 20:30",
+                    "squadra_casa": "Verona",
+                    "squadra_trasferta": "US Catanzaro 1929",
+                    "pronostico": "Vittoria Verona",
+                    "quota": 1.95,
+                    "bookmaker": "Betfair",
+                    "score": 0.06,
+                    "lega": "soccer_italy_serie_b",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "37238247",
+            "modello": "beta",
+            "data_creazione": "14/10/2026",
+            "importo": 8.0,
+            "quota_totale": 1.75,
+            "ritorno_potenziale": 14.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "7d3160040958fe21778fd5ee485666c3",
+                    "data": "16/10 20:45",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 4.5 Cartellini Totali",
+                    "quota": 1.75,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }

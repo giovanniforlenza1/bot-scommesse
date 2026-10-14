@@ -1,125 +1,546 @@
 {
-    "ultimo_aggiornamento": "2026-10-13 19:13",
+    "ultimo_aggiornamento": "14/10/2026 10:19",
+    "totale_partite_analizzate": 54,
     "analisi": [
         {
-            "id_partita": "846e496fc232b2fc20214754836727d0",
-            "match": "Betis Siviglia - Barcelona",
-            "data": "2026-10-17T16:30:00Z",
-            "consiglio_algoritmo": "vittoria Barcelona",
-            "quota_valore_minima": 1.52,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Barcelona del 68.5%. La simulazione genera una quota equa di @1.46. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.52."
-        },
-        {
-            "id_partita": "da9e9e9eb9a238ed97827c4a8fbe6044",
-            "match": "RB Leipzig - PSV Eindhoven",
-            "data": "2026-10-13T19:00:00Z",
-            "consiglio_algoritmo": "vittoria RB Leipzig",
-            "quota_valore_minima": 1.61,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria RB Leipzig del 64.3%. La simulazione genera una quota equa di @1.55. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.61."
+            "id_partita": "907639dade64cca45d1ab639195d201e",
+            "lega": "soccer_italy_serie_a",
+            "data": "17/10 15:00",
+            "match": "Venezia - Napoli",
+            "consiglio_algoritmo": "Vittoria Napoli",
+            "probabilita_reale": 56.9,
+            "quota_equa": 1.76,
+            "quota_valore_minima": 1.8
         },
         {
             "id_partita": "bfefc309177723410230fee52f650315",
+            "lega": "soccer_italy_serie_a",
+            "data": "17/10 18:00",
             "match": "Bologna - Inter",
-            "data": "2026-10-17T16:00:00Z",
-            "consiglio_algoritmo": "vittoria Inter",
-            "quota_valore_minima": 1.62,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Inter del 64.0%. La simulazione genera una quota equa di @1.56. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.62."
+            "consiglio_algoritmo": "Vittoria Inter",
+            "probabilita_reale": 61.1,
+            "quota_equa": 1.64,
+            "quota_valore_minima": 1.68
         },
         {
-            "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
-            "match": "Aston Villa - Fenerbahce",
-            "data": "2026-10-14T19:00:00Z",
-            "consiglio_algoritmo": "vittoria Aston Villa",
-            "quota_valore_minima": 1.65,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Aston Villa del 62.7%. La simulazione genera una quota equa di @1.59. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.65."
+            "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+            "lega": "soccer_italy_serie_a",
+            "data": "17/10 20:45",
+            "match": "Roma - Genoa",
+            "consiglio_algoritmo": "Vittoria Roma",
+            "probabilita_reale": 69.8,
+            "quota_equa": 1.43,
+            "quota_valore_minima": 1.47
         },
         {
-            "id_partita": "d8eac776adb07b0e7f01d8736d097291",
-            "match": "Union Berlin - Borussia Dortmund",
-            "data": "2026-10-17T13:30:00Z",
-            "consiglio_algoritmo": "vittoria Borussia Dortmund",
-            "quota_valore_minima": 1.72,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Borussia Dortmund del 60.5%. La simulazione genera una quota equa di @1.65. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.72."
+            "id_partita": "9a691aeace75a589f2f920824522c830",
+            "lega": "soccer_italy_serie_b",
+            "data": "16/10 20:30",
+            "match": "Verona - US Catanzaro 1929",
+            "consiglio_algoritmo": "Vittoria Verona",
+            "probabilita_reale": 54.1,
+            "quota_equa": 1.85,
+            "quota_valore_minima": 1.89
         },
         {
-            "id_partita": "907639dade64cca45d1ab639195d201e",
-            "match": "Venezia - Napoli",
-            "data": "2026-10-17T13:00:00Z",
-            "consiglio_algoritmo": "vittoria Napoli",
-            "quota_valore_minima": 1.75,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Napoli del 59.6%. La simulazione genera una quota equa di @1.68. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.75."
+            "id_partita": "dda51c46c51b80b6bd863c7314c1e12e",
+            "lega": "soccer_italy_serie_b",
+            "data": "17/10 15:00",
+            "match": "Ascoli - Empoli",
+            "consiglio_algoritmo": "Vittoria Ascoli",
+            "probabilita_reale": 53.9,
+            "quota_equa": 1.85,
+            "quota_valore_minima": 1.9
         },
         {
-            "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
-            "match": "Lech Poznań - Bayer Leverkusen",
-            "data": "2026-10-15T16:45:00Z",
-            "consiglio_algoritmo": "vittoria Bayer Leverkusen",
-            "quota_valore_minima": 1.76,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Bayer Leverkusen del 59.3%. La simulazione genera una quota equa di @1.69. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.76."
+            "id_partita": "629c785b753d46923b73fe4de3122507",
+            "lega": "soccer_italy_serie_b",
+            "data": "17/10 15:00",
+            "match": "Benevento - Vicenza",
+            "consiglio_algoritmo": "Vittoria Benevento",
+            "probabilita_reale": 48.5,
+            "quota_equa": 2.06,
+            "quota_valore_minima": 2.11
+        },
+        {
+            "id_partita": "0531b53481eb5516d08217895a651bd3",
+            "lega": "soccer_italy_serie_b",
+            "data": "17/10 15:00",
+            "match": "Carrarese - Modena",
+            "consiglio_algoritmo": "Vittoria Modena",
+            "probabilita_reale": 53.8,
+            "quota_equa": 1.86,
+            "quota_valore_minima": 1.9
         },
         {
             "id_partita": "7895f97f2f9577f3b13287a3d086859d",
+            "lega": "soccer_epl",
+            "data": "17/10 16:00",
             "match": "Fulham - Hull City",
-            "data": "2026-10-17T14:00:00Z",
-            "consiglio_algoritmo": "vittoria Fulham",
-            "quota_valore_minima": 1.79,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Fulham del 58.1%. La simulazione genera una quota equa di @1.72. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.79."
+            "consiglio_algoritmo": "Vittoria Fulham",
+            "probabilita_reale": 57.0,
+            "quota_equa": 1.75,
+            "quota_valore_minima": 1.8
+        },
+        {
+            "id_partita": "bf2142d1ca76ba2fc9e61afce80f86c0",
+            "lega": "soccer_epl",
+            "data": "17/10 16:00",
+            "match": "Manchester City - Ipswich Town",
+            "consiglio_algoritmo": "Vittoria Manchester City",
+            "probabilita_reale": 79.2,
+            "quota_equa": 1.26,
+            "quota_valore_minima": 1.29
+        },
+        {
+            "id_partita": "35d7cc4a96b152b4a31b0b151cb70feb",
+            "lega": "soccer_efl_champ",
+            "data": "14/10 20:45",
+            "match": "Queens Park Rangers - Derby County",
+            "consiglio_algoritmo": "Vittoria Queens Park Rangers",
+            "probabilita_reale": 59.1,
+            "quota_equa": 1.69,
+            "quota_valore_minima": 1.74
+        },
+        {
+            "id_partita": "b6f4ecaf15915781326083408fba0e52",
+            "lega": "soccer_efl_champ",
+            "data": "14/10 21:00",
+            "match": "Lincoln City - West Ham United",
+            "consiglio_algoritmo": "Vittoria West Ham United",
+            "probabilita_reale": 55.9,
+            "quota_equa": 1.79,
+            "quota_valore_minima": 1.83
+        },
+        {
+            "id_partita": "fbbd46f088071f0f022dce6850bcfa80",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 13:30",
+            "match": "Middlesbrough - Cardiff City",
+            "consiglio_algoritmo": "Vittoria Middlesbrough",
+            "probabilita_reale": 63.4,
+            "quota_equa": 1.58,
+            "quota_valore_minima": 1.62
+        },
+        {
+            "id_partita": "1d647c4a829133678cfb3a0425b1cd16",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 13:30",
+            "match": "Millwall - Lincoln City",
+            "consiglio_algoritmo": "Vittoria Millwall",
+            "probabilita_reale": 49.5,
+            "quota_equa": 2.02,
+            "quota_valore_minima": 2.07
+        },
+        {
+            "id_partita": "35d7df16a960d08a7d38e7f4f706677d",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 16:00",
+            "match": "Birmingham City - Queens Park Rangers",
+            "consiglio_algoritmo": "Vittoria Birmingham City",
+            "probabilita_reale": 46.9,
+            "quota_equa": 2.13,
+            "quota_valore_minima": 2.19
+        },
+        {
+            "id_partita": "37d564daa14e4724b53830d610cf5868",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 16:00",
+            "match": "West Bromwich Albion - Blackburn Rovers",
+            "consiglio_algoritmo": "Vittoria West Bromwich Albion",
+            "probabilita_reale": 50.3,
+            "quota_equa": 1.99,
+            "quota_valore_minima": 2.04
+        },
+        {
+            "id_partita": "899f15da06998732d951a91ed8f5e32f",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 16:00",
+            "match": "Southampton - Bolton Wanderers",
+            "consiglio_algoritmo": "Vittoria Southampton",
+            "probabilita_reale": 65.9,
+            "quota_equa": 1.52,
+            "quota_valore_minima": 1.55
+        },
+        {
+            "id_partita": "7a8f8a079740c8d4b39c995cdd304e0c",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 16:00",
+            "match": "Norwich City - Portsmouth",
+            "consiglio_algoritmo": "Vittoria Norwich City",
+            "probabilita_reale": 56.1,
+            "quota_equa": 1.78,
+            "quota_valore_minima": 1.83
+        },
+        {
+            "id_partita": "33ad80e4f2bfa519396049639fd4d31a",
+            "lega": "soccer_efl_champ",
+            "data": "17/10 16:00",
+            "match": "Wrexham AFC - Preston North End",
+            "consiglio_algoritmo": "Vittoria Wrexham AFC",
+            "probabilita_reale": 57.9,
+            "quota_equa": 1.73,
+            "quota_valore_minima": 1.77
+        },
+        {
+            "id_partita": "19ee731602634e5c9e3106630e087464",
+            "lega": "soccer_spain_la_liga",
+            "data": "16/10 21:00",
+            "match": "Deportivo La Coruña - Levante",
+            "consiglio_algoritmo": "Vittoria Deportivo La Coruña",
+            "probabilita_reale": 47.0,
+            "quota_equa": 2.13,
+            "quota_valore_minima": 2.18
         },
         {
             "id_partita": "6436925dd15916d7041ba32b60000d48",
+            "lega": "soccer_spain_la_liga",
+            "data": "17/10 14:00",
             "match": "Espanyol - Atlético Madrid",
-            "data": "2026-10-17T12:00:00Z",
-            "consiglio_algoritmo": "vittoria Atlético Madrid",
-            "quota_valore_minima": 1.82,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Atlético Madrid del 57.2%. La simulazione genera una quota equa di @1.75. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.82."
+            "consiglio_algoritmo": "Vittoria Atlético Madrid",
+            "probabilita_reale": 55.7,
+            "quota_equa": 1.8,
+            "quota_valore_minima": 1.84
         },
         {
-            "id_partita": "431fc65e67cd737bceb5827118d3f7eb",
-            "match": "Salzburg - Milan",
-            "data": "2026-10-15T16:45:00Z",
-            "consiglio_algoritmo": "vittoria Milan",
-            "quota_valore_minima": 1.89,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Milan del 54.8%. La simulazione genera una quota equa di @1.82. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.89."
+            "id_partita": "aef660734585649651415961a9d177c6",
+            "lega": "soccer_spain_la_liga",
+            "data": "17/10 16:15",
+            "match": "Villarreal - Elche CF",
+            "consiglio_algoritmo": "Vittoria Villarreal",
+            "probabilita_reale": 67.6,
+            "quota_equa": 1.48,
+            "quota_valore_minima": 1.52
         },
         {
-            "id_partita": "3957ec8d52653fa1c852825bea985fb7",
-            "match": "NEC Nijmegen - PFC Levski Sofia",
-            "data": "2026-10-15T19:00:00Z",
-            "consiglio_algoritmo": "vittoria NEC Nijmegen",
-            "quota_valore_minima": 1.89,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria NEC Nijmegen del 55.0%. La simulazione genera una quota equa di @1.82. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.89."
+            "id_partita": "846e496fc232b2fc20214754836727d0",
+            "lega": "soccer_spain_la_liga",
+            "data": "17/10 18:30",
+            "match": "Betis Siviglia - Barcelona",
+            "consiglio_algoritmo": "Vittoria Barcelona",
+            "probabilita_reale": 67.2,
+            "quota_equa": 1.49,
+            "quota_valore_minima": 1.53
         },
         {
-            "id_partita": "9a422e1aad1053828eaf629a58d901de",
-            "match": "Werder Bremen - SC Paderborn",
-            "data": "2026-10-17T13:30:00Z",
-            "consiglio_algoritmo": "vittoria Werder Bremen",
-            "quota_valore_minima": 1.9,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Werder Bremen del 54.7%. La simulazione genera una quota equa di @1.83. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.9."
+            "id_partita": "947bd5d924835af090d9cdc7bbdf10f6",
+            "lega": "soccer_germany_bundesliga",
+            "data": "16/10 20:30",
+            "match": "Eintracht Frankfurt - 1. Köln",
+            "consiglio_algoritmo": "Vittoria Eintracht Frankfurt",
+            "probabilita_reale": 49.3,
+            "quota_equa": 2.03,
+            "quota_valore_minima": 2.08
+        },
+        {
+            "id_partita": "d8eac776adb07b0e7f01d8736d097291",
+            "lega": "soccer_germany_bundesliga",
+            "data": "17/10 15:30",
+            "match": "Union Berlin - Borussia Dortmund",
+            "consiglio_algoritmo": "Vittoria Borussia Dortmund",
+            "probabilita_reale": 58.4,
+            "quota_equa": 1.71,
+            "quota_valore_minima": 1.75
         },
         {
             "id_partita": "221916b8b36706ec52aa655a64e5f1d2",
+            "lega": "soccer_germany_bundesliga",
+            "data": "17/10 15:30",
             "match": "Hamburger SV - VfB Stuttgart",
-            "data": "2026-10-17T13:30:00Z",
-            "consiglio_algoritmo": "vittoria VfB Stuttgart",
-            "quota_valore_minima": 1.96,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria VfB Stuttgart del 53.1%. La simulazione genera una quota equa di @1.88. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.96."
+            "consiglio_algoritmo": "Vittoria VfB Stuttgart",
+            "probabilita_reale": 53.8,
+            "quota_equa": 1.86,
+            "quota_valore_minima": 1.9
         },
         {
-            "id_partita": "a9c22e08b395ee5753c8a65bc0eb97cf",
-            "match": "Atlético Madrid - Manchester United",
-            "data": "2026-10-13T19:00:00Z",
-            "consiglio_algoritmo": "vittoria Atlético Madrid",
-            "quota_valore_minima": 1.97,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Atlético Madrid del 52.9%. La simulazione genera una quota equa di @1.89. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @1.97."
+            "id_partita": "9a422e1aad1053828eaf629a58d901de",
+            "lega": "soccer_germany_bundesliga",
+            "data": "17/10 15:30",
+            "match": "Werder Bremen - SC Paderborn",
+            "consiglio_algoritmo": "Vittoria Werder Bremen",
+            "probabilita_reale": 55.1,
+            "quota_equa": 1.82,
+            "quota_valore_minima": 1.86
         },
         {
-            "id_partita": "2b0a946cac613732fcbf57ce931490a1",
-            "match": "RC Lens - Sporting Lisbon",
-            "data": "2026-10-13T16:45:00Z",
-            "consiglio_algoritmo": "vittoria Sporting Lisbon",
-            "quota_valore_minima": 2.0,
-            "report_testuale": "Analisi Ibrida completata. Dopo 10.000 simulazioni Monte Carlo sul match, l'algoritmo rileva una probabilità di vittoria Sporting Lisbon del 52.0%. La simulazione genera una quota equa di @1.92. Il Cecchino ha l'ordine di piazzare la giocata solo se il mercato copre la Value Bet minima di @2.0."
+            "id_partita": "9a64448205fdc4b95f45641bb946706c",
+            "lega": "soccer_germany_bundesliga",
+            "data": "17/10 18:30",
+            "match": "Bayern Monaco - RB Leipzig",
+            "consiglio_algoritmo": "Vittoria Bayern Monaco",
+            "probabilita_reale": 78.2,
+            "quota_equa": 1.28,
+            "quota_valore_minima": 1.31
+        },
+        {
+            "id_partita": "f3034246520a2ee4ff0ac0d5074966f8",
+            "lega": "soccer_france_ligue_one",
+            "data": "17/10 17:15",
+            "match": "Strasbourg - PSG",
+            "consiglio_algoritmo": "Vittoria PSG",
+            "probabilita_reale": 67.3,
+            "quota_equa": 1.49,
+            "quota_valore_minima": 1.52
+        },
+        {
+            "id_partita": "ad25a350c89b64715e15c59cde5653d3",
+            "lega": "soccer_france_ligue_one",
+            "data": "17/10 20:45",
+            "match": "Lille - Brest",
+            "consiglio_algoritmo": "Vittoria Lille",
+            "probabilita_reale": 53.6,
+            "quota_equa": 1.87,
+            "quota_valore_minima": 1.91
+        },
+        {
+            "id_partita": "b077aa049133c0358bcd643bfee48da3",
+            "lega": "soccer_france_ligue_one",
+            "data": "17/10 20:45",
+            "match": "Troyes - RC Lens",
+            "consiglio_algoritmo": "Vittoria RC Lens",
+            "probabilita_reale": 52.1,
+            "quota_equa": 1.92,
+            "quota_valore_minima": 1.97
+        },
+        {
+            "id_partita": "629893a6ea12183c2474ac48c4fbe2ee",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "16/10 20:00",
+            "match": "Heerenveen - Excelsior",
+            "consiglio_algoritmo": "Vittoria Heerenveen",
+            "probabilita_reale": 58.0,
+            "quota_equa": 1.72,
+            "quota_valore_minima": 1.77
+        },
+        {
+            "id_partita": "81b7e4b9208cf3cf7214c9900540d0ff",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "17/10 16:30",
+            "match": "ADO Den Haag - PSV Eindhoven",
+            "consiglio_algoritmo": "Vittoria PSV Eindhoven",
+            "probabilita_reale": 74.2,
+            "quota_equa": 1.35,
+            "quota_valore_minima": 1.38
+        },
+        {
+            "id_partita": "d9b03d772e9b039441049be8b83290e6",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "17/10 20:00",
+            "match": "SC Telstar - Feyenoord",
+            "consiglio_algoritmo": "Vittoria Feyenoord",
+            "probabilita_reale": 70.8,
+            "quota_equa": 1.41,
+            "quota_valore_minima": 1.45
+        },
+        {
+            "id_partita": "fc96145ee5d186e331503870bfef8020",
+            "lega": "soccer_netherlands_eredivisie",
+            "data": "17/10 21:00",
+            "match": "Sparta Rotterdam - Willem II",
+            "consiglio_algoritmo": "Vittoria Sparta Rotterdam",
+            "probabilita_reale": 58.9,
+            "quota_equa": 1.7,
+            "quota_valore_minima": 1.74
+        },
+        {
+            "id_partita": "5d6f9accd6f79ae4216dfd29ccc342b2",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 18:45",
+            "match": "Feyenoord - Como",
+            "consiglio_algoritmo": "Vittoria Como",
+            "probabilita_reale": 48.2,
+            "quota_equa": 2.07,
+            "quota_valore_minima": 2.13
+        },
+        {
+            "id_partita": "2903ee092f7e08c549b130a3d394ac3c",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 18:45",
+            "match": "LASK - Liverpool",
+            "consiglio_algoritmo": "Vittoria Liverpool",
+            "probabilita_reale": 69.1,
+            "quota_equa": 1.45,
+            "quota_valore_minima": 1.48
+        },
+        {
+            "id_partita": "d4ef112438afa4c2cdbbfc9376a009c9",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 21:00",
+            "match": "Roma - Real Madrid",
+            "consiglio_algoritmo": "Vittoria Real Madrid",
+            "probabilita_reale": 49.4,
+            "quota_equa": 2.02,
+            "quota_valore_minima": 2.07
+        },
+        {
+            "id_partita": "3f3cb74e560dfcc3e795b667ed9ebdef",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 21:00",
+            "match": "Aston Villa - Fenerbahce",
+            "consiglio_algoritmo": "Vittoria Aston Villa",
+            "probabilita_reale": 56.8,
+            "quota_equa": 1.76,
+            "quota_valore_minima": 1.8
+        },
+        {
+            "id_partita": "5a1a6a04c5561897741105e30d5d7ec4",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 21:00",
+            "match": "Manchester City - PSG",
+            "consiglio_algoritmo": "Vittoria Manchester City",
+            "probabilita_reale": 47.2,
+            "quota_equa": 2.12,
+            "quota_valore_minima": 2.17
+        },
+        {
+            "id_partita": "4c7f87780ae5ab8bec9e83d6d6ec9909",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 21:00",
+            "match": "Betis Siviglia - Porto",
+            "consiglio_algoritmo": "Vittoria Betis Siviglia",
+            "probabilita_reale": 46.9,
+            "quota_equa": 2.13,
+            "quota_valore_minima": 2.18
+        },
+        {
+            "id_partita": "d7576351b8cb2396e32cc3de0446f3de",
+            "lega": "soccer_uefa_champs_league",
+            "data": "14/10 21:00",
+            "match": "ŠK Slovan Bratislava - VfB Stuttgart",
+            "consiglio_algoritmo": "Vittoria VfB Stuttgart",
+            "probabilita_reale": 73.9,
+            "quota_equa": 1.35,
+            "quota_valore_minima": 1.39
+        },
+        {
+            "id_partita": "431fc65e67cd737bceb5827118d3f7eb",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 18:45",
+            "match": "Salzburg - Milan",
+            "consiglio_algoritmo": "Vittoria Milan",
+            "probabilita_reale": 52.0,
+            "quota_equa": 1.92,
+            "quota_valore_minima": 1.97
+        },
+        {
+            "id_partita": "571499e2d0a5fccc92b7801aa4d6c124",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 18:45",
+            "match": "AZ Alkmaar - Hapoel Be'er Sheva",
+            "consiglio_algoritmo": "Vittoria AZ Alkmaar",
+            "probabilita_reale": 73.8,
+            "quota_equa": 1.35,
+            "quota_valore_minima": 1.39
+        },
+        {
+            "id_partita": "c3923b733e33ae8ebd1f024cd5312d1e",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 18:45",
+            "match": "Lech Poznań - Bayer Leverkusen",
+            "consiglio_algoritmo": "Vittoria Bayer Leverkusen",
+            "probabilita_reale": 57.6,
+            "quota_equa": 1.74,
+            "quota_valore_minima": 1.78
+        },
+        {
+            "id_partita": "fad99d69743794a14fe2961d8fb9e8f2",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 18:45",
+            "match": "Sparta Prague - Lillestrom",
+            "consiglio_algoritmo": "Vittoria Sparta Prague",
+            "probabilita_reale": 71.4,
+            "quota_equa": 1.4,
+            "quota_valore_minima": 1.44
+        },
+        {
+            "id_partita": "da3a8db9ad8d25b73789727f7dde009d",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 18:45",
+            "match": "Torreense - Sunderland",
+            "consiglio_algoritmo": "Vittoria Sunderland",
+            "probabilita_reale": 68.9,
+            "quota_equa": 1.45,
+            "quota_valore_minima": 1.49
+        },
+        {
+            "id_partita": "3ee605005bdc62da54d42a0ec3e1a930",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Dinamo Zagreb - Anderlecht",
+            "consiglio_algoritmo": "Vittoria Dinamo Zagreb",
+            "probabilita_reale": 47.3,
+            "quota_equa": 2.12,
+            "quota_valore_minima": 2.17
+        },
+        {
+            "id_partita": "feda75190a774fb92164059453b037be",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Benfica - Celtic",
+            "consiglio_algoritmo": "Vittoria Benfica",
+            "probabilita_reale": 76.8,
+            "quota_equa": 1.3,
+            "quota_valore_minima": 1.33
+        },
+        {
+            "id_partita": "4cfd3c3636333951706a205b96dc1db3",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "TSG Hoffenheim - Besiktas JK",
+            "consiglio_algoritmo": "Vittoria TSG Hoffenheim",
+            "probabilita_reale": 48.7,
+            "quota_equa": 2.05,
+            "quota_valore_minima": 2.11
+        },
+        {
+            "id_partita": "0def5b7ac0c0a816aa080774d7082c9b",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Bournemouth - SK Sturm Graz",
+            "consiglio_algoritmo": "Vittoria Bournemouth",
+            "probabilita_reale": 80.2,
+            "quota_equa": 1.25,
+            "quota_valore_minima": 1.28
+        },
+        {
+            "id_partita": "b03dd3e42a0894b49f11ac599d2eb3b1",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Jagiellonia Białystok - FC Ararat-Armenia",
+            "consiglio_algoritmo": "Vittoria Jagiellonia Białystok",
+            "probabilita_reale": 68.7,
+            "quota_equa": 1.46,
+            "quota_valore_minima": 1.49
+        },
+        {
+            "id_partita": "3d74f2cf08612874adfb17130fd73f25",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Ferencváros TC - Viktoria Plzeň",
+            "consiglio_algoritmo": "Vittoria Ferencváros TC",
+            "probabilita_reale": 49.2,
+            "quota_equa": 2.03,
+            "quota_valore_minima": 2.09
+        },
+        {
+            "id_partita": "3957ec8d52653fa1c852825bea985fb7",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "NEC Nijmegen - PFC Levski Sofia",
+            "consiglio_algoritmo": "Vittoria NEC Nijmegen",
+            "probabilita_reale": 53.8,
+            "quota_equa": 1.86,
+            "quota_valore_minima": 1.91
+        },
+        {
+            "id_partita": "9b2bf9bed21283dcad774dd5be7ba1da",
+            "lega": "soccer_uefa_europa_league",
+            "data": "15/10 21:00",
+            "match": "Rennes - OFI Crete",
+            "consiglio_algoritmo": "Vittoria Rennes",
+            "probabilita_reale": 77.3,
+            "quota_equa": 1.29,
+            "quota_valore_minima": 1.33
         }
     ]
 }
