@@ -2571,72 +2571,6 @@
             ]
         },
         {
-            "id": "40179436",
-            "modello": "alpha",
-            "data_creazione": "15/10/2026",
-            "importo": 10.0,
-            "quota_totale": 4.9,
-            "ritorno_potenziale": 49.0,
-            "stato_schedina": "in attesa",
-            "partite": [
-                {
-                    "id_partita": "7d3160040958fe21778fd5ee485666c3",
-                    "data": "16/10 20:45",
-                    "squadra_casa": "Frosinone",
-                    "squadra_trasferta": "Sassuolo",
-                    "pronostico": "Over 2.5 Gol",
-                    "quota": 1.51,
-                    "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
-                    "data": "17/10 20:45",
-                    "squadra_casa": "Roma",
-                    "squadra_trasferta": "Genoa",
-                    "pronostico": "Vittoria Roma",
-                    "quota": 1.5,
-                    "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "846e496fc232b2fc20214754836727d0",
-                    "data": "17/10 18:30",
-                    "squadra_casa": "Real Betis",
-                    "squadra_trasferta": "Barcelona",
-                    "pronostico": "Over 2.5 Gol",
-                    "quota": 1.25,
-                    "lega": "soccer_spain_la_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "d9b03d772e9b039441049be8b83290e6",
-                    "data": "17/10 20:00",
-                    "squadra_casa": "SC Telstar",
-                    "squadra_trasferta": "Feyenoord",
-                    "pronostico": "Over 2.5 Gol",
-                    "quota": 1.31,
-                    "lega": "soccer_netherlands_eredivisie",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "feda75190a774fb92164059453b037be",
-                    "data": "15/10 21:00",
-                    "squadra_casa": "Benfica",
-                    "squadra_trasferta": "Celtic",
-                    "pronostico": "Over 2.5 Gol",
-                    "quota": 1.32,
-                    "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                }
-            ]
-        },
-        {
             "id": "5715531b",
             "modello": "beta",
             "data_creazione": "15/10/2026",
@@ -2712,6 +2646,99 @@
                     "quota": 1.77,
                     "bookmaker": "Betfair",
                     "score": 0.02,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "85520841",
+            "modello": "omega",
+            "data_creazione": "15/10/2026",
+            "importo": 11.3,
+            "quota_totale": 3.65,
+            "ritorno_potenziale": 41.25,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "0531b53481eb5516d08217895a651bd3",
+                    "data": "17/10 15:00",
+                    "squadra_casa": "Carrarese",
+                    "squadra_trasferta": "Modena",
+                    "pronostico": "Vittoria Modena",
+                    "quota": 1.92,
+                    "bookmaker": "Betfair",
+                    "score": 0.02,
+                    "lega": "soccer_italy_serie_b",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "7a8f8a079740c8d4b39c995cdd304e0c",
+                    "data": "17/10 16:00",
+                    "squadra_casa": "Norwich City",
+                    "squadra_trasferta": "Portsmouth",
+                    "pronostico": "Vittoria Norwich City",
+                    "quota": 1.9,
+                    "bookmaker": "Betfair",
+                    "score": 0.04,
+                    "lega": "soccer_efl_champ",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "7bcb0bab",
+            "modello": "alpha",
+            "data_creazione": "15/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.21,
+            "ritorno_potenziale": 62.1,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "7d3160040958fe21778fd5ee485666c3",
+                    "data": "16/10 20:45",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.44,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+                    "data": "17/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.51,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
+                    "data": "18/10 15:00",
+                    "squadra_casa": "Fiorentina",
+                    "squadra_trasferta": "Como",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.7,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.68,
                     "lega": "soccer_italy_serie_a",
                     "stato": "in attesa",
                     "risultato_reale": ""
