@@ -71,12 +71,11 @@ def salva_database_principale(db):
 def esegui_alpha():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-     data_oggi_str = oggi.strftime("%d/%m/%Y")
+    data_oggi_str = oggi.strftime("%d/%m/%Y")
     limite_temporale = oggi + timedelta(days=4)
     
     db_principale = carica_database_principale()
     
-    # Rimuove eventuali schedine Alpha di oggi rimaste "fantasma" (senza invio Telegram) per forzare l'invio pulito
     db_principale['schedine'] = [
         s for s in db_principale['schedine'] 
         if not (s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str and not s.get('telegram_inviato'))
@@ -188,7 +187,6 @@ def esegui_alpha():
     partite_pulite = [{k: v for k, v in c.items() if k != 'score'} for c in selezionati]
     stake = 10.0
 
-    # Formattazione HTML blindata (non salta mai per apostrofi o caratteri speciali)
     msg = "<b>🚀 MODELLO ALPHA | QUOTA 5+</b>\n\n"
     msg += f"📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n"
     msg += f"💰 <b>Stake</b>: {stake}€ (Vincita pot.: {round(stake * quota_totale, 2)}€)\n\n"
