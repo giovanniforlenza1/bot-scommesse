@@ -2656,6 +2656,30 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "5257cd29",
+            "modello": "omega",
+            "data_creazione": "15/10/2026",
+            "importo": 13.6,
+            "quota_totale": 2.18,
+            "ritorno_potenziale": 29.65,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "629c785b753d46923b73fe4de3122507",
+                    "data": "17/10 15:00",
+                    "squadra_casa": "Benevento",
+                    "squadra_trasferta": "Vicenza",
+                    "pronostico": "Vittoria Benevento",
+                    "quota": 2.18,
+                    "bookmaker": "Betfair",
+                    "score": 0.08,
+                    "lega": "soccer_italy_serie_b",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
