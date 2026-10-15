@@ -2545,6 +2545,117 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "7c83f652",
+            "modello": "omega",
+            "data_creazione": "15/10/2026",
+            "importo": 14.5,
+            "quota_totale": 2.04,
+            "ritorno_potenziale": 29.58,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "d6b5afb499872d7aec7a6d23e8d35e81",
+                    "data": "18/10 19:30",
+                    "squadra_casa": "Sampdoria",
+                    "squadra_trasferta": "Arezzo",
+                    "pronostico": "Vittoria Sampdoria",
+                    "quota": 2.04,
+                    "bookmaker": "Betfair",
+                    "score": 0.1,
+                    "lega": "soccer_italy_serie_b",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "40179436",
+            "modello": "alpha",
+            "data_creazione": "15/10/2026",
+            "importo": 10.0,
+            "quota_totale": 4.9,
+            "ritorno_potenziale": 49.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "7d3160040958fe21778fd5ee485666c3",
+                    "data": "16/10 20:45",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.51,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+                    "data": "17/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.5,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "846e496fc232b2fc20214754836727d0",
+                    "data": "17/10 18:30",
+                    "squadra_casa": "Real Betis",
+                    "squadra_trasferta": "Barcelona",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.25,
+                    "lega": "soccer_spain_la_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "d9b03d772e9b039441049be8b83290e6",
+                    "data": "17/10 20:00",
+                    "squadra_casa": "SC Telstar",
+                    "squadra_trasferta": "Feyenoord",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.31,
+                    "lega": "soccer_netherlands_eredivisie",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "feda75190a774fb92164059453b037be",
+                    "data": "15/10 21:00",
+                    "squadra_casa": "Benfica",
+                    "squadra_trasferta": "Celtic",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.32,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "5715531b",
+            "modello": "beta",
+            "data_creazione": "15/10/2026",
+            "importo": 17.9,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 32.22,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+                    "data": "17/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
