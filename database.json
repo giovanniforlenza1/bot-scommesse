@@ -2680,6 +2680,43 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "4c4a02c6",
+            "modello": "omega",
+            "data_creazione": "15/10/2026",
+            "importo": 11.3,
+            "quota_totale": 3.52,
+            "ritorno_potenziale": 39.78,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "dda51c46c51b80b6bd863c7314c1e12e",
+                    "data": "17/10 15:00",
+                    "squadra_casa": "Ascoli",
+                    "squadra_trasferta": "Empoli",
+                    "pronostico": "Vittoria Ascoli",
+                    "quota": 1.99,
+                    "bookmaker": "Betfair",
+                    "score": 0.04,
+                    "lega": "soccer_italy_serie_b",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4c4026e2782f09d6f0ff2bde2a390513",
+                    "data": "18/10 20:45",
+                    "squadra_casa": "Juventus",
+                    "squadra_trasferta": "Lazio",
+                    "pronostico": "Vittoria Juventus",
+                    "quota": 1.77,
+                    "bookmaker": "Betfair",
+                    "score": 0.02,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
