@@ -1146,49 +1146,6 @@
             ]
         },
         {
-            "id": "9a3edea7",
-            "modello": "alpha",
-            "data_creazione": "07/10/2026",
-            "importo": 10.0,
-            "quota_totale": 7.85,
-            "ritorno_potenziale": 78.5,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "squadra_casa": "Napoli",
-                    "squadra_trasferta": "Frosinone",
-                    "pronostico": "vittoria Napoli",
-                    "quota": 1.44,
-                    "stato": "vinta",
-                    "risultato_reale": "3-0"
-                },
-                {
-                    "squadra_casa": "Lazio",
-                    "squadra_trasferta": "Monza",
-                    "pronostico": "vittoria Lazio",
-                    "quota": 1.57,
-                    "stato": "vinta",
-                    "risultato_reale": "3-1"
-                },
-                {
-                    "squadra_casa": "Sassuolo",
-                    "squadra_trasferta": "AC Milan",
-                    "pronostico": "vittoria AC Milan",
-                    "quota": 1.8,
-                    "stato": "persa",
-                    "risultato_reale": "1-1"
-                },
-                {
-                    "squadra_casa": "Lecce",
-                    "squadra_trasferta": "Bologna",
-                    "pronostico": "vittoria Bologna",
-                    "quota": 1.93,
-                    "stato": "vinta",
-                    "risultato_reale": "1-2"
-                }
-            ]
-        },
-        {
             "id": "3818e16e",
             "modello": "alpha",
             "data_creazione": "07/10/2026",
