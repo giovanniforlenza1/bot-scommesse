@@ -68,58 +68,43 @@ def esegui_richiesta_odds(url_template):
         except: pass
     return None
 
-def estrai_statistiche_dettagliate_espn(lega, event_id, comp_fallback):
-    """Entra nel referto ufficiale (/summary) di ESPN per leggere il numero esatto di Cartellini e Corner"""
+def leggi_statistiche_ufficiali(lega, event_id):
+    """Legge SOLO la tabella Statistiche di fine partita: Gialli + Rossi e Calci d'Angolo"""
     tot_corners = 0
-    tot_cards_stats = 0
-    tot_cards_details = 0
+    tot_cards = 0
 
     url_summary = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/summary?event={event_id}"
     try:
         res = requests.get(url_summary, timeout=8)
         if res.status_code == 200:
             data = res.json()
-            # 1. Legge dal Boxscore ufficiale della partita
+            # Scorre le due squadre (Casa e Trasferta) nella tabella Statistiche (boxscore)
             for team_box in data.get('boxscore', {}).get('teams', []):
+                gialli = 0
+                rossi = 0
+                angoli = 0
                 for stat in team_box.get('statistics', []):
-                    s_name = stat.get('name', '')
+                    nome_stat = stat.get('name', '')
                     val_str = str(stat.get('displayValue', '0')).strip()
                     val = int(float(val_str)) if val_str.replace('.', '', 1).isdigit() else 0
-                    if s_name in ['wonCorners', 'corners', 'cornerKicks']:
-                        tot_corners += val
-                    elif s_name in ['yellowCards', 'redCards']:
-                        tot_cards_stats += val
-
-            # 2. Conta anche i singoli cartellini nel tabellino eventi (fallback infallibile)
-            key_events = data.get('keyEvents', []) or data.get('header', {}).get('competitions', [{}])[0].get('details', [])
-            for ev in key_events:
-                tipo_testo = str(ev.get('type', {}).get('text', '')).lower()
-                if 'yellow' in tipo_testo or 'red' in tipo_testo or ev.get('yellowCard') or ev.get('redCard'):
-                    tot_cards_details += 1
+                    
+                    if nome_stat == 'wonCorners':
+                        angoli = val
+                    elif nome_stat == 'yellowCards':
+                        gialli = val
+                    elif nome_stat == 'redCards':
+                        rossi = val
+                        
+                tot_corners += angoli
+                tot_cards += (gialli + rossi)
+                
+            return tot_corners, tot_cards
     except:
         pass
-
-    # 3. Se per qualche motivo summary non risponde, usa i dati base dello scoreboard
-    if tot_corners == 0 and tot_cards_stats == 0:
-        for t in comp_fallback.get('competitors', []):
-            for s in t.get('statistics', []):
-                s_name = s.get('name', '')
-                val_str = str(s.get('displayValue', '0')).strip()
-                val = int(float(val_str)) if val_str.replace('.', '', 1).isdigit() else 0
-                if s_name in ['wonCorners', 'corners']:
-                    tot_corners += val
-                elif s_name in ['yellowCards', 'redCards']:
-                    tot_cards_stats += val
-
-    for d in comp_fallback.get('details', []):
-        if d.get('yellowCard') or d.get('redCard'):
-            tot_cards_details += 1
-
-    final_cards = max(tot_cards_stats, tot_cards_details)
-    return tot_corners, final_cards
+    return None, None
 
 def scarica_statistiche_espn():
-    """Scansiona gli ultimi 5 giorni su ESPN e raccoglie i dati reali del Modello Beta"""
+    """Raccoglie le statistiche post-partita degli ultimi 5 giorni"""
     stats_partite = []
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -134,6 +119,7 @@ def scarica_statistiche_espn():
                 data = res.json()
                 for ev in data.get('events', []):
                     comp = ev.get('competitions', [{}])[0]
+                    # Verifica che la partita sia terminata (completed = True)
                     status = comp.get('status', {}).get('type', {}).get('completed', False)
                     if not status: continue
 
@@ -147,7 +133,9 @@ def scarica_statistiche_espn():
                         else: trasf_nome = t_name
 
                     event_id = ev.get('id')
-                    tot_corners, tot_cards = estrai_statistiche_dettagliate_espn(lega, event_id, comp)
+                    tot_corners, tot_cards = leggi_statistiche_ufficiali(lega, event_id)
+                    if tot_corners is None:
+                        continue
 
                     stats_partite.append({
                         'casa_norm': normalizza_per_confronto(casa_nome),
@@ -178,11 +166,12 @@ def aggiorna_database():
                     elif s['name'] == m['away_team']: g_trasf = int(s['score'])
                 risultati_gol[m['id']] = (g_casa, g_trasf, traduci_squadra(m['home_team']), traduci_squadra(m['away_team']))
 
-    # Controlla se ci sono schedine Beta in attesa OPPURE schedine Beta segnate per errore con "0 Cartellini" / "0 Angoli"
+    # Controlla schedine Beta in attesa o quelle con il conteggio errato da ricalcolare ("0 " o "6 Cartellini")
+    valori_da_ricalcolare = ['0 Cartellini', '0 Angoli', '6 Cartellini']
     ha_beta_da_controllare = any(
         s.get('modello') == 'beta' and (
             s.get('stato_schedina') == 'in attesa' or 
-            any(p.get('risultato_reale') in ['0 Cartellini', '0 Angoli'] for p in s.get('partite', []))
+            any(p.get('risultato_reale') in valori_da_ricalcolare for p in s.get('partite', []))
         )
         for s in db.get('schedine', [])
     )
@@ -191,8 +180,7 @@ def aggiorna_database():
     modifiche_effettuate = False
 
     for schedina in db.get('schedine', []):
-        # Riapre temporaneamente la schedina se aveva il bug dello "0 Cartellini"
-        riaperta_per_fix = any(p.get('risultato_reale') in ['0 Cartellini', '0 Angoli'] for p in schedina.get('partite', []))
+        riaperta_per_fix = any(p.get('risultato_reale') in valori_da_ricalcolare for p in schedina.get('partite', []))
         
         if schedina.get('stato_schedina') != 'in attesa' and not riaperta_per_fix:
             continue
@@ -201,19 +189,17 @@ def aggiorna_database():
         schedina_persa = False
 
         for p in schedina.get('partite', []):
-            # Se la partita è già chiusa (e non ha il bug dello 0), mantieni il suo stato
-            if p.get('stato') != 'in attesa' and p.get('risultato_reale') not in ['0 Cartellini', '0 Angoli']:
+            if p.get('stato') != 'in attesa' and p.get('risultato_reale') not in valori_da_ricalcolare:
                 if p.get('stato') == 'persa': schedina_persa = True
                 continue
 
             pron = p.get('pronostico', '').lower()
 
-            # --- VERIFICA MODELLO BETA (ANGOLI E CARTELLINI) ---
+            # --- VERIFICA MODELLO BETA (SOMMA GIALLI + ROSSI E ANGOLI DALLE STATISTICHE) ---
             if 'angol' in pron or 'corner' in pron or 'cartellin' in pron:
                 c_norm = normalizza_per_confronto(p['squadra_casa'])
                 t_norm = normalizza_per_confronto(p['squadra_trasferta'])
                 
-                # Accoppiamento flessibile (riconosce il match se combacia casa+trasferta)
                 match_stat = next((
                     x for x in stats_espn 
                     if (c_norm in x['casa_norm'] or x['casa_norm'] in c_norm) and 
@@ -275,7 +261,7 @@ def aggiorna_database():
     if modifiche_effettuate:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database risultati aggiornato e corretto con successo!")
+        print("Database risultati aggiornato con le sole statistiche ufficiali!")
     else:
         print("Nessun nuovo risultato da aggiornare.")
 
