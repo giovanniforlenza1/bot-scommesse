@@ -2744,6 +2744,120 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "fb6b9e4d",
+            "modello": "omega",
+            "data_creazione": "16/10/2026",
+            "importo": 10.7,
+            "quota_totale": 3.87,
+            "ritorno_potenziale": 41.41,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "530a906583ad9f1e013f382e2fe19c5e",
+                    "data": "17/10 16:00",
+                    "squadra_casa": "Bristol City",
+                    "squadra_trasferta": "Sheffield United",
+                    "pronostico": "Vittoria Bristol City",
+                    "quota": 2.16,
+                    "bookmaker": "Betfair",
+                    "score": 0.02,
+                    "lega": "soccer_efl_champ",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "33ad80e4f2bfa519396049639fd4d31a",
+                    "data": "17/10 16:00",
+                    "squadra_casa": "Wrexham AFC",
+                    "squadra_trasferta": "Preston North End",
+                    "pronostico": "Vittoria Wrexham AFC",
+                    "quota": 1.79,
+                    "bookmaker": "Betfair",
+                    "score": 0.01,
+                    "lega": "soccer_efl_champ",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "83fd279d",
+            "modello": "alpha",
+            "data_creazione": "16/10/2026",
+            "importo": 10.0,
+            "quota_totale": 6.47,
+            "ritorno_potenziale": 64.7,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "7d3160040958fe21778fd5ee485666c3",
+                    "data": "16/10 20:45",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.44,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+                    "data": "17/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.61,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
+                    "data": "18/10 15:00",
+                    "squadra_casa": "Fiorentina",
+                    "squadra_trasferta": "Como",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.67,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.67,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "20aeca1a",
+            "modello": "beta",
+            "data_creazione": "16/10/2026",
+            "importo": 17.4,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 31.32,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "aef660734585649651415961a9d177c6",
+                    "data": "17/10 16:15",
+                    "squadra_casa": "Villarreal",
+                    "squadra_trasferta": "Elche CF",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
