@@ -2114,15 +2114,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "squadra_casa": "Salzburg",
                     "squadra_trasferta": "AC Milan",
                     "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0 Cartellini"
                 }
             ]
         },
@@ -2327,15 +2327,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Aston Villa",
                     "squadra_trasferta": "Fenerbahce",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "16 Angoli"
                 }
             ]
         },
