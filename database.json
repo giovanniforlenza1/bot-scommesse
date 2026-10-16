@@ -2108,99 +2108,6 @@
             ]
         },
         {
-            "id": "13061247",
-            "modello": "alpha",
-            "data_creazione": "11/10/2026",
-            "importo": 10.0,
-            "quota_totale": 6.04,
-            "ritorno_potenziale": 60.4,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "squadra_casa": "Atalanta BC",
-                    "squadra_trasferta": "Venezia",
-                    "pronostico": "vittoria Atalanta BC",
-                    "quota": 1.56,
-                    "stato": "vinta",
-                    "risultato_reale": "3-1"
-                },
-                {
-                    "squadra_casa": "Cagliari",
-                    "squadra_trasferta": "Juventus",
-                    "pronostico": "vittoria Juventus",
-                    "quota": 1.58,
-                    "stato": "persa",
-                    "risultato_reale": "1-1"
-                },
-                {
-                    "squadra_casa": "Sassuolo",
-                    "squadra_trasferta": "Milan",
-                    "pronostico": "vittoria Milan",
-                    "quota": 1.93,
-                    "stato": "persa",
-                    "risultato_reale": "1-1"
-                },
-                {
-                    "squadra_casa": "Inter",
-                    "squadra_trasferta": "Club Brugge",
-                    "pronostico": "vittoria Inter",
-                    "quota": 1.27,
-                    "stato": "persa",
-                    "risultato_reale": "3-4"
-                }
-            ]
-        },
-        {
-            "id": "d077a6f8",
-            "modello": "omega",
-            "data_creazione": "11/10/2026",
-            "importo": 10.0,
-            "quota_totale": 5.81,
-            "ritorno_potenziale": 58.1,
-            "stato_schedina": "persa",
-            "partite": [
-                {
-                    "id_partita": "1cf64166dda1e0da8b325161deb39662",
-                    "data": "11/10 18:00",
-                    "squadra_casa": "Sassuolo",
-                    "squadra_trasferta": "Milan",
-                    "pronostico": "vittoria Milan",
-                    "quota": 2.16,
-                    "bookmaker": "Betfair",
-                    "score": 0.18000000000000016,
-                    "lega": "soccer_italy_serie_a",
-                    "stato": "persa",
-                    "risultato_reale": "1-1"
-                },
-                {
-                    "id_partita": "407f7d03157d1dfad384876e6a6bc910",
-                    "data": "11/10 20:45",
-                    "squadra_casa": "Cagliari",
-                    "squadra_trasferta": "Juventus",
-                    "pronostico": "vittoria Juventus",
-                    "quota": 1.66,
-                    "bookmaker": "Betfair",
-                    "score": 0.07999999999999985,
-                    "lega": "soccer_italy_serie_a",
-                    "stato": "persa",
-                    "risultato_reale": "1-1"
-                },
-                {
-                    "id_partita": "0f2e7ff90b994f31d5cd48a9680943e1",
-                    "data": "12/10 18:30",
-                    "squadra_casa": "Atalanta BC",
-                    "squadra_trasferta": "Venezia",
-                    "pronostico": "vittoria Atalanta BC",
-                    "quota": 1.62,
-                    "bookmaker": "Betfair",
-                    "score": 0.020000000000000018,
-                    "lega": "soccer_italy_serie_a",
-                    "stato": "vinta",
-                    "risultato_reale": "3-1"
-                }
-            ]
-        },
-        {
             "id": "b5f47937",
             "modello": "beta",
             "data_creazione": "12/10/2026",
@@ -2226,15 +2133,15 @@
             "importo": 10.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 15.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "TSG Hoffenheim",
                     "squadra_trasferta": "Besiktas JK",
                     "pronostico": "Over 3.5 Cartellini Gialli/Rossi",
                     "quota": 1.57,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6"
                 }
             ]
         },
@@ -2245,15 +2152,15 @@
             "importo": 10.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 15.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Aston Villa",
                     "squadra_trasferta": "Fenerbahce",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.57,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "16"
                 }
             ]
         },
