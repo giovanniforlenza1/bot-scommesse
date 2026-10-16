@@ -1841,7 +1841,7 @@
             "importo": 8.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 14.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "7d3160040958fe21778fd5ee485666c3",
@@ -1850,8 +1850,8 @@
                     "squadra_trasferta": "Sassuolo",
                     "pronostico": "Over 4.5 Cartellini Totali",
                     "quota": 1.75,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1 Cartellini"
                 }
             ]
         },
