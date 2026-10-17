@@ -3,38 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBR | Smart Betting Routing - Quantitative Sports Trading</title>
+    <title>SBR | Smart Betting Routing</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0a172a;
-            --bg-card: #102542;
-            --bg-card-hover: #163054;
+            --bg-page: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #F1F5F9;
+            --primary: #102542;
             --accent: #F87060;
-            --accent-glow: rgba(248, 112, 96, 0.25);
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --win: #10b981;
-            --loss: #ef4444;
-            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #102542;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --win: #16A34A;
+            --win-bg: #F0FDF4;
+            --loss: #DC2626;
+            --loss-bg: #FEF2F2;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER & NAVBAR */
+        /* HEADER MINIMALE IN TINTA UNITA */
         header {
-            background: rgba(16, 37, 66, 0.85);
-            backdrop-filter: blur(12px);
+            background-color: var(--bg-card);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
@@ -42,7 +45,7 @@
             padding: 1rem 1.5rem;
         }
         .nav-container {
-            max-width: 1200px;
+            max-width: 1140px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -54,46 +57,48 @@
             gap: 12px;
             cursor: pointer;
             text-decoration: none;
-            color: var(--text-main);
+            color: var(--primary);
         }
         .brand img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            border: 1px solid var(--accent);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
         .brand-title {
             font-weight: 800;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             letter-spacing: -0.5px;
+            color: var(--primary);
         }
         .brand-title span { color: var(--accent); }
+        
         .tg-btn {
-            background: var(--accent);
-            color: #fff;
+            background-color: var(--primary);
+            color: #FFFFFF;
             text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            padding: 0.6rem 1.15rem;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            box-shadow: 0 4px 14px var(--accent-glow);
+            font-size: 0.88rem;
+            transition: background-color 0.15s;
         }
-        .tg-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .tg-btn:hover { background-color: var(--accent); }
 
         .container {
-            max-width: 1200px;
+            max-width: 1140px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 4rem;
+            padding: 2.5rem 1.5rem 4rem;
         }
 
-        /* BANNER OPERAZIONI IN CORSO (FOMO MARKETING) */
-        .live-fomo-banner {
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.12), rgba(16, 37, 66, 0.9));
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            border-radius: 12px;
-            padding: 1rem 1.4rem;
-            margin-bottom: 2rem;
+        /* BANNER OPERAZIONI IN CORSO (TINTA UNITA SOBRIA) */
+        .live-banner {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--win);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 2.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -103,118 +108,115 @@
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 0.92rem;
             font-weight: 600;
+            color: var(--primary);
         }
-        .pulse-dot {
-            width: 12px;
-            height: 12px;
+        .status-dot {
+            width: 10px;
+            height: 10px;
             background-color: var(--win);
             border-radius: 50%;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 1.8s infinite;
-        }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
-        /* HERO SECTION */
+        /* INTESTAZIONE HOME */
         .hero {
-            text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.2rem;
         }
         .hero h1 {
-            font-size: 2.3rem;
+            font-size: 1.9rem;
             font-weight: 800;
-            margin-bottom: 0.6rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
         }
         .hero p {
             color: var(--text-muted);
-            max-width: 680px;
-            margin: 0 auto;
-            font-size: 1.05rem;
+            font-size: 1rem;
+            max-width: 720px;
         }
 
-        /* GRIGLIA 3 PULSANTI / CARD MODELLI NELLA HOME */
+        /* GRIGLIA 3 MODELLI NELLA HOME */
         .models-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
         }
         .model-card {
-            background: var(--bg-card);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.8rem;
+            border-radius: 10px;
+            padding: 1.75rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.25s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: border-color 0.15s;
         }
         .model-card:hover {
-            transform: translateY(-5px);
-            background: var(--bg-card-hover);
-            border-color: var(--accent);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            border-color: var(--primary);
         }
         .model-tag {
             display: inline-block;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             text-transform: uppercase;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            background: rgba(248, 112, 96, 0.15);
-            color: var(--accent);
-            margin-bottom: 0.8rem;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            background-color: var(--bg-subtle);
+            color: var(--primary);
+            margin-bottom: 0.9rem;
         }
         .model-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.6rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
         }
         .model-desc {
             color: var(--text-muted);
-            font-size: 0.92rem;
-            margin-bottom: 1.4rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
         }
         .mini-kpis {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            padding-top: 1rem;
+            gap: 1rem;
+            padding: 1rem 0;
             border-top: 1px solid var(--border);
-            margin-bottom: 1.4rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
         }
         .mini-kpi span {
             display: block;
             font-size: 0.75rem;
             color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
         }
         .mini-kpi strong {
             font-size: 1.15rem;
             font-weight: 700;
+            color: var(--primary);
         }
         .open-page-btn {
             width: 100%;
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
+            background-color: var(--bg-subtle);
+            color: var(--primary);
             border: 1px solid var(--border);
-            padding: 0.8rem;
-            border-radius: 10px;
+            padding: 0.75rem;
+            border-radius: 6px;
             font-weight: 600;
+            font-size: 0.9rem;
             text-align: center;
-            transition: all 0.2s;
+            transition: all 0.15s;
         }
         .model-card:hover .open-page-btn {
-            background: var(--accent);
-            border-color: var(--accent);
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
         }
 
         /* PAGINA DEDICATA AL SINGOLO MODELLO */
@@ -224,135 +226,158 @@
             margin-bottom: 1.5rem;
         }
         .back-btn {
-            background: var(--bg-card);
-            color: var(--text-main);
+            background-color: var(--bg-card);
+            color: var(--primary);
             border: 1px solid var(--border);
-            padding: 0.65rem 1.2rem;
-            border-radius: 10px;
+            padding: 0.6rem 1.1rem;
+            border-radius: 6px;
             font-weight: 600;
+            font-size: 0.88rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
+            gap: 6px;
         }
-        .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .back-btn:hover {
+            background-color: var(--bg-subtle);
+        }
 
         .model-header-box {
-            background: var(--bg-card);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 10px;
             padding: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
         }
         .specs-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
         }
         .spec-item {
-            background: rgba(10, 23, 42, 0.55);
-            padding: 1rem;
-            border-radius: 10px;
-            border-left: 3px solid var(--accent);
+            background-color: var(--bg-subtle);
+            padding: 1.1rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
         }
-        .spec-item h4 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #fff; }
-        .spec-item p { font-size: 0.85rem; color: var(--text-muted); }
+        .spec-item h4 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+        .spec-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
         /* 4 KPI CARDS */
         .kpi-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
         }
         .kpi-box {
-            background: var(--bg-card);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.4rem;
-            text-align: center;
+            border-radius: 10px;
+            padding: 1.35rem;
         }
         .kpi-box span {
-            font-size: 0.82rem;
+            font-size: 0.78rem;
+            font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .kpi-box h3 {
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 800;
-            margin-top: 0.4rem;
+            margin-top: 0.35rem;
+            color: var(--primary);
         }
 
-        /* CHART BOX */
+        /* GRAFICO EQUITY LINE */
         .chart-box {
-            background: var(--bg-card);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
         }
         .chart-box h3 {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 1rem;
             color: var(--text-muted);
         }
 
         /* STORICO SCHEDINE */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
         .ticket-card {
-            background: var(--bg-card);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.4rem;
-            margin-bottom: 1.2rem;
+            border-radius: 10px;
+            padding: 1.35rem;
+            margin-bottom: 1rem;
         }
         .ticket-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 0.9rem;
-            margin-bottom: 0.9rem;
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
             border-bottom: 1px solid var(--border);
             flex-wrap: wrap;
             gap: 10px;
+            font-size: 0.9rem;
         }
         .badge-status {
-            padding: 0.3rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.78rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
         }
-        .badge-vinta { background: rgba(16, 185, 129, 0.18); color: var(--win); border: 1px solid var(--win); }
-        .badge-persa { background: rgba(239, 68, 68, 0.18); color: var(--loss); border: 1px solid var(--loss); }
+        .badge-vinta { background-color: var(--win-bg); color: var(--win); border: 1px solid #BBF7D0; }
+        .badge-persa { background-color: var(--loss-bg); color: var(--loss); border: 1px solid #FECACA; }
 
         .match-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--bg-subtle);
             flex-wrap: wrap;
             gap: 10px;
+            font-size: 0.92rem;
         }
-        .match-row:last-child { border-bottom: none; }
+        .match-row:last-child { border-bottom: none; padding-bottom: 0; }
+        
         .team-shield {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 26px;
             height: 26px;
-            border-radius: 50%;
-            background: rgba(248, 112, 96, 0.2);
-            color: var(--accent);
+            border-radius: 4px;
+            background-color: var(--bg-subtle);
+            color: var(--primary);
             font-size: 0.7rem;
-            font-weight: 800;
-            margin-right: 6px;
-            border: 1px solid rgba(248, 112, 96, 0.4);
+            font-weight: 700;
+            margin-right: 8px;
+            border: 1px solid var(--border);
         }
         .match-meta {
             display: flex;
@@ -360,23 +385,30 @@
             gap: 8px;
             flex-wrap: wrap;
         }
+        .pick-label {
+            color: var(--primary);
+            font-weight: 700;
+        }
         .book-pill {
-            background: rgba(255, 255, 255, 0.07);
+            background-color: var(--bg-subtle);
+            border: 1px solid var(--border);
             padding: 0.2rem 0.55rem;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 0.75rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
         .clv-pill {
-            background: rgba(16, 185, 129, 0.15);
+            background-color: var(--win-bg);
             color: var(--win);
+            border: 1px solid #BBF7D0;
             padding: 0.2rem 0.55rem;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 700;
         }
-        .text-win { color: var(--win); }
-        .text-loss { color: var(--loss); }
+        .text-win { color: var(--win) !important; }
+        .text-loss { color: var(--loss) !important; }
     </style>
 </head>
 <body>
@@ -384,7 +416,7 @@
 <header>
     <div class="nav-container">
         <a class="brand" onclick="mostraHome()">
-            <img src="favicon.png" alt="SBR Logo" onerror="this.style.display='none'">
+            <img src="favicon.png" alt="SBR" onerror="this.style.display='none'">
             <div class="brand-title">SBR <span>ROUTING</span></div>
         </a>
         <a href="https://t.me/+nyQkDOrFWrkyNGI8" target="_blank" class="tg-btn">Canale Telegram</a>
@@ -393,83 +425,83 @@
 
 <div class="container">
 
-    <!-- BANNER FOMO OPERAZIONI IN CORSO (NASCOSTE) -->
-    <div id="liveBanner" class="live-fomo-banner hidden">
+    <!-- BANNER OPERAZIONI IN CORSO (NASCOSTE PER PROTEZIONE QUOTE) -->
+    <div id="liveBanner" class="live-banner hidden">
         <div class="live-indicator">
-            <div class="pulse-dot"></div>
-            <span id="liveBannerText">Operazioni Quantitative Attive a Mercato (Dettagli criptati fino al termine del match)</span>
+            <div class="status-dot"></div>
+            <span id="liveBannerText">Operazioni Quantitative a Mercato</span>
         </div>
-        <span style="font-size:0.82rem; color:var(--text-muted);">Protezione anti-crollo quote attiva</span>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">Dettagli oscurati fino al termine delle partite</span>
     </div>
 
     <!-- VISTA 1: HOME PAGE -->
     <div id="homeView">
         <div class="hero">
-            <h1>Ecosistema di Trading Sportivo Quantitativo</h1>
-            <p>Seleziona uno dei tre modelli matematici per esplorare l'architettura predittiva, la curva di crescita (Equity Line) e lo storico certificato delle operazioni concluse.</p>
+            <h1>SBR — Smart Betting Routing</h1>
+            <p>Architettura quantitativa per il trading sportivo. Seleziona un modello per consultare le specifiche matematiche, le metriche di rendimento e lo storico certificato delle operazioni concluse.</p>
         </div>
 
         <div class="models-grid">
             <!-- CARD OMEGA -->
             <div class="model-card" onclick="apriPaginaModello('omega')">
                 <div>
-                    <span class="model-tag">Quantitativo • VIP</span>
+                    <span class="model-tag">Quantitativo</span>
                     <h2>Modello Omega</h2>
-                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita 10.000 volte per estrarre valore assoluto.</p>
+                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-omega">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-omega">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Apri Sala Operativa Omega →</div>
+                    <div class="open-page-btn">Consultazione Modello Omega →</div>
                 </div>
             </div>
 
             <!-- CARD ALPHA -->
             <div class="model-card" onclick="apriPaginaModello('alpha')">
                 <div>
-                    <span class="model-tag">Alto Rendimento • Quota 5+</span>
+                    <span class="model-tag">Alto Rendimento</span>
                     <h2>Modello Alpha</h2>
-                    <p class="model-desc">L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili e mercati scudo (Doppia Chance / Over) per massimizzare il ritorno.</p>
+                    <p class="model-desc">L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-alpha">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-alpha">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Apri Sala Operativa Alpha →</div>
+                    <div class="open-page-btn">Consultazione Modello Alpha →</div>
                 </div>
             </div>
 
             <!-- CARD BETA -->
             <div class="model-card" onclick="apriPaginaModello('beta')">
                 <div>
-                    <span class="model-tag">Esotico • Inferenza Poisson</span>
+                    <span class="model-tag">Esotico</span>
                     <h2>Modello Beta</h2>
-                    <p class="model-desc">L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson e lo storico ESPN per prevedere cartellini e calci d'angolo.</p>
+                    <p class="model-desc">L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-beta">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-beta">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Apri Sala Operativa Beta →</div>
+                    <div class="open-page-btn">Consultazione Modello Beta →</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- VISTA 2: PAGINA DEDICATA AL MODELLO -->
+    <!-- VISTA 2: PAGINA DEDICATA AL SINGOLO MODELLO -->
     <div id="modelDetailView" class="hidden">
         <div class="back-bar">
-            <button class="back-btn" onclick="mostraHome()">← Torna alla Home SBR</button>
+            <button class="back-btn" onclick="mostraHome()">← Torna alla panoramica modelli</button>
         </div>
 
         <div class="model-header-box">
             <span id="det-tag" class="model-tag">MODELLO</span>
-            <h1 id="det-title" style="font-size:2rem; margin-bottom:0.5rem;">Titolo Modello</h1>
-            <p id="det-subtitle" style="color:var(--text-muted); font-size:1rem;"></p>
+            <h1 id="det-title" style="font-size:1.75rem; color:var(--primary); margin-bottom:0.4rem;">Titolo Modello</h1>
+            <p id="det-subtitle" style="color:var(--text-muted); font-size:0.95rem;"></p>
             <div id="det-specs" class="specs-list"></div>
         </div>
 
@@ -495,12 +527,12 @@
 
         <!-- EQUITY LINE CHART -->
         <div class="chart-box">
-            <h3>Andamento Capitale Certificato (Equity Line)</h3>
-            <canvas id="equityChart" height="90"></canvas>
+            <h3>Andamento Capitale (Equity Line)</h3>
+            <canvas id="equityChart" height="85"></canvas>
         </div>
 
         <!-- STORICO SCHEDINE CONCLUSE -->
-        <h3 style="margin-bottom: 1.2rem; font-size: 1.3rem;">Storico Operazioni Concluse</h3>
+        <h3 class="section-title">Storico Operazioni Concluse</h3>
         <div id="det-storico-list"></div>
     </div>
 
@@ -512,33 +544,33 @@
 
     const INFO_MODELLI = {
         omega: {
-            tag: "QUANTITATIVO • MONTE CARLO",
+            tag: "QUANTITATIVO",
             titolo: "Modello Omega",
-            sottotitolo: "Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita diecimila volte per estrarre valore assoluto.",
+            sottotitolo: "Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.",
             specs: [
-                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker (De-vigging) rivelando la percentuale reale." },
-                { t: "Simulazione tattica (Dixon-Coles)", d: "Gioca virtualmente il match 10.000 volte calcolando attacco, difesa e attrito sui pareggi." },
-                { t: "Il colpo mirato & CLV", d: "Invia la giocata solo se la quota supera il reale valore probabilistico (+1% netto) tracciando il Closing Line Value." }
+                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale." },
+                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles." },
+                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico." }
             ]
         },
         alpha: {
-            tag: "ALTO RENDIMENTO • QUOTA 5+",
+            tag: "ALTO RENDIMENTO",
             titolo: "Modello Alpha",
-            sottotitolo: "L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili e mercati protetti per massimizzare il ritorno economico.",
+            sottotitolo: "L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.",
             specs: [
-                { t: "Ricerca del valore & Scudo", d: "Seleziona eventi con confidenza matematica strutturale integrando Doppia Chance (1X/X2) e Over." },
-                { t: "Moltiplicatore esplosivo", d: "Costruttore dinamico che concatena i match migliori fino a raggiungere la soglia target di 5.00." },
-                { t: "Bankroll speculativo", d: "Progettato per generare picchi di profitto elevati con rischio controllato." }
+                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale." },
+                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00." },
+                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati." }
             ]
         },
         beta: {
-            tag: "ESOTICO • INFERENZA POISSON",
+            tag: "ESOTICO",
             titolo: "Modello Beta",
-            sottotitolo: "L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson e i dati reali ESPN per prevedere cartellini e calci d'angolo.",
+            sottotitolo: "L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.",
             specs: [
-                { t: "Analisi della tensione", d: "Incrocia lo storico ammonizioni ESPN con l'equilibrio delle quote per stimare i cartellini." },
-                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo e la media corner reale per singola squadra." },
-                { t: "Staking dinamico di Kelly", d: "Applica il criterio di Kelly frazionato suggerendo l'esposizione esatta per ogni operazione." }
+                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base." },
+                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner attesi per singola partita." },
+                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione." }
             ]
         }
     };
@@ -552,14 +584,13 @@
 
     function calcolaMetricheModello(modelloKey) {
         const baseCap = 200.0;
-        // Filtra rigorosamente SOLO le schedine concluse (vinta o persa), escludendo quelle "in attesa"
         const concluse = (globalDb.schedine || []).filter(s => 
             s.modello === modelloKey && (s.stato_schedina === 'vinta' || s.stato_schedina === 'persa')
         );
 
         let investito = 0, profitto = 0, vinte = 0;
         let storicoCassa = [baseCap];
-        let labels = ["Start"];
+        let labels = ["Inizio"];
 
         concluse.forEach((s, idx) => {
             const imp = parseFloat(s.importo || 10);
@@ -571,7 +602,7 @@
             } else {
                 profitto -= imp;
             }
-            storicoCassa.push( parseFloat((baseCap + profitto).toFixed(2)) );
+            storicoCassa.push(parseFloat((baseCap + profitto).toFixed(2)));
             labels.push(s.data_creazione || `#${idx + 1}`);
         });
 
@@ -592,13 +623,12 @@
     }
 
     function aggiornaHome() {
-        // Contatore schedine in attesa (Criptate)
         const inAttesa = (globalDb.schedine || []).filter(s => s.stato_schedina === 'in attesa');
         const banner = document.getElementById('liveBanner');
         if (inAttesa.length > 0) {
             banner.classList.remove('hidden');
             document.getElementById('liveBannerText').innerText = 
-                `${inAttesa.length} Operazion${inAttesa.length === 1 ? 'e Quantitativa Attiva' : 'i Quantitative Attive'} a Mercato (Dettagli criptati fino al fischio finale)`;
+                `${inAttesa.length} Operazion${inAttesa.length === 1 ? 'e Quantitativa Attiva' : 'i Quantitative Attive'} a Mercato`;
         } else {
             banner.classList.add('hidden');
         }
@@ -668,21 +698,22 @@
                 datasets: [{
                     label: 'Cassa Modello (€)',
                     data: dataPoints,
-                    borderColor: '#F87060',
-                    backgroundColor: 'rgba(248, 112, 96, 0.15)',
-                    borderWidth: 3,
+                    borderColor: '#102542',
+                    backgroundColor: '#F1F5F9',
+                    borderWidth: 2.5,
                     pointRadius: 4,
-                    pointBackgroundColor: '#ffffff',
-                    fill: true,
-                    tension: 0.3
+                    pointBackgroundColor: '#F87060',
+                    pointBorderColor: '#102542',
+                    fill: false,
+                    tension: 0.15
                 }]
             },
             options: {
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    x: { ticks: { color: '#64748B' }, grid: { color: '#E2E8F0' } },
+                    y: { ticks: { color: '#64748B' }, grid: { color: '#E2E8F0' } }
                 }
             }
         });
@@ -691,26 +722,26 @@
     function renderizzaStorico(schedineConcluse) {
         const container = document.getElementById('det-storico-list');
         if (!schedineConcluse.length) {
-            container.innerHTML = `<div class="ticket-card" style="text-align:center; color:var(--text-muted);">Nessuna operazione conclusa registrata per questo modello. Le giocate in corso appariranno qui al termine dei match.</div>`;
+            container.innerHTML = `<div class="ticket-card" style="text-align:center; color:var(--text-muted);">Nessuna operazione conclusa registrata per questo modello.</div>`;
             return;
         }
 
         container.innerHTML = schedineConcluse.map(s => {
             const isWin = s.stato_schedina === 'vinta';
-            const netto = isWin ? `+${(s.ritorno_potenziale - s.importo).toFixed(2)}€` : `-${parseFloat(s.importo).toFixed(2)}€`;
+            const netto = isWin ? `+${(s.ritorno_potenziale - s.importo).toFixed(2)} €` : `-${parseFloat(s.importo).toFixed(2)} €`;
             
             const righePartite = (s.partite || []).map(p => `
                 <div class="match-row">
                     <div>
                         ${creaStemmaSquadra(p.squadra_casa)}
                         <strong>${p.squadra_casa} - ${p.squadra_trasferta}</strong>
-                        <span style="color:var(--text-muted); font-size:0.82rem; margin-left:6px;">(${p.data || ''})</span>
+                        <span style="color:var(--text-muted); font-size:0.82rem; margin-left:6px;">${p.data || ''}</span>
                     </div>
                     <div class="match-meta">
-                        <span style="color:var(--accent); font-weight:600;">${p.pronostico} (@${p.quota})</span>
-                        ${p.bookmaker ? `<span class="book-pill">🏦 ${p.bookmaker}</span>` : ''}
+                        <span class="pick-label">${p.pronostico} (@${p.quota})</span>
+                        ${p.bookmaker ? `<span class="book-pill">${p.bookmaker}</span>` : ''}
                         ${p.clv_edge ? `<span class="clv-pill">CLV ${p.clv_edge}</span>` : ''}
-                        ${p.risultato_reale ? `<span class="book-pill">Ris: <strong>${p.risultato_reale}</strong></span>` : ''}
+                        ${p.risultato_reale ? `<span class="book-pill">Esito: <strong>${p.risultato_reale}</strong></span>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -719,8 +750,8 @@
                 <div class="ticket-card">
                     <div class="ticket-top">
                         <div>
-                            <strong>Data: ${s.data_creazione}</strong> • 
-                            <span style="color:var(--text-muted);">Quota Totale: <strong>@${s.quota_totale}</strong> | Stake: <strong>${s.importo}€</strong></span>
+                            <strong>Data: ${s.data_creazione}</strong> &nbsp;•&nbsp; 
+                            <span style="color:var(--text-muted);">Quota: <strong>@${s.quota_totale}</strong> &nbsp;|&nbsp; Stake: <strong>${s.importo} €</strong></span>
                         </div>
                         <div style="display:flex; align-items:center; gap:10px;">
                             <strong class="${isWin ? 'text-win' : 'text-loss'}">${netto}</strong>
