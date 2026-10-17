@@ -129,7 +129,6 @@
         .m-pick { font-size: 12px; font-weight: 700; color: var(--vibrant-coral); text-transform: uppercase; }
         .m-quote { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--khaki-beige); }
         
-        /* BADGE ESITO SINGOLA PARTITA (VERDE/ROSSO) */
         .m-result { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; display: inline-block; padding: 2px 8px; border-radius: 4px; }
         .m-result.vinta { background-color: var(--success-bg); color: var(--success); }
         .m-result.persa { background-color: var(--danger-bg); color: var(--danger); }
@@ -168,7 +167,7 @@
                 <div class="status-dot"></div>
                 <span id="liveBannerText">Operazioni Quantitative Attive a Mercato</span>
             </div>
-            <span style="font-size:12px; color: var(--text-muted); font-weight:600;">Dettagli oscurati fino al termine delle partite</span>
+            <span style="font-size:12px; color: var(--text-muted); font-weight:600;">Dettagli oscurati fino al termine delle partite[cite: 6]</span>
         </div>
 
         <div class="models-info-grid">
@@ -267,14 +266,12 @@
         }
 
         function aggiornaBannerInCorso(schedineTutte) {
-            // Conta quante schedine sono in attesa nel database globale
             const inAttesa = schedineTutte.filter(sc => sc.stato_schedina === 'in attesa');
             const banner = document.getElementById('liveBanner');
             
             if (inAttesa.length > 0) {
                 banner.classList.remove('hidden');
-                document.getElementById('liveBannerTextinnerHTML').innerText = '';
-                document.getElementById('liveBannerText').innerHTML = `🟢 <strong>${inAttesa.length}</strong> Operazion${inAttesa.length === 1 ? 'e' : 'i'} Quantitativa/e Attiva/e a Mercato in questo momento`;
+                document.getElementById('liveBannerText').innerHTML = `🟢 <strong>${inAttesa.length}</strong> Schedin${inAttesa.length === 1 ? 'a' : 'e'} in corso a mercato`;
             } else {
                 banner.classList.add('hidden');
             }
@@ -283,7 +280,7 @@
         function aggiornaDashboard() {
             if (!databaseGlobale) return;
 
-            // Filtra solo le schedine concluse per la visualizzazione dello storico e grafici
+            // Filtra solo le schedine concluse per la dashboard e i grafici
             const schedineModello = databaseGlobale.schedine.filter(sc => {
                 let mod = sc.modello ? sc.modello.toLowerCase() : 'alpha';
                 return mod === modelloAttuale && sc.stato_schedina !== 'in attesa';
@@ -429,7 +426,7 @@
         fetch(urlFresco)
             .then(res => res.json())
             .then(data => {
-                // Aggiorna il banner delle schedine in corso basandosi su tutte le schedine presenti nel database prima di filtrarle
+                // Passa l'intero array delle schedine al banner per contare quelle "in attesa"
                 aggiornaBannerInCorso(data.schedine);
                 
                 databaseGlobale = data;
