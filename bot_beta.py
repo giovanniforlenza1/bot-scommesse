@@ -14,22 +14,38 @@ campionati = [
     'soccer_germany_bundesliga', 'soccer_france_ligue_one'
 ]
 
+MAPPA_CAMPIONATI_ESPN = {
+    'soccer_italy_serie_a': 'ita.1',
+    'soccer_epl': 'eng.1',
+    'soccer_spain_la_liga': 'esp.1',
+    'soccer_germany_bundesliga': 'ger.1',
+    'soccer_france_ligue_one': 'fra.1'
+}
+
 TRADUZIONI_SQUADRE = {
-    "Inter Milan": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
+    "Inter Milan": "Inter", "Internazionale": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
     "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "Juventus FC": "Juventus",
     "Hellas Verona": "Verona", "Bologna FC": "Bologna", "Fiorentina": "Fiorentina",
     "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
     "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma",
     "Como 1907": "Como", "Manchester Utd": "Manchester United",
-    "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham",
+    "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham", "Tottenham Hotspur": "Tottenham",
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG",
-    "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen"
+    "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen",
+    "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
+    "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
 def traduci_squadra(nome):
     nome_pulito = nome.strip()
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
+
+def normalizza_nome(nome):
+    n = traduci_squadra(nome).lower()
+    for p in ["calcio", "fc", "ac", "sc", "cf", "united", "city", "1907", "1913"]:
+        n = n.replace(p, "")
+    return n.strip()
 
 def esegui_richiesta_api(url_template):
     chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
@@ -42,8 +58,48 @@ def esegui_richiesta_api(url_template):
         except: pass
     return None
 
+def costruisci_storico_reale_espn():
+    """Scarica gli ultimi 14 giorni di partite da ESPN per calcolare le medie reali di Corner e Cartellini per squadra"""
+    storico_squadre = {}
+    fuso_italia = ZoneInfo("Europe/Rome")
+    oggi = datetime.now(fuso_italia)
+    # Controlla campioni di giornate negli ultimi 14 giorni
+    date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7, 8, 10, 13, 14]]
+
+    for _, lega_espn in MAPPA_CAMPIONATI_ESPN.items():
+        for d_str in date_studio:
+            url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega_espn}/scoreboard?dates={d_str}"
+            try:
+                res = requests.get(url, timeout=6)
+                if res.status_code != 200: continue
+                for ev in res.json().get('events', []):
+                    comp = ev.get('competitions', [{}])[0]
+                    if not comp.get('status', {}).get('type', {}).get('completed', False):
+                        continue
+                    for t in comp.get('competitors', []):
+                        nome_norm = normalizza_nome(t.get('team', {}).get('displayName', ''))
+                        corners, cards = 0, 0
+                        for s in t.get('statistics', []):
+                            val_str = str(s.get('displayValue', '0')).strip()
+                            val = int(float(val_str)) if val_str.replace('.', '', 1).isdigit() else 0
+                            if s.get('name') == 'wonCorners': corners = val
+                            elif s.get('name') in ['yellowCards', 'redCards']: cards += val
+                        if corners > 0 or cards > 0:
+                            info = storico_squadre.setdefault(nome_norm, {'corners': [], 'cards': []})
+                            info['corners'].append(corners)
+                            info['cards'].append(cards)
+            except:
+                continue
+    return storico_squadre
+
+def ottieni_media_storica(storico, squadra_ita, tipo, default_val):
+    n_cerca = normalizza_nome(squadra_ita)
+    for k, dati in storico.items():
+        if (n_cerca in k or k in n_cerca) and dati[tipo]:
+            return sum(dati[tipo]) / len(dati[tipo])
+    return default_val
+
 def prob_poisson_over(lmbda, linea):
-    # Calcola probabilità che escano più eventi della linea (es. Over 9.5 -> almeno 10)
     soglia = int(math.floor(linea))
     prob_under = sum((math.exp(-lmbda) * (lmbda**k)) / math.factorial(k) for k in range(soglia + 1))
     return 1.0 - prob_under
@@ -68,6 +124,9 @@ def esegui_beta():
             print("Beta già generata oggi.")
             return
 
+    print("Beta: Analisi storico reale ESPN per Angoli e Cartellini in corso...")
+    storico_espn = costruisci_storico_reale_espn()
+
     miglior_operazione = None
     miglior_edge = 0.0
 
@@ -85,6 +144,7 @@ def esegui_beta():
 
             q1_list, q2_list = [], []
             for book in p.get('bookmakers', []):
+                if 'exchange' in book.get('title', '').lower(): continue
                 for m in book.get('markets', []):
                     if m['key'] == 'h2h':
                         for out in m['outcomes']:
@@ -95,9 +155,20 @@ def esegui_beta():
             q1_med = sum(q1_list) / len(q1_list)
             q2_med = sum(q2_list) / len(q2_list)
 
-            # CASO 1: Pressione Offensiva Corner (Favorita in casa tra 1.40 e 1.85 contro difesa chiusa)
-            if 1.40 <= q1_med <= 1.85 and q2_med >= 4.20:
-                lambda_corner = 10.6 + ((1.85 - q1_med) * 2.2)
+            # Estrae le medie storiche reali da ESPN (o usa baseline se squadra neopromossa)
+            media_corner_casa = ottieni_media_storica(storico_espn, casa_ita, 'corners', 5.4)
+            media_corner_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'corners', 4.5)
+            
+            media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
+            media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
+
+            # CASO 1: Pressione Offensiva Corner (Quote + Storico Reale ESPN)
+            if 1.38 <= q1_med <= 1.90 and q2_med >= 3.90:
+                lambda_quote = 10.5 + ((1.90 - q1_med) * 2.1)
+                lambda_storico = media_corner_casa + media_corner_trasf
+                # Media pesata: 60% Storico Reale ESPN + 40% Pressione Tattica Quote
+                lambda_corner = (lambda_storico * 0.60) + (lambda_quote * 0.40)
+                
                 prob_over_9_5 = prob_poisson_over(lambda_corner, 9.5)
                 quota_target = 1.80
                 edge = (prob_over_9_5 * quota_target) - 1.0
@@ -114,10 +185,13 @@ def esegui_beta():
                         'edge': edge
                     }
 
-            # CASO 2: Alta Tensione Cartellini (Match in totale equilibrio / Scontro Diretto)
-            elif 2.25 <= q1_med <= 2.95 and 2.25 <= q2_med <= 2.95:
-                bonus_campionato = 0.8 if camp in ['soccer_italy_serie_a', 'soccer_spain_la_liga'] else 0.2
-                lambda_cards = 4.6 + bonus_campionato
+            # CASO 2: Alta Tensione Cartellini (Equilibrio Quote + Storico Reale ESPN)
+            elif 2.15 <= q1_med <= 3.10 and 2.15 <= q2_med <= 3.10:
+                bonus_campionato = 0.7 if camp in ['soccer_italy_serie_a', 'soccer_spain_la_liga'] else 0.2
+                lambda_quote = 4.6 + bonus_campionato
+                lambda_storico = media_cards_casa + media_cards_trasf
+                lambda_cards = (lambda_storico * 0.60) + (lambda_quote * 0.40)
+                
                 prob_over_4_5 = prob_poisson_over(lambda_cards, 4.5)
                 quota_target = 1.75
                 edge = (prob_over_4_5 * quota_target) - 1.0
@@ -136,7 +210,6 @@ def esegui_beta():
 
     if not miglior_operazione: return
 
-    # Calcolo Criterio di Kelly Frazionato (1/4 di Kelly su cassa 200€)
     b = miglior_operazione['quota'] - 1.0
     p_win = miglior_operazione['prob']
     q_lose = 1.0 - p_win
@@ -154,27 +227,27 @@ def esegui_beta():
         'risultato_reale': ''
     }
 
-    db_principale['schedine'].append({
-        'id': str(uuid.uuid4())[:8],
-        'modello': 'beta',
-        'data_creazione': oggi.strftime("%d/%m/%Y"),
-        'importo': stake_kelly,
-        'quota_totale': miglior_operazione['quota'],
-        'ritorno_potenziale': round(stake_kelly * miglior_operazione['quota'], 2),
-        'stato_schedina': 'in attesa',
-        'partite': [partita_db]
-    })
+    msg = "<b>⚡ MODELLO BETA | INFERENZA POISSON</b>\n\n"
+    msg += f"⚽ <b>{partita_db['data']} | {partita_db['squadra_casa']} - {partita_db['squadra_trasferta']}</b>\n"
+    msg += f"🎯 <b>Singola Esotica</b>: {partita_db['pronostico']}\n"
+    msg += f"📊 <b>Quota Minima Consigliata</b>: @{partita_db['quota']}\n"
+    msg += f"📈 <b>Probabilità Poisson</b>: {round(p_win * 100, 1)}%\n"
+    msg += f"💰 <b>Stake Kelly Suggerito</b>: {stake_kelly}€\n\n"
+    msg += "<b>#ModelloBeta #Poisson #ValueBetting</b>"
 
-    msg = "**⚡ MODELLO BETA | INFERENZA POISSON**\n\n"
-    msg += f"⚽ **{partita_db['data']} | {partita_db['squadra_casa']} - {partita_db['squadra_trasferta']}**\n"
-    msg += f"🎯 **Singola Esotica**: {partita_db['pronostico']}\n"
-    msg += f"📊 **Quota Minima Consigliata**: @{partita_db['quota']}\n"
-    msg += f"📈 **Probabilità Poisson**: {round(p_win * 100, 1)}%\n"
-    msg += f"💰 **Stake Kelly Suggerito**: {stake_kelly}€\n\n"
-    msg += "**#ModelloBeta #Poisson #ValueBetting**"
-
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "Markdown"})
-    salva_database_principale(db_principale)
+    res = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"})
+    if res.status_code == 200:
+        db_principale['schedine'].append({
+            'id': str(uuid.uuid4())[:8],
+            'modello': 'beta',
+            'data_creazione': oggi.strftime("%d/%m/%Y"),
+            'importo': stake_kelly,
+            'quota_totale': miglior_operazione['quota'],
+            'ritorno_potenziale': round(stake_kelly * miglior_operazione['quota'], 2),
+            'stato_schedina': 'in attesa',
+            'partite': [partita_db]
+        })
+        salva_database_principale(db_principale)
 
 if __name__ == "__main__":
     esegui_beta()
