@@ -1410,7 +1410,7 @@
             "importo": 12.7,
             "quota_totale": 1.95,
             "ritorno_potenziale": 24.76,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "9a691aeace75a589f2f920824522c830",
@@ -1422,8 +1422,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.06,
                     "lega": "soccer_italy_serie_b",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-2"
                 }
             ]
         },
@@ -1609,8 +1609,8 @@
                     "pronostico": "Over 2.5 Gol",
                     "quota": 1.44,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-2"
                 },
                 {
                     "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
@@ -1702,8 +1702,8 @@
                     "pronostico": "Over 2.5 Gol",
                     "quota": 1.44,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-2"
                 },
                 {
                     "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
