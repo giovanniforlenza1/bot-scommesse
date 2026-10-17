@@ -1482,7 +1482,7 @@
             "importo": 17.9,
             "quota_totale": 1.8,
             "ritorno_potenziale": 32.22,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
@@ -1491,8 +1491,8 @@
                     "squadra_trasferta": "Genoa",
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "persa",
+                    "risultato_reale": "8 Angoli",
                     "clv_edge": "+11.1%"
                 }
             ]
@@ -1628,8 +1628,8 @@
                     "pronostico": "Vittoria Roma",
                     "quota": 1.51,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
@@ -1725,8 +1725,8 @@
                     "pronostico": "Vittoria Roma",
                     "quota": 1.61,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
