@@ -29,7 +29,7 @@ TRADUZIONI_NAZIONALI = {
 }
 
 TRADUZIONI_SQUADRE = {
-    "Inter Milan": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
+    "Inter Milan": "Inter", "Internazionale": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
     "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "Juventus FC": "Juventus",
     "Hellas Verona": "Verona", "Bologna FC": "Bologna", "Fiorentina": "Fiorentina",
     "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
@@ -47,6 +47,45 @@ def traduci_squadra(nome):
     if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
+
+def normalizza_chiave_squadra(nome):
+    n = traduci_squadra(nome).lower()
+    for p in ["calcio", "fc", "ac", "sc", "cf", "united", "city", "sporting", "1907", "1913", "bc", "us", "ss", "cfc", "as"]:
+        n = n.replace(f" {p}", "").replace(f"{p} ", "")
+    return n.strip()
+
+def carica_database_squadre():
+    if os.path.exists('database_squadre.json'):
+        try:
+            with open('database_squadre.json', 'r', encoding='utf-8') as f:
+                return json.load(f).get('squadre', {})
+        except:
+            pass
+    return {}
+
+def valuta_studio_squadra(db_squadre, squadra_ita, data_partita_dt):
+    k_cerca = normalizza_chiave_squadra(squadra_ita)
+    info = db_squadre.get(k_cerca)
+    if not info:
+        for k, val in db_squadre.items():
+            if k_cerca and (k_cerca in k or k in k_cerca):
+                info = val
+                break
+    if not info:
+        return 1.0, False, 4.0
+
+    rating = info.get('rating_tattico', 1.0)
+    tiri = info.get('media_tiri_porta', 4.0)
+    stanca = False
+    ultima_str = info.get('ultima_partita', '')
+    if ultima_str:
+        try:
+            dt_ultima = datetime.strptime(ultima_str, "%Y-%m-%d").date()
+            if 0 < (data_partita_dt.date() - dt_ultima).days <= 3:
+                stanca = True
+        except:
+            pass
+    return rating, stanca, tiri
 
 def esegui_richiesta_api(url_template):
     chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
@@ -75,12 +114,13 @@ def esegui_alpha():
     limite_temporale = oggi + timedelta(days=4)
     
     db_principale = carica_database_principale()
-    
     for s in db_principale['schedine']:
         if s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str and s.get('telegram_inviato'):
             print("Alpha: Schedina già generata oggi.")
             return
 
+    # Carica lo studio tattico generato da Omega
+    db_squadre = carica_database_squadre()
     candidati_alpha = []
 
     for camp in campionati:
@@ -94,6 +134,10 @@ def esegui_alpha():
 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
+
+            # Studio forma, tiri in porta e stanchezza
+            rating_c, stanca_c, tiri_c = valuta_studio_squadra(db_squadre, casa_ita, data_ita)
+            rating_t, stanca_t, tiri_t = valuta_studio_squadra(db_squadre, trasf_ita, data_ita)
 
             opzioni_match = {}
 
@@ -111,30 +155,30 @@ def esegui_alpha():
                             elif out['name'] == trasf_orig: q2 = out['price']
                             elif out['name'].lower() == 'draw': qx = out['price']
                         
-                        # Accetta Vittoria Secca solo se super-favorita in casa (<= 1.48)
-                        if q1 and q1 <= 1.48:
+                        # Vittoria secca permessa SOLO se la squadra NON è stanca dalle coppe ed è in forma!
+                        if q1 and q1 <= 1.48 and not stanca_c and rating_c >= 0.98:
                             opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((q1, is_ammesso))
-                        if q2 and q2 <= 1.45:
+                        if q2 and q2 <= 1.45 and not stanca_t and rating_t >= 1.00:
                             opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((q2, is_ammesso))
                         
-                        # Doppia Chance Corazzata (copre sempre il pareggio!)
+                        # Doppia Chance Corazzata
                         if q1 and qx and q2:
                             dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.965, 2)
                             dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.965, 2)
-                            if 1.22 <= dc_1x <= 1.52:
+                            if 1.22 <= dc_1x <= 1.52 and rating_c >= 0.95:
                                 opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append((dc_1x, is_ammesso))
-                            if 1.22 <= dc_x2 <= 1.52:
+                            if 1.22 <= dc_x2 <= 1.52 and rating_t >= 0.96:
                                 opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append((dc_x2, is_ammesso))
                             
-                            # Stima matematica Over 1.5 Gol quando le due squadre sono offensive
-                            if qx >= 3.55:
+                            # Over 1.5 Gol potenziato se la somma dei tiri in porta delle due squadre supera 8.5 a partita
+                            if qx >= 3.50 and (tiri_c + tiri_t) >= 8.2:
                                 q_over15 = round(max(1.24, min(1.42, 1.85 / (qx * 0.40))), 2)
                                 opzioni_match.setdefault("Over 1.5 Gol", []).append((q_over15, is_ammesso))
 
                     elif m['key'] == 'totals':
                         for out in m['outcomes']:
                             if out.get('name') == 'Over' and out.get('point') in [1.5, 2.5]:
-                                if out['price'] <= 1.62:
+                                if out['price'] <= 1.60 and (tiri_c + tiri_t) >= 8.0:
                                     label = f"Over {out['point']} Gol"
                                     opzioni_match.setdefault(label, []).append((out['price'], is_ammesso))
 
@@ -152,9 +196,11 @@ def esegui_alpha():
                 
                 if 1.22 <= q_media <= 1.58 and 1.22 <= q_giocabile <= 1.62:
                     edge_quota = min(1.08, q_giocabile / q_media)
-                    # Forte priorità a Doppia Chance e Over 1.5 (altissima % di riuscita)
                     bonus_scudo = 0.09 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
-                    score = (1.0 / q_media) * edge_quota + bonus_scudo
+                    
+                    # Bonus Tattico dal Database Squadre (premia chi tira molto in porta e vince)
+                    fattore_tattico = max(rating_c, rating_t)
+                    score = ((1.0 / q_media) * edge_quota * fattore_tattico) + bonus_scudo
                     
                     if score > miglior_score:
                         miglior_score = score
@@ -179,7 +225,6 @@ def esegui_alpha():
 
     ordinati = sorted(candidati_alpha, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))
 
-    # NUOVO TARGET ORO: Massimo 3 partite selezionatissime per una quota tra 2.15 e 3.20!
     selezionati = []
     quota_totale = 1.0
     
