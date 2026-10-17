@@ -76,14 +76,9 @@ def esegui_alpha():
     
     db_principale = carica_database_principale()
     
-    db_principale['schedine'] = [
-        s for s in db_principale['schedine'] 
-        if not (s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str and not s.get('telegram_inviato'))
-    ]
-
     for s in db_principale['schedine']:
         if s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str and s.get('telegram_inviato'):
-            print("Alpha: Schedina già generata e confermata su Telegram oggi.")
+            print("Alpha: Schedina già generata oggi.")
             return
 
     candidati_alpha = []
@@ -116,23 +111,32 @@ def esegui_alpha():
                             elif out['name'] == trasf_orig: q2 = out['price']
                             elif out['name'].lower() == 'draw': qx = out['price']
                         
-                        if q1: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((q1, is_ammesso))
-                        if q2: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((q2, is_ammesso))
+                        # Accetta Vittoria Secca solo se super-favorita in casa (<= 1.48)
+                        if q1 and q1 <= 1.48:
+                            opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((q1, is_ammesso))
+                        if q2 and q2 <= 1.45:
+                            opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((q2, is_ammesso))
                         
-                        # Sintesi matematica Doppia Chance (1X e X2) con margine bookmaker
+                        # Doppia Chance Corazzata (copre sempre il pareggio!)
                         if q1 and qx and q2:
-                            dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.96, 2)
-                            dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.96, 2)
-                            if 1.24 <= dc_1x <= 1.60:
+                            dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.965, 2)
+                            dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.965, 2)
+                            if 1.22 <= dc_1x <= 1.52:
                                 opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append((dc_1x, is_ammesso))
-                            if 1.24 <= dc_x2 <= 1.60:
+                            if 1.22 <= dc_x2 <= 1.52:
                                 opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append((dc_x2, is_ammesso))
+                            
+                            # Stima matematica Over 1.5 Gol quando le due squadre sono offensive
+                            if qx >= 3.55:
+                                q_over15 = round(max(1.24, min(1.42, 1.85 / (qx * 0.40))), 2)
+                                opzioni_match.setdefault("Over 1.5 Gol", []).append((q_over15, is_ammesso))
 
                     elif m['key'] == 'totals':
                         for out in m['outcomes']:
                             if out.get('name') == 'Over' and out.get('point') in [1.5, 2.5]:
-                                label = f"Over {out['point']} Gol"
-                                opzioni_match.setdefault(label, []).append((out['price'], is_ammesso))
+                                if out['price'] <= 1.62:
+                                    label = f"Over {out['point']} Gol"
+                                    opzioni_match.setdefault(label, []).append((out['price'], is_ammesso))
 
             miglior_pick = None
             miglior_score = 0.0
@@ -146,10 +150,10 @@ def esegui_alpha():
                 q_media = sum(tutte_quote) / len(tutte_quote)
                 q_giocabile = max(quote_italiane) if quote_italiane else round(q_media, 2)
                 
-                if 1.25 <= q_media <= 1.70 and 1.25 <= q_giocabile <= 1.75:
-                    edge_quota = min(1.12, q_giocabile / q_media)
-                    # Bonus protezione per Doppia Chance (+6%) e Over (+5%)
-                    bonus_scudo = 0.06 if "Doppia Chance" in pick else (0.05 if "Over" in pick else 0.0)
+                if 1.22 <= q_media <= 1.58 and 1.22 <= q_giocabile <= 1.62:
+                    edge_quota = min(1.08, q_giocabile / q_media)
+                    # Forte priorità a Doppia Chance e Over 1.5 (altissima % di riuscita)
+                    bonus_scudo = 0.09 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
                     score = (1.0 / q_media) * edge_quota + bonus_scudo
                     
                     if score > miglior_score:
@@ -171,38 +175,36 @@ def esegui_alpha():
                     'risultato_reale': ''
                 })
 
-    if len(candidati_alpha) < 3: return
+    if len(candidati_alpha) < 2: return
 
     ordinati = sorted(candidati_alpha, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))
 
+    # NUOVO TARGET ORO: Massimo 3 partite selezionatissime per una quota tra 2.15 e 3.20!
     selezionati = []
     quota_totale = 1.0
     
     for c in ordinati:
-        if len(selezionati) < 5 and quota_totale < 5.00:
+        if len(selezionati) < 3 and quota_totale < 2.45:
             selezionati.append(c)
             quota_totale *= c['quota']
 
-    if quota_totale < 4.60 and len(ordinati) > len(selezionati):
-        restanti_alti = sorted(ordinati[len(selezionati):], key=lambda x: -x['quota'])
-        for extra in restanti_alti:
-            if len(selezionati) < 6 and quota_totale < 4.80:
-                selezionati.append(extra)
-                quota_totale *= extra['quota']
+    if quota_totale < 2.05 and len(ordinati) > len(selezionati) and len(selezionati) < 4:
+        selezionati.append(ordinati[len(selezionati)])
+        quota_totale *= selezionati[-1]['quota']
 
     quota_totale = round(quota_totale, 2)
-    if quota_totale < 4.50: return
+    if quota_totale < 1.95: return
 
     partite_pulite = [{k: v for k, v in c.items() if k != 'score'} for c in selezionati]
-    stake = 10.0
+    stake = 12.0
 
-    msg = "<b>🚀 MODELLO ALPHA | QUOTA 5+</b>\n\n"
+    msg = "<b>🚀 MODELLO ALPHA | MULTIPLA PROTETTA</b>\n\n"
     msg += f"📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n"
-    msg += f"💰 <b>Stake</b>: {stake}€ (Vincita pot.: {round(stake * quota_totale, 2)}€)\n\n"
+    msg += f"💰 <b>Stake</b>: {stake}€ (Ritorno pot.: {round(stake * quota_totale, 2)}€)\n\n"
     for c in partite_pulite:
         msg += f"⚽ <b>{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}</b>\n"
-        msg += f"🛡️ <b>Scelta</b>: {c['pronostico']} (@{c['quota']})\n\n"
-    msg += "<b>#SmartBetting #ModelloAlpha #Multiple</b>"
+        msg += f"🛡️ <b>Scelta Scudo</b>: {c['pronostico']} (@{c['quota']})\n\n"
+    msg += "<b>#SmartBetting #ModelloAlpha #RaddoppioPlus</b>"
 
     res = requests.post(
         f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", 
