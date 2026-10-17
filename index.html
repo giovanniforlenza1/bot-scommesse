@@ -10,17 +10,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-page: #F8FAFC;
+            --prussian-blue: #102542;
+            --vibrant-coral: #F87060;
+            --alabaster-grey: #CDD7D6;
+            --khaki-beige: #B3A394;
+            --white: #FFFFFF;
+            
+            --bg-page: #F4F6F6;
             --bg-card: #FFFFFF;
-            --bg-subtle: #F1F5F9;
-            --primary: #102542; /* Blu Notte SBR */
-            --accent: #F87060;  /* Corallo SBR */
             --text-main: #102542;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            --win: #16A34A;
-            --win-bg: #F0FDF4;
-            --loss: #DC2626;
+            --text-muted: #576574;
+            --border: #CDD7D6;
+            
+            --win: #10B981;
+            --win-bg: #ECFDF5;
+            --loss: #EF4444;
             --loss-bg: #FEF2F2;
         }
 
@@ -35,17 +39,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER MINIMALE */
+        /* HEADER PROFESSIONALE */
         header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
+            background-color: var(--prussian-blue);
+            color: var(--white);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 1rem 1.5rem;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(16, 37, 66, 0.1);
         }
         .nav-container {
-            max-width: 1140px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -57,48 +62,48 @@
             gap: 12px;
             cursor: pointer;
             text-decoration: none;
-            color: var(--primary);
+            color: var(--white);
         }
         .brand img {
             width: 36px;
             height: 36px;
             border-radius: 8px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--vibrant-coral);
         }
         .brand-title {
             font-weight: 800;
             font-size: 1.25rem;
             letter-spacing: -0.5px;
-            color: var(--primary);
+            color: var(--white);
         }
-        .brand-title span { color: var(--accent); }
+        .brand-title span { color: var(--vibrant-coral); }
         
         .tg-btn {
-            background-color: var(--primary);
-            color: #FFFFFF;
+            background-color: var(--vibrant-coral);
+            color: var(--white);
             text-decoration: none;
-            padding: 0.6rem 1.15rem;
+            padding: 0.6rem 1.25rem;
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.88rem;
-            transition: background-color 0.15s;
+            transition: filter 0.15s;
         }
-        .tg-btn:hover { background-color: var(--accent); }
+        .tg-btn:hover { filter: brightness(1.1); }
 
         .container {
-            max-width: 1140px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2.5rem 1.5rem 4rem;
         }
 
         /* BANNER OPERAZIONI IN CORSO */
         .live-banner {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--win);
+            background-color: var(--alabaster-grey);
+            border: 1px solid var(--khaki-beige);
+            border-left: 5px solid var(--win);
             border-radius: 8px;
             padding: 1rem 1.25rem;
-            margin-bottom: 2.2rem;
+            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -111,7 +116,7 @@
             gap: 10px;
             font-size: 0.92rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--prussian-blue);
         }
         .status-dot {
             width: 10px;
@@ -122,16 +127,17 @@
 
         /* INTESTAZIONE HOME */
         .hero {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 2.5rem;
             margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .hero h1 {
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--prussian-blue);
             letter-spacing: -0.5px;
             margin-bottom: 0.5rem;
         }
@@ -144,11 +150,11 @@
         /* GRIGLIA MODELLI */
         .models-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 1.5rem;
         }
         .model-card {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1.75rem;
@@ -156,12 +162,13 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.15s ease;
-            position: relative;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .model-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 4px 12px rgba(16,37,66,0.06);
+            border-color: var(--vibrant-coral);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16,37,66,0.06);
         }
         .model-tag {
             display: inline-block;
@@ -171,14 +178,14 @@
             letter-spacing: 0.5px;
             padding: 0.25rem 0.65rem;
             border-radius: 4px;
-            background-color: var(--bg-subtle);
-            color: var(--primary);
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
             margin-bottom: 0.9rem;
         }
         .model-card h2 {
             font-size: 1.4rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--prussian-blue);
             margin-bottom: 0.5rem;
         }
         .model-desc {
@@ -205,13 +212,13 @@
         .mini-kpi strong {
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--prussian-blue);
         }
         .open-page-btn {
             width: 100%;
-            background-color: var(--bg-subtle);
-            color: var(--primary);
-            border: 1px solid var(--border);
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
+            border: 1px solid var(--khaki-beige);
             padding: 0.75rem;
             border-radius: 6px;
             font-weight: 600;
@@ -220,9 +227,9 @@
             transition: all 0.15s;
         }
         .model-card:hover .open-page-btn {
-            background-color: var(--accent);
-            color: #FFFFFF;
-            border-color: var(--accent);
+            background-color: var(--vibrant-coral);
+            color: var(--white);
+            border-color: var(--vibrant-coral);
         }
 
         /* PAGINA DEDICATA AL SINGOLO MODELLO */
@@ -232,8 +239,8 @@
             margin-bottom: 1.5rem;
         }
         .back-btn {
-            background-color: var(--bg-card);
-            color: var(--primary);
+            background-color: var(--white);
+            color: var(--prussian-blue);
             border: 1px solid var(--border);
             padding: 0.6rem 1.1rem;
             border-radius: 6px;
@@ -244,15 +251,16 @@
             align-items: center;
             gap: 6px;
         }
-        .back-btn:hover { background-color: var(--bg-subtle); }
+        .back-btn:hover { background-color: var(--alabaster-grey); }
 
         .model-header-box {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 2rem;
             margin-bottom: 1.75rem;
-            border-top: 4px solid var(--accent);
+            border-top: 5px solid var(--vibrant-coral);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .specs-list {
             display: grid;
@@ -263,16 +271,16 @@
             border-top: 1px solid var(--border);
         }
         .spec-item {
-            background-color: var(--bg-subtle);
+            background-color: var(--alabaster-grey);
             padding: 1.1rem;
             border-radius: 6px;
-            border-left: 3px solid var(--accent);
+            border-left: 3px solid var(--prussian-blue);
         }
         .spec-item h4 {
             font-size: 0.92rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
-            color: var(--primary);
+            color: var(--prussian-blue);
         }
         .spec-item p {
             font-size: 0.85rem;
@@ -287,10 +295,11 @@
             margin-bottom: 1.75rem;
         }
         .kpi-box {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1.35rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .kpi-box span {
             font-size: 0.78rem;
@@ -303,16 +312,17 @@
             font-size: 1.65rem;
             font-weight: 800;
             margin-top: 0.35rem;
-            color: var(--primary);
+            color: var(--prussian-blue);
         }
 
         /* GRAFICO EQUITY LINE */
         .chart-box {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .chart-box h3 {
             font-size: 0.95rem;
@@ -327,15 +337,16 @@
         .section-title {
             font-size: 1.2rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--prussian-blue);
             margin-bottom: 1rem;
         }
         .ticket-card {
-            background-color: var(--bg-card);
+            background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1.35rem;
             margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         .ticket-top {
             display: flex;
@@ -363,7 +374,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.7rem 0;
-            border-bottom: 1px solid var(--bg-subtle);
+            border-bottom: 1px solid var(--alabaster-grey);
             flex-wrap: wrap;
             gap: 10px;
             font-size: 0.92rem;
@@ -377,12 +388,12 @@
             width: 26px;
             height: 26px;
             border-radius: 4px;
-            background-color: var(--bg-subtle);
-            color: var(--primary);
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
             font-size: 0.7rem;
             font-weight: 700;
             margin-right: 8px;
-            border: 1px solid var(--border);
+            border: 1px solid var(--khaki-beige);
         }
         .match-meta {
             display: flex;
@@ -391,16 +402,16 @@
             flex-wrap: wrap;
         }
         .pick-label {
-            color: var(--primary);
+            color: var(--prussian-blue);
             font-weight: 700;
         }
         .book-pill {
-            background-color: var(--bg-subtle);
-            border: 1px solid var(--border);
+            background-color: var(--alabaster-grey);
+            border: 1px solid var(--khaki-beige);
             padding: 0.2rem 0.55rem;
             border-radius: 4px;
             font-size: 0.75rem;
-            color: var(--text-muted);
+            color: var(--prussian-blue);
             font-weight: 500;
         }
         .clv-pill {
@@ -412,19 +423,25 @@
             font-size: 0.75rem;
             font-weight: 700;
         }
-        /* CLASSI PER ESITO SINGOLA PARTITA (VERDE/ROSSO) */
-        .match-vinta {
+
+        /* ESITO SINGOLA PARTITA (SOLO SUL BADGE/ESITO) */
+        .esito-vinto {
             background-color: var(--win-bg);
-            border-left: 3px solid var(--win);
-            padding-left: 8px;
+            color: var(--win);
+            border: 1px solid #BBF7D0;
+            padding: 0.2rem 0.6rem;
             border-radius: 4px;
+            font-weight: 700;
         }
-        .match-persa {
+        .esito-perso {
             background-color: var(--loss-bg);
-            border-left: 3px solid var(--loss);
-            padding-left: 8px;
+            color: var(--loss);
+            border: 1px solid #FECACA;
+            padding: 0.2rem 0.6rem;
             border-radius: 4px;
+            font-weight: 700;
         }
+
         .text-win { color: var(--win) !important; }
         .text-loss { color: var(--loss) !important; }
     </style>
@@ -463,9 +480,9 @@
             <!-- CARD OMEGA -->
             <div class="model-card" onclick="apriPaginaModello('omega')" style="border-top: 4px solid #102542;">
                 <div>
-                    <span class="model-tag" style="color: #102542; background-color: #E2E8F0;">Quantitativo</span>
+                    <span class="model-tag">Quantitativo</span>
                     <h2>Modello Omega</h2>
-                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.</p>
+                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -479,9 +496,9 @@
             <!-- CARD ALPHA -->
             <div class="model-card" onclick="apriPaginaModello('alpha')" style="border-top: 4px solid #F87060;">
                 <div>
-                    <span class="model-tag" style="color: #F87060; background-color: #FEE2E2;">Alto Rendimento</span>
+                    <span class="model-tag">Alto Rendimento</span>
                     <h2>Modello Alpha</h2>
-                    <p class="model-desc">L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.</p>
+                    <p class="model-desc">L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -493,11 +510,11 @@
             </div>
 
             <!-- CARD BETA -->
-            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #102542;">
+            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #B3A394;">
                 <div>
-                    <span class="model-tag" style="color: #102542; background-color: #E2E8F0;">Esotico</span>
+                    <span class="model-tag">Esotico</span>
                     <h2>Modello Beta</h2>
-                    <p class="model-desc">L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.</p>
+                    <p class="model-desc">L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -518,7 +535,7 @@
 
         <div class="model-header-box" id="modelHeaderBox">
             <span id="det-tag" class="model-tag">MODELLO</span>
-            <h1 id="det-title" style="font-size:1.75rem; color:var(--primary); margin-bottom:0.4rem;">Titolo Modello</h1>
+            <h1 id="det-title" style="font-size:1.75rem; color:var(--prussian-blue); margin-bottom:0.4rem;">Titolo Modello</h1>
             <p id="det-subtitle" style="color:var(--text-muted); font-size:0.95rem;"></p>
             <div id="det-specs" class="specs-list"></div>
         </div>
@@ -566,7 +583,6 @@
             titolo: "Modello Omega",
             sottotitolo: "Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.",
             colorHex: "#102542",
-            badgeBg: "#E2E8F0",
             specs: [
                 { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale." },
                 { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles." },
@@ -578,7 +594,6 @@
             titolo: "Modello Alpha",
             sottotitolo: "L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.",
             colorHex: "#F87060",
-            badgeBg: "#FEE2E2",
             specs: [
                 { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale." },
                 { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00." },
@@ -589,8 +604,7 @@
             tag: "ESOTICO",
             titolo: "Modello Beta",
             sottotitolo: "L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.",
-            colorHex: "#102542",
-            badgeBg: "#E2E8F0",
+            colorHex: "#B3A394",
             specs: [
                 { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base." },
                 { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner per singola partita." },
@@ -601,15 +615,7 @@
 
     function applicaTemaModello(modelloKey) {
         const info = INFO_MODELLI[modelloKey];
-        document.documentElement.style.setProperty('--primary', info.colorHex);
         document.getElementById('modelHeaderBox').style.borderTopColor = info.colorHex;
-        const tag = document.getElementById('det-tag');
-        tag.style.color = info.colorHex;
-        tag.style.backgroundColor = info.badgeBg;
-    }
-
-    function resetTemaSBR() {
-        document.documentElement.style.setProperty('--primary', '#102542');
     }
 
     function creaStemmaSquadra(nome) {
@@ -660,7 +666,6 @@
     }
 
     function aggiornaHome() {
-        resetTemaSBR();
         const inAttesa = (globalDb.schedine || []).filter(s => s.stato_schedina === 'in attesa');
         const banner = document.getElementById('liveBanner');
         if (inAttesa.length > 0) {
@@ -701,7 +706,7 @@
         document.getElementById('det-subtitle').innerText = info.sottotitolo;
 
         document.getElementById('det-specs').innerHTML = info.specs.map(sp => `
-            <div class="spec-item" style="border-left-color: ${info.colorHex};">
+            <div class="spec-item">
                 <h4>${sp.t}</h4>
                 <p>${sp.d}</p>
             </div>
@@ -740,12 +745,12 @@
                     label: 'Cassa Modello (€)',
                     data: dataPoints,
                     borderColor: colorHex,
-                    backgroundColor: '#F1F5F9',
+                    backgroundColor: 'rgba(16,37,66,0.03)',
                     borderWidth: 2.5,
                     pointRadius: 4,
                     pointBackgroundColor: '#F87060',
                     pointBorderColor: colorHex,
-                    fill: false,
+                    fill: true,
                     tension: 0.15
                 }]
             },
@@ -753,8 +758,8 @@
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#64748B' }, grid: { color: '#E2E8F0' } },
-                    y: { ticks: { color: '#64748B' }, grid: { color: '#E2E8F0' } }
+                    x: { ticks: { color: '#576574' }, grid: { color: '#CDD7D6' } },
+                    y: { ticks: { color: '#576574' }, grid: { color: '#CDD7D6' } }
                 }
             }
         });
@@ -772,15 +777,17 @@
             const netto = isWin ? `+${(s.ritorno_potenziale - s.importo).toFixed(2)} €` : `-${parseFloat(s.importo).toFixed(2)} €`;
             
             const righePartite = (s.partite || []).map(p => {
-                // Determina se la singola gamba è vinta o persa in base allo stato globale o all'esito
-                let matchClass = "";
-                if (p.stato === 'vinta') matchClass = "match-vinta";
-                else if (p.stato === 'persa') matchClass = "match-persa";
-                else if (s.stato_schedina === 'vinta') matchClass = "match-vinta";
-                else if (s.stato_schedina === 'persa' && p.risultato_reale) matchClass = "match-persa";
+                let esitoBadge = "";
+                if (p.stato === 'vinta' || (!p.stato && s.stato_schedina === 'vinta')) {
+                    esitoBadge = `<span class="esito-vinto">✓ ${p.risultato_reale || 'Presa'}</span>`;
+                } else if (p.stato === 'persa' || (!p.stato && s.stato_schedina === 'persa')) {
+                    esitoBadge = `<span class="esito-perso">✕ ${p.risultato_reale || 'Saltata'}</span>`;
+                } else if (p.risultato_reale) {
+                    esitoBadge = `<span class="book-pill">${p.risultato_reale}</span>`;
+                }
 
                 return `
-                    <div class="match-row ${matchClass}">
+                    <div class="match-row">
                         <div>
                             ${creaStemmaSquadra(p.squadra_casa)}
                             <strong>${p.squadra_casa} - ${p.squadra_trasferta}</strong>
@@ -790,7 +797,7 @@
                             <span class="pick-label">${p.pronostico} (@${p.quota})</span>
                             ${p.bookmaker ? `<span class="book-pill">${p.bookmaker}</span>` : ''}
                             ${p.clv_edge ? `<span class="clv-pill">CLV ${p.clv_edge}</span>` : ''}
-                            ${p.risultato_reale ? `<span class="book-pill">Esito: <strong>${p.risultato_reale}</strong></span>` : ''}
+                            ${esitoBadge}
                         </div>
                     </div>
                 `;
