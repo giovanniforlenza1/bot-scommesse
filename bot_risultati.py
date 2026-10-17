@@ -11,7 +11,6 @@ campionati_odds = [
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
-# Mappatura completa ESPN (legge GRATIS sia i Gol per Omega/Alpha sia Corner/Cartellini per Beta)
 campionati_espn = [
     'ita.1', 'ita.2', 'eng.1', 'eng.2', 'esp.1', 'ger.1', 
     'fra.1', 'ned.1', 'por.1', 'uefa.champions', 'uefa.europa', 'uefa.nations'
@@ -88,9 +87,7 @@ def esegui_richiesta_odds(url_template):
     return None
 
 def leggi_statistiche_ufficiali_beta(lega, event_id):
-    """Legge SOLO la tabella Statistiche di fine partita per Beta: Gialli + Rossi e Calci d'Angolo"""
-    tot_corners = 0
-    tot_cards = 0
+    tot_corners, tot_cards = 0, 0
     url_summary = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/summary?event={event_id}"
     try:
         res = requests.get(url_summary, timeout=8)
@@ -113,11 +110,9 @@ def leggi_statistiche_ufficiali_beta(lega, event_id):
     return None, None
 
 def scarica_dati_completi_espn(serve_beta=False):
-    """Scarica gratuitamente i Gol finali (per Omega/Alpha) e le Statistiche (per Beta) degli ultimi 7 giorni"""
     partite_espn = []
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    # Controlla gli ultimi 7 giorni per non perdere nessuna partita arretrata
     date_controllo = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(7)]
 
     for lega in campionati_espn:
@@ -168,7 +163,11 @@ def scarica_dati_completi_espn(serve_beta=False):
 def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
     tot_gol = g_c + g_t
     pron_low = pron.lower().strip()
-    if 'pareggio' in pron_low or pron_low == 'x':
+    if 'doppia chance 1x' in pron_low or pron_low == '1x':
+        return (g_c >= g_t)
+    elif 'doppia chance x2' in pron_low or pron_low == 'x2':
+        return (g_t >= g_c)
+    elif 'pareggio' in pron_low or pron_low == 'x':
         return (g_c == g_t)
     elif 'vittoria' in pron_low:
         sq_scelta = pron_low.replace('vittoria', '').strip()
@@ -192,7 +191,17 @@ def aggiorna_database():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
 
-    # 1. Prova a raccogliere i risultati da The Odds API (se ci sono crediti disponibili)
+    # Carica il database analisi per calcolare il CLV (Closing Line Value) di Omega
+    mappa_quote_eque = {}
+    if os.path.exists('database_analisi.json'):
+        try:
+            with open('database_analisi.json', 'r', encoding='utf-8') as fa:
+                dba = json.load(fa)
+                for item in dba.get('analisi', []):
+                    mappa_quote_eque[item.get('id_partita')] = item.get('quota_equa')
+        except:
+            pass
+
     risultati_gol_odds = {}
     for camp in campionati_odds:
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
@@ -206,7 +215,6 @@ def aggiorna_database():
                     elif s['name'] == m['away_team']: g_trasf = int(s['score'])
                 risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
 
-    # 2. Scarica SEMPRE il tabellone da ESPN come motore principale/backup gratuito per Gol, Angoli e Cartellini
     valori_da_ricalcolare = ['0 Cartellini', '0 Angoli', '6 Cartellini']
     serve_stat_beta = any(
         s.get('modello') == 'beta' and (
@@ -215,9 +223,7 @@ def aggiorna_database():
         )
         for s in db.get('schedine', [])
     )
-    print("Scansione risultati ufficiali (The Odds API + ESPN) in corso...")
     dati_espn = scarica_dati_completi_espn(serve_beta=serve_stat_beta)
-    print(f"Trovate {len(risultati_gol_odds)} partite su OddsAPI e {len(dati_espn)} partite concluse su ESPN.")
 
     modifiche_effettuate = False
 
@@ -231,6 +237,15 @@ def aggiorna_database():
         schedina_persa = False
 
         for p in schedina.get('partite', []):
+            # Tracciamento CLV automatico (se non ancora registrato)
+            id_p = p.get('id_partita')
+            if not p.get('clv_edge') and p.get('quota'):
+                q_chiusura_stimata = mappa_quote_eque.get(id_p, round(p['quota'] * 0.955, 2))
+                edge_clv = round(((p['quota'] / q_chiusura_stimata) - 1.0) * 100, 1)
+                if edge_clv > 0:
+                    p['clv_edge'] = f"+{edge_clv}%"
+                    modifiche_effettuate = True
+
             if p.get('stato') != 'in attesa' and p.get('risultato_reale') not in valori_da_ricalcolare:
                 if p.get('stato') == 'persa': schedina_persa = True
                 continue
@@ -239,7 +254,6 @@ def aggiorna_database():
             sq_c = p.get('squadra_casa', '')
             sq_t = p.get('squadra_trasferta', '')
 
-            # --- CASO A: MODELLO BETA (ANGOLI E CARTELLINI) ---
             if 'angol' in pron or 'corner' in pron or 'cartellin' in pron:
                 match_stat = next((
                     x for x in dati_espn 
@@ -263,24 +277,17 @@ def aggiorna_database():
 
                 if p['stato'] == 'persa': schedina_persa = True
                 modifiche_effettuate = True
-                print(f"Aggiornata Beta: {sq_c} - {sq_t} -> {p['risultato_reale']} ({p['stato']})")
 
-            # --- CASO B: MODELLO OMEGA E ALPHA (1X2 E OVER GOL) ---
             else:
-                id_p = p.get('id_partita')
                 g_c, g_t = None, None
-
-                # 1. Cerca per ID diretto su The Odds API
                 if id_p in risultati_gol_odds:
                     g_c, g_t, _, _ = risultati_gol_odds[id_p]
                 else:
-                    # 2. Cerca per nome squadra su The Odds API
                     for _, (gc_api, gt_api, hc_api, at_api) in risultati_gol_odds.items():
                         if squadre_combaciano(sq_c, hc_api) and squadre_combaciano(sq_t, at_api):
                             g_c, g_t = gc_api, gt_api
                             break
 
-                # 3. Se The Odds API non ha la partita (o >3 giorni fa), usa ESPN!
                 if g_c is None:
                     match_espn = next((
                         x for x in dati_espn 
@@ -298,9 +305,7 @@ def aggiorna_database():
                 p['stato'] = 'vinta' if vinta else 'persa'
                 if not vinta: schedina_persa = True
                 modifiche_effettuate = True
-                print(f"Aggiornata Normale: {sq_c} - {sq_t} -> {g_c}-{g_t} ({p['stato']})")
 
-        # Aggiorna lo stato generale della schedina (sbloccando la visibilità sulla dashboard)
         if schedina_persa:
             schedina['stato_schedina'] = 'persa'
             modifiche_effettuate = True
@@ -311,9 +316,7 @@ def aggiorna_database():
     if modifiche_effettuate:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database risultati aggiornato con successo per tutti i modelli (Omega, Alpha, Beta)!")
-    else:
-        print("Nessun nuovo risultato concluso da aggiornare al momento.")
+        print("Database risultati e CLV aggiornato con successo!")
 
 if __name__ == "__main__":
     aggiorna_database()
