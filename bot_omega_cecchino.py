@@ -15,7 +15,6 @@ campionati = [
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
-# Mappatura dei feed internazionali sui corrispondenti Bookmaker ADM operanti in Italia
 MAPPA_BOOKMAKER_ITALIA = {
     "unibet": "Unibet / Eurobet",
     "leovegas": "LeoVegas / Eurobet",
@@ -34,7 +33,7 @@ MAPPA_BOOKMAKER_ITALIA = {
     "betonlineag": "Bet365",
     "coral": "Eurobet",
     "ladbrokes": "Sisal",
-    "paddypower": "Betfair Sport (No Exchange)",
+    "paddypower": "Betfair Sport",
     "skybet": "SkyBet / Sisal"
 }
 
@@ -101,14 +100,30 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f: 
         json.dump(db, f, indent=4, ensure_ascii=False)
 
+def calcola_cassa_reale_modello(db, modello_nome):
+    cassa = 200.0
+    ultime_due = []
+    for s in db.get('schedine', []):
+        if s.get('modello') == modello_nome and s.get('stato_schedina') in ['vinta', 'persa']:
+            imp = float(s.get('importo', 10.0))
+            rit = float(s.get('ritorno_potenziale', 0.0))
+            if s['stato_schedina'] == 'vinta':
+                cassa += (rit - imp)
+                ultime_due.append('W')
+            else:
+                cassa -= imp
+                ultime_due.append('L')
+    # Freno anti-drawdown: se le ultime 2 sono perse, riduce l'esposizione del 20% per proteggere i profitti
+    freno = 0.80 if len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L'] else 1.0
+    return max(120.0, cassa), freno
+
 def invia_messaggio_protezione():
     msg = (
         "<b>⚠️ AVVISO DAL SISTEMA: PROTEZIONE CASSA (CROLLO QUOTE)</b>\n\n"
         "L'Analista quantitativo aveva individuato partite con un potenziale vantaggio statistico. "
         "Tuttavia, al momento della verifica finale, i bookmaker hanno corretto i mercati abbassando le quote sotto la nostra soglia minima di valore.\n\n"
         "Il Modello Omega è programmato per scovare probabilità nascoste e piazzare il colpo solo se il mercato offre un valore reale. "
-        "Se il vantaggio matematico svanisce prima dell'esecuzione, il bot blocca le operazioni per proteggere il capitale.\n\n"
-        "Non forziamo mai le giocate: si entra a mercato solo ed esclusivamente alle nostre condizioni."
+        "Se il vantaggio matematico svanisce prima dell'esecuzione, il bot blocca le operazioni per proteggere il capitale."
     )
     requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
 
@@ -119,22 +134,13 @@ def esegui_cecchino():
     limite_temporale = oggi + timedelta(days=4)
     
     db_analisi = carica_database_analisi()
-    if not db_analisi or not db_analisi.get('analisi'):
-        print("Omega Cecchino: Nessun database analisi trovato.")
-        return
+    if not db_analisi or not db_analisi.get('analisi'): return
     
     db_principale = carica_database_principale()
     
-    # Rimuove eventuali schedine errate con quota > 4.50 (es. il vecchio @20.0 di Betfair)
-    db_principale['schedine'] = [
-        s for s in db_principale['schedine'] 
-        if not (s.get('modello') == 'omega' and s.get('quota_totale', 0) > 4.50)
-    ]
-    
     for s in db_principale['schedine']:
         if s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str:
-            print("Omega Cecchino: Schedina valida già generata oggi.")
-            salva_database_principale(db_principale)
+            print("Omega Cecchino: Operazione già generata oggi.")
             return
     
     id_gia_giocati = {p['id_partita'] for s in db_principale['schedine'] if s.get('modello') == 'omega' and s.get('stato_schedina') == 'in attesa' for p in s.get('partite', [])}
@@ -142,7 +148,6 @@ def esegui_cecchino():
     candidati_valore = []
     
     for camp in campionati:
-        # Legge sia EU che UK per catturare William Hill, 888sport, Betway, Unibet, Bwin, ecc.
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h"
         partite_live = esegui_richiesta_api(url_template)
         if not partite_live: continue
@@ -165,9 +170,10 @@ def esegui_cecchino():
             pronostico_richiesto = analisi_match['consiglio_algoritmo']
             quota_minima = analisi_match['quota_valore_minima']
             quota_equa = analisi_match.get('quota_equa', quota_minima)
+            prob_reale = analisi_match.get('probabilita_reale', 55.0) / 100.0
             
-            # Tetto massimo anti-anomalia (blocca quote sballate oltre il +25% della quota equa o > 2.65)
-            tetto_massimo_reale = min(2.65, round(quota_equa * 1.25, 2))
+            # Tetto massimo rigoroso: vogliamo favorite vere (max quota 1.95)
+            tetto_massimo_reale = min(1.95, round(quota_equa * 1.18, 2))
             
             miglior_quota = 0.0
             book_vincente = ""
@@ -175,8 +181,6 @@ def esegui_cecchino():
             for book in p_live.get('bookmakers', []):
                 titolo_book = book.get('title', '')
                 key_book = book.get('key', '').lower()
-                
-                # Esclude qualsiasi Exchange (Betfair Exchange, Matchbook, Smarkets)
                 if 'exchange' in titolo_book.lower() or 'betfair' in key_book or 'matchbook' in key_book or 'smarkets' in key_book:
                     continue
                 
@@ -184,25 +188,21 @@ def esegui_cecchino():
                     if mercato.get('key') != 'h2h': continue
                     for out in mercato.get('outcomes', []):
                         q_attuale = out.get('price', 0)
-                        
-                        if q_attuale > tetto_massimo_reale:
-                            continue
+                        if q_attuale > tetto_massimo_reale: continue
                             
                         nome_esito_originale = out.get('name', '')
-                        is_match = False
+                        squadra_vincente_ita = pronostico_richiesto.lower().replace("vittoria ", "").strip()
+                        nome_esito_ita = traduci_squadra(nome_esito_originale).lower()
                         
-                        if "pareggio" in pronostico_richiesto.lower():
-                            if nome_esito_originale.lower() == 'draw': is_match = True
-                        elif "vittoria" in pronostico_richiesto.lower():
-                            squadra_vincente_ita = pronostico_richiesto.lower().replace("vittoria ", "").strip()
-                            nome_esito_ita = traduci_squadra(nome_esito_originale).lower()
-                            if squadra_vincente_ita == nome_esito_ita: is_match = True
-                                
-                        if is_match and q_attuale > miglior_quota:
+                        if squadra_vincente_ita == nome_esito_ita and q_attuale > miglior_quota:
                             miglior_quota = q_attuale
                             book_vincente = formatta_nome_bookmaker(key_book, titolo_book)
                             
             if quota_minima <= miglior_quota <= tetto_massimo_reale:
+                # Indice di qualità: combina il valore matematico (EV) con l'alta probabilità di vincita
+                ev_reale = (prob_reale * miglior_quota) - 1.0
+                indice_qualita = (ev_reale * 0.65) + (prob_reale * 0.35)
+                
                 candidati_valore.append({
                     'id_partita': p_live['id'],
                     'data': data_ita.strftime("%d/%m %H:%M"),
@@ -211,51 +211,55 @@ def esegui_cecchino():
                     'pronostico': pronostico_richiesto,
                     'quota': round(miglior_quota, 2),
                     'bookmaker': book_vincente,
-                    'score': round(miglior_quota - quota_minima, 3),
+                    'score': round(indice_qualita, 4),
+                    'ev': round(ev_reale, 3),
                     'lega': camp,
                     'stato': 'in attesa',
                     'risultato_reale': ''
                 })
                 
-    print(f"Omega Cecchino: Trovati {len(candidati_valore)} candidati di valore reali (+1% netto).")
-    
     if not candidati_valore: 
-        salva_database_principale(db_principale)
         invia_messaggio_protezione()
         return
     
     ordinati = sorted(candidati_valore, key=lambda x: (0 if 'italy' in x['lega'] else 1, -x['score']))
     
-    if ordinati[0]['quota'] >= 1.65 and ordinati[0]['score'] >= 0.03:
+    # REGOLA D'ORO DEI PROFESSIONISTI: 
+    # Mai più di 2 partite! Se la migliore è >= 1.48 si va in SINGOLA SECCA, altrimenti DOPPIA (max 2 match).
+    if ordinati[0]['quota'] >= 1.48:
+        finalisti = [ordinati[0]]
+        tipo_giocata = "Colpo Mirato in Singola ad Alta Probabilità."
+    elif len(ordinati) >= 2:
+        finalisti = [ordinati[0], ordinati[1]]
+        tipo_giocata = "Doppia Quantitativa a Bassa Varianza."
+    else:
         finalisti = [ordinati[0]]
         tipo_giocata = "Colpo Mirato in Singola."
-    else:
-        finalisti = []
-        q_temp = 1.0
-        for cand in ordinati[:3]:
-            finalisti.append(cand)
-            q_temp *= cand['quota']
-            if q_temp >= 1.58 and len(finalisti) >= 2:
-                break
-        tipo_giocata = "Schedina quantitativa."
     
-    quota_totale = round(q_temp if len(finalisti) > 1 else finalisti[0]['quota'], 2)
-    print(f"Omega Cecchino: Schedina assemblata ({len(finalisti)} match) -> Quota Totale: {quota_totale}")
+    q_temp = 1.0
+    for f in finalisti: q_temp *= f['quota']
+    quota_totale = round(q_temp, 2)
     
-    if quota_totale < 1.50: 
-        salva_database_principale(db_principale)
+    if quota_totale < 1.38: 
         invia_messaggio_protezione()
         return
         
-    vantaggio_medio = sum(c['score'] for c in finalisti) / len(finalisti)
-    stake_consigliato = round(min(20.0, max(10.0, 10.0 + (vantaggio_medio * 35))), 1)
+    # Staking con Interesse Composto sulla Cassa Reale di Omega
+    cassa_omega, freno_rischio = calcola_cassa_reale_modello(db_principale, 'omega')
+    ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
+    
+    # Stake tra il 6% e il 10% della cassa reale in base al valore matematico
+    percentuale_cassa = min(0.10, max(0.06, 0.06 + (ev_medio * 0.45))) * freno_rischio
+    stake_consigliato = round(cassa_omega * percentuale_cassa, 1)
+    
+    partite_db = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
     
     msg = "<b>MODELLO OMEGA</b>\n\n"
     msg += f"<b>{tipo_giocata}</b>\n\n"
     msg += f"📊 <b>Quota totale</b>: {quota_totale}\n"
     msg += f"💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
     
-    for c in finalisti:
+    for c in partite_db:
         msg += f"⚽ <b>{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}</b>\n"
         msg += f"🎯 <b>Giocata</b>: {c['pronostico'].lower()} (@{c['quota']})\n"
         msg += f"🏦 <b>Bookmaker</b>: {c['bookmaker']}\n\n"
@@ -263,7 +267,6 @@ def esegui_cecchino():
     msg += "<b>#TradingSportivo #ValueBetting #ScommesseSportive</b>"
     
     res = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
-    print(f"Omega Telegram Status: {res.status_code}")
     
     if res.status_code == 200:
         db_principale['schedine'].append({
@@ -274,7 +277,7 @@ def esegui_cecchino():
             'quota_totale': quota_totale,
             'ritorno_potenziale': round(stake_consigliato * quota_totale, 2),
             'stato_schedina': 'in attesa',
-            'partite': finalisti
+            'partite': partite_db
         })
         salva_database_principale(db_principale)
 
