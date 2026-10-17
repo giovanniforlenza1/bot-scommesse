@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBR | Smart Betting Routing Dashboard</title>
-    <!-- Favicon Personalizzata -->
+    <title>SBR | Smart Betting Routing</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --prussian-blue: #102542;
@@ -16,375 +15,835 @@
             --alabaster-grey: #CDD7D6;
             --khaki-beige: #B3A394;
             --white: #FFFFFF;
-
-            --bg-body: #f4f6f6;
+            
+            --bg-page: #F4F6F6;
+            --bg-card: #FFFFFF;
             --text-main: #102542;
-            --text-muted: #5c6b7d;
-            --border-solid: #CDD7D6;
-            --success: #22c55e;
-            --danger: #ef4444;
+            --text-muted: #576574;
+            --border: #CDD7D6;
+            
+            --win: #10B981;
+            --win-bg: #ECFDF5;
+            --loss: #EF4444;
+            --loss-bg: #FEF2F2;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
-
-        header { background-color: #102542; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(16, 37, 66, 0.15); }
-        .nav-container { max-width: 1100px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-        .brand h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0; letter-spacing: -0.5px; }
-        .nav-btn { background-color: var(--vibrant-coral); color: var(--white); padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
-        .nav-btn:hover { opacity: 0.9; }
-        .spacer { height: 70px; }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-
-        .models-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; align-items: start; }
-        .model-card { background-color: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-solid); border-top: 4px solid #102542; height: 100%; }
-        .model-card.alpha { border-top-color: #102542; }
-        .model-card.beta { border-top-color: var(--khaki-beige); }
-        .model-card.omega { border-top-color: var(--vibrant-coral); }
-        .model-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-        .model-card p { font-size: 13px; color: var(--text-main); line-height: 1.5; margin-bottom: 12px; }
-        .model-card ul { padding-left: 18px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
-        .model-card li { margin-bottom: 8px; }
-        .badge { font-size: 10px; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.5px; }
-
-        .dashboard-header { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid var(--border-solid); display: flex; flex-direction: column; gap: 20px; }
-
-        .model-selector { display: flex; gap: 10px; border-bottom: 1px solid var(--border-solid); padding-bottom: 20px; }
-        .model-tab { flex: 1; padding: 12px; text-align: center; font-weight: 700; font-size: 14px; color: var(--text-muted); background: var(--alabaster-grey); border-radius: 8px; cursor: pointer; transition: all 0.2s; border: none; text-transform: uppercase; }
-        .model-tab:hover { background: #e2e8e8; }
-
-        .model-tab.tab-alpha.active { background: #102542; color: var(--white); }
-        .model-tab.tab-beta.active { background: var(--khaki-beige); color: var(--white); }
-        .model-tab.tab-omega.active { background: var(--vibrant-coral); color: var(--white); }
-
-        .status-selector { display: flex; gap: 10px; flex-wrap: wrap; }
-        .status-btn { background: transparent; border: 1px solid var(--khaki-beige); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-        .status-btn:hover { border-color: #102542; color: #102542; }
-        .status-btn.active { background: var(--vibrant-coral); color: var(--white); border-color: var(--vibrant-coral); }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 20px 15px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .stat-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
-        .stat-value { font-size: 24px; font-weight: 800; color: #102542; font-family: 'JetBrains Mono', monospace; }
-        .stat-value.profit { color: var(--success); }
-        .stat-value.negative { color: var(--danger); }
-
-        .chart-box { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 25px; margin-bottom: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .chart-wrapper { position: relative; height: 300px; width: 100%; }
-
-        .tickets-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .ticket { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
-        .ticket-header { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); display: flex; justify-content: space-between; align-items: center; background-color: #fafbfc; }
-        .t-date { font-size: 12px; font-weight: 600; color: var(--khaki-beige); font-family: 'JetBrains Mono', monospace; }
-        .t-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
-        .t-status.vinta { background-color: #dcfce7; color: var(--success); }
-        .t-status.persa { background-color: #fee2e2; color: var(--danger); }
-
-        .match-row { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); }
-        .match-row:last-child { border-bottom: none; }
-        .m-teams { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; color: #102542; }
-        .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .m-pick { font-size: 12px; font-weight: 700; color: var(--vibrant-coral); text-transform: uppercase; }
-        .m-quote { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--khaki-beige); }
-        .m-result { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-
-        .ticket-footer { padding: 14px 16px; border-top: 1px solid var(--alabaster-grey); background-color: #fafbfc; }
-        .t-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-        .t-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; color: #102542; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--alabaster-grey); }
-
-        @media (max-width: 900px) {
-            .models-info-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
-        @media (max-width: 600px) {
-            .model-selector { flex-direction: column; }
-            .stats-grid { grid-template-columns: 1fr; }
+
+        /* HEADER PROFESSIONALE */
+        header {
+            background-color: var(--prussian-blue);
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(16, 37, 66, 0.1);
         }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--white);
+        }
+        .brand img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--vibrant-coral);
+        }
+        .brand-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            color: var(--white);
+        }
+        .brand-title span { color: var(--vibrant-coral); }
+        
+        .tg-btn {
+            background-color: var(--vibrant-coral);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: filter 0.15s;
+        }
+        .tg-btn:hover { filter: brightness(1.1); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* BANNER OPERAZIONI IN CORSO (SOTTO L'HEADER) */
+        .live-banner {
+            background-color: var(--win-bg);
+            border: 1px solid #A7F3D0;
+            border-left: 5px solid var(--win);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.05);
+        }
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #065F46;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--win);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* INTESTAZIONE HOME */
+        .hero {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--prussian-blue);
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 750px;
+        }
+
+        /* GRIGLIA MODELLI */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .model-card {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .model-card:hover {
+            border-color: var(--vibrant-coral);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16,37,66,0.06);
+        }
+        .model-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
+            margin-bottom: 0.9rem;
+        }
+        .model-card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--prussian-blue);
+            margin-bottom: 0.5rem;
+        }
+        .model-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .mini-kpis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.25rem;
+        }
+        .mini-kpi span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .mini-kpi strong {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--prussian-blue);
+        }
+        .open-page-btn {
+            width: 100%;
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
+            border: 1px solid var(--khaki-beige);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: all 0.15s;
+        }
+        .model-card:hover .open-page-btn {
+            background-color: var(--vibrant-coral);
+            color: var(--white);
+            border-color: var(--vibrant-coral);
+        }
+
+        /* PAGINA DEDICATA AL SINGOLO MODELLO */
+        .hidden { display: none !important; }
+        
+        .back-bar {
+            margin-bottom: 1.5rem;
+        }
+        .back-btn {
+            background-color: var(--white);
+            color: var(--prussian-blue);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-btn:hover { background-color: var(--alabaster-grey); }
+
+        .model-header-box {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.75rem;
+            border-top: 5px solid var(--vibrant-coral);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .specs-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .spec-item {
+            background-color: var(--alabaster-grey);
+            padding: 1.1rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--prussian-blue);
+        }
+        .spec-item h4 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--prussian-blue);
+        }
+        .spec-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* 4 KPI CARDS */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+        .kpi-box {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.35rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .kpi-box span {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .kpi-box h3 {
+            font-size: 1.65rem;
+            font-weight: 800;
+            margin-top: 0.35rem;
+            color: var(--prussian-blue);
+        }
+
+        /* GRAFICO EQUITY LINE */
+        .chart-box {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .chart-box h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* STORICO SCHEDINE */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--prussian-blue);
+            margin-bottom: 1rem;
+        }
+        .ticket-card {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.35rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .ticket-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        .badge-status {
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-vinta { background-color: var(--win-bg); color: var(--win); border: 1px solid #BBF7D0; }
+        .badge-persa { background-color: var(--loss-bg); color: var(--loss); border: 1px solid #FECACA; }
+
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--alabaster-grey);
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.92rem;
+        }
+        .match-row:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        .team-shield {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            background-color: var(--alabaster-grey);
+            color: var(--prussian-blue);
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-right: 8px;
+            border: 1px solid var(--khaki-beige);
+        }
+        .match-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .pick-label {
+            color: var(--prussian-blue);
+            font-weight: 700;
+        }
+        .book-pill {
+            background-color: var(--alabaster-grey);
+            border: 1px solid var(--khaki-beige);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--prussian-blue);
+            font-weight: 500;
+        }
+        .clv-pill {
+            background-color: var(--win-bg);
+            color: var(--win);
+            border: 1px solid #BBF7D0;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* ESITO SINGOLA PARTITA */
+        .esito-vinto {
+            background-color: var(--win-bg);
+            color: var(--win);
+            border: 1px solid #BBF7D0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        .esito-perso {
+            background-color: var(--loss-bg);
+            color: var(--loss);
+            border: 1px solid #FECACA;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .text-win { color: var(--win) !important; }
+        .text-loss { color: var(--loss) !important; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
+<header>
+    <div class="nav-container">
+        <a class="brand" onclick="mostraHome()">
+            <img src="favicon.png" alt="SBR" onerror="this.style.display='none'">
+            <div class="brand-title">SBR <span>ROUTING</span></div>
+        </a>
+        <a href="https://t.me/+nyQkDOrFWrkyNGI8" target="_blank" class="tg-btn" id="headerTgBtn">Canale Telegram</a>
+    </div>
+</header>
 
-    <!-- BANNER OPERAZIONI IN CORSO (FOMO MARKETING) -->
+<div class="container">
+
+    <!-- BANNER OPERAZIONI IN CORSO (SOTTO L'HEADER) -->
     <div id="liveBanner" class="live-banner hidden">
         <div class="live-indicator">
             <div class="status-dot"></div>
             <span id="liveBannerText">Operazioni Quantitative a Mercato</span>
         </div>
         <span style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">Dettagli oscurati fino al termine delle partite</span>
-
-    <!-- Resto della tua pagina (hero, griglia modelli, ecc.) -->
-            <a href="#" class="brand">
-                <h1>SBR</h1>
-            </a>
-            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank"><i class="fa-brands fa-telegram"></i> Canale Telegram</a>
-        </div>
-    </header>
-
-    <div class="spacer"></div>
-
-    <div class="container">
-        <div class="models-info-grid">
-            <div class="model-card alpha">
-                <h3>Modello Alpha <span class="badge" style="background-color: #102542;">ALTO RENDIMENTO</span></h3>
-                <p><strong>L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.</strong></p>
-                <ul>
-                    <li><strong>Ricerca del valore</strong>: seleziona eventi con quota minima 1.25 e confidenza matematica strutturale.</li>
-                    <li><strong>Moltiplicatore esplosivo</strong>: concatena fino a 5 match per raggiungere e superare la soglia totale di 5.00.</li>
-                    <li><strong>Bankroll speculativo</strong>: sacrifica la frequenza di vincita per generare picchi di profitto elevati.</li>
-                </ul>
-            </div>
-            <div class="model-card beta">
-                <h3>Modello Beta <span class="badge" style="background-color: var(--khaki-beige);">ESOTICO</span></h3>
-                <p><strong>L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.</strong></p>
-                <ul>
-                    <li><strong>Analisi della tensione</strong>: incrocia le probabilità per stimare le ammonizioni con un rigoroso filtro sulle quote base.</li>
-                    <li><strong>Pressione offensiva</strong>: valuta lo squilibrio in campo calcolando il volume dei corner per singola partita.</li>
-                    <li><strong>Staking dinamico</strong>: applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione.</li>
-                </ul>
-            </div>
-            <div class="model-card omega">
-                <h3>Modello Omega <span class="badge" style="background-color: var(--vibrant-coral);">QUANTITATIVO</span></h3>
-                <p><strong>Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.</strong></p>
-                <ul>
-                    <li><strong>Purificazione del mercato</strong>: elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale.</li>
-                    <li><strong>Simulazione tattica</strong>: gioca virtualmente il match diecimila volte calcolando attacco e difesa.</li>
-                    <li><strong>Il colpo mirato</strong>: invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="dashboard-header">
-            <div class="model-selector">
-                <button class="model-tab tab-alpha active" onclick="selezionaModello('alpha')">Alpha (Alto Rendimento)</button>
-                <button class="model-tab tab-beta" onclick="selezionaModello('beta')">Beta (Singole Esotiche)</button>
-                <button class="model-tab tab-omega" onclick="selezionaModello('omega')">Omega (Predittivo Core)</button>
-            </div>
-            <div class="status-selector">
-                <button class="status-btn active" onclick="selezionaFiltro('tutte', this)">Tutte (<span id="count-tutte">0</span>)</button>
-                <button class="status-btn" onclick="selezionaFiltro('vinta', this)">Vinte (<span id="count-vinte">0</span>)</button>
-                <button class="status-btn" onclick="selezionaFiltro('persa', this)">Perse (<span id="count-perse">0</span>)</button>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Cassa Modello</div>
-                <div class="stat-value" id="capitale">-- €</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Profitto Netto</div>
-                <div class="stat-value" id="profitto">-- €</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Yield (ROI)</div>
-                <div class="stat-value" id="yield">--%</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Win Rate</div>
-                <div class="stat-value" id="winrate">--%</div>
-            </div>
-        </div>
-
-        <div class="chart-box">
-            <div class="chart-wrapper">
-                <canvas id="equityChart"></canvas>
-            </div>
-        </div>
-
-        <div id="storico-container" class="tickets-container"></div>
     </div>
 
-    <script>
-        let databaseGlobale = null;
-        let modelloAttuale = 'alpha';
-        let filtroAttuale = 'tutte';
-        let chartIstanza = null;
+    <!-- VISTA 1: HOME PAGE -->
+    <div id="homeView">
+        <div class="hero">
+            <h1>Smart Betting Routing</h1>
+            <p>Piattaforma di trading sportivo quantitativo. Monitoraggio in tempo reale dei modelli algoritmici, analisi dei flussi di quota e rendicontazione finanziaria trasparente basata su database storico.</p>
+        </div>
 
-        function aggiornaHome() {
+        <div class="models-grid">
+            <!-- CARD OMEGA -->
+            <div class="model-card" onclick="apriPaginaModello('omega')" style="border-top: 4px solid #102542;">
+                <div>
+                    <span class="model-tag">Quantitativo</span>
+                    <h2>Modello Omega</h2>
+                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].</p>
+                </div>
+                <div>
+                    <div class="mini-kpis">
+                        <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-omega">-- €</strong></div>
+                        <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-omega">--%</strong></div>
+                    </div>
+                    <div class="open-page-btn">Consulta Sala Omega →</div>
+                </div>
+            </div>
+
+            <!-- CARD ALPHA -->
+            <div class="model-card" onclick="apriPaginaModello('alpha')" style="border-top: 4px solid #F87060;">
+                <div>
+                    <span class="model-tag">Alto Rendimento</span>
+                    <h2>Modello Alpha</h2>
+                    <p class="model-desc">L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].</p>
+                </div>
+                <div>
+                    <div class="mini-kpis">
+                        <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-alpha">-- €</strong></div>
+                        <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-alpha">--%</strong></div>
+                    </div>
+                    <div class="open-page-btn">Consulta Sala Alpha →</div>
+                </div>
+            </div>
+
+            <!-- CARD BETA -->
+            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #B3A394;">
+                <div>
+                    <span class="model-tag">Esotico</span>
+                    <h2>Modello Beta</h2>
+                    <p class="model-desc">L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].</p>
+                </div>
+                <div>
+                    <div class="mini-kpis">
+                        <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-beta">-- €</strong></div>
+                        <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-beta">--%</strong></div>
+                    </div>
+                    <div class="open-page-btn">Consulta Sala Beta →</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISTA 2: PAGINA DEDICATA AL SINGOLO MODELLO -->
+    <div id="modelDetailView" class="hidden">
+        <div class="back-bar">
+            <button class="back-btn" onclick="mostraHome()">← Torna alla panoramica modelli</button>
+        </div>
+
+        <div class="model-header-box" id="modelHeaderBox">
+            <span id="det-tag" class="model-tag">MODELLO</span>
+            <h1 id="det-title" style="font-size:1.75rem; color:var(--prussian-blue); margin-bottom:0.4rem;">Titolo Modello</h1>
+            <p id="det-subtitle" style="color:var(--text-muted); font-size:0.95rem;"></p>
+            <div id="det-specs" class="specs-list"></div>
+        </div>
+
+        <!-- 4 KPI FINANZIARI -->
+        <div class="kpi-row">
+            <div class="kpi-box">
+                <span>Cassa Modello</span>
+                <h3 id="det-cassa">200.00 €</h3>
+            </div>
+            <div class="kpi-box">
+                <span>Profitto Netto</span>
+                <h3 id="det-profitto">0.00 €</h3>
+            </div>
+            <div class="kpi-box">
+                <span>Yield (ROI)</span>
+                <h3 id="det-yield">0.0%</h3>
+            </div>
+            <div class="kpi-box">
+                <span>Win Rate</span>
+                <h3 id="det-winrate">0.0%</h3>
+            </div>
+        </div>
+
+        <!-- EQUITY LINE CHART -->
+        <div class="chart-box">
+            <h3>Andamento Capitale (Equity Line)</h3>
+            <canvas id="equityChart" height="85"></canvas>
+        </div>
+
+        <!-- STORICO SCHEDINE CONCLUSE -->
+        <h3 class="section-title">Storico Operazioni Concluse</h3>
+        <div id="det-storico-list"></div>
+    </div>
+
+</div>
+
+<script>
+    let globalDb = { capitale_iniziale: 200.0, schedine: [] };
+    let chartInstance = null;
+
+    const INFO_MODELLI = {
+        omega: {
+            tag: "QUANTITATIVO",
+            titolo: "Modello Omega",
+            sottotitolo: "Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].",
+            colorHex: "#102542",
+            specs: [
+                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale[cite: 5]." },
+                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles[cite: 5]." },
+                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico[cite: 5]." }
+            ]
+        },
+        alpha: {
+            tag: "ALTO RENDIMENTO",
+            titolo: "Modello Alpha",
+            sottotitolo: "L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].",
+            colorHex: "#F87060",
+            specs: [
+                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale[cite: 5]." },
+                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00[cite: 5]." },
+                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati[cite: 5]." }
+            ]
+        },
+        beta: {
+            tag: "ESOTICO",
+            titolo: "Modello Beta",
+            sottotitolo: "L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].",
+            colorHex: "#B3A394",
+            specs: [
+                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base[cite: 5]." },
+                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner per singola partita[cite: 5]." },
+                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione[cite: 5]." }
+            ]
+        }
+    };
+
+    function applicaTemaModello(modelloKey) {
+        const info = INFO_MODELLI[modelloKey];
+        document.getElementById('modelHeaderBox').style.borderTopColor = info.colorHex;
+    }
+
+    function creaStemmaSquadra(nome) {
+        if (!nome) return "";
+        const parole = nome.trim().split(" ");
+        const iniziali = parole.length > 1 ? (parole[0][0] + parole[1][0]) : nome.substring(0, 2);
+        return `<span class="team-shield">${iniziali.toUpperCase()}</span>`;
+    }
+
+    function calcolaMetricheModello(modelloKey) {
+        const baseCap = 200.0;
+        const concluse = (globalDb.schedine || []).filter(s => 
+            s.modello === modelloKey && (s.stato_schedina === 'vinta' || s.stato_schedina === 'persa')
+        );
+
+        let investito = 0, profitto = 0, vinte = 0;
+        let storicoCassa = [baseCap];
+        let labels = ["Inizio"];
+
+        concluse.forEach((s, idx) => {
+            const imp = parseFloat(s.importo || 10);
+            const ritorno = parseFloat(s.ritorno_potenziale || (imp * s.quota_totale));
+            investito += imp;
+            if (s.stato_schedina === 'vinta') {
+                profitto += (ritorno - imp);
+                vinte += 1;
+            } else {
+                profitto -= imp;
+            }
+            storicoCassa.push(parseFloat((baseCap + profitto).toFixed(2)));
+            labels.push(s.data_creazione || `#${idx + 1}`);
+        });
+
+        const cassaFinale = baseCap + profitto;
+        const yieldPct = investito > 0 ? ((profitto / investito) * 100) : 0;
+        const winRate = concluse.length > 0 ? ((vinte / concluse.length) * 100) : 0;
+
+        return {
+            cassa: cassaFinale.toFixed(2),
+            profitto: profitto.toFixed(2),
+            profittoNum: profitto,
+            yieldPct: yieldPct.toFixed(1),
+            winRate: winRate.toFixed(1),
+            concluse: concluse.slice().reverse(),
+            storicoCassa,
+            labels
+        };
+    }
+
+    function aggiornaHome() {
+        // FILTRO SCHEDINE IN ATTESA (OPERAZIONI IN CORSO)
         const inAttesa = (globalDb.schedine || []).filter(s => s.stato_schedina === 'in attesa');
         const banner = document.getElementById('liveBanner');
-    
-        if (inAttesa.length > 0) {
-        banner.classList.remove('hidden');
-        document.getElementById('liveBannerText').innerText = 
-            `${inAttesa.length} Operazion${inAttesa.length === 1 ? 'e Quantitativa Attiva' : 'i Quantitative Attive'} a Mercato`;
-        } else {
-        banner.classList.add('hidden');
-        }
-    
-    // ... resto delle metriche dei modelli ...
-       }
         
-        function selezionaModello(modello) {
-            modelloAttuale = modello;
-            document.querySelectorAll('.model-tab').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.innerText.toLowerCase().includes(modello)) {
-                    btn.classList.add('active');
-                }
-            });
-            aggiornaDashboard();
+        if (inAttesa.length > 0) {
+            banner.classList.remove('hidden');
+            document.getElementById('liveBannerText').innerText = 
+                `🟢 ${inAttesa.length} Operazion${inAttesa.length === 1 ? 'e' : 'i'} Quantitativa/e Attiva/e a Mercato in questo momento`;
+        } else {
+            banner.classList.add('hidden'); // Se non ce ne sono, sparisce completamente
         }
 
-        function selezionaFiltro(filtro, elemento) {
-            filtroAttuale = filtro;
-            document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
-            if(elemento) elemento.classList.add('active');
-            aggiornaDashboard();
+        ['omega', 'alpha', 'beta'].forEach(m => {
+            const stats = calcolaMetricheModello(m);
+            const elProf = document.getElementById(`home-profit-${m}`);
+            const elYield = document.getElementById(`home-yield-${m}`);
+            if (elProf) {
+                elProf.innerText = `${stats.profittoNum >= 0 ? '+' : ''}${stats.profitto} €`;
+                elProf.className = stats.profittoNum >= 0 ? 'text-win' : 'text-loss';
+            }
+            if (elYield) {
+                elYield.innerText = `${stats.profittoNum >= 0 ? '+' : ''}${stats.yieldPct}%`;
+                elYield.className = stats.profittoNum >= 0 ? 'text-win' : 'text-loss';
+            }
+        });
+    }
+
+    function apriPaginaModello(modelloKey) {
+        document.getElementById('homeView').classList.add('hidden');
+        document.getElementById('modelDetailView').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        applicaTemaModello(modelloKey);
+
+        const info = INFO_MODELLI[modelloKey];
+        const stats = calcolaMetricheModello(modelloKey);
+
+        document.getElementById('det-tag').innerText = info.tag;
+        document.getElementById('det-title').innerText = info.titolo;
+        document.getElementById('det-subtitle').innerText = info.sottotitolo;
+
+        document.getElementById('det-specs').innerHTML = info.specs.map(sp => `
+            <div class="spec-item">
+                <h4>${sp.t}</h4>
+                <p>${sp.d}</p>
+            </div>
+        `).join('');
+
+        document.getElementById('det-cassa').innerText = `${stats.cassa} €`;
+        const elProf = document.getElementById('det-profitto');
+        elProf.innerText = `${stats.profittoNum >= 0 ? '+' : ''}${stats.profitto} €`;
+        elProf.className = stats.profittoNum >= 0 ? 'text-win' : 'text-loss';
+
+        const elYield = document.getElementById('det-yield');
+        elYield.innerText = `${stats.profittoNum >= 0 ? '+' : ''}${stats.yieldPct}%`;
+        elYield.className = stats.profittoNum >= 0 ? 'text-win' : 'text-loss';
+
+        document.getElementById('det-winrate').innerText = `${stats.winRate}%`;
+
+        disegnaGrafico(stats.labels, stats.storicoCassa, info.colorHex);
+        renderizzaStorico(stats.concluse);
+    }
+
+    function mostraHome() {
+        document.getElementById('modelDetailView').classList.add('hidden');
+        document.getElementById('homeView').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        aggiornaHome();
+    }
+
+    function disegnaGrafico(labels, dataPoints, colorHex) {
+        const ctx = document.getElementById('equityChart').getContext('2d');
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Cassa Modello (€)',
+                    data: dataPoints,
+                    borderColor: colorHex,
+                    backgroundColor: 'rgba(16,37,66,0.03)',
+                    borderWidth: 2.5,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#F87060',
+                    pointBorderColor: colorHex,
+                    fill: true,
+                    tension: 0.15
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: '#576574' }, grid: { color: '#CDD7D6' } },
+                    y: { ticks: { color: '#576574' }, grid: { color: '#CDD7D6' } }
+                }
+            }
+        });
+    }
+
+    function renderizzaStorico(schedineConcluse) {
+        const container = document.getElementById('det-storico-list');
+        if (!schedineConcluse.length) {
+            container.innerHTML = `<div class="ticket-card" style="text-align:center; color:var(--text-muted);">Nessuna operazione conclusa registrata per questo modello.</div>`;
+            return;
         }
 
-        function aggiornaDashboard() {
-            if (!databaseGlobale) return;
-
-            const schedineModello = databaseGlobale.schedine.filter(sc => {
-                let mod = sc.modello ? sc.modello.toLowerCase() : 'alpha';
-                return mod === modelloAttuale;
-            });
-
-            let capitale = 200.0;
-            let vinte = 0, perse = 0, totalePuntato = 0;
-            let labelsGrafico = ['Start'];
-            let puntiCassa = [200.0];
-
-            schedineModello.forEach(sc => {
-                totalePuntato += sc.importo;
-                if (sc.stato_schedina === 'vinta') {
-                    capitale += (sc.ritorno_potenziale - sc.importo);
-                    vinte++;
-                } else if (sc.stato_schedina === 'persa') {
-                    capitale -= sc.importo;
-                    perse++;
+        container.innerHTML = schedineConcluse.map(s => {
+            const isWin = s.stato_schedina === 'vinta';
+            const netto = isWin ? `+${(s.ritorno_potenziale - s.importo).toFixed(2)} €` : `-${parseFloat(s.importo).toFixed(2)} €`;
+            
+            const righePartite = (s.partite || []).map(p => {
+                let esitoBadge = "";
+                if (p.stato === 'vinta' || (!p.stato && s.stato_schedina === 'vinta')) {
+                    esitoBadge = `<span class="esito-vinto">✓ ${p.risultato_reale || 'Presa'}</span>`;
+                } else if (p.stato === 'persa' || (!p.stato && s.stato_schedina === 'persa')) {
+                    esitoBadge = `<span class="esito-perso">✕ ${p.risultato_reale || 'Saltata'}</span>`;
+                } else if (p.risultato_reale) {
+                    esitoBadge = `<span class="book-pill">${p.risultato_reale}</span>`;
                 }
-                labelsGrafico.push(sc.data_creazione);
-                puntiCassa.push(Number(capitale.toFixed(2)));
-            });
 
-            document.getElementById('count-tutte').innerText = schedineModello.length;
-            document.getElementById('count-vinte').innerText = vinte;
-            document.getElementById('count-perse').innerText = perse;
-
-            let profittoNetto = capitale - 200.0;
-            document.getElementById('capitale').innerText = capitale.toFixed(2) + ' €';
-
-            let elProfitto = document.getElementById('profitto');
-            elProfitto.innerText = (profittoNetto > 0 ? '+' : '') + profittoNetto.toFixed(2) + ' €';
-            elProfitto.className = 'stat-value ' + (profittoNetto > 0 ? 'profit' : (profittoNetto < 0 ? 'negative' : ''));
-
-            let totaliDecisi = vinte + perse;
-            document.getElementById('winrate').innerText = totaliDecisi > 0 ? Math.round((vinte / totaliDecisi) * 100) + '%' : '--%';
-
-            let elYield = document.getElementById('yield');
-            if (totalePuntato > 0) {
-                let roi = (profittoNetto / totalePuntato) * 100;
-                elYield.innerText = (roi > 0 ? '+' : '') + roi.toFixed(1) + '%';
-                elYield.className = 'stat-value ' + (roi > 0 ? 'profit' : (roi < 0 ? 'negative' : ''));
-            } else {
-                elYield.innerText = '--%';
-                elYield.className = 'stat-value';
-            }
-
-            renderizzaGrafico(labelsGrafico, puntiCassa);
-
-            const container = document.getElementById('storico-container');
-            container.innerHTML = '';
-
-            const schedineFiltrate = schedineModello.slice().reverse().filter(sc => filtroAttuale === 'tutte' || sc.stato_schedina === filtroAttuale);
-
-            if (schedineFiltrate.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna giocata trovata per il Modello ${modelloAttuale.toUpperCase()} con i filtri attuali.</div>`;
-                return;
-            }
-
-            schedineFiltrate.forEach(sc => {
-                let classStamp = sc.stato_schedina === 'vinta' ? 'vinta' : 'persa';
-
-                let matchesHTML = sc.partite.map(p => {
-                    let icon = p.stato === 'vinta' ? '✓' : (p.stato === 'persa' ? '✗' : '⏱');
-                    let color = p.stato === 'vinta' ? 'var(--success)' : (p.stato === 'persa' ? 'var(--danger)' : 'var(--text-muted)');
-                    let score = p.risultato_reale ? `[${p.risultato_reale}] ` : '';
-                    return `
+                return `
                     <div class="match-row">
-                        <span class="m-teams">${p.squadra_casa} - ${p.squadra_trasferta}</span>
-                        <div class="m-details">
-                            <span class="m-pick">${p.pronostico}</span>
-                            <span class="m-quote">@${p.quota.toFixed(2)}</span>
-                        </div>
-                        <div class="m-result" style="color: ${color};">${score}${icon}</div>
-                    </div>`;
-                }).join('');
-
-                container.innerHTML += `
-                    <div class="ticket">
                         <div>
-                            <div class="ticket-header">
-                                <span class="t-date">${sc.data_creazione}</span>
-                                <span class="t-status ${classStamp}">${sc.stato_schedina}</span>
-                            </div>
-                            <div>${matchesHTML}</div>
+                            ${creaStemmaSquadra(p.squadra_casa)}
+                            <strong>${p.squadra_casa} - ${p.squadra_trasferta}</strong>
+                            <span style="color:var(--text-muted); font-size:0.82rem; margin-left:6px;">${p.data || ''}</span>
                         </div>
-                        <div class="ticket-footer">
-                            <div class="t-row"><span>Quota totale:</span><span>${sc.quota_totale.toFixed(2)}</span></div>
-                            <div class="t-row"><span>Stake:</span><span>€ ${sc.importo.toFixed(2)}</span></div>
-                            <div class="t-total"><span>Vincita:</span><span>€ ${sc.ritorno_potenziale.toFixed(2)}</span></div>
+                        <div class="match-meta">
+                            <span class="pick-label">${p.pronostico} (@${p.quota})</span>
+                            ${p.bookmaker ? `<span class="book-pill">${p.bookmaker}</span>` : ''}
+                            ${p.clv_edge ? `<span class="clv-pill">CLV ${p.clv_edge}</span>` : ''}
+                            ${esitoBadge}
                         </div>
-                    </div>`;
-            });
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="ticket-card">
+                    <div class="ticket-top">
+                        <div>
+                            <strong>Data: ${s.data_creazione}</strong> &nbsp;•&nbsp; 
+                            <span style="color:var(--text-muted);">Quota: <strong>@${s.quota_totale}</strong> &nbsp;|&nbsp; Stake: <strong>${s.importo} €</strong></span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <strong class="${isWin ? 'text-win' : 'text-loss'}">${netto}</strong>
+                            <span class="badge-status ${isWin ? 'badge-vinta' : 'badge-persa'}">${s.stato_schedina}</span>
+                        </div>
+                    </div>
+                    <div>${righePartite}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function caricaDati() {
+        try {
+            const res = await fetch(`database.json?t=${Date.now()}`);
+            if (res.ok) {
+                globalDb = await res.json();
+            }
+        } catch (e) {
+            console.error("Errore caricamento database:", e);
         }
+        aggiornaHome();
+    }
 
-        function renderizzaGrafico(labels, data) {
-            const ctx = document.getElementById('equityChart').getContext('2d');
-            if (chartIstanza) chartIstanza.destroy();
-
-            let lineColor = '#102542'; 
-            if(modelloAttuale === 'beta') lineColor = '#B3A394'; 
-            if(modelloAttuale === 'omega') lineColor = '#F87060'; 
-
-            chartIstanza = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Capitale (€)',
-                        data: data,
-                        borderColor: lineColor,
-                        backgroundColor: 'transparent',
-                        borderWidth: 3,
-                        pointBackgroundColor: lineColor,
-                        pointRadius: 4,
-                        tension: 0.2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { grid: { color: '#CDD7D6' } }
-                    }
-                }
-            });
-        }
-
-        const urlFresco = 'database.json?v=' + new Date().getTime();
-
-        fetch(urlFresco)
-            .then(res => res.json())
-            .then(data => {
-                // FILTRO INVISIBILITÀ: Scarta in automatico tutte le giocate non ancora concluse
-                data.schedine = data.schedine.filter(sc => sc.stato_schedina !== 'in attesa');
-                
-                databaseGlobale = data;
-                aggiornaDashboard();
-            })
-            .catch(err => {
-                document.getElementById('storico-container').innerHTML = '<div style="color: var(--danger); padding: 40px;">Errore caricamento database.</div>';
-            });
-    </script>
+    caricaDati();
+</script>
 </body>
 </html>
