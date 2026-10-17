@@ -15,7 +15,8 @@ campionati = [
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
-siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Betfair', 'William Hill', 'Unibet', 'Marathonbet', '888sport']
+# Rimosso Betfair (Exchange) perché genera quote illiquide sballate (es. @20.0)
+siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'William Hill', 'Unibet', 'Marathonbet', '888sport']
 
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
@@ -39,7 +40,7 @@ TRADUZIONI_SQUADRE = {
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG",
     "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen",
     "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
-    "Athletic Club": "Athletic Bilbao"
+    "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
 def traduci_squadra(nome):
@@ -75,14 +76,14 @@ def salva_database_principale(db):
 
 def invia_messaggio_protezione():
     msg = (
-        "**⚠️ AVVISO DAL SISTEMA: PROTEZIONE CASSA (CROLLO QUOTE)**\n\n"
+        "<b>⚠️ AVVISO DAL SISTEMA: PROTEZIONE CASSA (CROLLO QUOTE)</b>\n\n"
         "L'Analista quantitativo aveva individuato partite con un potenziale vantaggio statistico. "
         "Tuttavia, al momento della verifica finale, i bookmaker hanno corretto i mercati abbassando le quote sotto la nostra soglia minima di valore.\n\n"
         "Il Modello Omega è programmato per scovare probabilità nascoste e piazzare il colpo solo se il mercato offre un valore reale. "
         "Se il vantaggio matematico svanisce prima dell'esecuzione, il bot blocca le operazioni per proteggere il capitale.\n\n"
         "Non forziamo mai le giocate: si entra a mercato solo ed esclusivamente alle nostre condizioni."
     )
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "Markdown"})
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
 
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
@@ -93,7 +94,13 @@ def esegui_cecchino():
     if not db_analisi or not db_analisi.get('analisi'): return
     
     db_principale = carica_database_principale()
-    # Evita di rigiocare partite già inserite oggi
+    
+    # PULIZIA AUTOMATICA: Rimuove dal database eventuali schedine buggate con quota > 4.50 (es. il bug @20.0 di Betfair)
+    db_principale['schedine'] = [
+        s for s in db_principale['schedine'] 
+        if not (s.get('modello') == 'omega' and s.get('quota_totale', 0) > 4.50)
+    ]
+    
     id_gia_giocati = {p['id_partita'] for s in db_principale['schedine'] if s.get('modello') == 'omega' and s.get('stato_schedina') == 'in attesa' for p in s.get('partite', [])}
         
     candidati_valore = []
@@ -110,19 +117,41 @@ def esegui_cecchino():
 
             nome_casa_ita = traduci_squadra(p_live['home_team'])
             nome_trasf_ita = traduci_squadra(p_live['away_team'])
-            analisi_match = next((a for a in db_analisi['analisi'] if nome_casa_ita in a['match']), None)
+            match_intero = f"{nome_casa_ita} - {nome_trasf_ita}"
+            
+            # FIX ACCOPPIAMENTO: Controlla l'ID univoco della partita o il nome esatto di entrambe le squadre
+            analisi_match = next((
+                a for a in db_analisi['analisi'] 
+                if a.get('id_partita') == p_live['id'] or a.get('match') == match_intero
+            ), None)
             if not analisi_match: continue
             
             pronostico_richiesto = analisi_match['consiglio_algoritmo']
             quota_minima = analisi_match['quota_valore_minima']
+            quota_equa = analisi_match.get('quota_equa', quota_minima)
+            
+            # TETTO MASSIMO ANTI-ERRORE BOOKMAKER:
+            # Una quota reale su un evento con >46% di probabilità non può mai superare 2.80 o essere >30% sopra la quota equa
+            tetto_massimo_reale = min(2.80, round(quota_equa * 1.30, 2))
+            
             miglior_quota = 0.0
             book_vincente = ""
             
             for book in p_live.get('bookmakers', []):
-                if not any(sb.lower() in book.get('title', '').lower() for sb in siti_ammessi): continue
+                titolo_book = book.get('title', '')
+                # Esclude categoricamente Betfair Exchange o siti non ammessi
+                if 'exchange' in titolo_book.lower() or 'betfair' in titolo_book.lower(): continue
+                if not any(sb.lower() in titolo_book.lower() for sb in siti_ammessi): continue
+                
                 for mercato in book.get('markets', []):
+                    if mercato.get('key') != 'h2h': continue
                     for out in mercato.get('outcomes', []):
                         q_attuale = out.get('price', 0)
+                        
+                        # Scarta all'istante quote folli o buggate dei feed (es. @20.0)
+                        if q_attuale > tetto_massimo_reale:
+                            continue
+                            
                         nome_esito_originale = out.get('name', '')
                         is_match = False
                         
@@ -135,16 +164,16 @@ def esegui_cecchino():
                                 
                         if is_match and q_attuale > miglior_quota:
                             miglior_quota = q_attuale
-                            book_vincente = book.get('title', '')
+                            book_vincente = titolo_book
                             
-            if miglior_quota >= quota_minima:
+            if quota_minima <= miglior_quota <= tetto_massimo_reale:
                 candidati_valore.append({
                     'id_partita': p_live['id'],
                     'data': data_ita.strftime("%d/%m %H:%M"),
                     'squadra_casa': nome_casa_ita,
                     'squadra_trasferta': nome_trasf_ita,
                     'pronostico': pronostico_richiesto,
-                    'quota': miglior_quota,
+                    'quota': round(miglior_quota, 2),
                     'bookmaker': book_vincente,
                     'score': round(miglior_quota - quota_minima, 3),
                     'lega': camp,
@@ -153,18 +182,16 @@ def esegui_cecchino():
                 })
                 
     if not candidati_valore: 
+        salva_database_principale(db_principale)
         invia_messaggio_protezione()
         return
     
-    # Ordina dando priorità a Serie A/B e al maggior vantaggio matematico (score)
     ordinati = sorted(candidati_valore, key=lambda x: (0 if 'italy' in x['lega'] else 1, -x['score']))
     
-    # LOGICA INTELLIGENTE: Se il primo candidato è già >= 1.65 con forte valore, gioca in SINGOLA SECCA
-    if ordinati[0]['quota'] >= 1.65 and ordinati[0]['score'] >= 0.05:
+    if ordinati[0]['quota'] >= 1.65 and ordinati[0]['score'] >= 0.04:
         finalisti = [ordinati[0]]
         tipo_giocata = "Colpo Mirato in Singola."
     else:
-        # Altrimenti costruisce la multipla stretta (max 3 match) appena supera 1.50
         finalisti = []
         q_temp = 1.0
         for cand in ordinati[:3]:
@@ -177,12 +204,12 @@ def esegui_cecchino():
     quota_totale = round(q_temp if len(finalisti) > 1 else finalisti[0]['quota'], 2)
     
     if quota_totale < 1.50: 
+        salva_database_principale(db_principale)
         invia_messaggio_protezione()
         return
         
-    # Calcolo Stake Dinamico (Kelly Frazionato) basato sul valore medio estratto
     vantaggio_medio = sum(c['score'] for c in finalisti) / len(finalisti)
-    stake_consigliato = round(min(22.0, max(10.0, 10.0 + (vantaggio_medio * 45))), 1)
+    stake_consigliato = round(min(20.0, max(10.0, 10.0 + (vantaggio_medio * 35))), 1)
     
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
@@ -195,19 +222,19 @@ def esegui_cecchino():
         'partite': finalisti
     })
     
-    msg = "**MODELLO OMEGA**\n\n"
-    msg += f"**{tipo_giocata}**\n\n"
-    msg += f"📊 **Quota totale**: {quota_totale}\n"
-    msg += f"💰 **Stake Kelly**: {stake_consigliato}€\n\n"
+    msg = "<b>MODELLO OMEGA</b>\n\n"
+    msg += f"<b>{tipo_giocata}</b>\n\n"
+    msg += f"📊 <b>Quota totale</b>: {quota_totale}\n"
+    msg += f"💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
     
     for c in finalisti:
-        msg += f"⚽ **{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}**\n"
-        msg += f"🎯 **Giocata**: {c['pronostico'].lower()} (@{c['quota']})\n"
-        msg += f"🏦 **Bookmaker**: {c['bookmaker']}\n\n"
+        msg += f"⚽ <b>{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}</b>\n"
+        msg += f"🎯 <b>Giocata</b>: {c['pronostico'].lower()} (@{c['quota']})\n"
+        msg += f"🏦 <b>Bookmaker</b>: {c['bookmaker']}\n\n"
         
-    msg += "**#TradingSportivo #ValueBetting #ScommesseSportive**"
+    msg += "<b>#TradingSportivo #ValueBetting #ScommesseSportive</b>"
     
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "Markdown"})
+    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
     salva_database_principale(db_principale)
 
 if __name__ == "__main__":
