@@ -13,8 +13,8 @@
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
-            --primary: #102542; /* Default Omega / SBR */
-            --accent: #F87060;
+            --primary: #102542; /* Blu Notte SBR */
+            --accent: #F87060;  /* Corallo SBR */
             --text-main: #102542;
             --text-muted: #64748B;
             --border: #E2E8F0;
@@ -160,8 +160,8 @@
             position: relative;
         }
         .model-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(16,37,66,0.06);
         }
         .model-tag {
             display: inline-block;
@@ -220,9 +220,9 @@
             transition: all 0.15s;
         }
         .model-card:hover .open-page-btn {
-            background-color: var(--primary);
+            background-color: var(--accent);
             color: #FFFFFF;
-            border-color: var(--primary);
+            border-color: var(--accent);
         }
 
         /* PAGINA DEDICATA AL SINGOLO MODELLO */
@@ -252,7 +252,7 @@
             border-radius: 10px;
             padding: 2rem;
             margin-bottom: 1.75rem;
-            border-top: 4px solid var(--primary);
+            border-top: 4px solid var(--accent);
         }
         .specs-list {
             display: grid;
@@ -266,7 +266,7 @@
             background-color: var(--bg-subtle);
             padding: 1.1rem;
             border-radius: 6px;
-            border-left: 3px solid var(--primary);
+            border-left: 3px solid var(--accent);
         }
         .spec-item h4 {
             font-size: 0.92rem;
@@ -412,6 +412,19 @@
             font-size: 0.75rem;
             font-weight: 700;
         }
+        /* CLASSI PER ESITO SINGOLA PARTITA (VERDE/ROSSO) */
+        .match-vinta {
+            background-color: var(--win-bg);
+            border-left: 3px solid var(--win);
+            padding-left: 8px;
+            border-radius: 4px;
+        }
+        .match-persa {
+            background-color: var(--loss-bg);
+            border-left: 3px solid var(--loss);
+            padding-left: 8px;
+            border-radius: 4px;
+        }
         .text-win { color: var(--win) !important; }
         .text-loss { color: var(--loss) !important; }
     </style>
@@ -452,7 +465,7 @@
                 <div>
                     <span class="model-tag" style="color: #102542; background-color: #E2E8F0;">Quantitativo</span>
                     <h2>Modello Omega</h2>
-                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].</p>
+                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -464,11 +477,11 @@
             </div>
 
             <!-- CARD ALPHA -->
-            <div class="model-card" onclick="apriPaginaModello('alpha')" style="border-top: 4px solid #065F46;">
+            <div class="model-card" onclick="apriPaginaModello('alpha')" style="border-top: 4px solid #F87060;">
                 <div>
-                    <span class="model-tag" style="color: #065F46; background-color: #D1FAE5;">Alto Rendimento</span>
+                    <span class="model-tag" style="color: #F87060; background-color: #FEE2E2;">Alto Rendimento</span>
                     <h2>Modello Alpha</h2>
-                    <p class="model-desc">L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].</p>
+                    <p class="model-desc">L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -480,11 +493,11 @@
             </div>
 
             <!-- CARD BETA -->
-            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #5B21B6;">
+            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #102542;">
                 <div>
-                    <span class="model-tag" style="color: #5B21B6; background-color: #EDE9FE;">Esotico</span>
+                    <span class="model-tag" style="color: #102542; background-color: #E2E8F0;">Esotico</span>
                     <h2>Modello Beta</h2>
-                    <p class="model-desc">L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].</p>
+                    <p class="model-desc">L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
@@ -551,37 +564,37 @@
         omega: {
             tag: "QUANTITATIVO",
             titolo: "Modello Omega",
-            sottotitolo: "Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].",
+            sottotitolo: "Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.",
             colorHex: "#102542",
             badgeBg: "#E2E8F0",
             specs: [
-                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale[cite: 5]." },
-                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles[cite: 5]." },
-                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico[cite: 5]." }
+                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale." },
+                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles." },
+                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico." }
             ]
         },
         alpha: {
             tag: "ALTO RENDIMENTO",
             titolo: "Modello Alpha",
-            sottotitolo: "L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].",
-            colorHex: "#065F46",
-            badgeBg: "#D1FAE5",
+            sottotitolo: "L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.",
+            colorHex: "#F87060",
+            badgeBg: "#FEE2E2",
             specs: [
-                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale[cite: 5]." },
-                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00[cite: 5]." },
-                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati[cite: 5]." }
+                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale." },
+                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00." },
+                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati." }
             ]
         },
         beta: {
             tag: "ESOTICO",
             titolo: "Modello Beta",
-            sottotitolo: "L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].",
-            colorHex: "#5B21B6",
-            badgeBg: "#EDE9FE",
+            sottotitolo: "L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.",
+            colorHex: "#102542",
+            badgeBg: "#E2E8F0",
             specs: [
-                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base[cite: 5]." },
-                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner per singola partita[cite: 5]." },
-                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione[cite: 5]." }
+                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base." },
+                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner per singola partita." },
+                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione." }
             ]
         }
     };
@@ -758,21 +771,30 @@
             const isWin = s.stato_schedina === 'vinta';
             const netto = isWin ? `+${(s.ritorno_potenziale - s.importo).toFixed(2)} €` : `-${parseFloat(s.importo).toFixed(2)} €`;
             
-            const righePartite = (s.partite || []).map(p => `
-                <div class="match-row">
-                    <div>
-                        ${creaStemmaSquadra(p.squadra_casa)}
-                        <strong>${p.squadra_casa} - ${p.squadra_trasferta}</strong>
-                        <span style="color:var(--text-muted); font-size:0.82rem; margin-left:6px;">${p.data || ''}</span>
+            const righePartite = (s.partite || []).map(p => {
+                // Determina se la singola gamba è vinta o persa in base allo stato globale o all'esito
+                let matchClass = "";
+                if (p.stato === 'vinta') matchClass = "match-vinta";
+                else if (p.stato === 'persa') matchClass = "match-persa";
+                else if (s.stato_schedina === 'vinta') matchClass = "match-vinta";
+                else if (s.stato_schedina === 'persa' && p.risultato_reale) matchClass = "match-persa";
+
+                return `
+                    <div class="match-row ${matchClass}">
+                        <div>
+                            ${creaStemmaSquadra(p.squadra_casa)}
+                            <strong>${p.squadra_casa} - ${p.squadra_trasferta}</strong>
+                            <span style="color:var(--text-muted); font-size:0.82rem; margin-left:6px;">${p.data || ''}</span>
+                        </div>
+                        <div class="match-meta">
+                            <span class="pick-label">${p.pronostico} (@${p.quota})</span>
+                            ${p.bookmaker ? `<span class="book-pill">${p.bookmaker}</span>` : ''}
+                            ${p.clv_edge ? `<span class="clv-pill">CLV ${p.clv_edge}</span>` : ''}
+                            ${p.risultato_reale ? `<span class="book-pill">Esito: <strong>${p.risultato_reale}</strong></span>` : ''}
+                        </div>
                     </div>
-                    <div class="match-meta">
-                        <span class="pick-label">${p.pronostico} (@${p.quota})</span>
-                        ${p.bookmaker ? `<span class="book-pill">${p.bookmaker}</span>` : ''}
-                        ${p.clv_edge ? `<span class="clv-pill">CLV ${p.clv_edge}</span>` : ''}
-                        ${p.risultato_reale ? `<span class="book-pill">Esito: <strong>${p.risultato_reale}</strong></span>` : ''}
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             return `
                 <div class="ticket-card">
