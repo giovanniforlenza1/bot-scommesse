@@ -205,6 +205,21 @@
         let filtroAttuale = 'tutte';
         let chartIstanza = null;
 
+        function aggiornaHome() {
+        const inAttesa = (globalDb.schedine || []).filter(s => s.stato_schedina === 'in attesa');
+        const banner = document.getElementById('liveBanner');
+    
+        if (inAttesa.length > 0) {
+        banner.classList.remove('hidden');
+        document.getElementById('liveBannerText').innerText = 
+            `${inAttesa.length} Operazion${inAttesa.length === 1 ? 'e Quantitativa Attiva' : 'i Quantitative Attive'} a Mercato`;
+        } else {
+        banner.classList.add('hidden');
+        }
+    
+    // ... resto delle metriche dei modelli ...
+       }
+        
         function selezionaModello(modello) {
             modelloAttuale = modello;
             document.querySelectorAll('.model-tab').forEach(btn => {
