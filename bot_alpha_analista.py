@@ -15,7 +15,7 @@ campionati = [
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
 ]
 
-siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'Betfair', 'William Hill', 'Unibet', 'Marathonbet', '888sport']
+siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'William Hill', 'Unibet', 'Marathonbet', '888sport', 'Bwin', 'Betsson']
 
 TRADUZIONI_NAZIONALI = {
     "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
@@ -39,7 +39,7 @@ TRADUZIONI_SQUADRE = {
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG",
     "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen",
     "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
-    "Athletic Club": "Athletic Bilbao"
+    "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
 def traduci_squadra(nome):
@@ -89,7 +89,7 @@ def esegui_alpha():
     candidati_alpha = []
 
     for camp in campionati:
-        url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h,totals"
+        url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h,totals"
         partite = esegui_richiesta_api(url_template)
         if not partite: continue
 
@@ -104,15 +104,30 @@ def esegui_alpha():
 
             for book in p.get('bookmakers', []):
                 titolo_book = book.get('title', '')
+                key_b = book.get('key', '').lower()
+                if 'exchange' in titolo_book.lower() or 'betfair' in key_b: continue
                 is_ammesso = any(sb.lower() in titolo_book.lower() for sb in siti_ammessi)
                 
                 for m in book.get('markets', []):
                     if m['key'] == 'h2h':
+                        q1, qx, q2 = None, None, None
                         for out in m['outcomes']:
-                            if out['name'] == casa_orig:
-                                opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((out['price'], is_ammesso))
-                            elif out['name'] == trasf_orig:
-                                opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((out['price'], is_ammesso))
+                            if out['name'] == casa_orig: q1 = out['price']
+                            elif out['name'] == trasf_orig: q2 = out['price']
+                            elif out['name'].lower() == 'draw': qx = out['price']
+                        
+                        if q1: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((q1, is_ammesso))
+                        if q2: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((q2, is_ammesso))
+                        
+                        # Sintesi matematica Doppia Chance (1X e X2) con margine bookmaker
+                        if q1 and qx and q2:
+                            dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.96, 2)
+                            dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.96, 2)
+                            if 1.24 <= dc_1x <= 1.60:
+                                opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append((dc_1x, is_ammesso))
+                            if 1.24 <= dc_x2 <= 1.60:
+                                opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append((dc_x2, is_ammesso))
+
                     elif m['key'] == 'totals':
                         for out in m['outcomes']:
                             if out.get('name') == 'Over' and out.get('point') in [1.5, 2.5]:
@@ -131,10 +146,11 @@ def esegui_alpha():
                 q_media = sum(tutte_quote) / len(tutte_quote)
                 q_giocabile = max(quote_italiane) if quote_italiane else round(q_media, 2)
                 
-                if 1.25 <= q_media <= 1.72 and 1.25 <= q_giocabile <= 1.78:
-                    edge_quota = q_giocabile / q_media
-                    bonus_over = 0.05 if "Over" in pick else 0.0
-                    score = (1.0 / q_media) * edge_quota + bonus_over
+                if 1.25 <= q_media <= 1.70 and 1.25 <= q_giocabile <= 1.75:
+                    edge_quota = min(1.12, q_giocabile / q_media)
+                    # Bonus protezione per Doppia Chance (+6%) e Over (+5%)
+                    bonus_scudo = 0.06 if "Doppia Chance" in pick else (0.05 if "Over" in pick else 0.0)
+                    score = (1.0 / q_media) * edge_quota + bonus_scudo
                     
                     if score > miglior_score:
                         miglior_score = score
@@ -155,10 +171,7 @@ def esegui_alpha():
                     'risultato_reale': ''
                 })
 
-    print(f"Alpha: Trovati {len(candidati_alpha)} candidati validi nei prossimi 4 giorni.")
-    if len(candidati_alpha) < 3:
-        print("Alpha Stop: Meno di 3 candidati disponibili in lavagna.")
-        return
+    if len(candidati_alpha) < 3: return
 
     ordinati = sorted(candidati_alpha, key=lambda x: (0 if x['lega'] == 'soccer_italy_serie_a' else 1, -x['score']))
 
@@ -178,11 +191,7 @@ def esegui_alpha():
                 quota_totale *= extra['quota']
 
     quota_totale = round(quota_totale, 2)
-    print(f"Alpha: Schedina calcolata con {len(selezionati)} eventi -> Quota Totale: {quota_totale}")
-
-    if quota_totale < 4.50:
-        print(f"Alpha Stop: Quota totale ({quota_totale}) insufficiente per il target Alpha.")
-        return
+    if quota_totale < 4.50: return
 
     partite_pulite = [{k: v for k, v in c.items() if k != 'score'} for c in selezionati]
     stake = 10.0
@@ -199,7 +208,6 @@ def esegui_alpha():
         f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", 
         json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"}
     )
-    print(f"Alpha Telegram Status: {res.status_code} - Risposta: {res.text}")
 
     if res.status_code == 200:
         db_principale['schedine'].append({
@@ -214,8 +222,6 @@ def esegui_alpha():
             'partite': partite_pulite
         })
         salva_database_principale(db_principale)
-    else:
-        print("ERRORE TELEGRAM: Messaggio non consegnato. Controlla CHAT_ID o i permessi del bot.")
 
 if __name__ == "__main__":
     esegui_alpha()
