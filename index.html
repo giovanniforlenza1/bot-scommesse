@@ -13,7 +13,7 @@
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
-            --primary: #102542;
+            --primary: #102542; /* Default Omega / SBR */
             --accent: #F87060;
             --text-main: #102542;
             --text-muted: #64748B;
@@ -35,7 +35,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER MINIMALE IN TINTA UNITA */
+        /* HEADER MINIMALE */
         header {
             background-color: var(--bg-card);
             border-bottom: 1px solid var(--border);
@@ -91,7 +91,7 @@
             padding: 2.5rem 1.5rem 4rem;
         }
 
-        /* BANNER OPERAZIONI IN CORSO (TINTA UNITA SOBRIA) */
+        /* BANNER OPERAZIONI IN CORSO */
         .live-banner {
             background-color: var(--bg-card);
             border: 1px solid var(--border);
@@ -122,22 +122,26 @@
 
         /* INTESTAZIONE HOME */
         .hero {
-            margin-bottom: 2.2rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
         }
         .hero h1 {
             font-size: 1.9rem;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: -0.5px;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
         .hero p {
             color: var(--text-muted);
             font-size: 1rem;
-            max-width: 720px;
+            max-width: 750px;
         }
 
-        /* GRIGLIA 3 MODELLI NELLA HOME */
+        /* GRIGLIA MODELLI */
         .models-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -152,10 +156,12 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            transition: border-color 0.15s;
+            transition: all 0.15s ease;
+            position: relative;
         }
         .model-card:hover {
             border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
         .model-tag {
             display: inline-block;
@@ -238,9 +244,7 @@
             align-items: center;
             gap: 6px;
         }
-        .back-btn:hover {
-            background-color: var(--bg-subtle);
-        }
+        .back-btn:hover { background-color: var(--bg-subtle); }
 
         .model-header-box {
             background-color: var(--bg-card);
@@ -248,6 +252,7 @@
             border-radius: 10px;
             padding: 2rem;
             margin-bottom: 1.75rem;
+            border-top: 4px solid var(--primary);
         }
         .specs-list {
             display: grid;
@@ -419,13 +424,13 @@
             <img src="favicon.png" alt="SBR" onerror="this.style.display='none'">
             <div class="brand-title">SBR <span>ROUTING</span></div>
         </a>
-        <a href="https://t.me/+nyQkDOrFWrkyNGI8" target="_blank" class="tg-btn">Canale Telegram</a>
+        <a href="https://t.me/+nyQkDOrFWrkyNGI8" target="_blank" class="tg-btn" id="headerTgBtn">Canale Telegram</a>
     </div>
 </header>
 
 <div class="container">
 
-    <!-- BANNER OPERAZIONI IN CORSO (NASCOSTE PER PROTEZIONE QUOTE) -->
+    <!-- BANNER OPERAZIONI IN CORSO -->
     <div id="liveBanner" class="live-banner hidden">
         <div class="live-indicator">
             <div class="status-dot"></div>
@@ -437,56 +442,56 @@
     <!-- VISTA 1: HOME PAGE -->
     <div id="homeView">
         <div class="hero">
-            <h1>SBR — Smart Betting Routing</h1>
-            <p>Architettura quantitativa per il trading sportivo. Seleziona un modello per consultare le specifiche matematiche, le metriche di rendimento e lo storico certificato delle operazioni concluse.</p>
+            <h1>Smart Betting Routing</h1>
+            <p>Piattaforma di trading sportivo quantitativo. Monitoraggio in tempo reale dei modelli algoritmici, analisi dei flussi di quota e rendicontazione finanziaria trasparente basata su database storico.</p>
         </div>
 
         <div class="models-grid">
             <!-- CARD OMEGA -->
-            <div class="model-card" onclick="apriPaginaModello('omega')">
+            <div class="model-card" onclick="apriPaginaModello('omega')" style="border-top: 4px solid #102542;">
                 <div>
-                    <span class="model-tag">Quantitativo</span>
+                    <span class="model-tag" style="color: #102542; background-color: #E2E8F0;">Quantitativo</span>
                     <h2>Modello Omega</h2>
-                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.</p>
+                    <p class="model-desc">Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-omega">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-omega">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Consultazione Modello Omega →</div>
+                    <div class="open-page-btn">Consulta Sala Omega →</div>
                 </div>
             </div>
 
             <!-- CARD ALPHA -->
-            <div class="model-card" onclick="apriPaginaModello('alpha')">
+            <div class="model-card" onclick="apriPaginaModello('alpha')" style="border-top: 4px solid #065F46;">
                 <div>
-                    <span class="model-tag">Alto Rendimento</span>
+                    <span class="model-tag" style="color: #065F46; background-color: #D1FAE5;">Alto Rendimento</span>
                     <h2>Modello Alpha</h2>
-                    <p class="model-desc">L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.</p>
+                    <p class="model-desc">L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-alpha">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-alpha">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Consultazione Modello Alpha →</div>
+                    <div class="open-page-btn">Consulta Sala Alpha →</div>
                 </div>
             </div>
 
             <!-- CARD BETA -->
-            <div class="model-card" onclick="apriPaginaModello('beta')">
+            <div class="model-card" onclick="apriPaginaModello('beta')" style="border-top: 4px solid #5B21B6;">
                 <div>
-                    <span class="model-tag">Esotico</span>
+                    <span class="model-tag" style="color: #5B21B6; background-color: #EDE9FE;">Esotico</span>
                     <h2>Modello Beta</h2>
-                    <p class="model-desc">L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.</p>
+                    <p class="model-desc">L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].</p>
                 </div>
                 <div>
                     <div class="mini-kpis">
                         <div class="mini-kpi"><span>Profitto Netto</span><strong id="home-profit-beta">-- €</strong></div>
                         <div class="mini-kpi"><span>Yield (ROI)</span><strong id="home-yield-beta">--%</strong></div>
                     </div>
-                    <div class="open-page-btn">Consultazione Modello Beta →</div>
+                    <div class="open-page-btn">Consulta Sala Beta →</div>
                 </div>
             </div>
         </div>
@@ -498,7 +503,7 @@
             <button class="back-btn" onclick="mostraHome()">← Torna alla panoramica modelli</button>
         </div>
 
-        <div class="model-header-box">
+        <div class="model-header-box" id="modelHeaderBox">
             <span id="det-tag" class="model-tag">MODELLO</span>
             <h1 id="det-title" style="font-size:1.75rem; color:var(--primary); margin-bottom:0.4rem;">Titolo Modello</h1>
             <p id="det-subtitle" style="color:var(--text-muted); font-size:0.95rem;"></p>
@@ -546,34 +551,53 @@
         omega: {
             tag: "QUANTITATIVO",
             titolo: "Modello Omega",
-            sottotitolo: "Il nucleo solido in simulazione Monte Carlo. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto.",
+            sottotitolo: "Il nucleo solido in simulazione Monte Carlo[cite: 5]. Smaschera le probabilità nascoste simulando la partita migliaia di volte per estrarre valore assoluto[cite: 5].",
+            colorHex: "#102542",
+            badgeBg: "#E2E8F0",
             specs: [
-                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale." },
-                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles." },
-                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico." }
+                { t: "Purificazione del mercato", d: "Elimina chirurgicamente il margine del bookmaker rivelando la percentuale reale[cite: 5]." },
+                { t: "Simulazione tattica", d: "Gioca virtualmente il match diecimila volte calcolando attacco, difesa e correzione Dixon-Coles[cite: 5]." },
+                { t: "Il colpo mirato", d: "Invia la giocata solo se la quota offerta supera nettamente il reale valore probabilistico[cite: 5]." }
             ]
         },
         alpha: {
             tag: "ALTO RENDIMENTO",
             titolo: "Modello Alpha",
-            sottotitolo: "L'acceleratore di cassa a quota 5+. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico.",
+            sottotitolo: "L'acceleratore di cassa a quota 5+[cite: 5]. Crea multiple incrociando i match più probabili per massimizzare il ritorno economico[cite: 5].",
+            colorHex: "#065F46",
+            badgeBg: "#D1FAE5",
             specs: [
-                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale." },
-                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00." },
-                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati." }
+                { t: "Ricerca del valore", d: "Seleziona eventi con quota minima 1.25, mercati scudo (Doppia Chance / Over) e confidenza matematica strutturale[cite: 5]." },
+                { t: "Moltiplicatore esplosivo", d: "Concatena i match più solidi per raggiungere e superare la soglia target di 5.00[cite: 5]." },
+                { t: "Bankroll speculativo", d: "Sacrifica la frequenza di vincita per generare picchi di profitto elevati[cite: 5]." }
             ]
         },
         beta: {
             tag: "ESOTICO",
             titolo: "Modello Beta",
-            sottotitolo: "L'inferenza statistica a quota minima 1.70. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore.",
+            sottotitolo: "L'inferenza statistica a quota minima 1.70[cite: 5]. Sfrutta la distribuzione di Poisson per prevedere cartellini e angoli inviando singole di altissimo valore[cite: 5].",
+            colorHex: "#5B21B6",
+            badgeBg: "#EDE9FE",
             specs: [
-                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base." },
-                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner attesi per singola partita." },
-                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione." }
+                { t: "Analisi della tensione", d: "Incrocia le probabilità e lo storico reale ESPN per stimare le ammonizioni con un rigoroso filtro sulle quote base[cite: 5]." },
+                { t: "Pressione offensiva", d: "Valuta lo squilibrio in campo calcolando il volume dei corner per singola partita[cite: 5]." },
+                { t: "Staking dinamico", d: "Applica il criterio di Kelly suggerendo l'esposizione finanziaria esatta per ogni singola operazione[cite: 5]." }
             ]
         }
     };
+
+    function applicaTemaModello(modelloKey) {
+        const info = INFO_MODELLI[modelloKey];
+        document.documentElement.style.setProperty('--primary', info.colorHex);
+        document.getElementById('modelHeaderBox').style.borderTopColor = info.colorHex;
+        const tag = document.getElementById('det-tag');
+        tag.style.color = info.colorHex;
+        tag.style.backgroundColor = info.badgeBg;
+    }
+
+    function resetTemaSBR() {
+        document.documentElement.style.setProperty('--primary', '#102542');
+    }
 
     function creaStemmaSquadra(nome) {
         if (!nome) return "";
@@ -623,6 +647,7 @@
     }
 
     function aggiornaHome() {
+        resetTemaSBR();
         const inAttesa = (globalDb.schedine || []).filter(s => s.stato_schedina === 'in attesa');
         const banner = document.getElementById('liveBanner');
         if (inAttesa.length > 0) {
@@ -653,6 +678,8 @@
         document.getElementById('modelDetailView').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
+        applicaTemaModello(modelloKey);
+
         const info = INFO_MODELLI[modelloKey];
         const stats = calcolaMetricheModello(modelloKey);
 
@@ -661,7 +688,7 @@
         document.getElementById('det-subtitle').innerText = info.sottotitolo;
 
         document.getElementById('det-specs').innerHTML = info.specs.map(sp => `
-            <div class="spec-item">
+            <div class="spec-item" style="border-left-color: ${info.colorHex};">
                 <h4>${sp.t}</h4>
                 <p>${sp.d}</p>
             </div>
@@ -678,7 +705,7 @@
 
         document.getElementById('det-winrate').innerText = `${stats.winRate}%`;
 
-        disegnaGrafico(stats.labels, stats.storicoCassa);
+        disegnaGrafico(stats.labels, stats.storicoCassa, info.colorHex);
         renderizzaStorico(stats.concluse);
     }
 
@@ -686,9 +713,10 @@
         document.getElementById('modelDetailView').classList.add('hidden');
         document.getElementById('homeView').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        aggiornaHome();
     }
 
-    function disegnaGrafico(labels, dataPoints) {
+    function disegnaGrafico(labels, dataPoints, colorHex) {
         const ctx = document.getElementById('equityChart').getContext('2d');
         if (chartInstance) chartInstance.destroy();
         chartInstance = new Chart(ctx, {
@@ -698,12 +726,12 @@
                 datasets: [{
                     label: 'Cassa Modello (€)',
                     data: dataPoints,
-                    borderColor: '#102542',
+                    borderColor: colorHex,
                     backgroundColor: '#F1F5F9',
                     borderWidth: 2.5,
                     pointRadius: 4,
                     pointBackgroundColor: '#F87060',
-                    pointBorderColor: '#102542',
+                    pointBorderColor: colorHex,
                     fill: false,
                     tension: 0.15
                 }]
