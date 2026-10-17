@@ -2169,30 +2169,6 @@
             ]
         },
         {
-            "id": "268202ab",
-            "modello": "omega",
-            "data_creazione": "17/10/2026",
-            "importo": 22.0,
-            "quota_totale": 20.0,
-            "ritorno_potenziale": 440.0,
-            "stato_schedina": "in attesa",
-            "partite": [
-                {
-                    "id_partita": "3b6ffffb1208351a67941b2f25516ca4",
-                    "data": "20/10 20:45",
-                    "squadra_casa": "Wolverhampton Wanderers",
-                    "squadra_trasferta": "Portsmouth",
-                    "pronostico": "Vittoria Wolverhampton Wanderers",
-                    "quota": 20.0,
-                    "bookmaker": "Betfair",
-                    "score": 18.33,
-                    "lega": "soccer_efl_champ",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                }
-            ]
-        },
-        {
             "id": "f02df502",
             "modello": "alpha",
             "data_creazione": "17/10/2026",
