@@ -59,11 +59,9 @@ def esegui_richiesta_api(url_template):
     return None
 
 def costruisci_storico_reale_espn():
-    """Scarica gli ultimi 14 giorni di partite da ESPN per calcolare le medie reali di Corner e Cartellini per squadra"""
     storico_squadre = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    # Controlla campioni di giornate negli ultimi 14 giorni
     date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7, 8, 10, 13, 14]]
 
     for _, lega_espn in MAPPA_CAMPIONATI_ESPN.items():
@@ -113,6 +111,15 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
+def calcola_cassa_beta(db):
+    cassa = 200.0
+    for s in db.get('schedine', []):
+        if s.get('modello') == 'beta' and s.get('stato_schedina') in ['vinta', 'persa']:
+            imp = float(s.get('importo', 10.0))
+            rit = float(s.get('ritorno_potenziale', 0.0))
+            cassa += (rit - imp) if s['stato_schedina'] == 'vinta' else -imp
+    return max(140.0, cassa)
+
 def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -124,11 +131,10 @@ def esegui_beta():
             print("Beta già generata oggi.")
             return
 
-    print("Beta: Analisi storico reale ESPN per Angoli e Cartellini in corso...")
     storico_espn = costruisci_storico_reale_espn()
 
     miglior_operazione = None
-    miglior_edge = 0.0
+    miglior_score = 0.0
 
     for camp in campionati:
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h"
@@ -155,66 +161,68 @@ def esegui_beta():
             q1_med = sum(q1_list) / len(q1_list)
             q2_med = sum(q2_list) / len(q2_list)
 
-            # Estrae le medie storiche reali da ESPN (o usa baseline se squadra neopromossa)
-            media_corner_casa = ottieni_media_storica(storico_espn, casa_ita, 'corners', 5.4)
-            media_corner_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'corners', 4.5)
+            media_corner_casa = ottieni_media_storica(storico_espn, casa_ita, 'corners', 5.5)
+            media_corner_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'corners', 4.6)
             
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
-            # CASO 1: Pressione Offensiva Corner (Quote + Storico Reale ESPN)
-            if 1.38 <= q1_med <= 1.90 and q2_med >= 3.90:
-                lambda_quote = 10.5 + ((1.90 - q1_med) * 2.1)
+            # CASO 1: Linea Protetta Over 8.5 Calci d'Angolo (Probabilità > 68%)
+            if 1.35 <= q1_med <= 1.92 and q2_med >= 3.80:
+                lambda_quote = 10.6 + ((1.92 - q1_med) * 2.2)
                 lambda_storico = media_corner_casa + media_corner_trasf
-                # Media pesata: 60% Storico Reale ESPN + 40% Pressione Tattica Quote
-                lambda_corner = (lambda_storico * 0.60) + (lambda_quote * 0.40)
+                lambda_corner = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
-                prob_over_9_5 = prob_poisson_over(lambda_corner, 9.5)
-                quota_target = 1.80
-                edge = (prob_over_9_5 * quota_target) - 1.0
-                if edge > miglior_edge and prob_over_9_5 >= 0.58:
-                    miglior_edge = edge
+                # Usa la linea più sicura Over 8.5 (basta che facciano 9 angoli!)
+                prob_over_8_5 = prob_poisson_over(lambda_corner, 8.5)
+                quota_target = 1.62
+                edge = (prob_over_8_5 * quota_target) - 1.0
+                if prob_over_8_5 >= 0.68 and edge > miglior_score:
+                    miglior_score = edge
                     miglior_operazione = {
                         'id_partita': p['id'],
                         'data': data_ita.strftime("%d/%m %H:%M"),
                         'squadra_casa': casa_ita,
                         'squadra_trasferta': trasf_ita,
-                        'pronostico': "Over 9.5 Calci d'Angolo",
+                        'pronostico': "Over 8.5 Calci d'Angolo",
                         'quota': quota_target,
-                        'prob': prob_over_9_5,
+                        'prob': prob_over_8_5,
                         'edge': edge
                     }
 
-            # CASO 2: Alta Tensione Cartellini (Equilibrio Quote + Storico Reale ESPN)
-            elif 2.15 <= q1_med <= 3.10 and 2.15 <= q2_med <= 3.10:
-                bonus_campionato = 0.7 if camp in ['soccer_italy_serie_a', 'soccer_spain_la_liga'] else 0.2
+            # CASO 2: Linea Protetta Over 3.5 Cartellini Totali (Probabilità > 70%)
+            elif 2.10 <= q1_med <= 3.20 and 2.10 <= q2_med <= 3.20:
+                bonus_campionato = 0.75 if camp in ['soccer_italy_serie_a', 'soccer_spain_la_liga'] else 0.25
                 lambda_quote = 4.6 + bonus_campionato
                 lambda_storico = media_cards_casa + media_cards_trasf
-                lambda_cards = (lambda_storico * 0.60) + (lambda_quote * 0.40)
+                lambda_cards = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
-                prob_over_4_5 = prob_poisson_over(lambda_cards, 4.5)
-                quota_target = 1.75
-                edge = (prob_over_4_5 * quota_target) - 1.0
-                if edge > miglior_edge and prob_over_4_5 >= 0.60:
-                    miglior_edge = edge
+                # Linea abbassata a Over 3.5 Cartellini (bastano 4 cartellini in tutta la partita!)
+                prob_over_3_5 = prob_poisson_over(lambda_cards, 3.5)
+                quota_target = 1.58
+                edge = (prob_over_3_5 * quota_target) - 1.0
+                if prob_over_3_5 >= 0.70 and edge > miglior_score:
+                    miglior_score = edge
                     miglior_operazione = {
                         'id_partita': p['id'],
                         'data': data_ita.strftime("%d/%m %H:%M"),
                         'squadra_casa': casa_ita,
                         'squadra_trasferta': trasf_ita,
-                        'pronostico': "Over 4.5 Cartellini Totali",
+                        'pronostico': "Over 3.5 Cartellini Totali",
                         'quota': quota_target,
-                        'prob': prob_over_4_5,
+                        'prob': prob_over_3_5,
                         'edge': edge
                     }
 
     if not miglior_operazione: return
 
+    cassa_attuale = calcola_cassa_beta(db_principale)
     b = miglior_operazione['quota'] - 1.0
     p_win = miglior_operazione['prob']
     q_lose = 1.0 - p_win
     kelly_fraction = ((b * p_win) - q_lose) / b
-    stake_kelly = round(max(8.0, min(20.0, 200.0 * (kelly_fraction * 0.25))), 1)
+    # Staking calibrato sulla cassa reale di Beta (tra 12€ e 22€ per far crescere il profitto netto)
+    stake_kelly = round(max(12.0, min(22.0, cassa_attuale * (kelly_fraction * 0.35))), 1)
 
     partita_db = {
         'id_partita': miglior_operazione['id_partita'],
@@ -229,10 +237,10 @@ def esegui_beta():
 
     msg = "<b>⚡ MODELLO BETA | INFERENZA POISSON</b>\n\n"
     msg += f"⚽ <b>{partita_db['data']} | {partita_db['squadra_casa']} - {partita_db['squadra_trasferta']}</b>\n"
-    msg += f"🎯 <b>Singola Esotica</b>: {partita_db['pronostico']}\n"
-    msg += f"📊 <b>Quota Minima Consigliata</b>: @{partita_db['quota']}\n"
-    msg += f"📈 <b>Probabilità Poisson</b>: {round(p_win * 100, 1)}%\n"
-    msg += f"💰 <b>Stake Kelly Suggerito</b>: {stake_kelly}€\n\n"
+    msg += f"🎯 <b>Singola ad Alta Confidenza</b>: {partita_db['pronostico']}\n"
+    msg += f"📊 <b>Quota Consigliata</b>: @{partita_db['quota']}\n"
+    msg += f"📈 <b>Probabilità Stimata</b>: {round(p_win * 100, 1)}%\n"
+    msg += f"💰 <b>Stake Kelly</b>: {stake_kelly}€\n\n"
     msg += "<b>#ModelloBeta #Poisson #ValueBetting</b>"
 
     res = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"})
