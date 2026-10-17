@@ -2167,6 +2167,107 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "268202ab",
+            "modello": "omega",
+            "data_creazione": "17/10/2026",
+            "importo": 22.0,
+            "quota_totale": 20.0,
+            "ritorno_potenziale": 440.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3b6ffffb1208351a67941b2f25516ca4",
+                    "data": "20/10 20:45",
+                    "squadra_casa": "Wolverhampton Wanderers",
+                    "squadra_trasferta": "Portsmouth",
+                    "pronostico": "Vittoria Wolverhampton Wanderers",
+                    "quota": 20.0,
+                    "bookmaker": "Betfair",
+                    "score": 18.33,
+                    "lega": "soccer_efl_champ",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "f02df502",
+            "modello": "alpha",
+            "data_creazione": "17/10/2026",
+            "importo": 10.0,
+            "quota_totale": 7.54,
+            "ritorno_potenziale": 75.4,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "bfefc309177723410230fee52f650315",
+                    "data": "17/10 18:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.66,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "907639dade64cca45d1ab639195d201e",
+                    "data": "17/10 15:00",
+                    "squadra_casa": "Venezia",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.68,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3ea32a0aa44a5f0ef7fd088155430087",
+                    "data": "18/10 15:00",
+                    "squadra_casa": "Fiorentina",
+                    "squadra_trasferta": "Como",
+                    "pronostico": "Over 2.5 Gol",
+                    "quota": 1.67,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
+                    "data": "17/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.62,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "160f4790",
+            "modello": "beta",
+            "data_creazione": "17/10/2026",
+            "importo": 16.7,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 30.06,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "9baaf4e48b041cfef04e70e42532502e",
+                    "data": "19/10 21:00",
+                    "squadra_casa": "Tottenham Hotspur",
+                    "squadra_trasferta": "Coventry City",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
