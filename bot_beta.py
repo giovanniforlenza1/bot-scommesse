@@ -23,7 +23,6 @@ MAPPA_CAMPIONATI_ESPN = {
     'soccer_france_ligue_one': 'fra.1'
 }
 
-# Punto 2: Coefficiente Severità Arbitrale Storica per Lega
 SEVERITA_ARBITRALE_LEGA = {
     'soccer_spain_la_liga': 0.95,
     'soccer_italy_serie_a': 0.80,
@@ -153,7 +152,7 @@ def esegui_beta():
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
-        if s.get('modello') == 'beta' and s.get('data_creazione') == oggi.strftime("%d/%m/%Y"):
+        if s.get('modello') == 'beta' and s.get('data_creazione'] == oggi.strftime("%d/%m/%Y"):
             print("Beta già generata oggi.")
             return
 
@@ -190,15 +189,16 @@ def esegui_beta():
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
-            if 1.35 <= q1_med <= 1.92 and q2_med >= 3.80:
-                lambda_quote = 10.6 + ((1.92 - q1_med) * 2.2)
+            # Angoli: soglia ammorbidita a probabilità >= 64%
+            if 1.32 <= q1_med <= 1.95 and q2_med >= 3.60:
+                lambda_quote = 10.6 + ((1.95 - q1_med) * 2.2)
                 lambda_storico = media_corner_casa + media_corner_trasf
                 lambda_corner = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
                 prob_over_8_5 = prob_poisson_over(lambda_corner, 8.5)
-                quota_target = 1.62
+                quota_target = 1.60
                 edge = (prob_over_8_5 * quota_target) - 1.0
-                if prob_over_8_5 >= 0.68 and edge > miglior_score:
+                if prob_over_8_5 >= 0.64 and edge > miglior_score:
                     miglior_score = edge
                     miglior_operazione = {
                         'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
@@ -207,16 +207,17 @@ def esegui_beta():
                         'prob': prob_over_8_5, 'edge': edge
                     }
 
-            elif 2.10 <= q1_med <= 3.20 and 2.10 <= q2_med <= 3.20:
+            # Cartellini: soglia ammorbidita a probabilità >= 65%
+            elif 2.00 <= q1_med <= 3.40 and 2.00 <= q2_med <= 3.40:
                 bonus_arbitro = SEVERITA_ARBITRALE_LEGA.get(camp, 0.35)
                 lambda_quote = 4.5 + bonus_arbitro
                 lambda_storico = media_cards_casa + media_cards_trasf
                 lambda_cards = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
                 prob_over_3_5 = prob_poisson_over(lambda_cards, 3.5)
-                quota_target = 1.58
+                quota_target = 1.55
                 edge = (prob_over_3_5 * quota_target) - 1.0
-                if prob_over_3_5 >= 0.70 and edge > miglior_score:
+                if prob_over_3_5 >= 0.65 and edge > miglior_score:
                     miglior_score = edge
                     miglior_operazione = {
                         'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
