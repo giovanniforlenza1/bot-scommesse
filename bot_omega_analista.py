@@ -210,7 +210,7 @@ def calcola_fattore_specifico(db_squadre, nome_ita, data_partita_dt, is_home=Tru
         try:
             dt_ultima = datetime.strptime(ultima_str, "%Y-%m-%d").date()
             if 0 < (data_partita_dt.date() - dt_ultima).days <= 3:
-                moltiplicatore *= 0.97 # Malus stanchezza leggero ed elastico
+                moltiplicatore *= 0.97
                 stanca = True
         except: pass
     return moltiplicatore, stanca
@@ -251,7 +251,9 @@ def simulazione_monte_carlo_avanzata(prob_1, prob_x, prob_2, mult_casa, mult_tra
 def esegui_analista():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    limite_temporale = oggi + timedelta(days=4)
+    # MODIFICA CHIAVE: Prende tutta la giornata corrente (fino a 5 giorni nel futuro senza blocchi rigidi di ora)
+    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
+    limite_temporale = inizio_oggi + timedelta(days=5)
     
     db_squadre = genera_database_studio_squadre(oggi)
     esegui_test_silenzioso_tennis(oggi)
@@ -265,7 +267,8 @@ def esegui_analista():
         
         for p in partite:
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            if data_ita < oggi or data_ita > limite_temporale: continue
+            # Finestra temporale flessibile basata sull'intera giornata
+            if data_ita < inizio_oggi or data_ita > limite_temporale: continue
                 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
@@ -301,7 +304,6 @@ def esegui_analista():
             mult_trasf, stanca_trasf = calcola_fattore_specifico(db_squadre, trasf_ita, data_ita, is_home=False)
             
             mc_1, mc_x, mc_2 = simulazione_monte_carlo_avanzata(prob_pura_1, prob_pura_x, prob_pura_2, mult_casa, mult_trasf, meteo_brutto, 10000)
-            
             prob_dnb_2 = mc_2 / max(0.01, (1.0 - mc_x))
             
             opzioni = [
@@ -311,11 +313,10 @@ def esegui_analista():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             scelta_migliore, prob_stimata, rating_sq, quota_apertura_pin = opzioni[0]
             
-            # PARAMETRO MODIFICATO: Soglia confidenza minima abbassata da 54% a 51% per maggiore operatività
             if prob_stimata < 0.51: continue
                 
             quota_equa = round(1.0 / prob_stimata, 2)
-            quota_valore_minima = round(quota_equa * 1.005, 2) # Margine elastico
+            quota_valore_minima = round(quota_equa * 1.005, 2)
             
             if quota_valore_minima < 1.20 or quota_valore_minima > 2.10: continue
             
