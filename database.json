@@ -1457,7 +1457,7 @@
             "importo": 14.5,
             "quota_totale": 2.04,
             "ritorno_potenziale": 29.58,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "d6b5afb499872d7aec7a6d23e8d35e81",
@@ -1469,8 +1469,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.1,
                     "lega": "soccer_italy_serie_b",
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "persa",
+                    "risultato_reale": "1-2",
                     "clv_edge": "+4.6%"
                 }
             ]
