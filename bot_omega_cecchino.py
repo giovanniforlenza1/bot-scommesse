@@ -48,14 +48,12 @@ TRADUZIONI_SQUADRE = {
 }
 
 def cripta_dati_sensibili(lista_partite):
-    """SICUREZZA ANTI-F12: Cripta i dettagli delle partite in corso usando TELEGRAM_TOKEN come chiave segreta"""
     raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
     key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
     xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
     return base64.b64encode(xored).decode('ascii')
 
 def crea_partite_offuscate_per_sito(lista_partite):
-    """Mostra nel JSON pubblico solo segnaposto finché la partita non è terminata"""
     return [{
         'id_partita': 'protetto',
         'data': p.get('data', ''),
@@ -79,7 +77,7 @@ def formatta_nome_bookmaker(key_book, title_book):
         if chiave in k or chiave in title_book.lower(): return nome_ita
     return title_book
 
- crediti_alert_inviato = False
+crediti_alert_inviato = False
 
 def esegui_richiesta_api(url_template):
     global crediti_alert_inviato
@@ -90,7 +88,6 @@ def esegui_richiesta_api(url_template):
         try:
             res = requests.get(url, timeout=10)
             if res.status_code == 200:
-                # Punto 15: Alert Salvavita se l'ultima chiave API ha meno di 40 crediti rimasti
                 rem = int(res.headers.get('x-requests-remaining', 500))
                 if idx == len(chiavi) - 1 and rem < 40 and not crediti_alert_inviato:
                     crediti_alert_inviato = True
@@ -100,7 +97,8 @@ def esegui_richiesta_api(url_template):
                         "parse_mode": "HTML"
                     })
                 return res.json()
-        except: pass
+        except:
+            pass
     return None
 
 def carica_database_analisi():
@@ -118,7 +116,6 @@ def salva_database_principale(db):
         json.dump(db, f, indent=4, ensure_ascii=False)
 
 def calcola_cassa_e_circuit_breaker(db, modello_nome):
-    """Punto 8: Circuit Breaker automatico in caso di drawdown settimanale >15% o 2 perse consecutive"""
     cassa = 200.0
     picco_massimo = 200.0
     ultime_due = []
@@ -136,7 +133,7 @@ def calcola_cassa_e_circuit_breaker(db, modello_nome):
             
     drawdown = (picco_massimo - cassa) / picco_massimo if picco_massimo > 0 else 0.0
     freno = 1.0
-    if drawdown >= 0.15: freno = 0.55 # Circuit Breaker attivo
+    if drawdown >= 0.15: freno = 0.55
     elif len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L']: freno = 0.80
     return max(120.0, cassa), freno
 
@@ -221,7 +218,6 @@ def esegui_cecchino():
                                 book_vincente = formatta_nome_bookmaker(key_book, titolo_book)
                             
             if quota_minima <= miglior_quota <= tetto_massimo_reale:
-                # Punto 10: Rilevamento Steam Move (crollo quota su Pinnacle > 5% ma bookmaker italiano in ritardo)
                 steam_bonus = 0.05 if (quota_pinnacle_live and quota_pinnacle_live < quota_apertura * 0.95 and miglior_quota >= quota_apertura) else 0.0
                 
                 ev_reale = (prob_reale * miglior_quota) - 1.0 + steam_bonus
@@ -255,7 +251,6 @@ def esegui_cecchino():
     elif len(ordinati) >= 2:
         finalisti = [ordinati[0], ordinati[1]]
         tipo_giocata = "Doppia Quantitativa a Bassa Varianza."
-        # Punto 9: Riduzione Kelly sulle doppie per compensare la varianza combinata
         fattore_varianza_kelly = 0.85
     else:
         finalisti = [ordinati[0]]
@@ -278,11 +273,9 @@ def esegui_cecchino():
     
     partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
     
-    # Punto 7: Salva in locale gli ID usati da Omega oggi per evitare correlazione con Alpha
     with open('omega_oggi.json', 'w', encoding='utf-8') as fo:
         json.dump([c['id_partita'] for c in partite_reali], fo)
 
-    # Sanitizzazione HTML contro Injection su Telegram
     msg = "<b>MODELLO OMEGA</b>\n\n"
     msg += f"<b>{html.escape(tipo_giocata)}</b>\n\n"
     msg += f"📊 <b>Quota totale</b>: {quota_totale}\n"
@@ -302,7 +295,6 @@ def esegui_cecchino():
     res = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
     
     if res.status_code == 200:
-        # SICUREZZA ZERO-KNOWLEDGE: Cripta i dettagli nel database finché non finisce la partita!
         db_principale['schedine'].append({
             'id': str(uuid.uuid4())[:8],
             'modello': 'omega',
