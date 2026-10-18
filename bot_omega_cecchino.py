@@ -151,7 +151,6 @@ def esegui_cecchino():
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
     
-    # Finestra temporale giornaliera flessibile
     inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
     limite_temporale = inizio_oggi + timedelta(days=5)
     
@@ -161,7 +160,8 @@ def esegui_cecchino():
     db_principale = carica_database_principale()
     
     for s in db_principale['schedine']:
-        if s.get('modello') == 'omega' and s.get('data_creazione'] == data_oggi_str:
+        # CORRETTO: Sostituita la parentesi quadra errata con quella tonda
+        if s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str:
             print("Omega Cecchino: Operazione già generata oggi.")
             return
     
@@ -175,7 +175,6 @@ def esegui_cecchino():
         for p_live in partite_live:
             data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
             
-            # Controllo temporale indentato correttamente nel ciclo for
             if data_ita < inizio_oggi or data_ita > limite_temporale:
                 continue
 
