@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
-CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati_odds = [
     'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
@@ -91,7 +90,11 @@ def squadre_combaciano(nome_db, nome_api):
     n1 = normalizza_per_confronto(nome_db)
     n2 = normalizza_per_confronto(nome_api)
     if not n1 or not n2: return False
-    return (n1 in n2) or (n2 in n1)
+    if (n1 in n2) or (n2 in n1): return True
+    # Matching per cognome sui giocatori di Tennis (es. "Jannik Sinner" vs "J. Sinner")
+    cognome1 = n1.split()[-1] if n1.split() else ""
+    cognome2 = n2.split()[-1] if n2.split() else ""
+    return len(cognome1) >= 4 and cognome1 == cognome2
 
 def esegui_richiesta_odds(url_template):
     chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
@@ -126,7 +129,7 @@ def leggi_statistiche_ufficiali_beta(lega, event_id):
     except: pass
     return None, None
 
-def scarica_dati_completi_espn(serve_beta=False):
+def scarica_dati_completi_espn(serve_beta=False, serve_tennis=False):
     partite_espn = []
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -169,6 +172,35 @@ def scarica_dati_completi_espn(serve_beta=False):
                         'corners': tot_corners, 'cards': tot_cards
                     })
             except: continue
+
+    # Se ci sono schedine Sigma (Tennis) in attesa, controlla anche lo Scoreboard gratuito ESPN Tennis ATP/WTA
+    if serve_tennis:
+        for circuito in ['atp', 'wta']:
+            url_t = f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard"
+            try:
+                res = requests.get(url_t, timeout=8)
+                if res.status_code != 200: continue
+                for ev in res.json().get('events', []):
+                    for grouping in ev.get('groupings', []):
+                        for comp in grouping.get('competitions', []):
+                            if not comp.get('status', {}).get('type', {}).get('completed', False):
+                                continue
+                            competitors = comp.get('competitors', [])
+                            if len(competitors) < 2: continue
+                            p1_name = competitors[0].get('athlete', {}).get('displayName', '')
+                            p2_name = competitors[1].get('athlete', {}).get('displayName', '')
+                            w1 = competitors[0].get('winner', False)
+                            w2 = competitors[1].get('winner', False)
+                            if w1 or w2:
+                                partite_espn.append({
+                                    'casa_orig': p1_name, 'trasf_orig': p2_name,
+                                    'gol_casa': 2 if w1 else 0,
+                                    'gol_trasf': 2 if w2 else 0,
+                                    'corners': None, 'cards': None
+                                })
+            except:
+                continue
+
     return partite_espn
 
 def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
@@ -189,8 +221,7 @@ def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
     return False
 
 def esegui_backup_settimanale(oggi):
-    """Punto 16: Backup automatico settimanale del database nella cartella /backups/"""
-    if oggi.weekday() == 0: # Ogni lunedì
+    if oggi.weekday() == 0:
         os.makedirs('backups', exist_ok=True)
         nome_bk = f"backups/database_{oggi.strftime('%Y_%m_%d')}.json"
         if not os.path.exists(nome_bk) and os.path.exists('database.json'):
@@ -214,8 +245,15 @@ def aggiorna_database():
                     mappa_quote_eque[item.get('id_partita')] = item.get('quota_equa')
         except: pass
 
+    # Aggiunge in automatico i tornei di tennis presenti nelle schedine Sigma in attesa
+    leghe_extra_tennis = set()
+    for s in db.get('schedine', []):
+        if s.get('modello') == 'sigma' and s.get('stato_schedina') == 'in attesa':
+            for p in s.get('partite', []):
+                if p.get('lega'): leghe_extra_tennis.add(p['lega'])
+
     risultati_gol_odds = {}
-    for camp in campionati_odds:
+    for camp in list(campionati_odds) + list(leghe_extra_tennis):
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
         dati = esegui_richiesta_odds(url)
         if not dati: continue
@@ -223,12 +261,15 @@ def aggiorna_database():
             if m.get('completed') and m.get('scores'):
                 g_casa, g_trasf = 0, 0
                 for s in m['scores']:
-                    if s['name'] == m['home_team']: g_casa = int(s['score'])
-                    elif s['name'] == m['away_team']: g_trasf = int(s['score'])
+                    val_s = str(s.get('score', '0')).strip()
+                    punti_s = int(float(val_s)) if val_s.isdigit() else 0
+                    if s['name'] == m['home_team']: g_casa = punti_s
+                    elif s['name'] == m['away_team']: g_trasf = punti_s
                 risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
 
     serve_stat_beta = any(s.get('modello') == 'beta' and s.get('stato_schedina') == 'in attesa' for s in db.get('schedine', []))
-    dati_espn = scarica_dati_completi_espn(serve_beta=serve_stat_beta)
+    serve_stat_tennis = any(s.get('modello') == 'sigma' and s.get('stato_schedina') == 'in attesa' for s in db.get('schedine', []))
+    dati_espn = scarica_dati_completi_espn(serve_beta=serve_stat_beta, serve_tennis=serve_stat_tennis)
 
     modifiche_effettuate = False
 
@@ -236,7 +277,6 @@ def aggiorna_database():
         if schedina.get('stato_schedina') != 'in attesa':
             continue
 
-        # Se la schedina è criptata con il Vault Anti-F12, la decripta temporaneamente in RAM
         partite_lavoro = schedina.get('partite', [])
         era_criptata = False
         if schedina.get('payload_criptato'):
@@ -311,20 +351,18 @@ def aggiorna_database():
                     tutte_concluse = False
                     continue
 
-                p['risultato_reale'] = f"{g_c}-{g_t}"
+                p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t) else "Persa")
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
                 p['stato'] = 'vinta' if vinta else 'persa'
                 if not vinta: schedina_persa = True
                 modifiche_effettuate = True
 
-        # Se la schedina si è conclusa (vinta o persa), SBLOCCA i dati in chiaro per il sito e rimuove il payload criptato!
         if schedina_persa or tutte_concluse:
             schedina['stato_schedina'] = 'persa' if schedina_persa else 'vinta'
             schedina['partite'] = partite_lavoro
             schedina.pop('payload_criptato', None)
             modifiche_effettuate = True
         elif era_criptata:
-            # Se è ancora in attesa, aggiorna il payload criptato ma lascia oscurato il JSON pubblico!
             schedina['payload_criptato'] = cripta_dati_sensibili(partite_lavoro)
 
     if modifiche_effettuate:
