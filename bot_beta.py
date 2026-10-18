@@ -152,7 +152,7 @@ def esegui_beta():
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
-        if s.get('modello') == 'beta' and s.get('data_creazione'] == oggi.strftime("%d/%m/%Y"):
+        if s.get('modello') == 'beta' and s.get('data_creazione') == oggi.strftime("%d/%m/%Y"):
             print("Beta già generata oggi.")
             return
 
@@ -189,7 +189,6 @@ def esegui_beta():
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
-            # Angoli: soglia ammorbidita a probabilità >= 64%
             if 1.32 <= q1_med <= 1.95 and q2_med >= 3.60:
                 lambda_quote = 10.6 + ((1.95 - q1_med) * 2.2)
                 lambda_storico = media_corner_casa + media_corner_trasf
@@ -207,7 +206,6 @@ def esegui_beta():
                         'prob': prob_over_8_5, 'edge': edge
                     }
 
-            # Cartellini: soglia ammorbidita a probabilità >= 65%
             elif 2.00 <= q1_med <= 3.40 and 2.00 <= q2_med <= 3.40:
                 bonus_arbitro = SEVERITA_ARBITRALE_LEGA.get(camp, 0.35)
                 lambda_quote = 4.5 + bonus_arbitro
