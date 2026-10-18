@@ -89,9 +89,6 @@ def costruisci_storico_reale_espn():
     storico_squadre = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
-    limite_temporale = inizio_oggi + timedelta(days=5)
-    if data_ita < inizio_oggi or data_ita > limite_temporale: continue
     date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7, 8, 10, 13, 14]]
 
     for _, lega_espn in MAPPA_CAMPIONATI_ESPN.items():
@@ -151,11 +148,14 @@ def calcola_cassa_beta(db):
 def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    limite_temporale = oggi + timedelta(days=3)
+    data_oggi_str = oggi.strftime("%d/%m/%Y")
+    
+    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
+    limite_temporale = inizio_oggi + timedelta(days=5)
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
-        if s.get('modello') == 'beta' and s.get('data_creazione') == oggi.strftime("%d/%m/%Y"):
+        if s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str:
             print("Beta già generata oggi.")
             return
 
@@ -169,7 +169,9 @@ def esegui_beta():
 
         for p in partite:
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            if data_ita < oggi or data_ita > limite_temporale: continue
+            
+            if data_ita < inizio_oggi or data_ita > limite_temporale:
+                continue
 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
