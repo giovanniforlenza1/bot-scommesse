@@ -89,6 +89,9 @@ def calcola_cassa_sigma(db):
 def esegui_sigma_tennis():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
+    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
+    limite_temporale = inizio_oggi + timedelta(days=5)
+    if data_ita < inizio_oggi or data_ita > limite_temporale: continue
     data_oggi_str = oggi.strftime("%d/%m/%Y")
     limite_temporale = oggi + timedelta(days=3)
 
