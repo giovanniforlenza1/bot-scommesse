@@ -37,17 +37,15 @@ def esegui_richiesta_api(url_template):
     return None
 
 def trova_tornei_tennis_attivi():
-    """Chiama l'endpoint GRATUITO (0 crediti) /v4/sports per trovare tutti i tornei ATP e WTA attivi questa settimana"""
     dati = esegui_richiesta_api("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
     if not dati: return []
     tornei = [
         s['key'] for s in dati 
         if s.get('active') and (s['key'].startswith('tennis_atp_') or s['key'].startswith('tennis_wta_'))
     ]
-    return tornei[:6] # Limita ai 6 tornei principali per preservare i crediti API
+    return tornei[:6]
 
 def power_devig_2way(q1, q2):
-    """De-vigging di Potenza specifico per il Tennis (2 soli esiti, zero pareggi)"""
     inv1, inv2 = 1.0 / q1, 1.0 / q2
     overround = inv1 + inv2
     if overround <= 1.0:
@@ -58,20 +56,14 @@ def power_devig_2way(q1, q2):
     return p1 / tot, p2 / tot
 
 def simulazione_monte_carlo_tennis(prob_1, n_sim=10000):
-    """Simula 10.000 match al meglio dei 3 set basandosi sulla probabilità di vincere il singolo set"""
-    # Converte la probabilità match in forza sul singolo set con leggera regressione verso il centro
     p_set = max(0.15, min(0.85, (prob_1 * 0.92) + 0.04))
     vittorie_p1 = 0
     for _ in range(n_sim):
         set_1, set_2 = 0, 0
         while set_1 < 2 and set_2 < 2:
-            if random.random() < p_set:
-                set_1 += 1
-            else:
-                set_2 += 1
-        if set_1 == 2:
-            vittorie_p1 += 1
-            
+            if random.random() < p_set: set_1 += 1
+            else: set_2 += 1
+        if set_1 == 2: vittorie_p1 += 1
     p1_mc = (prob_1 * 0.70) + ((vittorie_p1 / n_sim) * 0.30)
     return p1_mc, (1.0 - p1_mc)
 
@@ -102,7 +94,6 @@ def esegui_sigma_tennis():
 
     db_principale = carica_database_principale()
 
-    # Evita doppioni nella stessa giornata
     for s in db_principale.get('schedine', []):
         if s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str:
             print("Sigma Tennis: Operazione già registrata oggi sul sito.")
@@ -119,9 +110,7 @@ def esegui_sigma_tennis():
         print("Sigma Tennis: Nessun torneo ATP/WTA quotato al momento.")
         return
 
-    print(f"Sigma Tennis: Scansione tornei attivi -> {tornei_attivi}")
     candidati_valore = []
-
     for torneo in tornei_attivi:
         url_template = f"https://api.the-odds-api.com/v4/sports/{torneo}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h"
         partite = esegui_richiesta_api(url_template)
@@ -143,8 +132,7 @@ def esegui_sigma_tennis():
             for book in p.get('bookmakers', []):
                 key_b = book.get('key', '').lower()
                 title_b = book.get('title', '')
-                if 'exchange' in title_b.lower() or 'betfair' in key_b or 'matchbook' in key_b or 'smarkets' in key_b:
-                    continue
+                if 'exchange' in title_b.lower() or 'betfair' in key_b or 'matchbook' in key_b: continue
                 is_pin = 'pinnacle' in key_b
                 for m in book.get('markets', []):
                     if m.get('key') == 'h2h':
@@ -152,15 +140,11 @@ def esegui_sigma_tennis():
                         for out in m.get('outcomes', []):
                             if out['name'] == p['home_team']: q1 = out['price']
                             elif out['name'] == p['away_team']: q2 = out['price']
-                        if q1 and q2 and q1 <= 3.50 and q2 <= 3.50:
+                        if q1 and q2 and q1 <= 3.80 and q2 <= 3.80:
                             quote_1.append(q1); quote_2.append(q2)
                             if is_pin: pin_1, pin_2 = q1, q2
-                            if q1 > miglior_q1:
-                                miglior_q1 = q1
-                                book_1 = formatta_nome_bookmaker(key_b, title_b)
-                            if q2 > miglior_q2:
-                                miglior_q2 = q2
-                                book_2 = formatta_nome_bookmaker(key_b, title_b)
+                            if q1 > miglior_q1: miglior_q1 = q1; book_1 = formatta_nome_bookmaker(key_b, title_b)
+                            if q2 > miglior_q2: miglior_q2 = q2; book_2 = formatta_nome_bookmaker(key_b, title_b)
 
             if len(quote_1) < 2: continue
 
@@ -177,28 +161,21 @@ def esegui_sigma_tennis():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             pronostico, prob_reale, quota_top, book_top = opzioni[0]
 
-            # Filtro Alta Confidenza Tennis: probabilità >= 56% e quota reale tra 1.30 e 1.95
-            if prob_reale < 0.56: continue
+            # PARAMETRO MODIFICATO: Confidenza minima abbassata dal 56% al 52% per maggiore operatività sul Tennis
+            if prob_reale < 0.52: continue
             quota_equa = round(1.0 / prob_reale, 2)
-            quota_minima = round(quota_equa * 1.008, 2)
-            tetto_max = min(1.95, round(quota_equa * 1.18, 2))
+            quota_minima = round(quota_equa * 1.005, 2)
+            tetto_max = min(2.10, round(quota_equa * 1.22, 2))
 
             if quota_minima <= quota_top <= tetto_max:
                 ev = (prob_reale * quota_top) - 1.0
                 score = (ev * 0.65) + (prob_reale * 0.35)
                 candidati_valore.append({
-                    'id_partita': p['id'],
-                    'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': giocatore_1,
-                    'squadra_trasferta': giocatore_2,
-                    'pronostico': pronostico,
-                    'quota': round(quota_top, 2),
-                    'bookmaker': book_top,
-                    'score': round(score, 4),
-                    'ev': round(ev, 3),
-                    'lega': torneo,
-                    'stato': 'in attesa',
-                    'risultato_reale': ''
+                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                    'squadra_casa': giocatore_1, 'squadra_trasferta': giocatore_2,
+                    'pronostico': pronostico, 'quota': round(quota_top, 2), 'bookmaker': book_top,
+                    'score': round(score, 4), 'ev': round(ev, 3), 'lega': torneo,
+                    'stato': 'in attesa', 'risultato_reale': ''
                 })
 
     if not candidati_valore:
@@ -206,12 +183,7 @@ def esegui_sigma_tennis():
         return
 
     ordinati = sorted(candidati_valore, key=lambda x: -x['score'])
-
-    # Regola Omega applicata a Sigma: Singola se >= 1.48, altrimenti Doppia (max 2 match)
-    if ordinati[0]['quota'] >= 1.48 or len(ordinati) == 1:
-        finalisti = [ordinati[0]]
-    else:
-        finalisti = [ordinati[0], ordinati[1]]
+    finalisti = [ordinati[0]] if ordinati[0]['quota'] >= 1.42 or len(ordinati) == 1 else [ordinati[0], ordinati[1]]
 
     q_tot = 1.0
     for f in finalisti: q_tot *= f['quota']
@@ -219,11 +191,10 @@ def esegui_sigma_tennis():
 
     cassa_sigma = calcola_cassa_sigma(db_principale)
     ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
-    stake_kelly = round(cassa_sigma * min(0.09, max(0.05, 0.05 + (ev_medio * 0.40))), 1)
+    stake_kelly = round(cassa_sigma * min(0.10, max(0.05, 0.05 + (ev_medio * 0.40))), 1)
 
     partite_db = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
 
-    # NESSUN INVIO TELEGRAM: Salva direttamente in chiaro nel database per la pagina Tennis del sito!
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
         'modello': 'sigma',
