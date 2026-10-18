@@ -89,6 +89,9 @@ def costruisci_storico_reale_espn():
     storico_squadre = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
+    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
+    limite_temporale = inizio_oggi + timedelta(days=5)
+    if data_ita < inizio_oggi or data_ita > limite_temporale: continue
     date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7, 8, 10, 13, 14]]
 
     for _, lega_espn in MAPPA_CAMPIONATI_ESPN.items():
