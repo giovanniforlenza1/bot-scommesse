@@ -1,8 +1,14 @@
 import requests
 import json
 import os
+import shutil
+import base64
+import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
+CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati_odds = [
     'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
@@ -17,18 +23,15 @@ campionati_espn = [
 ]
 
 TRADUZIONI_NAZIONALI = {
-    "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
-    "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
-    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
-    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
-    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
-    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
-    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
-    "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord",
-    "Czechia": "Repubblica Ceca", "Czech Republic": "Repubblica Ceca",
-    "Republic of Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
-    "Bosnia and Herzegovina": "Bosnia", "Greece": "Grecia", "Ukraine": "Ucraina",
-    "Georgia": "Georgia", "Romania": "Romania", "Slovakia": "Slovacchia", "Slovenia": "Slovenia"
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
+    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
+    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
+    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
+    "Serbia": "Serbia", "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord",
+    "Czechia": "Repubblica Ceca", "Czech Republic": "Repubblica Ceca", "Republic of Ireland": "Irlanda",
+    "Northern Ireland": "Irlanda del Nord", "Bosnia and Herzegovina": "Bosnia", "Greece": "Grecia",
+    "Ukraine": "Ucraina", "Georgia": "Georgia", "Romania": "Romania", "Slovakia": "Slovacchia", "Slovenia": "Slovenia"
 }
 
 TRADUZIONI_SQUADRE = {
@@ -51,8 +54,23 @@ TRADUZIONI_SQUADRE = {
     "Brighton and Hove Albion": "Brighton", "West Ham United": "West Ham"
 }
 
+def decripta_dati_sensibili(payload_b64):
+    try:
+        xored = base64.b64decode(payload_b64.encode('ascii'))
+        key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
+        raw_bytes = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(xored)])
+        return json.loads(raw_bytes.decode('utf-8'))
+    except:
+        return None
+
+def cripta_dati_sensibili(lista_partite):
+    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
+    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
+    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
+    return base64.b64encode(xored).decode('ascii')
+
 def traduci_squadra(nome):
-    nome_pulito = nome.strip()
+    nome_pulito = str(nome).strip()
     if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "").replace(" CF", "").replace(" SSC", "")
@@ -105,8 +123,7 @@ def leggi_statistiche_ufficiali_beta(lega, event_id):
                 tot_corners += angoli
                 tot_cards += (gialli + rossi)
             return tot_corners, tot_cards
-    except:
-        pass
+    except: pass
     return None, None
 
 def scarica_dati_completi_espn(serve_beta=False):
@@ -137,11 +154,9 @@ def scarica_dati_completi_espn(serve_beta=False):
                         score_str = str(t.get('score', '0')).strip()
                         gol_val = int(float(score_str)) if score_str.isdigit() else 0
                         if t.get('homeAway') == 'home':
-                            casa_nome = t_name
-                            gol_casa = gol_val
+                            casa_nome = t_name; gol_casa = gol_val
                         else:
-                            trasf_nome = t_name
-                            gol_trasf = gol_val
+                            trasf_nome = t_name; gol_trasf = gol_val
 
                     tot_corners, tot_cards = None, None
                     if serve_beta:
@@ -149,49 +164,47 @@ def scarica_dati_completi_espn(serve_beta=False):
                         tot_corners, tot_cards = leggi_statistiche_ufficiali_beta(lega, event_id)
 
                     partite_espn.append({
-                        'casa_orig': casa_nome,
-                        'trasf_orig': trasf_nome,
-                        'gol_casa': gol_casa,
-                        'gol_trasf': gol_trasf,
-                        'corners': tot_corners,
-                        'cards': tot_cards
+                        'casa_orig': casa_nome, 'trasf_orig': trasf_nome,
+                        'gol_casa': gol_casa, 'gol_trasf': gol_trasf,
+                        'corners': tot_corners, 'cards': tot_cards
                     })
-            except:
-                continue
+            except: continue
     return partite_espn
 
 def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
     tot_gol = g_c + g_t
     pron_low = pron.lower().strip()
-    if 'doppia chance 1x' in pron_low or pron_low == '1x':
-        return (g_c >= g_t)
-    elif 'doppia chance x2' in pron_low or pron_low == 'x2':
-        return (g_t >= g_c)
-    elif 'pareggio' in pron_low or pron_low == 'x':
-        return (g_c == g_t)
+    if 'doppia chance 1x' in pron_low or pron_low == '1x': return (g_c >= g_t)
+    elif 'doppia chance x2' in pron_low or pron_low == 'x2': return (g_t >= g_c)
+    elif 'pareggio' in pron_low or pron_low == 'x': return (g_c == g_t)
     elif 'vittoria' in pron_low:
         sq_scelta = pron_low.replace('vittoria', '').strip()
-        if squadre_combaciano(sq_scelta, sq_casa_db) and g_c > g_t:
-            return True
-        elif squadre_combaciano(sq_scelta, sq_trasf_db) and g_t > g_c:
-            return True
+        if squadre_combaciano(sq_scelta, sq_casa_db) and g_c > g_t: return True
+        elif squadre_combaciano(sq_scelta, sq_trasf_db) and g_t > g_c: return True
         return False
-    elif 'over 1.5' in pron_low:
-        return (tot_gol >= 2)
-    elif 'over 2.5' in pron_low:
-        return (tot_gol >= 3)
-    elif 'under 2.5' in pron_low:
-        return (tot_gol <= 2)
-    elif 'under 3.5' in pron_low:
-        return (tot_gol <= 3)
+    elif 'over 1.5' in pron_low: return (tot_gol >= 2)
+    elif 'over 2.5' in pron_low: return (tot_gol >= 3)
+    elif 'under 2.5' in pron_low: return (tot_gol <= 2)
+    elif 'under 3.5' in pron_low: return (tot_gol <= 3)
     return False
+
+def esegui_backup_settimanale(oggi):
+    """Punto 16: Backup automatico settimanale del database nella cartella /backups/"""
+    if oggi.weekday() == 0: # Ogni lunedì
+        os.makedirs('backups', exist_ok=True)
+        nome_bk = f"backups/database_{oggi.strftime('%Y_%m_%d')}.json"
+        if not os.path.exists(nome_bk) and os.path.exists('database.json'):
+            shutil.copy2('database.json', nome_bk)
 
 def aggiorna_database():
     if not os.path.exists('database.json'): return
+    fuso_italia = ZoneInfo("Europe/Rome")
+    oggi = datetime.now(fuso_italia)
+    esegui_backup_settimanale(oggi)
+
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
 
-    # Carica il database analisi per calcolare il CLV (Closing Line Value) di Omega
     mappa_quote_eque = {}
     if os.path.exists('database_analisi.json'):
         try:
@@ -199,8 +212,7 @@ def aggiorna_database():
                 dba = json.load(fa)
                 for item in dba.get('analisi', []):
                     mappa_quote_eque[item.get('id_partita')] = item.get('quota_equa')
-        except:
-            pass
+        except: pass
 
     risultati_gol_odds = {}
     for camp in campionati_odds:
@@ -215,29 +227,28 @@ def aggiorna_database():
                     elif s['name'] == m['away_team']: g_trasf = int(s['score'])
                 risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
 
-    valori_da_ricalcolare = ['0 Cartellini', '0 Angoli', '6 Cartellini']
-    serve_stat_beta = any(
-        s.get('modello') == 'beta' and (
-            s.get('stato_schedina') == 'in attesa' or 
-            any(p.get('risultato_reale') in valori_da_ricalcolare for p in s.get('partite', []))
-        )
-        for s in db.get('schedine', [])
-    )
+    serve_stat_beta = any(s.get('modello') == 'beta' and s.get('stato_schedina') == 'in attesa' for s in db.get('schedine', []))
     dati_espn = scarica_dati_completi_espn(serve_beta=serve_stat_beta)
 
     modifiche_effettuate = False
 
     for schedina in db.get('schedine', []):
-        riaperta_per_fix = any(p.get('risultato_reale') in valori_da_ricalcolare for p in schedina.get('partite', []))
-        
-        if schedina.get('stato_schedina') != 'in attesa' and not riaperta_per_fix:
+        if schedina.get('stato_schedina') != 'in attesa':
             continue
+
+        # Se la schedina è criptata con il Vault Anti-F12, la decripta temporaneamente in RAM
+        partite_lavoro = schedina.get('partite', [])
+        era_criptata = False
+        if schedina.get('payload_criptato'):
+            dec = decripta_dati_sensibili(schedina['payload_criptato'])
+            if dec:
+                partite_lavoro = dec
+                era_criptata = True
 
         tutte_concluse = True
         schedina_persa = False
 
-        for p in schedina.get('partite', []):
-            # Tracciamento CLV automatico (se non ancora registrato)
+        for p in partite_lavoro:
             id_p = p.get('id_partita')
             if not p.get('clv_edge') and p.get('quota'):
                 q_chiusura_stimata = mappa_quote_eque.get(id_p, round(p['quota'] * 0.955, 2))
@@ -246,7 +257,7 @@ def aggiorna_database():
                     p['clv_edge'] = f"+{edge_clv}%"
                     modifiche_effettuate = True
 
-            if p.get('stato') != 'in attesa' and p.get('risultato_reale') not in valori_da_ricalcolare:
+            if p.get('stato') != 'in attesa':
                 if p.get('stato') == 'persa': schedina_persa = True
                 continue
 
@@ -306,17 +317,20 @@ def aggiorna_database():
                 if not vinta: schedina_persa = True
                 modifiche_effettuate = True
 
-        if schedina_persa:
-            schedina['stato_schedina'] = 'persa'
+        # Se la schedina si è conclusa (vinta o persa), SBLOCCA i dati in chiaro per il sito e rimuove il payload criptato!
+        if schedina_persa or tutte_concluse:
+            schedina['stato_schedina'] = 'persa' if schedina_persa else 'vinta'
+            schedina['partite'] = partite_lavoro
+            schedina.pop('payload_criptato', None)
             modifiche_effettuate = True
-        elif tutte_concluse:
-            schedina['stato_schedina'] = 'vinta'
-            modifiche_effettuate = True
+        elif era_criptata:
+            # Se è ancora in attesa, aggiorna il payload criptato ma lascia oscurato il JSON pubblico!
+            schedina['payload_criptato'] = cripta_dati_sensibili(partite_lavoro)
 
     if modifiche_effettuate:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database risultati e CLV aggiornato con successo!")
+        print("Database risultati aggiornato con successo!")
 
 if __name__ == "__main__":
     aggiorna_database()
