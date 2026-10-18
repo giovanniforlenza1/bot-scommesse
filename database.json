@@ -1861,7 +1861,7 @@
             "importo": 10.0,
             "quota_totale": 3.33,
             "ritorno_potenziale": 33.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "367da93aa21a1e13eeafb94fd2263c75",
@@ -1873,8 +1873,8 @@
                     "bookmaker": "1xBet",
                     "score": 0.0,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "persa",
+                    "risultato_reale": "0-3",
                     "clv_edge": "+1.0%"
                 },
                 {
