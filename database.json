@@ -1605,7 +1605,7 @@
             "importo": 10.0,
             "quota_totale": 6.21,
             "ritorno_potenziale": 62.1,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -1639,8 +1639,8 @@
                     "pronostico": "Over 2.5 Gol",
                     "quota": 1.7,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-3"
                 },
                 {
                     "id_partita": "bfefc309177723410230fee52f650315",
@@ -1702,7 +1702,7 @@
             "importo": 10.0,
             "quota_totale": 6.47,
             "ritorno_potenziale": 64.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -1736,8 +1736,8 @@
                     "pronostico": "Over 2.5 Gol",
                     "quota": 1.67,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-3"
                 },
                 {
                     "id_partita": "bfefc309177723410230fee52f650315",
