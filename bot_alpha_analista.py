@@ -2,10 +2,13 @@ import requests
 import json
 import os
 import uuid
+import html
+import base64
+import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati = [
@@ -18,14 +21,12 @@ campionati = [
 siti_ammessi = ['Bet365', 'Snai', 'Sisal', 'Eurobet', 'PlanetWin365', 'GoldBet', 'William Hill', 'Unibet', 'Marathonbet', '888sport', 'Bwin', 'Betsson']
 
 TRADUZIONI_NAZIONALI = {
-    "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
-    "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
-    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
-    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
-    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
-    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
-    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
-    "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord"
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
+    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
+    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
+    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
+    "Serbia": "Serbia", "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord"
 }
 
 TRADUZIONI_SQUADRE = {
@@ -42,8 +43,26 @@ TRADUZIONI_SQUADRE = {
     "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
+def cripta_dati_sensibili(lista_partite):
+    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
+    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
+    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
+    return base64.b64encode(xored).decode('ascii')
+
+def crea_partite_offuscate_per_sito(lista_partite):
+    return [{
+        'id_partita': 'protetto',
+        'data': p.get('data', ''),
+        'squadra_casa': '🔒 Operazione',
+        'squadra_trasferta': 'In Corso',
+        'pronostico': 'Dettagli sul Canale Telegram',
+        'quota': p.get('quota', 1.0),
+        'stato': 'in attesa',
+        'risultato_reale': ''
+    } for p in lista_partite]
+
 def traduci_squadra(nome):
-    nome_pulito = nome.strip()
+    nome_pulito = str(nome).strip()
     if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
@@ -59,11 +78,19 @@ def carica_database_squadre():
         try:
             with open('database_squadre.json', 'r', encoding='utf-8') as f:
                 return json.load(f).get('squadre', {})
-        except:
-            pass
+        except: pass
     return {}
 
-def valuta_studio_squadra(db_squadre, squadra_ita, data_partita_dt):
+def carica_id_omega_oggi():
+    """Punto 7: Legge quali partite ha già giocato Omega per evitare doppia esposizione sullo stesso match"""
+    if os.path.exists('omega_oggi.json'):
+        try:
+            with open('omega_oggi.json', 'r', encoding='utf-8') as f:
+                return set(json.load(f))
+        except: pass
+    return set()
+
+def valuta_studio_squadra(db_squadre, squadra_ita, data_partita_dt, is_home=True):
     k_cerca = normalizza_chiave_squadra(squadra_ita)
     info = db_squadre.get(k_cerca)
     if not info:
@@ -71,20 +98,18 @@ def valuta_studio_squadra(db_squadre, squadra_ita, data_partita_dt):
             if k_cerca and (k_cerca in k or k in k_cerca):
                 info = val
                 break
-    if not info:
-        return 1.0, False, 4.0
+    if not info: return 1.0, False, 4.0
 
-    rating = info.get('rating_tattico', 1.0)
+    chiave_r = 'rating_casa' if is_home else 'rating_trasferta'
+    rating = info.get(chiave_r, info.get('rating_tattico', 1.0))
     tiri = info.get('media_tiri_porta', 4.0)
     stanca = False
     ultima_str = info.get('ultima_partita', '')
     if ultima_str:
         try:
             dt_ultima = datetime.strptime(ultima_str, "%Y-%m-%d").date()
-            if 0 < (data_partita_dt.date() - dt_ultima).days <= 3:
-                stanca = True
-        except:
-            pass
+            if 0 < (data_partita_dt.date() - dt_ultima).days <= 3: stanca = True
+        except: pass
     return rating, stanca, tiri
 
 def esegui_richiesta_api(url_template):
@@ -119,8 +144,8 @@ def esegui_alpha():
             print("Alpha: Schedina già generata oggi.")
             return
 
-    # Carica lo studio tattico generato da Omega
     db_squadre = carica_database_squadre()
+    id_esclusi_omega = carica_id_omega_oggi()
     candidati_alpha = []
 
     for camp in campionati:
@@ -129,15 +154,17 @@ def esegui_alpha():
         if not partite: continue
 
         for p in partite:
+            # Punto 7: Salta la partita se è già stata giocata da Omega oggi (Zero Rischio Correlato)
+            if p['id'] in id_esclusi_omega: continue
+
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
             if data_ita < oggi or data_ita > limite_temporale: continue
 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
 
-            # Studio forma, tiri in porta e stanchezza
-            rating_c, stanca_c, tiri_c = valuta_studio_squadra(db_squadre, casa_ita, data_ita)
-            rating_t, stanca_t, tiri_t = valuta_studio_squadra(db_squadre, trasf_ita, data_ita)
+            rating_c, stanca_c, tiri_c = valuta_studio_squadra(db_squadre, casa_ita, data_ita, is_home=True)
+            rating_t, stanca_t, tiri_t = valuta_studio_squadra(db_squadre, trasf_ita, data_ita, is_home=False)
 
             opzioni_match = {}
 
@@ -155,13 +182,11 @@ def esegui_alpha():
                             elif out['name'] == trasf_orig: q2 = out['price']
                             elif out['name'].lower() == 'draw': qx = out['price']
                         
-                        # Vittoria secca permessa SOLO se la squadra NON è stanca dalle coppe ed è in forma!
                         if q1 and q1 <= 1.48 and not stanca_c and rating_c >= 0.98:
                             opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append((q1, is_ammesso))
                         if q2 and q2 <= 1.45 and not stanca_t and rating_t >= 1.00:
                             opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append((q2, is_ammesso))
                         
-                        # Doppia Chance Corazzata
                         if q1 and qx and q2:
                             dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.965, 2)
                             dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.965, 2)
@@ -170,7 +195,6 @@ def esegui_alpha():
                             if 1.22 <= dc_x2 <= 1.52 and rating_t >= 0.96:
                                 opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append((dc_x2, is_ammesso))
                             
-                            # Over 1.5 Gol potenziato se la somma dei tiri in porta delle due squadre supera 8.5 a partita
                             if qx >= 3.50 and (tiri_c + tiri_t) >= 8.2:
                                 q_over15 = round(max(1.24, min(1.42, 1.85 / (qx * 0.40))), 2)
                                 opzioni_match.setdefault("Over 1.5 Gol", []).append((q_over15, is_ammesso))
@@ -182,9 +206,7 @@ def esegui_alpha():
                                     label = f"Over {out['point']} Gol"
                                     opzioni_match.setdefault(label, []).append((out['price'], is_ammesso))
 
-            miglior_pick = None
-            miglior_score = 0.0
-            quota_scelta = 0.0
+            miglior_pick, miglior_score, quota_scelta = None, 0.0, 0.0
 
             for pick, lista_tuple in opzioni_match.items():
                 if len(lista_tuple) < 2: continue
@@ -197,8 +219,6 @@ def esegui_alpha():
                 if 1.22 <= q_media <= 1.58 and 1.22 <= q_giocabile <= 1.62:
                     edge_quota = min(1.08, q_giocabile / q_media)
                     bonus_scudo = 0.09 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
-                    
-                    # Bonus Tattico dal Database Squadre (premia chi tira molto in porta e vince)
                     fattore_tattico = max(rating_c, rating_t)
                     score = ((1.0 / q_media) * edge_quota * fattore_tattico) + bonus_scudo
                     
@@ -247,8 +267,11 @@ def esegui_alpha():
     msg += f"📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n"
     msg += f"💰 <b>Stake</b>: {stake}€ (Ritorno pot.: {round(stake * quota_totale, 2)}€)\n\n"
     for c in partite_pulite:
-        msg += f"⚽ <b>{c['data']} | {c['squadra_casa']} - {c['squadra_trasferta']}</b>\n"
-        msg += f"🛡️ <b>Scelta Scudo</b>: {c['pronostico']} (@{c['quota']})\n\n"
+        c_casa = html.escape(c['squadra_casa'])
+        c_trasf = html.escape(c['squadra_trasferta'])
+        c_pron = html.escape(c['pronostico'])
+        msg += f"⚽ <b>{c['data']} | {c_casa} - {c_trasf}</b>\n"
+        msg += f"🛡️ <b>Scelta Scudo</b>: {c_pron} (@{c['quota']})\n\n"
     msg += "<b>#SmartBetting #ModelloAlpha #RaddoppioPlus</b>"
 
     res = requests.post(
@@ -266,7 +289,8 @@ def esegui_alpha():
             'ritorno_potenziale': round(stake * quota_totale, 2),
             'stato_schedina': 'in attesa',
             'telegram_inviato': True,
-            'partite': partite_pulite
+            'payload_criptato': cripta_dati_sensibili(partite_pulite),
+            'partite': crea_partite_offuscate_per_sito(partite_pulite)
         })
         salva_database_principale(db_principale)
 
