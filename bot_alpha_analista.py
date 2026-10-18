@@ -114,11 +114,10 @@ def salva_database_principale(db):
 def esegui_alpha():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
+    data_oggi_str = oggi.strftime("%d/%m/%Y")
+    
     inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
     limite_temporale = inizio_oggi + timedelta(days=5)
-    if data_ita < inizio_oggi or data_ita > limite_temporale: continue
-    data_oggi_str = oggi.strftime("%d/%m/%Y")
-    limite_temporale = oggi + timedelta(days=4)
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
@@ -136,7 +135,10 @@ def esegui_alpha():
         for p in partite:
             if p['id'] in id_esclusi_omega: continue
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            if data_ita < oggi or data_ita > limite_temporale: continue
+            
+            # Controllo temporale indentato correttamente dentro il ciclo for p in partite
+            if data_ita < inizio_oggi or data_ita > limite_temporale:
+                continue
 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
@@ -177,7 +179,6 @@ def esegui_alpha():
                 q_media = sum(tutte_quote) / len(tutte_quote)
                 q_giocabile = max(quote_italiane) if quote_italiane else round(q_media, 2)
                 
-                # PARAMETRO MODIFICATO: Forbice quote allargata per Alpha (1.20 - 1.65)
                 if 1.20 <= q_media <= 1.65 and 1.20 <= q_giocabile <= 1.70:
                     score = ((1.0 / q_media) * max(rating_c, rating_t)) + (0.08 if "Doppia Chance" in pick or "Over 1.5" in pick else 0.0)
                     if score > miglior_score:
@@ -209,7 +210,7 @@ def esegui_alpha():
     partite_pulite = [{k: v for k, v in c.items() if k != 'score'} for c in selezionati]
     stake = 12.0
 
-    msg = "<b>🚀 MODELLO ALPHA | MULTIPLA PROTETTA</b>\n\n📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n💰 <b>Stake</b>: {stake}€\n\n"
+    msg = f"<b>🚀 MODELLO ALPHA | MULTIPLA PROTETTA</b>\n\n📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n💰 <b>Stake</b>: {stake}€\n\n"
     for c in partite_pulite:
         msg += f"⚽ <b>{c['data']} | {html.escape(c['squadra_casa'])} - {html.escape(c['squadra_trasferta'])}</b>\n🛡️ <b>Scelta</b>: {html.escape(c['pronostico'])} (@{c['quota']})\n\n"
     
