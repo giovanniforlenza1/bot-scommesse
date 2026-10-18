@@ -16,6 +16,8 @@
             --vibrant-coral: #F87060;
             --alabaster-grey: #CDD7D6;
             --khaki-beige: #B3A394;
+            --court-green: #2D6A4F; /* Colore in palette dedicato al Tennis (Modello Sigma) */
+            --court-green-bg: #E8F5E9;
             --white: #FFFFFF;
 
             --bg-body: #f4f6f6;
@@ -26,23 +28,45 @@
             --success-bg: #dcfce7;
             --danger: #ef4444;
             --danger-bg: #fee2e2;
+            --pending: #d97706;
+            --pending-bg: #fef3c7;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
         header { background-color: #102542; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(16, 37, 66, 0.15); }
-        .nav-container { max-width: 1100px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
         .brand img { width: 34px; height: 34px; border-radius: 6px; }
         .brand h1 { font-size: 26px; font-weight: 800; color: var(--white); margin: 0; letter-spacing: -0.5px; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .page-switch-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .page-switch-btn:hover { background-color: rgba(255, 255, 255, 0.2); }
+        .page-switch-btn.active-tennis { background-color: var(--court-green); border-color: #52b788; color: var(--white); }
+
         .nav-btn { background-color: var(--vibrant-coral); color: var(--white); padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 13px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
         .nav-btn:hover { opacity: 0.9; }
         .spacer { height: 70px; }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .hidden { display: none !important; }
 
-        /* BANNER OPERAZIONI IN CORSO (FOMO) */
+        /* BANNER OPERAZIONI IN CORSO CALCIO */
         .live-banner {
             background-color: var(--success-bg);
             border: 1px solid #a7f3d0;
@@ -57,34 +81,33 @@
             gap: 10px;
             box-shadow: 0 2px 6px rgba(34, 197, 94, 0.08);
         }
-        .live-banner.hidden { display: none !important; }
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #065f46;
-        }
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--success);
-            border-radius: 50%;
-            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
-            animation: pulse 2s infinite;
-        }
+        .live-indicator { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: #065f46; }
+        .status-dot { width: 10px; height: 10px; background-color: var(--success); border-radius: 50%; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); animation: pulse 2s infinite; }
         @keyframes pulse {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
+        /* DISCLAIMER SVILUPPO TENNIS */
+        .tennis-disclaimer {
+            background-color: var(--court-green-bg);
+            border: 1px solid #b7e4c7;
+            border-left: 5px solid var(--court-green);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            color: var(--prussian-blue);
+        }
+        .tennis-disclaimer h4 { font-size: 14px; font-weight: 800; color: var(--court-green); text-transform: uppercase; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .tennis-disclaimer p { font-size: 13px; color: var(--text-main); }
+
         .models-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; align-items: start; }
         .model-card { background-color: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border-solid); border-top: 4px solid #102542; height: 100%; }
         .model-card.alpha { border-top-color: #102542; }
         .model-card.beta { border-top-color: var(--khaki-beige); }
         .model-card.omega { border-top-color: var(--vibrant-coral); }
+        .model-card.sigma { border-top-color: var(--court-green); margin-bottom: 30px; }
         .model-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .model-card p { font-size: 13px; color: var(--text-main); line-height: 1.5; margin-bottom: 12px; }
         .model-card ul { padding-left: 18px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
@@ -106,6 +129,7 @@
         .status-btn { background: transparent; border: 1px solid var(--khaki-beige); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
         .status-btn:hover { border-color: #102542; color: #102542; }
         .status-btn.active { background: var(--vibrant-coral); color: var(--white); border-color: var(--vibrant-coral); }
+        .status-btn.active-sigma { background: var(--court-green); color: var(--white); border-color: var(--court-green); }
 
         .streak-badge { background-color: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; }
 
@@ -119,7 +143,6 @@
         .chart-box { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .chart-wrapper { position: relative; height: 300px; width: 100%; }
 
-        /* SIMULATORE DI RENDIMENTO (PUNTO 17) */
         .calc-box { background-color: var(--white); border: 1px solid var(--border-solid); border-radius: 12px; padding: 18px 24px; margin-bottom: 35px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .calc-box label { font-size: 13px; font-weight: 700; color: var(--prussian-blue); }
         .calc-controls { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
@@ -132,17 +155,20 @@
         .t-status { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
         .t-status.vinta { background-color: #dcfce7; color: var(--success); }
         .t-status.persa { background-color: #fee2e2; color: var(--danger); }
+        .t-status.attesa { background-color: var(--pending-bg); color: var(--pending); }
 
         .match-row { padding: 14px 16px; border-bottom: 1px solid var(--alabaster-grey); }
         .match-row:last-child { border-bottom: none; }
         .m-teams { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; color: #102542; }
         .m-details { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .m-pick { font-size: 12px; font-weight: 700; color: var(--vibrant-coral); text-transform: uppercase; }
+        .m-pick.pick-sigma { color: var(--court-green); }
         .m-quote { font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: var(--khaki-beige); }
         
         .m-result { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; display: inline-block; padding: 2px 8px; border-radius: 4px; }
         .m-result.vinta { background-color: var(--success-bg); color: var(--success); }
         .m-result.persa { background-color: var(--danger-bg); color: var(--danger); }
+        .m-result.attesa { background-color: var(--pending-bg); color: var(--pending); }
 
         .ticket-footer { padding: 14px 16px; border-top: 1px solid var(--alabaster-grey); background-color: #fafbfc; }
         .t-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
@@ -162,24 +188,35 @@
 
     <header>
         <div class="nav-container">
-            <a href="#" class="brand">
+            <a onclick="cambiaPaginaSport('calcio')" class="brand">
                 <img src="favicon.png" alt="SBR" onerror="this.style.display='none'">
                 <h1>SBR</h1>
             </a>
-            <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i> Canale Telegram</a>
+            <div class="nav-actions">
+                <button id="btnPageCalcio" class="page-switch-btn" onclick="cambiaPaginaSport('calcio')" style="background-color: var(--vibrant-coral); border-color: var(--vibrant-coral);">
+                    <i class="fa-solid fa-futbol"></i> Calcio
+                </button>
+                <button id="btnPageTennis" class="page-switch-btn" onclick="cambiaPaginaSport('tennis')">
+                    <i class="fa-solid fa-table-tennis-paddle-ball"></i> Tennis Lab (Sigma)
+                </button>
+                <a href="https://t.me/+nyQkDOrFWrkyNGI8" class="nav-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i> Telegram</a>
+            </div>
         </div>
     </header>
 
     <div class="spacer"></div>
 
-    <div class="container">
-        <!-- BANNER OPERAZIONI IN CORSO (FOMO) -->
+    <!-- ==========================================
+         PAGINA 1: DASHBOARD PRINCIPALE CALCIO
+         ========================================== -->
+    <div id="paginaCalcio" class="container">
+        <!-- BANNER OPERAZIONI IN CORSO (SOLO CALCIO) -->
         <div id="liveBanner" class="live-banner hidden">
             <div class="live-indicator">
                 <div class="status-dot"></div>
                 <span id="liveBannerText">Operazioni Quantitative Attive a Mercato</span>
             </div>
-            <span style="font-size:12px; color: var(--text-muted); font-weight:600;"> Vault Crittografico Attivo: dettagli svelati a fine match</span>
+            <span style="font-size:12px; color: var(--text-muted); font-weight:600;">Vault Crittografico Attivo: dettagli svelati a fine match</span>
         </div>
 
         <div class="models-info-grid">
@@ -259,7 +296,6 @@
             </div>
         </div>
 
-        <!-- PUNTO 17: SIMULATORE INTERATTIVO DI RENDIMENTO -->
         <div class="calc-box">
             <label for="simRange"><i class="fa-solid fa-calculator"></i> Simulatore Capitale (Basato sul rendimento reale del modello selezionato):</label>
             <div class="calc-controls">
@@ -273,15 +309,76 @@
         <div id="storico-container" class="tickets-container"></div>
     </div>
 
+    <!-- ==========================================
+         PAGINA 2: SEZIONE SEPARATA TENNIS (MODELLO SIGMA)
+         ========================================== -->
+    <div id="paginaTennis" class="container hidden">
+        
+        <div class="tennis-disclaimer">
+            <h4><i class="fa-solid fa-flask"></i> Laboratorio Quantitativo Tennis — Sviluppo e Calibrazione in Corso</h4>
+            <p>Il <strong>Modello Sigma (ATP / WTA)</strong> applica l'architettura Monte Carlo di Omega ai mercati tennistici a 2 esiti (zero pareggi). In questa fase di calibrazione pubblica, le operazioni non vengono inviate su Telegram ma sono pubblicate in chiaro (incluse le giocate <strong>In Attesa</strong>) direttamente in questa pagina dedicata.</p>
+        </div>
+
+        <div class="model-card sigma">
+            <h3>Modello Sigma — Tennis Core <span class="badge" style="background-color: var(--court-green);">TENNIS ATP / WTA</span></h3>
+            <p><strong>Il gemello quantitativo di Omega progettato per il Tennis professionistico. Sfrutta l'assenza del pareggio per abbattere la varianza e massimizzare il Win Rate.</strong></p>
+            <ul>
+                <li><strong>Power De-vigging 2-Way</strong>: purifica le quote di Pinnacle sui circuiti ATP e WTA mondiali rilevando automaticamente i tornei attivi.</li>
+                <li><strong>Simulazione Monte Carlo Set-by-Set</strong>: simula 10.000 volte l'incontro al meglio dei 3 set per calcolare la probabilità reale di vittoria.</li>
+                <li><strong>Trasparenza Live Lab</strong>: tutte le giocate (sia in attesa che concluse) sono visibili in tempo reale qui sotto durante la fase di test.</li>
+            </ul>
+        </div>
+
+        <div class="dashboard-header">
+            <div class="filters-row">
+                <div class="status-selector">
+                    <button class="status-btn active-sigma" onclick="selezionaFiltroTennis('tutte', this)">Tutte (<span id="t-count-tutte">0</span>)</button>
+                    <button class="status-btn" onclick="selezionaFiltroTennis('in attesa', this)">In Attesa (<span id="t-count-attesa">0</span>)</button>
+                    <button class="status-btn" onclick="selezionaFiltroTennis('vinta', this)">Vinte (<span id="t-count-vinte">0</span>)</button>
+                    <button class="status-btn" onclick="selezionaFiltroTennis('persa', this)">Perse (<span id="t-count-perse">0</span>)</button>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: var(--court-green);">🎾 MONITORAGGIO LIVE ATTIVO</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card" style="border-top: 3px solid var(--court-green);">
+                <div class="stat-label">Cassa Sigma Tennis</div>
+                <div class="stat-value" id="t-capitale">200.00 €</div>
+            </div>
+            <div class="stat-card" style="border-top: 3px solid var(--court-green);">
+                <div class="stat-label">Profitto Netto</div>
+                <div class="stat-value" id="t-profitto">0.00 €</div>
+            </div>
+            <div class="stat-card" style="border-top: 3px solid var(--court-green);">
+                <div class="stat-label">Yield (ROI)</div>
+                <div class="stat-value" id="t-yield">--%</div>
+            </div>
+            <div class="stat-card" style="border-top: 3px solid var(--court-green);">
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value" id="t-winrate">--%</div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-wrapper">
+                <canvas id="tennisEquityChart"></canvas>
+            </div>
+        </div>
+
+        <div id="tennis-storico-container" class="tickets-container"></div>
+    </div>
+
     <script>
         let databaseGlobale = null;
         let modelloAttuale = 'alpha';
         let filtroAttuale = 'tutte';
+        let filtroTennisAttuale = 'tutte';
         let giorniPeriodo = 9999;
         let crescitaPercentualeModello = 0.0;
         let chartIstanza = null;
+        let chartTennisIstanza = null;
 
-        // SICUREZZA ANTI-XSS: Sanifica qualsiasi stringa prima di inserirla nel DOM
         function escapeHTML(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -292,11 +389,35 @@
                 .replace(/'/g, '&#039;');
         }
 
+        function cambiaPaginaSport(sport) {
+            const pagCalcio = document.getElementById('paginaCalcio');
+            const pagTennis = document.getElementById('paginaTennis');
+            const btnCalcio = document.getElementById('btnPageCalcio');
+            const btnTennis = document.getElementById('btnPageTennis');
+
+            if (sport === 'tennis') {
+                pagCalcio.classList.add('hidden');
+                pagTennis.classList.remove('hidden');
+                btnCalcio.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                btnCalcio.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                btnTennis.classList.add('active-tennis');
+                aggiornaDashboardTennis();
+            } else {
+                pagTennis.classList.add('hidden');
+                pagCalcio.classList.remove('hidden');
+                btnTennis.classList.remove('active-tennis');
+                btnCalcio.style.backgroundColor = 'var(--vibrant-coral)';
+                btnCalcio.style.borderColor = 'var(--vibrant-coral)';
+                aggiornaDashboard();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function parseDataItaliana(dataStr) {
             if (!dataStr) return new Date();
             const parti = dataStr.split('/');
             if (parti.length !== 3) return new Date();
-            return new Date( parseInt(parti[2]), parseInt(parti[1]) - 1, parseInt(parti[0]) );
+            return new Date(parseInt(parti[2]), parseInt(parti[1]) - 1, parseInt(parti[0]));
         }
 
         function selezionaModello(modello) {
@@ -318,6 +439,14 @@
             aggiornaDashboard();
         }
 
+        function selezionaFiltroTennis(filtro, elemento) {
+            filtroTennisAttuale = filtro;
+            const parent = elemento.parentElement;
+            parent.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active-sigma'));
+            if(elemento) elemento.classList.add('active-sigma');
+            aggiornaDashboardTennis();
+        }
+
         function selezionaPeriodo(giorni, elemento) {
             giorniPeriodo = giorni;
             const parent = elemento.parentElement;
@@ -336,7 +465,6 @@
             elOut.style.color = diff >= 0 ? 'var(--success)' : 'var(--danger)';
         }
 
-        // PUNTO 14: ESPORTAZIONE CERTIFICATA CSV
         function esportaCSV() {
             if (!databaseGlobale) return;
             const concluse = databaseGlobale.schedine.filter(sc => sc.stato_schedina !== 'in attesa');
@@ -352,13 +480,13 @@
         }
 
         function aggiornaBannerInCorso(schedineTutte) {
-            const inAttesa = (schedineTutte || []).filter(sc => sc.stato_schedina === 'in attesa');
+            const inAttesaCalcio = (schedineTutte || []).filter(sc => sc.stato_schedina === 'in attesa' && sc.modello !== 'sigma');
             const banner = document.getElementById('liveBanner');
             
-            if (inAttesa.length > 0) {
+            if (inAttesaCalcio.length > 0) {
                 banner.classList.remove('hidden');
-                const n = inAttesa.length;
-                document.getElementById('liveBannerText').innerHTML = `🟢 <strong>${n}</strong> ${n === 1 ? 'Schedina in corso a mercato in questo momento' : 'Schedine in corso a mercato in questo momento'}`;
+                const n = inAttesaCalcio.length;
+                document.getElementById('liveBannerText').innerHTML = `🟢 <strong>${n}</strong> ${n === 1 ? 'Schedina Calcio in corso a mercato in questo momento' : 'Schedine Calcio in corso a mercato in questo momento'}`;
             } else {
                 banner.classList.add('hidden');
             }
@@ -402,7 +530,6 @@
                 puntiCassa.push(Number(capitale.toFixed(2)));
             });
 
-            // Punto 19: Badge Hot Streak se >= 2 vinte consecutive
             const badgeStreak = document.getElementById('hotStreakBadge');
             if (seriePositiva >= 2) {
                 badgeStreak.style.display = 'inline-block';
@@ -468,17 +595,12 @@
                         resultText = scoreClean + '⏱';
                     }
 
-                    const sqCasa = escapeHTML(p.squadra_casa);
-                    const sqTrasf = escapeHTML(p.squadra_trasferta);
-                    const pron = escapeHTML(p.pronostico);
-                    const quotaNum = Number(p.quota || 1.0).toFixed(2);
-
                     return `
                     <div class="match-row">
-                        <span class="m-teams">${sqCasa} - ${sqTrasf}</span>
+                        <span class="m-teams">${escapeHTML(p.squadra_casa)} - ${escapeHTML(p.squadra_trasferta)}</span>
                         <div class="m-details">
-                            <span class="m-pick">${pron}</span>
-                            <span class="m-quote">@${quotaNum}</span>
+                            <span class="m-pick">${escapeHTML(p.pronostico)}</span>
+                            <span class="m-quote">@${Number(p.quota || 1.0).toFixed(2)}</span>
                         </div>
                         <div style="text-align: right;"><span class="m-result ${resultClass}">${resultText}</span></div>
                     </div>`;
@@ -497,6 +619,148 @@
                             <div class="t-row"><span>Quota totale:</span><span>${Number(sc.quota_totale || 1.0).toFixed(2)}</span></div>
                             <div class="t-row"><span>Stake:</span><span>€ ${Number(sc.importo || 10).toFixed(2)}</span></div>
                             <div class="t-total"><span>Vincita:</span><span>€ ${Number(sc.ritorno_potenziale || 0).toFixed(2)}</span></div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // FUNZIONE DEDICATA ALLA PAGINA TENNIS (MODELLO SIGMA - MOSTRA ANCHE LE SCHEDINE IN ATTESA)
+        function aggiornaDashboardTennis() {
+            if (!databaseGlobale) return;
+
+            const schedineSigma = databaseGlobale.schedine.filter(sc => sc.modello && sc.modello.toLowerCase() === 'sigma');
+
+            let capitale = 200.0;
+            let vinte = 0, perse = 0, inAttesa = 0, totalePuntatoConcluse = 0;
+            let labelsGrafico = ['Start'];
+            let puntiCassa = [200.0];
+
+            schedineSigma.forEach(sc => {
+                const imp = Number(sc.importo || 10);
+                const rit = Number(sc.ritorno_potenziale || 0);
+                if (sc.stato_schedina === 'vinta') {
+                    capitale += (rit - imp);
+                    totalePuntatoConcluse += imp;
+                    vinte++;
+                    labelsGrafico.push(escapeHTML(sc.data_creazione));
+                    puntiCassa.push(Number(capitale.toFixed(2)));
+                } else if (sc.stato_schedina === 'persa') {
+                    capitale -= imp;
+                    totalePuntatoConcluse += imp;
+                    perse++;
+                    labelsGrafico.push(escapeHTML(sc.data_creazione));
+                    puntiCassa.push(Number(capitale.toFixed(2)));
+                } else {
+                    inAttesa++;
+                }
+            });
+
+            document.getElementById('t-count-tutte').innerText = schedineSigma.length;
+            document.getElementById('t-count-attesa').innerText = inAttesa;
+            document.getElementById('t-count-vinte').innerText = vinte;
+            document.getElementById('t-count-perse').innerText = perse;
+
+            let profittoNetto = capitale - 200.0;
+            document.getElementById('t-capitale').innerText = capitale.toFixed(2) + ' €';
+
+            let elProfitto = document.getElementById('t-profitto');
+            elProfitto.innerText = (profittoNetto > 0 ? '+' : '') + profittoNetto.toFixed(2) + ' €';
+            elProfitto.className = 'stat-value ' + (profittoNetto > 0 ? 'profit' : (profittoNetto < 0 ? 'negative' : ''));
+
+            let totaliDecisi = vinte + perse;
+            document.getElementById('t-winrate').innerText = totaliDecisi > 0 ? Math.round((vinte / totaliDecisi) * 100) + '%' : '--%';
+
+            let elYield = document.getElementById('t-yield');
+            if (totalePuntatoConcluse > 0) {
+                let roi = (profittoNetto / totalePuntatoConcluse) * 100;
+                elYield.innerText = (roi > 0 ? '+' : '') + roi.toFixed(1) + '%';
+                elYield.className = 'stat-value ' + (roi > 0 ? 'profit' : (roi < 0 ? 'negative' : ''));
+            } else {
+                elYield.innerText = '--%';
+                elYield.className = 'stat-value';
+            }
+
+            const ctx = document.getElementById('tennisEquityChart').getContext('2d');
+            if (chartTennisIstanza) chartTennisIstanza.destroy();
+            chartTennisIstanza = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labelsGrafico,
+                    datasets: [{
+                        label: 'Capitale Sigma Tennis (€)',
+                        data: puntiCassa,
+                        borderColor: '#2D6A4F',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#2D6A4F',
+                        pointRadius: 4,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: '#CDD7D6' } }
+                    }
+                }
+            });
+
+            const container = document.getElementById('tennis-storico-container');
+            container.innerHTML = '';
+
+            const filtrate = schedineSigma.slice().reverse().filter(sc => filtroTennisAttuale === 'tutte' || sc.stato_schedina === filtroTennisAttuale);
+
+            if (filtrate.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna operazione Tennis presente con questo filtro. Al prossimo avvio il bot Sigma pubblicherà qui le giocate ATP/WTA in corso.</div>`;
+                return;
+            }
+
+            filtrate.forEach(sc => {
+                let classStamp = sc.stato_schedina === 'vinta' ? 'vinta' : (sc.stato_schedina === 'persa' ? 'persa' : 'attesa');
+
+                let matchesHTML = (sc.partite || []).map(p => {
+                    let resultClass = 'attesa';
+                    let scoreClean = p.risultato_reale ? `[${escapeHTML(p.risultato_reale)}] ` : '';
+                    let resultText = scoreClean + 'In Corso ⏱';
+                    
+                    if (p.stato === 'vinta') {
+                        resultClass = 'vinta';
+                        resultText = scoreClean + '✓';
+                    } else if (p.stato === 'persa') {
+                        resultClass = 'persa';
+                        resultText = scoreClean + '✗';
+                    }
+
+                    return `
+                    <div class="match-row">
+                        <span class="m-teams">🎾 ${escapeHTML(p.squadra_casa)} vs ${escapeHTML(p.squadra_trasferta)}</span>
+                        <div class="m-details">
+                            <span class="m-pick pick-sigma">${escapeHTML(p.pronostico)}</span>
+                            <span class="m-quote">@${Number(p.quota || 1.0).toFixed(2)}</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11px; color:var(--text-muted);">${escapeHTML(p.bookmaker || '')} (${escapeHTML(p.data || '')})</span>
+                            <span class="m-result ${resultClass}">${resultText}</span>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                container.innerHTML += `
+                    <div class="ticket" style="border-top: 3px solid var(--court-green);">
+                        <div>
+                            <div class="ticket-header">
+                                <span class="t-date">${escapeHTML(sc.data_creazione)}</span>
+                                <span class="t-status ${classStamp}">${escapeHTML(sc.stato_schedina)}</span>
+                            </div>
+                            <div>${matchesHTML}</div>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="t-row"><span>Quota totale:</span><span>${Number(sc.quota_totale || 1.0).toFixed(2)}</span></div>
+                            <div class="t-row"><span>Stake Kelly:</span><span>€ ${Number(sc.importo || 10).toFixed(2)}</span></div>
+                            <div class="t-total"><span>Ritorno Potenziale:</span><span>€ ${Number(sc.ritorno_potenziale || 0).toFixed(2)}</span></div>
                         </div>
                     </div>`;
             });
