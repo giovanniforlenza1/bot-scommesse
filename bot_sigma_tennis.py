@@ -89,11 +89,10 @@ def calcola_cassa_sigma(db):
 def esegui_sigma_tennis():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
+    data_oggi_str = oggi.strftime("%d/%m/%Y")
+    
     inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
     limite_temporale = inizio_oggi + timedelta(days=5)
-    if data_ita < inizio_oggi or data_ita > limite_temporale: continue
-    data_oggi_str = oggi.strftime("%d/%m/%Y")
-    limite_temporale = oggi + timedelta(days=3)
 
     db_principale = carica_database_principale()
 
@@ -122,7 +121,9 @@ def esegui_sigma_tennis():
         for p in partite:
             if p['id'] in id_gia_giocati: continue
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            if data_ita < oggi or data_ita > limite_temporale: continue
+            
+            if data_ita < inizio_oggi or data_ita > limite_temporale:
+                continue
 
             giocatore_1 = p['home_team'].strip()
             giocatore_2 = p['away_team'].strip()
@@ -164,7 +165,6 @@ def esegui_sigma_tennis():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             pronostico, prob_reale, quota_top, book_top = opzioni[0]
 
-            # PARAMETRO MODIFICATO: Confidenza minima abbassata dal 56% al 52% per maggiore operatività sul Tennis
             if prob_reale < 0.52: continue
             quota_equa = round(1.0 / prob_reale, 2)
             quota_minima = round(quota_equa * 1.005, 2)
