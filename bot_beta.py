@@ -3,10 +3,13 @@ import json
 import os
 import uuid
 import math
+import html
+import base64
+import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati = [
@@ -15,11 +18,18 @@ campionati = [
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
-    'soccer_italy_serie_a': 'ita.1',
-    'soccer_epl': 'eng.1',
-    'soccer_spain_la_liga': 'esp.1',
-    'soccer_germany_bundesliga': 'ger.1',
+    'soccer_italy_serie_a': 'ita.1', 'soccer_epl': 'eng.1',
+    'soccer_spain_la_liga': 'esp.1', 'soccer_germany_bundesliga': 'ger.1',
     'soccer_france_ligue_one': 'fra.1'
+}
+
+# Punto 2: Coefficiente Severità Arbitrale Storica per Lega
+SEVERITA_ARBITRALE_LEGA = {
+    'soccer_spain_la_liga': 0.95,
+    'soccer_italy_serie_a': 0.80,
+    'soccer_france_ligue_one': 0.45,
+    'soccer_germany_bundesliga': 0.35,
+    'soccer_epl': 0.30
 }
 
 TRADUZIONI_SQUADRE = {
@@ -36,8 +46,26 @@ TRADUZIONI_SQUADRE = {
     "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
+def cripta_dati_sensibili(lista_partite):
+    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
+    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
+    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
+    return base64.b64encode(xored).decode('ascii')
+
+def crea_partite_offuscate_per_sito(lista_partite):
+    return [{
+        'id_partita': 'protetto',
+        'data': p.get('data', ''),
+        'squadra_casa': '🔒 Singola Esotica',
+        'squadra_trasferta': 'In Corso',
+        'pronostico': 'Poisson Riservato',
+        'quota': p.get('quota', 1.0),
+        'stato': 'in attesa',
+        'risultato_reale': ''
+    } for p in lista_partite]
+
 def traduci_squadra(nome):
-    nome_pulito = nome.strip()
+    nome_pulito = str(nome).strip()
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
 
@@ -72,8 +100,7 @@ def costruisci_storico_reale_espn():
                 if res.status_code != 200: continue
                 for ev in res.json().get('events', []):
                     comp = ev.get('competitions', [{}])[0]
-                    if not comp.get('status', {}).get('type', {}).get('completed', False):
-                        continue
+                    if not comp.get('status', {}).get('type', {}).get('completed', False): continue
                     for t in comp.get('competitors', []):
                         nome_norm = normalizza_nome(t.get('team', {}).get('displayName', ''))
                         corners, cards = 0, 0
@@ -86,8 +113,7 @@ def costruisci_storico_reale_espn():
                             info = storico_squadre.setdefault(nome_norm, {'corners': [], 'cards': []})
                             info['corners'].append(corners)
                             info['cards'].append(cards)
-            except:
-                continue
+            except: continue
     return storico_squadre
 
 def ottieni_media_storica(storico, squadra_ita, tipo, default_val):
@@ -132,9 +158,7 @@ def esegui_beta():
             return
 
     storico_espn = costruisci_storico_reale_espn()
-
-    miglior_operazione = None
-    miglior_score = 0.0
+    miglior_operazione, miglior_score = None, 0.0
 
     for camp in campionati:
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu&markets=h2h"
@@ -163,55 +187,42 @@ def esegui_beta():
 
             media_corner_casa = ottieni_media_storica(storico_espn, casa_ita, 'corners', 5.5)
             media_corner_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'corners', 4.6)
-            
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
-            # CASO 1: Linea Protetta Over 8.5 Calci d'Angolo (Probabilità > 68%)
             if 1.35 <= q1_med <= 1.92 and q2_med >= 3.80:
                 lambda_quote = 10.6 + ((1.92 - q1_med) * 2.2)
                 lambda_storico = media_corner_casa + media_corner_trasf
                 lambda_corner = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
-                # Usa la linea più sicura Over 8.5 (basta che facciano 9 angoli!)
                 prob_over_8_5 = prob_poisson_over(lambda_corner, 8.5)
                 quota_target = 1.62
                 edge = (prob_over_8_5 * quota_target) - 1.0
                 if prob_over_8_5 >= 0.68 and edge > miglior_score:
                     miglior_score = edge
                     miglior_operazione = {
-                        'id_partita': p['id'],
-                        'data': data_ita.strftime("%d/%m %H:%M"),
-                        'squadra_casa': casa_ita,
-                        'squadra_trasferta': trasf_ita,
-                        'pronostico': "Over 8.5 Calci d'Angolo",
-                        'quota': quota_target,
-                        'prob': prob_over_8_5,
-                        'edge': edge
+                        'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                        'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
+                        'pronostico': "Over 8.5 Calci d'Angolo", 'quota': quota_target,
+                        'prob': prob_over_8_5, 'edge': edge
                     }
 
-            # CASO 2: Linea Protetta Over 3.5 Cartellini Totali (Probabilità > 70%)
             elif 2.10 <= q1_med <= 3.20 and 2.10 <= q2_med <= 3.20:
-                bonus_campionato = 0.75 if camp in ['soccer_italy_serie_a', 'soccer_spain_la_liga'] else 0.25
-                lambda_quote = 4.6 + bonus_campionato
+                bonus_arbitro = SEVERITA_ARBITRALE_LEGA.get(camp, 0.35)
+                lambda_quote = 4.5 + bonus_arbitro
                 lambda_storico = media_cards_casa + media_cards_trasf
                 lambda_cards = (lambda_storico * 0.65) + (lambda_quote * 0.35)
                 
-                # Linea abbassata a Over 3.5 Cartellini (bastano 4 cartellini in tutta la partita!)
                 prob_over_3_5 = prob_poisson_over(lambda_cards, 3.5)
                 quota_target = 1.58
                 edge = (prob_over_3_5 * quota_target) - 1.0
                 if prob_over_3_5 >= 0.70 and edge > miglior_score:
                     miglior_score = edge
                     miglior_operazione = {
-                        'id_partita': p['id'],
-                        'data': data_ita.strftime("%d/%m %H:%M"),
-                        'squadra_casa': casa_ita,
-                        'squadra_trasferta': trasf_ita,
-                        'pronostico': "Over 3.5 Cartellini Totali",
-                        'quota': quota_target,
-                        'prob': prob_over_3_5,
-                        'edge': edge
+                        'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                        'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
+                        'pronostico': "Over 3.5 Cartellini Totali", 'quota': quota_target,
+                        'prob': prob_over_3_5, 'edge': edge
                     }
 
     if not miglior_operazione: return
@@ -219,12 +230,10 @@ def esegui_beta():
     cassa_attuale = calcola_cassa_beta(db_principale)
     b = miglior_operazione['quota'] - 1.0
     p_win = miglior_operazione['prob']
-    q_lose = 1.0 - p_win
-    kelly_fraction = ((b * p_win) - q_lose) / b
-    # Staking calibrato sulla cassa reale di Beta (tra 12€ e 22€ per far crescere il profitto netto)
+    kelly_fraction = ((b * p_win) - (1.0 - p_win)) / b
     stake_kelly = round(max(12.0, min(22.0, cassa_attuale * (kelly_fraction * 0.35))), 1)
 
-    partita_db = {
+    partita_reale = [{
         'id_partita': miglior_operazione['id_partita'],
         'data': miglior_operazione['data'],
         'squadra_casa': miglior_operazione['squadra_casa'],
@@ -233,12 +242,16 @@ def esegui_beta():
         'quota': miglior_operazione['quota'],
         'stato': 'in attesa',
         'risultato_reale': ''
-    }
+    }]
+
+    c_casa = html.escape(miglior_operazione['squadra_casa'])
+    c_trasf = html.escape(miglior_operazione['squadra_trasferta'])
+    c_pron = html.escape(miglior_operazione['pronostico'])
 
     msg = "<b>⚡ MODELLO BETA | INFERENZA POISSON</b>\n\n"
-    msg += f"⚽ <b>{partita_db['data']} | {partita_db['squadra_casa']} - {partita_db['squadra_trasferta']}</b>\n"
-    msg += f"🎯 <b>Singola ad Alta Confidenza</b>: {partita_db['pronostico']}\n"
-    msg += f"📊 <b>Quota Consigliata</b>: @{partita_db['quota']}\n"
+    msg += f"⚽ <b>{miglior_operazione['data']} | {c_casa} - {c_trasf}</b>\n"
+    msg += f"🎯 <b>Singola ad Alta Confidenza</b>: {c_pron}\n"
+    msg += f"📊 <b>Quota Consigliata</b>: @{miglior_operazione['quota']}\n"
     msg += f"📈 <b>Probabilità Stimata</b>: {round(p_win * 100, 1)}%\n"
     msg += f"💰 <b>Stake Kelly</b>: {stake_kelly}€\n\n"
     msg += "<b>#ModelloBeta #Poisson #ValueBetting</b>"
@@ -253,7 +266,8 @@ def esegui_beta():
             'quota_totale': miglior_operazione['quota'],
             'ritorno_potenziale': round(stake_kelly * miglior_operazione['quota'], 2),
             'stato_schedina': 'in attesa',
-            'partite': [partita_db]
+            'payload_criptato': cripta_dati_sensibili(partita_reale),
+            'partite': crea_partite_offuscate_per_sito(partita_reale)
         })
         salva_database_principale(db_principale)
 
