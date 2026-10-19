@@ -12,10 +12,10 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 OMEGA_CHAT_ID = os.environ.get("OMEGA_CHAT_ID") or os.environ.get("CHAT_ID")
 
 campionati = [
-    'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
-    'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
+    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
+    'soccer_germany_bundesliga', 'soccer_france_ligue_one',
+    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga'
 ]
 
 MAPPA_BOOKMAKER_ITALIA = {
@@ -27,20 +27,11 @@ MAPPA_BOOKMAKER_ITALIA = {
     "coral": "Eurobet", "ladbrokes": "Sisal", "paddypower": "Betfair Sport", "skybet": "SkyBet / Sisal"
 }
 
-TRADUZIONI_NAZIONALI = {
-    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
-    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
-    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
-    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
-    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
-    "Serbia": "Serbia", "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord"
-}
-
 TRADUZIONI_SQUADRE = {
     "Inter Milan": "Inter", "AC Milan": "Milan", "AS Roma": "Roma", "SSC Napoli": "Napoli",
     "SS Lazio": "Lazio", "Juventus FC": "Juventus", "Hellas Verona": "Verona", "Bologna FC": "Bologna",
     "Fiorentina": "Fiorentina", "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
-    "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma", "Como 1907": "Como",
+    "Udinese Calcio": "Udinese", "Parma Calcio 1913": "Parma", "Como 1907": "Como",
     "Manchester Utd": "Manchester United", "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham",
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG", "Bayern Munich": "Bayern Monaco",
     "Bayer Leverkusen": "Bayer Leverkusen", "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
@@ -70,7 +61,8 @@ def esegui_richiesta_api(url_template):
         try:
             res = requests.get(url, timeout=12)
             if res.status_code == 200: return res.json()
-        except: pass
+        except:
+            pass
     return None
 
 def cripta_dati_sensibili(lista_partite):
@@ -89,7 +81,6 @@ def crea_partite_offuscate_per_sito(lista_partite):
 
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
-    if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "")
 
@@ -127,22 +118,26 @@ def calcola_cassa_e_circuit_breaker(db, modello_nome):
     freno = 0.70 if drawdown >= 0.18 else (0.85 if len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L'] else 1.0)
     return max(120.0, cassa), freno
 
+def priorita_lega(lega):
+    """A parità di giorno, preferisce Champions/Europa League e Serie A rispetto agli altri campionati"""
+    if 'uefa' in lega or 'italy_serie_a' in lega:
+        return 0
+    return 1
+
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    inizio_finestra = oggi - timedelta(hours=4)
-    limite_temporale = oggi + timedelta(days=7)
+    inizio_finestra = oggi - timedelta(hours=2)
+    limite_temporale = oggi + timedelta(days=3)
     
     db_analisi = carica_database_analisi()
-    if not db_analisi or not db_analisi.get('analisi'):
-        print("Omega Cecchino: Nessun match nel database_analisi.json.")
-        return
+    if not db_analisi or not db_analisi.get('analisi'): return
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
         if s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str:
-            print("Omega Cecchino: Giocata odierna già presente nel database.")
+            print("Omega Cecchino: Giocata odierna già presente.")
             return
     
     candidati_valore = []
@@ -169,7 +164,7 @@ def esegui_cecchino():
             quota_equa = analisi_match.get('quota_equa', quota_minima)
             prob_reale = analisi_match.get('probabilita_reale', 55.0) / 100.0
             
-            tetto_massimo_reale = min(2.45, round(quota_equa * 1.35, 2))
+            tetto_massimo_reale = min(2.40, round(quota_equa * 1.35, 2))
             miglior_quota = 0.0
             book_vincente = "Bet365 / Snai"
             
@@ -188,23 +183,24 @@ def esegui_cecchino():
                                 miglior_quota = q_attuale
                                 book_vincente = formatta_nome_bookmaker(key_book, titolo_book)
                             
-            if miglior_quota >= 1.22:
+            if miglior_quota >= 1.25:
                 ev_reale = max(0.01, (prob_reale * miglior_quota) - 1.0)
+                giorni_attesa = max(0, (data_ita.date() - oggi.date()).days)
                 candidati_valore.append({
                     'id_partita': p_live['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                    'giorni_attesa': giorni_attesa,
                     'squadra_casa': nome_casa_ita, 'squadra_trasferta': nome_trasf_ita,
                     'pronostico': pronostico_richiesto, 'quota': round(miglior_quota, 2),
                     'bookmaker': book_vincente, 'score': round((ev_reale * 0.5) + (prob_reale * 0.5), 4),
                     'ev': round(ev_reale, 3), 'lega': camp, 'stato': 'in attesa', 'risultato_reale': ''
                 })
                 
-    if not candidati_valore:
-        print("Omega Cecchino: Nessun candidato trovato.")
-        return
+    if not candidati_valore: return
     
-    ordinati = sorted(candidati_valore, key=lambda x: (0 if 'italy' in x['lega'] else 1, -x['score']))
+    # ORDINE INTELLIGENTE: 1° Partite più vicine (0 o 1 giorno), 2° Coppe/Serie A, 3° Miglior Score
+    ordinati = sorted(candidati_valore, key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['score']))
     
-    if ordinati[0]['quota'] >= 1.45 or len(ordinati) == 1:
+    if ordinati[0]['quota'] >= 1.48 or len(ordinati) == 1:
         finalisti = [ordinati[0]]
         tipo_giocata = "Colpo Mirato in Singola ad Alta Probabilità."
     else:
@@ -219,7 +215,7 @@ def esegui_cecchino():
     ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
     stake_consigliato = round(cassa_omega * min(0.10, max(0.06, 0.06 + (ev_medio * 0.40))) * freno_rischio, 1)
     
-    partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
+    partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev', 'giorni_attesa']} for c in finalisti]
     with open('omega_oggi.json', 'w', encoding='utf-8') as fo:
         json.dump([c['id_partita'] for c in partite_reali], fo)
 
@@ -231,7 +227,6 @@ def esegui_cecchino():
         'partite': crea_partite_offuscate_per_sito(partite_reali)
     })
     salva_database_principale(db_principale)
-    print(f"Omega Cecchino: Schedina SALVATA con successo! Quota {quota_totale} | Stake {stake_consigliato}€")
 
     msg = f"<b>MODELLO OMEGA</b>\n\n<b>{html.escape(tipo_giocata)}</b>\n\n"
     msg += f"📊 <b>Quota totale</b>: {quota_totale}\n💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
