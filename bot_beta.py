@@ -13,12 +13,13 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati = [
-    'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_spain_la_liga',
-    'soccer_germany_bundesliga', 'soccer_france_ligue_one', 'soccer_netherlands_eredivisie',
-    'soccer_portugal_primeira_liga', 'soccer_uefa_champs_league', 'soccer_uefa_europa_league'
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league',
+    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga',
+    'soccer_germany_bundesliga', 'soccer_france_ligue_one'
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
+    'soccer_uefa_champs_league': 'uefa.champions', 'soccer_uefa_europa_league': 'uefa.europa',
     'soccer_italy_serie_a': 'ita.1', 'soccer_epl': 'eng.1',
     'soccer_spain_la_liga': 'esp.1', 'soccer_germany_bundesliga': 'ger.1',
     'soccer_france_ligue_one': 'fra.1'
@@ -26,7 +27,7 @@ MAPPA_CAMPIONATI_ESPN = {
 
 SEVERITA_ARBITRALE_LEGA = {
     'soccer_spain_la_liga': 0.95, 'soccer_italy_serie_a': 0.85,
-    'soccer_italy_serie_b': 0.90, 'soccer_portugal_primeira_liga': 0.80,
+    'soccer_uefa_champs_league': 0.65, 'soccer_uefa_europa_league': 0.75,
     'soccer_france_ligue_one': 0.55, 'soccer_germany_bundesliga': 0.45, 'soccer_epl': 0.40
 }
 
@@ -35,7 +36,7 @@ TRADUZIONI_SQUADRE = {
     "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "Juventus FC": "Juventus",
     "Hellas Verona": "Verona", "Bologna FC": "Bologna", "Fiorentina": "Fiorentina",
     "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
-    "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma",
+    "Udinese Calcio": "Udinese", "Parma Calcio 1913": "Parma",
     "Como 1907": "Como", "Manchester Utd": "Manchester United",
     "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham", "Tottenham Hotspur": "Tottenham",
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG",
@@ -61,21 +62,14 @@ def ottieni_pool_chiavi():
 
 def esegui_richiesta_api(url_template):
     chiavi = ottieni_pool_chiavi()
-    if not chiavi:
-        print("ERRORE CRITICO BETA: Nessuna chiave API trovata nei Secrets!")
-        return None
-    for idx, chiave in enumerate(chiavi):
+    if not chiavi: return None
+    for chiave in chiavi:
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=12)
-            if res.status_code == 200:
-                rem = res.headers.get('x-requests-remaining', '?')
-                print(f"[Beta API OK - Chiave #{idx+1}] Crediti residui: {rem}")
-                return res.json()
-            else:
-                print(f"[Beta Switch] Chiave #{idx+1} esaurita (Status {res.status_code}) -> Passo alla successiva...")
-        except Exception as e:
-            print(f"[Beta Errore Rete Chiave #{idx+1}] {e}")
+            if res.status_code == 200: return res.json()
+        except:
+            pass
     return None
 
 def cripta_dati_sensibili(lista_partite):
@@ -86,14 +80,10 @@ def cripta_dati_sensibili(lista_partite):
 
 def crea_partite_offuscate_per_sito(lista_partite):
     return [{
-        'id_partita': 'protetto',
-        'data': p.get('data', ''),
-        'squadra_casa': '🔒 Singola Esotica',
-        'squadra_trasferta': 'In Corso',
-        'pronostico': 'Poisson Riservato',
-        'quota': p.get('quota', 1.0),
-        'stato': 'in attesa',
-        'risultato_reale': ''
+        'id_partita': 'protetto', 'data': p.get('data', ''),
+        'squadra_casa': '🔒 Singola Esotica', 'squadra_trasferta': 'In Corso',
+        'pronostico': 'Poisson Riservato', 'quota': p.get('quota', 1.0),
+        'stato': 'in attesa', 'risultato_reale': ''
     } for p in lista_partite]
 
 def traduci_squadra(nome):
@@ -172,17 +162,17 @@ def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    inizio_finestra = oggi - timedelta(hours=4)
-    limite_temporale = oggi + timedelta(days=7)
+    inizio_finestra = oggi - timedelta(hours=2)
+    limite_temporale = oggi + timedelta(days=3)
     
     db_principale = carica_database_principale()
     for s in db_principale['schedine']:
         if s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str:
-            print("Beta: Operazione odierna già presente nel database.")
+            print("Beta: Operazione odierna già presente.")
             return
 
     storico_espn = costruisci_storico_reale_espn()
-    miglior_operazione, miglior_score = None, -999.0
+    candidati_beta = []
 
     for camp in campionati:
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h"
@@ -216,23 +206,12 @@ def esegui_beta():
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
+            giorni_attesa = max(0, (data_ita.date() - oggi.date()).days)
+
             lambda_quote_c = 10.2 + max(0.0, (2.10 - fav_q) * 1.8)
             lambda_corner = ((media_corner_casa + media_corner_trasf) * 0.60) + (lambda_quote_c * 0.40)
             prob_over_8_5 = prob_poisson_over(lambda_corner, 8.5)
             edge_c = (prob_over_8_5 * 1.62) - 1.0
-
-            if edge_c > miglior_score:
-                miglior_score = edge_c
-                miglior_operazione = {
-                    'id_partita': p['id'],
-                    'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': casa_ita,
-                    'squadra_trasferta': trasf_ita,
-                    'pronostico': "Over 8.5 Calci d'Angolo",
-                    'quota': 1.62,
-                    'prob': prob_over_8_5,
-                    'edge': edge_c
-                }
 
             bonus_arbitro = SEVERITA_ARBITRALE_LEGA.get(camp, 0.45)
             equilibrio_match = max(0.0, 1.2 - abs(q1_med - q2_med) * 0.4)
@@ -240,22 +219,28 @@ def esegui_beta():
             prob_over_3_5 = prob_poisson_over(lambda_cards, 3.5)
             edge_k = (prob_over_3_5 * 1.58) - 1.0
 
-            if edge_k > miglior_score:
-                miglior_score = edge_k
-                miglior_operazione = {
-                    'id_partita': p['id'],
-                    'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': casa_ita,
-                    'squadra_trasferta': trasf_ita,
-                    'pronostico': "Over 3.5 Cartellini Totali",
-                    'quota': 1.58,
-                    'prob': prob_over_3_5,
-                    'edge': edge_k
-                }
+            if edge_c >= edge_k:
+                candidati_beta.append({
+                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                    'giorni_attesa': giorni_attesa, 'lega': camp,
+                    'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
+                    'pronostico': "Over 8.5 Calci d'Angolo", 'quota': 1.62,
+                    'prob': prob_over_8_5, 'edge': edge_c
+                })
+            else:
+                candidati_beta.append({
+                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                    'giorni_attesa': giorni_attesa, 'lega': camp,
+                    'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
+                    'pronostico': "Over 3.5 Cartellini Totali", 'quota': 1.58,
+                    'prob': prob_over_3_5, 'edge': edge_k
+                })
 
-    if not miglior_operazione:
-        print("Beta: Nessuna partita disponibile dalle API.")
-        return
+    if not candidati_beta: return
+
+    # Dà priorità alle partite entro 24/48h (Coppe in settimana) e poi al miglior vantaggio matematico
+    candidati_beta.sort(key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, -x['edge']))
+    miglior_operazione = candidati_beta[0]
 
     cassa_attuale = calcola_cassa_beta(db_principale)
     b = miglior_operazione['quota'] - 1.0
@@ -286,7 +271,6 @@ def esegui_beta():
         'partite': crea_partite_offuscate_per_sito(partita_reale)
     })
     salva_database_principale(db_principale)
-    print(f"Beta: Singola SALVATA con successo! {miglior_operazione['squadra_casa']} - {miglior_operazione['pronostico']}")
 
     c_casa = html.escape(miglior_operazione['squadra_casa'])
     c_trasf = html.escape(miglior_operazione['squadra_trasferta'])
