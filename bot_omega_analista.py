@@ -6,35 +6,25 @@ import math
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+# SOLO TOP LEAGUES + COPPE EUROPEE (Rimosse Serie B e Championship)
 campionati = [
-    'soccer_italy_serie_a', 'soccer_italy_serie_b', 'soccer_epl', 'soccer_efl_champ',
-    'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_nations_league'
+    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
+    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
+    'soccer_germany_bundesliga', 'soccer_france_ligue_one',
+    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga'
 ]
 
 campionati_espn = [
-    'ita.1', 'ita.2', 'eng.1', 'eng.2', 'esp.1', 'ger.1', 
-    'fra.1', 'ned.1', 'por.1', 'uefa.champions', 'uefa.europa'
+    'uefa.champions', 'uefa.europa', 'uefa.europa.conf',
+    'ita.1', 'eng.1', 'esp.1', 'ger.1', 'fra.1', 'ned.1', 'por.1'
 ]
-
-TRADUZIONI_NAZIONALI = {
-    "Italy": "Italia", "France": "Francia", "Germany": "Germania", 
-    "Spain": "Spagna", "England": "Inghilterra", "Netherlands": "Olanda", 
-    "Belgium": "Belgio", "Portugal": "Portogallo", "Croatia": "Croazia", 
-    "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca", 
-    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria",
-    "Scotland": "Scozia", "Wales": "Galles", "Hungary": "Ungheria",
-    "Turkey": "Turchia", "Albania": "Albania", "Serbia": "Serbia",
-    "Kosovo": "Kosovo", "North Macedonia": "Macedonia del Nord"
-}
 
 TRADUZIONI_SQUADRE = {
     "Inter Milan": "Inter", "Internazionale": "Inter", "AC Milan": "Milan", "AS Roma": "Roma",
     "SSC Napoli": "Napoli", "SS Lazio": "Lazio", "Juventus FC": "Juventus",
     "Hellas Verona": "Verona", "Bologna FC": "Bologna", "Fiorentina": "Fiorentina",
     "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
-    "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma",
+    "Udinese Calcio": "Udinese", "Parma Calcio 1913": "Parma",
     "Como 1907": "Como", "US Lecce": "Lecce", "Cagliari Calcio": "Cagliari", "AC Monza": "Monza",
     "Atalanta BC": "Atalanta", "Manchester Utd": "Manchester United",
     "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham", "Tottenham Hotspur": "Tottenham",
@@ -48,7 +38,6 @@ TRADUZIONI_SQUADRE = {
 }
 
 def ottieni_pool_chiavi():
-    """Raccoglie TUTTE le chiavi segrete configurate su GitHub, partendo dalle nuove CHIAVE_A, B, C"""
     nomi_secrets = [
         "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
@@ -65,9 +54,7 @@ def ottieni_pool_chiavi():
 
 def esegui_richiesta_api(url_template):
     chiavi = ottieni_pool_chiavi()
-    if not chiavi:
-        print("ERRORE CRITICO: Nessuna chiave API trovata nei Secrets!")
-        return None
+    if not chiavi: return None
     for idx, chiave in enumerate(chiavi):
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
@@ -76,15 +63,12 @@ def esegui_richiesta_api(url_template):
                 rem = res.headers.get('x-requests-remaining', '?')
                 print(f"[API OK - Chiave #{idx+1}] Crediti residui: {rem}")
                 return res.json()
-            else:
-                print(f"[Switch Automatico] Chiave #{idx+1} esaurita o non valida (Status {res.status_code}) -> Passo alla chiave successiva...")
-        except Exception as e:
-            print(f"[Errore Rete Chiave #{idx+1}] {e} -> Passo alla successiva...")
+        except:
+            pass
     return None
 
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
-    if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
     if nome_pulito in TRADUZIONI_SQUADRE: return TRADUZIONI_SQUADRE[nome_pulito]
     return nome_pulito.replace(" FC", "").replace(" AC", "").replace(" Calcio", "").replace(" CF", "").replace(" SSC", "")
 
@@ -137,7 +121,8 @@ def genera_database_studio_squadre(oggi):
                         if me['is_home']: rec['punti_casa'].append(punti)
                         else: rec['punti_trasf'].append(punti)
                         if data_match_str > rec['ultima_partita']: rec['ultima_partita'] = data_match_str
-            except: continue
+            except:
+                continue
 
     db_squadre = {}
     for k, v in raw_stats.items():
@@ -211,18 +196,17 @@ def simulazione_monte_carlo_avanzata(prob_1, prob_x, prob_2, mult_casa, mult_tra
 def esegui_analista():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    inizio_finestra = oggi - timedelta(hours=6)
-    limite_temporale = oggi + timedelta(days=7)
+    inizio_finestra = oggi - timedelta(hours=2)
+    # Finestra stretta a 3 giorni (72 ore) per concentrarsi sulle partite imminenti (es. Champions/Europa League)
+    limite_temporale = oggi + timedelta(days=3)
     
     db_squadre = genera_database_studio_squadre(oggi)
     risultati_analisi = []
-    tot_scaricate = 0
     
     for camp in campionati:
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h"
         partite = esegui_richiesta_api(url_template)
         if not partite: continue
-        tot_scaricate += len(partite)
         
         for p in partite:
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
@@ -271,10 +255,11 @@ def esegui_analista():
             quota_equa = round(1.0 / prob_stimata, 2)
             quota_valore_minima = round(min(quota_equa, quota_media_rif * 0.97), 2)
             
-            if quota_valore_minima < 1.15 or quota_valore_minima > 2.35: continue
+            if quota_valore_minima < 1.18 or quota_valore_minima > 2.35: continue
             
             risultati_analisi.append({
                 'id_partita': p['id'], 'lega': camp, 'data': data_ita.strftime("%d/%m %H:%M"),
+                'giorni_distanza': (data_ita.date() - oggi.date()).days,
                 'match': f"{casa_ita} - {trasf_ita}", 'consiglio_algoritmo': scelta_migliore,
                 'probabilita_reale': round(prob_stimata * 100, 1),
                 'rating_tattico': rating_sq, 'quota_apertura_rif': round(quota_media_rif, 2),
@@ -283,7 +268,7 @@ def esegui_analista():
             
     with open('database_analisi.json', 'w', encoding='utf-8') as f:
         json.dump({'ultimo_aggiornamento': oggi.strftime("%d/%m/%Y %H:%M"), 'totale_partite_analizzate': len(risultati_analisi), 'analisi': risultati_analisi}, f, indent=4, ensure_ascii=False)
-    print(f"Omega Analista completato: {tot_scaricate} match letti dalle API -> {len(risultati_analisi)} match validi salvati.")
+    print(f"Omega Analista completato: {len(risultati_analisi)} match imminenti salvati.")
 
 if __name__ == "__main__":
     esegui_analista()
