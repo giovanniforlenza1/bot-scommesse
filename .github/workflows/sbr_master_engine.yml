@@ -10,7 +10,6 @@ permissions:
   contents: write
 
 env:
-  # PASSAGGIO GLOBALE DI TUTTE LE TUE CHIAVI SEGRETE A TUTTI I BOT
   CHIAVE_A: ${{ secrets.CHIAVE_A }}
   CHIAVE_B: ${{ secrets.CHIAVE_B }}
   CHIAVE_C: ${{ secrets.CHIAVE_C }}
@@ -31,6 +30,8 @@ jobs:
     steps:
       - name: 1. Scarica il codice dal repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 2. Configura Python 3.11
         uses: actions/setup-python@v5
@@ -42,33 +43,32 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: 4. Aggiorna Risultati Concluse (Calcio & Tennis + Decrittazione Vault)
+      - name: 4. Aggiorna Risultati Concluse
         run: |
-          if [ -f "aggiorna_risultati.py" ]; then python aggiorna_risultati.py; fi
-          if [ -f "bot_risultati.py" ]; then python bot_risultati.py; fi
+          python aggiorna_risultati.py
 
-      - name: 5. Esegui Modello OMEGA (Analista + Studio Squadre + Cecchino)
+      - name: 5. Esegui Modello OMEGA
         run: |
           python bot_omega_analista.py
           python bot_omega_cecchino.py
 
-      - name: 6. Esegui Modello ALPHA (Multipla Protetta Anti-Correlazione)
+      - name: 6. Esegui Modello ALPHA
         run: |
           python bot_alpha_analista.py
 
-      - name: 7. Esegui Modello BETA (Inferenza Poisson Corner & Cartellini)
+      - name: 7. Esegui Modello BETA
         run: |
           python bot_beta.py
 
-      - name: 8. Esegui Modello SIGMA (Laboratorio Tennis ATP/WTA - Solo Sito)
+      - name: 8. Esegui Modello SIGMA (Tennis)
         run: |
-          if [ -f "bot_sigma_tennis.py" ]; then python bot_sigma_tennis.py; fi
+          python bot_sigma_tennis.py
 
       - name: 9. Salva e pubblica i Database aggiornati sul Sito
         run: |
           git config --global user.name "SBR Quant Engine"
           git config --global user.email "bot@sbr-routing.com"
-          git pull --rebase --autostash || true
-          git add database.json database_analisi.json database_squadre.json tennis_test.json backups/ 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "Aggiornamento automatico SBR Engine (Calcio + Tennis)"
-          git push
+          git status
+          git add -A
+          git commit -m "Aggiornamento automatico SBR Engine" || echo "Nessuna modifica da salvare"
+          git push origin HEAD
