@@ -55,14 +55,10 @@ def cripta_dati_sensibili(lista_partite):
 
 def crea_partite_offuscate_per_sito(lista_partite):
     return [{
-        'id_partita': 'protetto',
-        'data': p.get('data', ''),
-        'squadra_casa': '🔒 Operazione',
-        'squadra_trasferta': 'Riservata VIP',
-        'pronostico': 'Crittografia Attiva',
-        'quota': p.get('quota', 1.0),
-        'stato': 'in attesa',
-        'risultato_reale': ''
+        'id_partita': 'protetto', 'data': p.get('data', ''),
+        'squadra_casa': '🔒 Operazione', 'squadra_trasferta': 'Riservata VIP',
+        'pronostico': 'Crittografia Attiva', 'quota': p.get('quota', 1.0),
+        'stato': 'in attesa', 'risultato_reale': ''
     } for p in lista_partite]
 
 def traduci_squadra(nome):
@@ -77,28 +73,15 @@ def formatta_nome_bookmaker(key_book, title_book):
         if chiave in k or chiave in title_book.lower(): return nome_ita
     return title_book
 
-crediti_alert_inviato = False
-
 def esegui_richiesta_api(url_template):
-    global crediti_alert_inviato
     chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
     if not chiavi: return None
-    for idx, chiave in enumerate(chiavi):
+    for chiave in chiavi:
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
-            res = requests.get(url, timeout=10)
-            if res.status_code == 200:
-                rem = int(res.headers.get('x-requests-remaining', 500))
-                if idx == len(chiavi) - 1 and rem < 40 and not crediti_alert_inviato:
-                    crediti_alert_inviato = True
-                    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={
-                        "chat_id": OMEGA_CHAT_ID,
-                        "text": f"⚠️ <b>AVVISO SISTEMA SBR</b>: Crediti API in esaurimento ({rem} rimasti sull'ultima chiave).",
-                        "parse_mode": "HTML"
-                    })
-                return res.json()
-        except:
-            pass
+            res = requests.get(url, timeout=12)
+            if res.status_code == 200: return res.json()
+        except: pass
     return None
 
 def carica_database_analisi():
@@ -112,8 +95,7 @@ def carica_database_principale():
     return {'capitale_iniziale': 200.0, 'schedine': []}
 
 def salva_database_principale(db):
-    with open('database.json', 'w', encoding='utf-8') as f: 
-        json.dump(db, f, indent=4, ensure_ascii=False)
+    with open('database.json', 'w', encoding='utf-8') as f: json.dump(db, f, indent=4, ensure_ascii=False)
 
 def calcola_cassa_e_circuit_breaker(db, modello_nome):
     cassa = 200.0
@@ -123,46 +105,29 @@ def calcola_cassa_e_circuit_breaker(db, modello_nome):
         if s.get('modello') == modello_nome and s.get('stato_schedina') in ['vinta', 'persa']:
             imp = float(s.get('importo', 10.0))
             rit = float(s.get('ritorno_potenziale', 0.0))
-            if s['stato_schedina'] == 'vinta':
-                cassa += (rit - imp)
-                ultime_due.append('W')
-            else:
-                cassa -= imp
-                ultime_due.append('L')
+            if s['stato_schedina'] == 'vinta': cassa += (rit - imp); ultime_due.append('W')
+            else: cassa -= imp; ultime_due.append('L')
             if cassa > picco_massimo: picco_massimo = cassa
-            
     drawdown = (picco_massimo - cassa) / picco_massimo if picco_massimo > 0 else 0.0
-    freno = 1.0
-    if drawdown >= 0.15: freno = 0.55
-    elif len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L']: freno = 0.80
+    freno = 0.70 if drawdown >= 0.18 else (0.85 if len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L'] else 1.0)
     return max(120.0, cassa), freno
-
-def invia_messaggio_protezione():
-    msg = (
-        "<b>⚠️ AVVISO DAL SISTEMA: PROTEZIONE CASSA (CROLLO QUOTE)</b>\n\n"
-        "L'Analista quantitativo aveva individuato partite con un potenziale vantaggio statistico. "
-        "Tuttavia, al momento della verifica finale, i bookmaker hanno corretto i mercati abbassando le quote sotto la nostra soglia minima di valore.\n\n"
-        "Il Modello Omega blocca le operazioni per proteggere il capitale."
-    )
-    requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
 
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    
-    inizio_oggi = oggi.replace(hour=0, minute=0, second=0, microsecond=0)
-    limite_temporale = inizio_oggi + timedelta(days=5)
+    inizio_finestra = oggi - timedelta(hours=4)
+    limite_temporale = oggi + timedelta(days=7)
     
     db_analisi = carica_database_analisi()
-    if not db_analisi or not db_analisi.get('analisi'): return
+    if not db_analisi or not db_analisi.get('analisi'):
+        print("Omega Cecchino: Nessun match nel database_analisi.json.")
+        return
     
     db_principale = carica_database_principale()
-    
     for s in db_principale['schedine']:
-        # CORRETTO: Sostituita la parentesi quadra errata con quella tonda
         if s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str:
-            print("Omega Cecchino: Operazione già generata oggi.")
+            print("Omega Cecchino: Giocata odierna già presente nel database.")
             return
     
     candidati_valore = []
@@ -174,144 +139,97 @@ def esegui_cecchino():
             
         for p_live in partite_live:
             data_ita = datetime.strptime(p_live['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-            
-            if data_ita < inizio_oggi or data_ita > limite_temporale:
+            if data_ita < inizio_finestra or data_ita > limite_temporale:
                 continue
 
             nome_casa_ita = traduci_squadra(p_live['home_team'])
             nome_trasf_ita = traduci_squadra(p_live['away_team'])
             match_intero = f"{nome_casa_ita} - {nome_trasf_ita}"
             
-            analisi_match = next((
-                a for a in db_analisi['analisi'] 
-                if a.get('id_partita') == p_live['id'] or a.get('match') == match_intero
-            ), None)
+            analisi_match = next((a for a in db_analisi['analisi'] if a.get('id_partita') == p_live['id'] or a.get('match') == match_intero), None)
             if not analisi_match: continue
             
             pronostico_richiesto = analisi_match['consiglio_algoritmo']
             quota_minima = analisi_match['quota_valore_minima']
             quota_equa = analisi_match.get('quota_equa', quota_minima)
-            quota_apertura = analisi_match.get('quota_apertura_rif', quota_equa)
             prob_reale = analisi_match.get('probabilita_reale', 55.0) / 100.0
             
-            tetto_massimo_reale = min(2.10, round(quota_equa * 1.25, 2))
-            
+            tetto_massimo_reale = min(2.45, round(quota_equa * 1.35, 2))
             miglior_quota = 0.0
-            quota_pinnacle_live = None
-            book_vincente = ""
+            book_vincente = "Bet365 / Snai"
             
             for book in p_live.get('bookmakers', []):
                 titolo_book = book.get('title', '')
                 key_book = book.get('key', '').lower()
-                if 'exchange' in titolo_book.lower() or 'betfair' in key_book or 'matchbook' in key_book:
-                    continue
+                if 'exchange' in titolo_book.lower() or 'betfair' in key_book or 'matchbook' in key_book: continue
                 
                 for mercato in book.get('markets', []):
                     if mercato.get('key') != 'h2h': continue
                     for out in mercato.get('outcomes', []):
                         q_attuale = out.get('price', 0)
                         if q_attuale > tetto_massimo_reale: continue
-                            
-                        nome_esito_originale = out.get('name', '')
-                        squadra_vincente_ita = pronostico_richiesto.lower().replace("vittoria ", "").strip()
-                        nome_esito_ita = traduci_squadra(nome_esito_originale).lower()
-                        
-                        if squadra_vincente_ita == nome_esito_ita:
-                            if 'pinnacle' in key_book: quota_pinnacle_live = q_attuale
+                        if traduci_squadra(out.get('name', '')).lower() == pronostico_richiesto.lower().replace("vittoria ", "").strip():
                             if q_attuale > miglior_quota:
                                 miglior_quota = q_attuale
                                 book_vincente = formatta_nome_bookmaker(key_book, titolo_book)
                             
-            if quota_minima <= miglior_quota <= tetto_massimo_reale:
-                steam_bonus = 0.04 if (quota_pinnacle_live and quota_pinnacle_live < quota_apertura * 0.96) else 0.0
-                
-                ev_reale = (prob_reale * miglior_quota) - 1.0 + steam_bonus
-                indice_qualita = (ev_reale * 0.65) + (prob_reale * 0.35)
-                
+            if miglior_quota >= 1.22:
+                ev_reale = max(0.01, (prob_reale * miglior_quota) - 1.0)
                 candidati_valore.append({
-                    'id_partita': p_live['id'],
-                    'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': nome_casa_ita,
-                    'squadra_trasferta': nome_trasf_ita,
-                    'pronostico': pronostico_richiesto,
-                    'quota': round(miglior_quota, 2),
-                    'bookmaker': book_vincente,
-                    'score': round(indice_qualita, 4),
-                    'ev': round(ev_reale, 3),
-                    'lega': camp,
-                    'stato': 'in attesa',
-                    'risultato_reale': ''
+                    'id_partita': p_live['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
+                    'squadra_casa': nome_casa_ita, 'squadra_trasferta': nome_trasf_ita,
+                    'pronostico': pronostico_richiesto, 'quota': round(miglior_quota, 2),
+                    'bookmaker': book_vincente, 'score': round((ev_reale * 0.5) + (prob_reale * 0.5), 4),
+                    'ev': round(ev_reale, 3), 'lega': camp, 'stato': 'in attesa', 'risultato_reale': ''
                 })
                 
-    if not candidati_valore: 
-        invia_messaggio_protezione()
+    if not candidati_valore:
+        print("Omega Cecchino: Nessun candidato trovato.")
         return
     
     ordinati = sorted(candidati_valore, key=lambda x: (0 if 'italy' in x['lega'] else 1, -x['score']))
     
-    if ordinati[0]['quota'] >= 1.42:
+    if ordinati[0]['quota'] >= 1.45 or len(ordinati) == 1:
         finalisti = [ordinati[0]]
         tipo_giocata = "Colpo Mirato in Singola ad Alta Probabilità."
-        fattore_varianza_kelly = 1.0
-    elif len(ordinati) >= 2:
+    else:
         finalisti = [ordinati[0], ordinati[1]]
         tipo_giocata = "Doppia Quantitativa a Bassa Varianza."
-        fattore_varianza_kelly = 0.85
-    else:
-        finalisti = [ordinati[0]]
-        tipo_giocata = "Colpo Mirato in Singola."
-        fattore_varianza_kelly = 1.0
     
-    q_temp = 1.0
-    for f in finalisti: q_temp *= f['quota']
-    quota_totale = round(q_temp, 2)
-    
-    if quota_totale < 1.35: 
-        invia_messaggio_protezione()
-        return
+    q_tot = 1.0
+    for f in finalisti: q_tot *= f['quota']
+    quota_totale = round(q_tot, 2)
         
     cassa_omega, freno_rischio = calcola_cassa_e_circuit_breaker(db_principale, 'omega')
     ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
-    
-    percentuale_cassa = min(0.10, max(0.06, 0.06 + (ev_medio * 0.40))) * freno_rischio * fattore_varianza_kelly
-    stake_consigliato = round(cassa_omega * percentuale_cassa, 1)
+    stake_consigliato = round(cassa_omega * min(0.10, max(0.06, 0.06 + (ev_medio * 0.40))) * freno_rischio, 1)
     
     partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
-    
     with open('omega_oggi.json', 'w', encoding='utf-8') as fo:
         json.dump([c['id_partita'] for c in partite_reali], fo)
 
-    msg = "<b>MODELLO OMEGA</b>\n\n"
-    msg += f"<b>{html.escape(tipo_giocata)}</b>\n\n"
-    msg += f"📊 <b>Quota totale</b>: {quota_totale}\n"
-    msg += f"💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
-    
+    # Salva SEMPRE nel database (anche se Telegram dovesse fallire)
+    db_principale['schedine'].append({
+        'id': str(uuid.uuid4())[:8], 'modello': 'omega', 'data_creazione': data_oggi_str,
+        'importo': stake_consigliato, 'quota_totale': quota_totale,
+        'ritorno_potenziale': round(stake_consigliato * quota_totale, 2),
+        'stato_schedina': 'in attesa', 'payload_criptato': cripta_dati_sensibili(partite_reali),
+        'partite': crea_partite_offuscate_per_sito(partite_reali)
+    })
+    salva_database_principale(db_principale)
+    print(f"Omega Cecchino: Schedina SALVATA con successo! Quota {quota_totale} | Stake {stake_consigliato}€")
+
+    msg = f"<b>MODELLO OMEGA</b>\n\n<b>{html.escape(tipo_giocata)}</b>\n\n"
+    msg += f"📊 <b>Quota totale</b>: {quota_totale}\n💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
     for c in partite_reali:
-        c_casa = html.escape(c['squadra_casa'])
-        c_trasf = html.escape(c['squadra_trasferta'])
-        c_pron = html.escape(c['pronostico'].lower())
-        c_book = html.escape(c['bookmaker'])
-        msg += f"⚽ <b>{c['data']} | {c_casa} - {c_trasf}</b>\n"
-        msg += f"🎯 <b>Giocata</b>: {c_pron} (@{c['quota']})\n"
-        msg += f"🏦 <b>Bookmaker</b>: {c_book}\n\n"
-        
+        msg += f"⚽ <b>{c['data']} | {html.escape(c['squadra_casa'])} - {html.escape(c['squadra_trasferta'])}</b>\n"
+        msg += f"🎯 <b>Giocata</b>: {html.escape(c['pronostico'].lower())} (@{c['quota']})\n🏦 <b>Bookmaker</b>: {html.escape(c['bookmaker'])}\n\n"
     msg += "<b>#TradingSportivo #ValueBetting #ScommesseSportive</b>"
     
-    res = requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"})
-    
-    if res.status_code == 200:
-        db_principale['schedine'].append({
-            'id': str(uuid.uuid4())[:8],
-            'modello': 'omega',
-            'data_creazione': data_oggi_str,
-            'importo': stake_consigliato,
-            'quota_totale': quota_totale,
-            'ritorno_potenziale': round(stake_consigliato * quota_totale, 2),
-            'stato_schedina': 'in attesa',
-            'payload_criptato': cripta_dati_sensibili(partite_reali),
-            'partite': crea_partite_offuscate_per_sito(partite_reali)
-        })
-        salva_database_principale(db_principale)
+    try:
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
+    except Exception as e:
+        print(f"Avviso invio Telegram Omega: {e}")
 
 if __name__ == "__main__":
     esegui_cecchino()
