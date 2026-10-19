@@ -243,7 +243,8 @@ def aggiorna_database():
 
         for p in partite_lavoro:
             if p.get('stato') in ['vinta', 'persa']:
-                if p.get('stato'] == 'persa': schedina_persa = True
+                if p.get('stato') == 'persa': 
+                    schedina_persa = True
                 continue
 
             id_p = p.get('id_partita')
@@ -266,7 +267,8 @@ def aggiorna_database():
                     soglia = 4.5 if '4.5' in pron else 3.5
                     p['risultato_reale'] = f"{totale} Cartellini"
                     p['stato'] = 'vinta' if totale > soglia else 'persa'
-                if p['stato'] == 'persa': schedina_persa = True
+                if p['stato'] == 'persa': 
+                    schedina_persa = True
                 modifiche_effettuate = True
             else:
                 g_c, g_t = None, None
@@ -288,7 +290,8 @@ def aggiorna_database():
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
                 p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if vinta else "Persa")
                 p['stato'] = 'vinta' if vinta else 'persa'
-                if not vinta: schedina_persa = True
+                if not vinta: 
+                    schedina_persa = True
                 modifiche_effettuate = True
 
         if tutte_concluse or schedina_persa:
