@@ -1,8 +1,6 @@
 import requests
 import json
 import os
-import base64
-import hashlib
 import unicodedata
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -67,19 +65,6 @@ def esegui_richiesta_odds(url_template):
             pass
     return None
 
-def decripta_dati_sensibili(payload_b64):
-    if not payload_b64:
-        return None
-    for token_prova in [TELEGRAM_TOKEN, "chiave_default_sicurezza", ""]:
-        try:
-            xored = base64.b64decode(payload_b64.encode('ascii'))
-            key_hash = hashlib.sha256(token_prova.encode('utf-8')).digest()
-            raw_bytes = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(xored)])
-            return json.loads(raw_bytes.decode('utf-8'))
-        except:
-            continue
-    return None
-
 def rimuovi_accenti(testo):
     return ''.join(c for c in unicodedata.normalize('NFD', str(testo)) if unicodedata.category(c) != 'Mn')
 
@@ -109,7 +94,7 @@ def normalizza_per_confronto(nome):
 def squadre_combaciano(nome_db, nome_api):
     n1 = normalizza_per_confronto(nome_db)
     n2 = normalizza_per_confronto(nome_api)
-    if not n1 or not n2 or "operazione" in n1 or "singola" in n1 or "protetto" in n1:
+    if not n1 or not n2 or "operazione" in n1 or "singola" in n1 or "protetto" in n1 or "riservata" in n1:
         return False
     if n1 == n2 or (n1 in n2) or (n2 in n1):
         return True
@@ -249,14 +234,6 @@ def aggiorna_database():
     modifiche_effettuate = False
 
     for schedina in db.get('schedine', []):
-        # Ripristina subito in chiaro eventuali schedine con payload_criptato
-        if schedina.get('payload_criptato'):
-            dec = decripta_dati_sensibili(schedina['payload_criptato'])
-            if dec:
-                schedina['partite'] = dec
-                schedina.pop('payload_criptato', None)
-                modifiche_effettuate = True
-
         if schedina.get('stato_schedina') != 'in attesa':
             continue
 
@@ -266,7 +243,7 @@ def aggiorna_database():
 
         for p in partite_lavoro:
             if p.get('stato') in ['vinta', 'persa']:
-                if p.get('stato') == 'persa': schedina_persa = True
+                if p.get('stato'] == 'persa': schedina_persa = True
                 continue
 
             id_p = p.get('id_partita')
@@ -321,7 +298,7 @@ def aggiorna_database():
     if modifiche_effettuate:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("Database risultati salvato con successo!")
+        print("Database risultati aggiornato con successo!")
 
 if __name__ == "__main__":
     aggiorna_database()
