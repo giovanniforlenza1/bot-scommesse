@@ -2005,6 +2005,40 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+                {
+            "id": "sig1910w",
+            "modello": "sigma",
+            "data_creazione": "19/10/2026",
+            "importo": 11.6,
+            "quota_totale": 1.96,
+            "ritorno_potenziale": 22.74,
+            "stato_schedina": "vinta",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "wta_eala_parry_1910",
+                    "data": "19/10 13:30",
+                    "squadra_casa": "Alexandra Eala",
+                    "squadra_trasferta": "Diane Parry",
+                    "pronostico": "Vittoria Alexandra Eala",
+                    "quota": 1.34,
+                    "bookmaker": "1xBet",
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
+                },
+                {
+                    "id_partita": "wta_rakhimova_bouzkova_1910",
+                    "data": "19/10 11:52",
+                    "squadra_casa": "Kamilla Rakhimova",
+                    "squadra_trasferta": "Marie Bouzkova",
+                    "pronostico": "Vittoria Marie Bouzkova",
+                    "quota": 1.46,
+                    "bookmaker": "Bet365 / Snai",
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
+                }
+            ]
         }
     ]
 }
