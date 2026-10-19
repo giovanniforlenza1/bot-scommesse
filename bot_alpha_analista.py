@@ -38,6 +38,32 @@ TRADUZIONI_SQUADRE = {
     "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
+def ottieni_pool_chiavi():
+    nomi_secrets = [
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
+        "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
+    ]
+    pool = []
+    for nome in nomi_secrets:
+        val = os.environ.get(nome, "")
+        for k in val.split(","):
+            k_clean = k.strip()
+            if k_clean and k_clean not in pool:
+                pool.append(k_clean)
+    return pool
+
+def esegui_richiesta_api(url_template):
+    chiavi = ottieni_pool_chiavi()
+    if not chiavi: return None
+    for chiave in chiavi:
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=12)
+            if res.status_code == 200: return res.json()
+        except: pass
+    return None
+
 def cripta_dati_sensibili(lista_partite):
     raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
     key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
@@ -64,17 +90,6 @@ def carica_id_omega_oggi():
             with open('omega_oggi.json', 'r', encoding='utf-8') as f: return set(json.load(f))
         except: pass
     return set()
-
-def esegui_richiesta_api(url_template):
-    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi: return None
-    for chiave in chiavi:
-        url = url_template.replace("API_KEY_SEGRETA", chiave)
-        try:
-            res = requests.get(url, timeout=12)
-            if res.status_code == 200: return res.json()
-        except: pass
-    return None
 
 def carica_database_principale():
     if os.path.exists('database.json'):
