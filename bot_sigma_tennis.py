@@ -16,25 +16,46 @@ MAPPA_BOOKMAKER_ITALIA = {
     "coral": "Eurobet", "ladbrokes": "Sisal", "paddypower": "Betfair Sport", "skybet": "SkyBet / Sisal"
 }
 
+def ottieni_pool_chiavi():
+    nomi_secrets = [
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
+        "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
+    ]
+    pool = []
+    for nome in nomi_secrets:
+        val = os.environ.get(nome, "")
+        for k in val.split(","):
+            k_clean = k.strip()
+            if k_clean and k_clean not in pool:
+                pool.append(k_clean)
+    return pool
+
+def esegui_richiesta_api(url_template):
+    chiavi = ottieni_pool_chiavi()
+    if not chiavi:
+        print("ERRORE CRITICO SIGMA: Nessuna chiave API trovata nei Secrets!")
+        return None
+    for idx, chiave in enumerate(chiavi):
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=12)
+            if res.status_code == 200:
+                rem = res.headers.get('x-requests-remaining', '?')
+                print(f"[Sigma Tennis API OK - Chiave #{idx+1}] Crediti residui: {rem}")
+                return res.json()
+            else:
+                print(f"[Sigma Switch] Chiave #{idx+1} esaurita (Status {res.status_code}) -> Passo alla successiva...")
+        except Exception as e:
+            print(f"[Sigma Errore Rete Chiave #{idx+1}] {e}")
+    return None
+
 def formatta_nome_bookmaker(key_book, title_book):
     k = key_book.lower()
     for chiave, nome_ita in MAPPA_BOOKMAKER_ITALIA.items():
         if chiave in k or chiave in title_book.lower():
             return nome_ita
     return title_book
-
-def esegui_richiesta_api(url_template):
-    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi: return None
-    for chiave in chiavi:
-        url = url_template.replace("API_KEY_SEGRETA", chiave)
-        try:
-            res = requests.get(url, timeout=12)
-            if res.status_code == 200:
-                return res.json()
-        except:
-            pass
-    return None
 
 def trova_tornei_tennis_attivi():
     dati = esegui_richiesta_api("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
@@ -56,9 +77,12 @@ def simulazione_monte_carlo_tennis(prob_1, n_sim=10000):
     for _ in range(n_sim):
         set_1, set_2 = 0, 0
         while set_1 < 2 and set_2 < 2:
-            if random.random() < p_set: set_1 += 1
-            else: set_2 += 1
-        if set_1 == 2: vittorie_p1 += 1
+            if random.random() < p_set:
+                set_1 += 1
+            else:
+                set_2 += 1
+        if set_1 == 2:
+            vittorie_p1 += 1
     p1_mc = (prob_1 * 0.75) + ((vittorie_p1 / n_sim) * 0.25)
     return p1_mc, (1.0 - p1_mc)
 
@@ -139,8 +163,12 @@ def esegui_sigma_tennis():
                             elif out['name'] == p['away_team']: q2 = out['price']
                         if q1 and q2:
                             quote_1.append(q1); quote_2.append(q2)
-                            if q1 > miglior_q1: miglior_q1 = q1; book_1 = formatta_nome_bookmaker(key_b, title_b)
-                            if q2 > miglior_q2: miglior_q2 = q2; book_2 = formatta_nome_bookmaker(key_b, title_b)
+                            if q1 > miglior_q1:
+                                miglior_q1 = q1
+                                book_1 = formatta_nome_bookmaker(key_b, title_b)
+                            if q2 > miglior_q2:
+                                miglior_q2 = q2
+                                book_2 = formatta_nome_bookmaker(key_b, title_b)
 
             if not quote_1: continue
 
@@ -157,15 +185,22 @@ def esegui_sigma_tennis():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             pronostico, prob_reale, quota_top, book_top = opzioni[0]
 
-            if 1.22 <= quota_top <= 2.25 and prob_reale >= 0.48:
+            if 1.20 <= quota_top <= 2.30 and prob_reale >= 0.46:
                 ev = max(0.01, (prob_reale * quota_top) - 1.0)
                 score = (ev * 0.55) + (prob_reale * 0.45)
                 candidati_valore.append({
-                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': giocatore_1, 'squadra_trasferta': giocatore_2,
-                    'pronostico': pronostico, 'quota': round(quota_top, 2), 'bookmaker': book_top,
-                    'score': round(score, 4), 'ev': round(ev, 3), 'lega': torneo,
-                    'stato': 'in attesa', 'risultato_reale': ''
+                    'id_partita': p['id'],
+                    'data': data_ita.strftime("%d/%m %H:%M"),
+                    'squadra_casa': giocatore_1,
+                    'squadra_trasferta': giocatore_2,
+                    'pronostico': pronostico,
+                    'quota': round(quota_top, 2),
+                    'bookmaker': book_top,
+                    'score': round(score, 4),
+                    'ev': round(ev, 3),
+                    'lega': torneo,
+                    'stato': 'in attesa',
+                    'risultato_reale': ''
                 })
 
     if not candidati_valore:
@@ -176,7 +211,8 @@ def esegui_sigma_tennis():
     finalisti = [ordinati[0]] if ordinati[0]['quota'] >= 1.45 or len(ordinati) == 1 else [ordinati[0], ordinati[1]]
 
     q_tot = 1.0
-    for f in finalisti: q_tot *= f['quota']
+    for f in finalisti:
+        q_tot *= f['quota']
     quota_totale = round(q_tot, 2)
 
     cassa_sigma = calcola_cassa_sigma(db_principale)
