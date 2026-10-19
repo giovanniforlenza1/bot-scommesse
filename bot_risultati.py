@@ -240,23 +240,19 @@ def aggiorna_database():
     modifiche_effettuate = False
 
     for idx, schedina in enumerate(db.get('schedine', [])):
-        stato_attuale = schedina.get('stato_schedina')
-        print(f"[DEBUG] Schedina #{idx+1} (Modello: {schedina.get('modello')}) - Stato: {stato_attuale}")
-        
-        if stato_attuale != 'in attesa':
-            continue
-
         partite_lavoro = schedina.get('partite', [])
         tutte_concluse = True
         schedina_persa = False
 
+        # Analizza SEMPRE tutte le partite per aggiornare i singoli risultati in chiaro
         for p in partite_lavoro:
             sq_c = p.get('squadra_casa', '')
             sq_t = p.get('squadra_trasferta', '')
-            print(f"   -> Controllo match interno: {sq_c} vs {sq_t} (Stato: {p.get('stato')})")
 
+            # Se la partita è già conclusa, controlla solo se ha fatto perdere la schedina
             if p.get('stato') in ['vinta', 'persa']:
-                if p.get('stato') == 'persa': schedina_persa = True
+                if p.get('stato') == 'persa': 
+                    schedina_persa = True
                 continue
 
             id_p = p.get('id_partita')
@@ -265,7 +261,6 @@ def aggiorna_database():
             if 'angol' in pron or 'corner' in pron or 'cartellin' in pron:
                 match_stat = next((x for x in dati_espn if squadre_combaciano(sq_c, x['casa_orig']) and squadre_combaciano(sq_t, x['trasf_orig'])), None)
                 if not match_stat:
-                    print(f"      [!] Statistiche ESPN non ancora trovate per {sq_c} - {sq_t}")
                     tutte_concluse = False
                     continue
                 if 'angol' in pron or 'corner' in pron:
@@ -278,9 +273,9 @@ def aggiorna_database():
                     soglia = 4.5 if '4.5' in pron else 3.5
                     p['risultato_reale'] = f"{totale} Cartellini"
                     p['stato'] = 'vinta' if totale > soglia else 'persa'
+                
                 if p['stato'] == 'persa': schedina_persa = True
                 modifiche_effettuate = True
-                print(f"      [OK] Aggiornato match Beta: {p['risultato_reale']} -> {p['stato']}")
             else:
                 g_c, g_t = None, None
                 if id_p in risultati_gol_odds:
@@ -296,25 +291,29 @@ def aggiorna_database():
                         g_c, g_t = match_espn['gol_casa'], match_espn['gol_trasf']
                 
                 if g_c is None:
-                    print(f"      [!] Risultato reale non ancora disponibile per {sq_c} vs {sq_t}")
                     tutte_concluse = False
                     continue
 
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
                 p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if vinta else "Persa")
                 p['stato'] = 'vinta' if vinta else 'persa'
+                
                 if not vinta: schedina_persa = True
                 modifiche_effettuate = True
-                print(f"      [OK] Trovato risultato {g_c}-{g_t} per {sq_c} vs {sq_t} -> Esito: {p['stato']}")
 
-        if tutte_concluse or schedina_persa:
+        # Verifica lo stato complessivo della schedina
+        for p in partite_lavoro:
+            if p.get('stato') == 'persa': schedina_persa = True
+            if p.get('stato') not in ['vinta', 'persa']: tutte_concluse = False
+
+        if schedina.get('stato_schedina') == 'in attesa' and (tutte_concluse or schedina_persa):
             schedina['stato_schedina'] = 'persa' if schedina_persa else 'vinta'
             modifiche_effettuate = True
-            print(f"   ==> Schedina completata! Nuovo stato: {schedina['stato_schedina']}")
+            print(f"==> Schedina {schedina.get('id')} aggiornata a: {schedina['stato_schedina'].upper()}")
 
     if modifiche_effettuate:
         with open('database.json', 'w', encoding='utf-8') as f:
             json.dump(db, f, indent=4, ensure_ascii=False)
-        print("[SUCCESS] Database risultati salvato con successo!")
+        print("[SUCCESS] Database risultati aggiornato con successo!")
     else:
-        print("[INFO] Nessuna modifica apportata dal bot risultati in questo giro.")
+        print("[INFO] Nessuna modifica apportata.")
