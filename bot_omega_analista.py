@@ -47,6 +47,41 @@ TRADUZIONI_SQUADRE = {
     "Wolverhampton Wanderers": "Wolverhampton", "Wolves": "Wolverhampton"
 }
 
+def ottieni_pool_chiavi():
+    """Raccoglie TUTTE le chiavi segrete configurate su GitHub, partendo dalle nuove CHIAVE_A, B, C"""
+    nomi_secrets = [
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
+        "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
+    ]
+    pool = []
+    for nome in nomi_secrets:
+        val = os.environ.get(nome, "")
+        for k in val.split(","):
+            k_clean = k.strip()
+            if k_clean and k_clean not in pool:
+                pool.append(k_clean)
+    return pool
+
+def esegui_richiesta_api(url_template):
+    chiavi = ottieni_pool_chiavi()
+    if not chiavi:
+        print("ERRORE CRITICO: Nessuna chiave API trovata nei Secrets!")
+        return None
+    for idx, chiave in enumerate(chiavi):
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=12)
+            if res.status_code == 200:
+                rem = res.headers.get('x-requests-remaining', '?')
+                print(f"[API OK - Chiave #{idx+1}] Crediti residui: {rem}")
+                return res.json()
+            else:
+                print(f"[Switch Automatico] Chiave #{idx+1} esaurita o non valida (Status {res.status_code}) -> Passo alla chiave successiva...")
+        except Exception as e:
+            print(f"[Errore Rete Chiave #{idx+1}] {e} -> Passo alla successiva...")
+    return None
+
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
     if nome_pulito in TRADUZIONI_NAZIONALI: return TRADUZIONI_NAZIONALI[nome_pulito]
@@ -58,25 +93,6 @@ def normalizza_chiave_squadra(nome):
     for p in ["calcio", "fc", "ac", "sc", "cf", "united", "city", "sporting", "1907", "1913", "bc", "us", "ss", "cfc", "as"]:
         n = n.replace(f" {p}", "").replace(f"{p} ", "")
     return n.strip()
-
-def esegui_richiesta_api(url_template):
-    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi:
-        print("ERRORE CRITICO: Nessuna ODDS_API_KEY trovata nei Secrets!")
-        return None
-    for idx, chiave in enumerate(chiavi):
-        url = url_template.replace("API_KEY_SEGRETA", chiave)
-        try:
-            res = requests.get(url, timeout=12)
-            if res.status_code == 200:
-                rem = res.headers.get('x-requests-remaining', '?')
-                print(f"[API OK - Chiave #{idx+1}] Crediti residui: {rem}")
-                return res.json()
-            else:
-                print(f"[API WARN - Chiave #{idx+1}] Status {res.status_code}: {res.text[:120]}")
-        except Exception as e:
-            print(f"[API ERR] {e}")
-    return None
 
 def genera_database_studio_squadre(oggi):
     raw_stats = {}
@@ -163,7 +179,6 @@ def calcola_fattore_specifico(db_squadre, nome_ita, is_home=True):
     return info.get('rating_casa' if is_home else 'rating_trasferta', info.get('rating_tattico', 1.0))
 
 def devig_accurato(q1, qx, q2):
-    """De-vigging proporzionale corretto che non penalizza le favorite"""
     inv1, invx, inv2 = 1.0 / q1, 1.0 / qx, 1.0 / q2
     tot = inv1 + invx + inv2
     return inv1 / tot, invx / tot, inv2 / tot
@@ -196,7 +211,6 @@ def simulazione_monte_carlo_avanzata(prob_1, prob_x, prob_2, mult_casa, mult_tra
 def esegui_analista():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    # Finestra ampia: da 6 ore fa fino ai prossimi 7 giorni
     inizio_finestra = oggi - timedelta(hours=6)
     limite_temporale = oggi + timedelta(days=7)
     
@@ -252,11 +266,9 @@ def esegui_analista():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             scelta_migliore, prob_stimata, rating_sq, quota_media_rif = opzioni[0]
             
-            # Soglia elastica: accetta qualsiasi favorita con almeno il 44% di probabilità (quota <= 2.25)
             if prob_stimata < 0.44: continue
                 
             quota_equa = round(1.0 / prob_stimata, 2)
-            # Imposta la soglia minima al 97% della quota media per garantire l'abbinamento sul mercato reale
             quota_valore_minima = round(min(quota_equa, quota_media_rif * 0.97), 2)
             
             if quota_valore_minima < 1.15 or quota_valore_minima > 2.35: continue
