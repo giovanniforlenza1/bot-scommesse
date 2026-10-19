@@ -26,8 +26,9 @@ TRADUZIONI_SQUADRE = {
     "Torino FC": "Torino", "Genoa CFC": "Genoa", "Empoli FC": "Empoli",
     "Udinese Calcio": "Udinese", "Venezia FC": "Venezia", "Parma Calcio 1913": "Parma",
     "Como 1907": "Como", "US Lecce": "Lecce", "Cagliari Calcio": "Cagliari", "AC Monza": "Monza",
-    "Atalanta BC": "Atalanta", "Manchester Utd": "Manchester United",
-    "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham", "Tottenham Hotspur": "Tottenham",
+    "Atalanta BC": "Atalanta", "Manchester Utd": "Manchester United", "Manchester United FC": "Manchester United",
+    "Nott'm Forest": "Nottingham Forest", "Nottingham Forest": "Nottingham Forest",
+    "Spurs": "Tottenham", "Tottenham Hotspur": "Tottenham",
     "Newcastle Utd": "Newcastle", "Newcastle United": "Newcastle", "Paris Saint Germain": "PSG",
     "Paris Saint-Germain": "PSG", "Bayern Munich": "Bayern Monaco", "Bayer Leverkusen": "Bayer Leverkusen",
     "Borussia Dortmund": "Dortmund", "RB Leipzig": "Lipsia", "Eintracht Frankfurt": "Francoforte",
@@ -78,7 +79,7 @@ def normalizza_per_confronto(nome):
     if "internazionale" in n or "inter milan" in n or n == "inter": return "inter"
     if "paris saint" in n or n == "psg": return "psg"
     if "bayern" in n: return "bayern monaco"
-    if "nott" in n and "forest" in n: return "nottingham"
+    if "nott" in n and "forest" in n: return "nottingham forest"
     if "leverkusen" in n: return "leverkusen"
     if "dortmund" in n: return "dortmund"
     if "leipzig" in n or "lipsia" in n: return "lipsia"
@@ -138,7 +139,8 @@ def scarica_dati_completi_espn():
     partite_espn = []
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    date_controllo = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(10)]
+    # Finestra estesa a 15 giorni nel passato per catturare anche le partite del weekend scorso (es. 18.10)
+    date_controllo = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(15)]
 
     for lega in campionati_espn:
         for data_str in date_controllo:
@@ -168,7 +170,7 @@ def scarica_dati_completi_espn():
                 continue
 
     for circuito in ['atp', 'wta']:
-        for data_str in date_controllo[:5]:
+        for data_str in date_controllo[:10]:
             url_t = f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard?dates={data_str}"
             try:
                 res = requests.get(url_t, timeout=5)
@@ -217,7 +219,8 @@ def aggiorna_database():
 
     risultati_gol_odds = {}
     for camp in campionati_odds:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
+        # Finestra estesa a 7 giorni per catturare anche le partite del fine settimana precedente
+        url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=7&apiKey=API_KEY_SEGRETA"
         dati = esegui_richiesta_odds(url)
         if not dati: continue
         for m in dati:
@@ -243,8 +246,7 @@ def aggiorna_database():
 
         for p in partite_lavoro:
             if p.get('stato') in ['vinta', 'persa']:
-                if p.get('stato') == 'persa': 
-                    schedina_persa = True
+                if p.get('stato'] == 'persa': schedina_persa = True
                 continue
 
             id_p = p.get('id_partita')
@@ -267,8 +269,7 @@ def aggiorna_database():
                     soglia = 4.5 if '4.5' in pron else 3.5
                     p['risultato_reale'] = f"{totale} Cartellini"
                     p['stato'] = 'vinta' if totale > soglia else 'persa'
-                if p['stato'] == 'persa': 
-                    schedina_persa = True
+                if p['stato'] == 'persa': schedina_persa = True
                 modifiche_effettuate = True
             else:
                 g_c, g_t = None, None
@@ -290,8 +291,7 @@ def aggiorna_database():
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
                 p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if vinta else "Persa")
                 p['stato'] = 'vinta' if vinta else 'persa'
-                if not vinta: 
-                    schedina_persa = True
+                if not vinta: schedina_persa = True
                 modifiche_effettuate = True
 
         if tutte_concluse or schedina_persa:
