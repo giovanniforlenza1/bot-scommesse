@@ -44,6 +44,40 @@ TRADUZIONI_SQUADRE = {
     "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
 }
 
+def ottieni_pool_chiavi():
+    nomi_secrets = [
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
+        "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
+    ]
+    pool = []
+    for nome in nomi_secrets:
+        val = os.environ.get(nome, "")
+        for k in val.split(","):
+            k_clean = k.strip()
+            if k_clean and k_clean not in pool:
+                pool.append(k_clean)
+    return pool
+
+def esegui_richiesta_api(url_template):
+    chiavi = ottieni_pool_chiavi()
+    if not chiavi:
+        print("ERRORE CRITICO BETA: Nessuna chiave API trovata nei Secrets!")
+        return None
+    for idx, chiave in enumerate(chiavi):
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=12)
+            if res.status_code == 200:
+                rem = res.headers.get('x-requests-remaining', '?')
+                print(f"[Beta API OK - Chiave #{idx+1}] Crediti residui: {rem}")
+                return res.json()
+            else:
+                print(f"[Beta Switch] Chiave #{idx+1} esaurita (Status {res.status_code}) -> Passo alla successiva...")
+        except Exception as e:
+            print(f"[Beta Errore Rete Chiave #{idx+1}] {e}")
+    return None
+
 def cripta_dati_sensibili(lista_partite):
     raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
     key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
@@ -52,10 +86,14 @@ def cripta_dati_sensibili(lista_partite):
 
 def crea_partite_offuscate_per_sito(lista_partite):
     return [{
-        'id_partita': 'protetto', 'data': p.get('data', ''),
-        'squadra_casa': '🔒 Singola Esotica', 'squadra_trasferta': 'In Corso',
-        'pronostico': 'Poisson Riservato', 'quota': p.get('quota', 1.0),
-        'stato': 'in attesa', 'risultato_reale': ''
+        'id_partita': 'protetto',
+        'data': p.get('data', ''),
+        'squadra_casa': '🔒 Singola Esotica',
+        'squadra_trasferta': 'In Corso',
+        'pronostico': 'Poisson Riservato',
+        'quota': p.get('quota', 1.0),
+        'stato': 'in attesa',
+        'risultato_reale': ''
     } for p in lista_partite]
 
 def traduci_squadra(nome):
@@ -68,17 +106,6 @@ def normalizza_nome(nome):
     for p in ["calcio", "fc", "ac", "sc", "cf", "united", "city", "1907", "1913"]:
         n = n.replace(p, "")
     return n.strip()
-
-def esegui_richiesta_api(url_template):
-    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi: return None
-    for chiave in chiavi:
-        url = url_template.replace("API_KEY_SEGRETA", chiave)
-        try:
-            res = requests.get(url, timeout=12)
-            if res.status_code == 200: return res.json()
-        except: pass
-    return None
 
 def costruisci_storico_reale_espn():
     storico_squadre = {}
@@ -107,7 +134,8 @@ def costruisci_storico_reale_espn():
                             info = storico_squadre.setdefault(nome_norm, {'corners': [], 'cards': []})
                             info['corners'].append(corners)
                             info['cards'].append(cards)
-            except: continue
+            except:
+                continue
     return storico_squadre
 
 def ottieni_media_storica(storico, squadra_ita, tipo, default_val):
@@ -188,7 +216,6 @@ def esegui_beta():
             media_cards_casa = ottieni_media_storica(storico_espn, casa_ita, 'cards', 2.2)
             media_cards_trasf = ottieni_media_storica(storico_espn, trasf_ita, 'cards', 2.4)
 
-            # Calcola SEMPRE sia Corner che Cartellini e prende la migliore opportunità assoluta
             lambda_quote_c = 10.2 + max(0.0, (2.10 - fav_q) * 1.8)
             lambda_corner = ((media_corner_casa + media_corner_trasf) * 0.60) + (lambda_quote_c * 0.40)
             prob_over_8_5 = prob_poisson_over(lambda_corner, 8.5)
@@ -197,10 +224,14 @@ def esegui_beta():
             if edge_c > miglior_score:
                 miglior_score = edge_c
                 miglior_operazione = {
-                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
-                    'pronostico': "Over 8.5 Calci d'Angolo", 'quota': 1.62,
-                    'prob': prob_over_8_5, 'edge': edge_c
+                    'id_partita': p['id'],
+                    'data': data_ita.strftime("%d/%m %H:%M"),
+                    'squadra_casa': casa_ita,
+                    'squadra_trasferta': trasf_ita,
+                    'pronostico': "Over 8.5 Calci d'Angolo",
+                    'quota': 1.62,
+                    'prob': prob_over_8_5,
+                    'edge': edge_c
                 }
 
             bonus_arbitro = SEVERITA_ARBITRALE_LEGA.get(camp, 0.45)
@@ -212,10 +243,14 @@ def esegui_beta():
             if edge_k > miglior_score:
                 miglior_score = edge_k
                 miglior_operazione = {
-                    'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
-                    'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
-                    'pronostico': "Over 3.5 Cartellini Totali", 'quota': 1.58,
-                    'prob': prob_over_3_5, 'edge': edge_k
+                    'id_partita': p['id'],
+                    'data': data_ita.strftime("%d/%m %H:%M"),
+                    'squadra_casa': casa_ita,
+                    'squadra_trasferta': trasf_ita,
+                    'pronostico': "Over 3.5 Cartellini Totali",
+                    'quota': 1.58,
+                    'prob': prob_over_3_5,
+                    'edge': edge_k
                 }
 
     if not miglior_operazione:
@@ -266,7 +301,11 @@ def esegui_beta():
     msg += "<b>#ModelloBeta #Poisson #ValueBetting</b>"
 
     try:
-        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
+        requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"},
+            timeout=10
+        )
     except Exception as e:
         print(f"Avviso invio Telegram Beta: {e}")
 
