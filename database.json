@@ -1892,6 +1892,119 @@
                     "clv_edge": "+1.2%"
                 }
             ]
+        },
+        {
+            "id": "078e9b6c",
+            "modello": "omega",
+            "data_creazione": "19/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.6,
+            "ritorno_potenziale": 24.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "b9567e9c3df909f8f6f21425b4b38d3f",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "Liverpool",
+                    "squadra_trasferta": "Villarreal",
+                    "pronostico": "Vittoria Liverpool",
+                    "quota": 1.6,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "b2e33311",
+            "modello": "alpha",
+            "data_creazione": "19/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "56989e10c299aba1a0fce210bb214775",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "VfB Stuttgart",
+                    "squadra_trasferta": "Atlético Madrid",
+                    "pronostico": "Doppia Chance X2 (Atlético Madrid)",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "464c74a35c648d4910cc16976ce2f7cd",
+                    "data": "20/10 18:45",
+                    "squadra_casa": "Sabah FK",
+                    "squadra_trasferta": "Borussia Dortmund",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "16e237246e9bef441e69998d1ef9536d",
+                    "data": "20/10 18:45",
+                    "squadra_casa": "Fenerbahce",
+                    "squadra_trasferta": "Slavia Praha",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "c3d98614",
+            "modello": "beta",
+            "data_creazione": "19/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "0686ce05e8489734fd66e5ee97fbbfa2",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "Porto",
+                    "squadra_trasferta": "PSV Eindhoven",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "d06514ca",
+            "modello": "sigma",
+            "data_creazione": "19/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.93,
+            "ritorno_potenziale": 28.95,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "382e298ed707ab99e1aea406cebbb42f",
+                    "data": "20/10 06:00",
+                    "squadra_casa": "Sara Bejlek",
+                    "squadra_trasferta": "Xiyu Wang",
+                    "pronostico": "Vittoria Sara Bejlek",
+                    "quota": 1.93,
+                    "bookmaker": "Unibet (NL)",
+                    "lega": "tennis_wta_ningbo_open",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
