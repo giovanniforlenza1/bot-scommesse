@@ -3,8 +3,6 @@ import json
 import os
 import uuid
 import html
-import base64
-import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -54,9 +52,7 @@ def ottieni_pool_chiavi():
     return pool
 
 def esegui_richiesta_api(url_template):
-    chiavi = ottieni_pool_chiavi()
-    if not chiavi: return None
-    for chiave in chiavi:
+    for chiave in ottieni_pool_chiavi():
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=12)
@@ -64,20 +60,6 @@ def esegui_richiesta_api(url_template):
         except:
             pass
     return None
-
-def cripta_dati_sensibili(lista_partite):
-    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
-    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
-    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
-    return base64.b64encode(xored).decode('ascii')
-
-def crea_partite_offuscate_per_sito(lista_partite):
-    return [{
-        'id_partita': 'protetto', 'data': p.get('data', ''),
-        'squadra_casa': '🔒 Operazione', 'squadra_trasferta': 'Riservata VIP',
-        'pronostico': 'Crittografia Attiva', 'quota': p.get('quota', 1.0),
-        'stato': 'in attesa', 'risultato_reale': ''
-    } for p in lista_partite]
 
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
@@ -101,28 +83,11 @@ def carica_database_principale():
     return {'capitale_iniziale': 200.0, 'schedine': []}
 
 def salva_database_principale(db):
-    with open('database.json', 'w', encoding='utf-8') as f: json.dump(db, f, indent=4, ensure_ascii=False)
-
-def calcola_cassa_e_circuit_breaker(db, modello_nome):
-    cassa = 200.0
-    picco_massimo = 200.0
-    ultime_due = []
-    for s in db.get('schedine', []):
-        if s.get('modello') == modello_nome and s.get('stato_schedina') in ['vinta', 'persa']:
-            imp = float(s.get('importo', 10.0))
-            rit = float(s.get('ritorno_potenziale', 0.0))
-            if s['stato_schedina'] == 'vinta': cassa += (rit - imp); ultime_due.append('W')
-            else: cassa -= imp; ultime_due.append('L')
-            if cassa > picco_massimo: picco_massimo = cassa
-    drawdown = (picco_massimo - cassa) / picco_massimo if picco_massimo > 0 else 0.0
-    freno = 0.70 if drawdown >= 0.18 else (0.85 if len(ultime_due) >= 2 and ultime_due[-2:] == ['L', 'L'] else 1.0)
-    return max(120.0, cassa), freno
+    with open('database.json', 'w', encoding='utf-8') as f:
+        json.dump(db, f, indent=4, ensure_ascii=False)
 
 def priorita_lega(lega):
-    """A parità di giorno, preferisce Champions/Europa League e Serie A rispetto agli altri campionati"""
-    if 'uefa' in lega or 'italy_serie_a' in lega:
-        return 0
-    return 1
+    return 0 if ('uefa' in lega or 'italy_serie_a' in lega) else 1
 
 def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
@@ -135,10 +100,11 @@ def esegui_cecchino():
     if not db_analisi or not db_analisi.get('analisi'): return
     
     db_principale = carica_database_principale()
-    for s in db_principale['schedine']:
-        if s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str:
-            print("Omega Cecchino: Giocata odierna già presente.")
-            return
+    # Sostituisce eventuale schedina in attesa di oggi per garantire scrittura fresca
+    db_principale['schedine'] = [
+        s for s in db_principale.get('schedine', [])
+        if not (s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
+    ]
     
     candidati_valore = []
     
@@ -160,8 +126,7 @@ def esegui_cecchino():
             if not analisi_match: continue
             
             pronostico_richiesto = analisi_match['consiglio_algoritmo']
-            quota_minima = analisi_match['quota_valore_minima']
-            quota_equa = analisi_match.get('quota_equa', quota_minima)
+            quota_equa = analisi_match.get('quota_equa', 1.50)
             prob_reale = analisi_match.get('probabilita_reale', 55.0) / 100.0
             
             tetto_massimo_reale = min(2.40, round(quota_equa * 1.35, 2))
@@ -197,7 +162,6 @@ def esegui_cecchino():
                 
     if not candidati_valore: return
     
-    # ORDINE INTELLIGENTE: 1° Partite più vicine (0 o 1 giorno), 2° Coppe/Serie A, 3° Miglior Score
     ordinati = sorted(candidati_valore, key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['score']))
     
     if ordinati[0]['quota'] >= 1.48 or len(ordinati) == 1:
@@ -210,23 +174,25 @@ def esegui_cecchino():
     q_tot = 1.0
     for f in finalisti: q_tot *= f['quota']
     quota_totale = round(q_tot, 2)
-        
-    cassa_omega, freno_rischio = calcola_cassa_e_circuit_breaker(db_principale, 'omega')
-    ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
-    stake_consigliato = round(cassa_omega * min(0.10, max(0.06, 0.06 + (ev_medio * 0.40))) * freno_rischio, 1)
+    stake_consigliato = 15.0
     
     partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev', 'giorni_attesa']} for c in finalisti]
     with open('omega_oggi.json', 'w', encoding='utf-8') as fo:
         json.dump([c['id_partita'] for c in partite_reali], fo)
 
+    # Salvataggio diretto e visibile in database.json (come il 17/10)
     db_principale['schedine'].append({
-        'id': str(uuid.uuid4())[:8], 'modello': 'omega', 'data_creazione': data_oggi_str,
-        'importo': stake_consigliato, 'quota_totale': quota_totale,
+        'id': str(uuid.uuid4())[:8],
+        'modello': 'omega',
+        'data_creazione': data_oggi_str,
+        'importo': stake_consigliato,
+        'quota_totale': quota_totale,
         'ritorno_potenziale': round(stake_consigliato * quota_totale, 2),
-        'stato_schedina': 'in attesa', 'payload_criptato': cripta_dati_sensibili(partite_reali),
-        'partite': crea_partite_offuscate_per_sito(partite_reali)
+        'stato_schedina': 'in attesa',
+        'partite': partite_reali
     })
     salva_database_principale(db_principale)
+    print(f"OMEGA SALVATO IN DATABASE.JSON: Quota {quota_totale}")
 
     msg = f"<b>MODELLO OMEGA</b>\n\n<b>{html.escape(tipo_giocata)}</b>\n\n"
     msg += f"📊 <b>Quota totale</b>: {quota_totale}\n💰 <b>Stake Kelly</b>: {stake_consigliato}€\n\n"
@@ -238,7 +204,7 @@ def esegui_cecchino():
     try:
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": OMEGA_CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
     except Exception as e:
-        print(f"Avviso invio Telegram Omega: {e}")
+        print(f"Errore Telegram Omega: {e}")
 
 if __name__ == "__main__":
     esegui_cecchino()
