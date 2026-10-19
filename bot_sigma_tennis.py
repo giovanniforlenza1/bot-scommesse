@@ -10,8 +10,9 @@ import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+# Usa esattamente gli stessi parametri Telegram di Bot Beta
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
-CHAT_ID = os.environ.get("CHAT_ID") or os.environ.get("OMEGA_CHAT_ID")
+CHAT_ID = os.environ.get("CHAT_ID")
 
 MAPPA_BOOKMAKER_ITALIA = {
     "unibet": "Unibet / Eurobet", "leovegas": "LeoVegas / Eurobet", "casumo": "Eurobet",
@@ -39,21 +40,15 @@ def ottieni_pool_chiavi():
 
 def esegui_richiesta_api(url_template):
     chiavi = ottieni_pool_chiavi()
-    if not chiavi:
-        print("ERRORE CRITICO SIGMA: Nessuna chiave API trovata nei Secrets!")
-        return None
+    if not chiavi: return None
     for idx, chiave in enumerate(chiavi):
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=12)
             if res.status_code == 200:
-                rem = res.headers.get('x-requests-remaining', '?')
-                print(f"[Sigma Tennis API OK - Chiave #{idx+1}] Crediti residui: {rem}")
                 return res.json()
-            else:
-                print(f"[Sigma Switch] Chiave #{idx+1} esaurita (Status {res.status_code}) -> Passo alla successiva...")
-        except Exception as e:
-            print(f"[Sigma Errore Rete Chiave #{idx+1}] {e}")
+        except:
+            pass
     return None
 
 def formatta_nome_bookmaker(key_book, title_book):
@@ -73,9 +68,9 @@ def crea_partite_offuscate_per_sito(lista_partite):
     return [{
         'id_partita': 'protetto',
         'data': p.get('data', ''),
-        'squadra_casa': '🔒 Operazione',
-        'squadra_trasferta': 'Riservata VIP',
-        'pronostico': 'Crittografia Attiva',
+        'squadra_casa': '🔒 Singola Tennis',
+        'squadra_trasferta': 'In Corso',
+        'pronostico': 'ATP/WTA Riservato',
         'quota': p.get('quota', 1.0),
         'stato': 'in attesa',
         'risultato_reale': ''
@@ -133,28 +128,27 @@ def esegui_sigma_tennis():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    inizio_finestra = oggi - timedelta(hours=4)
-    limite_temporale = oggi + timedelta(days=5)
+    inizio_finestra = oggi - timedelta(hours=2)
+    limite_temporale = oggi + timedelta(days=3)
 
     db_principale = carica_database_principale()
 
-    for s in db_principale.get('schedine', []):
-        if s.get('modello') == 'sigma' and s.get('data_creazione'] == data_oggi_str:
-            print("Sigma Tennis: Operazione già registrata oggi.")
-            return
+    # Rimuove eventuali vecchie schedine Sigma di oggi create senza invio Telegram
+    db_principale['schedine'] = [
+        s for s in db_principale.get('schedine', [])
+        if not (s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str and not s.get('telegram_inviato'))
+    ]
 
-    id_gia_giocati = {
-        p['id_partita'] for s in db_principale.get('schedine', [])
-        if s.get('modello') == 'sigma' and s.get('stato_schedina'] == 'in attesa'
-        for p in s.get('partite', [])
-    }
+    for s in db_principale.get('schedine', []):
+        if s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str and s.get('telegram_inviato'):
+            print("Sigma Tennis: Operazione già inviata su Telegram oggi.")
+            return
 
     tornei_attivi = trova_tornei_tennis_attivi()
     if not tornei_attivi:
         print("Sigma Tennis: Nessun torneo attivo restituito dall'API.")
         return
 
-    print(f"Sigma Tennis: Tornei attivi trovati -> {tornei_attivi}")
     candidati_valore = []
 
     for torneo in tornei_attivi:
@@ -163,7 +157,6 @@ def esegui_sigma_tennis():
         if not partite: continue
 
         for p in partite:
-            if p['id'] in id_gia_giocati: continue
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
             if data_ita < inizio_finestra or data_ita > limite_temporale:
                 continue
@@ -209,12 +202,14 @@ def esegui_sigma_tennis():
             opzioni.sort(key=lambda x: x[1], reverse=True)
             pronostico, prob_reale, quota_top, book_top = opzioni[0]
 
-            if 1.20 <= quota_top <= 2.30 and prob_reale >= 0.46:
+            if 1.30 <= quota_top <= 2.30 and prob_reale >= 0.45:
                 ev = max(0.01, (prob_reale * quota_top) - 1.0)
                 score = (ev * 0.55) + (prob_reale * 0.45)
+                giorni_attesa = max(0, (data_ita.date() - oggi.date()).days)
                 candidati_valore.append({
                     'id_partita': p['id'],
                     'data': data_ita.strftime("%d/%m %H:%M"),
+                    'giorni_attesa': giorni_attesa,
                     'squadra_casa': giocatore_1,
                     'squadra_trasferta': giocatore_2,
                     'pronostico': pronostico,
@@ -228,11 +223,11 @@ def esegui_sigma_tennis():
                 })
 
     if not candidati_valore:
-        print("Sigma Tennis: Nessun match quotato disponibile in questa finestra.")
+        print("Sigma Tennis: Nessun match disponibile.")
         return
 
-    ordinati = sorted(candidati_valore, key=lambda x: -x['score'])
-    finalisti = [ordinati[0]] if ordinati[0]['quota'] >= 1.45 or len(ordinati) == 1 else [ordinati[0], ordinati[1]]
+    ordinati = sorted(candidati_valore, key=lambda x: (x['giorni_attesa'], -x['score']))
+    finalisti = [ordinati[0]] if ordinati[0]['quota'] >= 1.50 or len(ordinati) == 1 else [ordinati[0], ordinati[1]]
 
     q_tot = 1.0
     for f in finalisti:
@@ -243,9 +238,28 @@ def esegui_sigma_tennis():
     ev_medio = sum(c['ev'] for c in finalisti) / len(finalisti)
     stake_kelly = round(cassa_sigma * min(0.10, max(0.05, 0.05 + (ev_medio * 0.40))), 1)
 
-    partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev']} for c in finalisti]
+    partite_reali = [{k: v for k, v in c.items() if k not in ['score', 'ev', 'giorni_attesa']} for c in finalisti]
 
-    # Salvataggio nel database con criptazione Vault anti-F12 (come gli altri bot)
+    msg = "<b>🎾 MODELLO SIGMA | TENNIS ATP & WTA</b>\n\n"
+    for c in partite_reali:
+        c_casa = html.escape(c['squadra_casa'])
+        c_trasf = html.escape(c['squadra_trasferta'])
+        c_pron = html.escape(c['pronostico'])
+        c_book = html.escape(c['bookmaker'])
+        msg += f"🎾 <b>{c['data']} | {c_casa} - {c_trasf}</b>\n"
+        msg += f"🎯 <b>Giocata</b>: {c_pron} (@{c['quota']})\n"
+        msg += f"🏦 <b>Bookmaker</b>: {c_book}\n\n"
+    msg += f"📊 <b>Quota Totale</b>: @{quota_totale}\n"
+    msg += f"💰 <b>Stake Kelly</b>: {stake_kelly}€\n\n"
+    msg += "<b>#ModelloSigma #TennisBetting #ValueBetting</b>"
+
+    res_tg = requests.post(
+        f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+        json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"},
+        timeout=10
+    )
+    print(f"Sigma Tennis Telegram Status: {res_tg.status_code}")
+
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
         'modello': 'sigma',
@@ -254,29 +268,12 @@ def esegui_sigma_tennis():
         'quota_totale': quota_totale,
         'ritorno_potenziale': round(stake_kelly * quota_totale, 2),
         'stato_schedina': 'in attesa',
+        'telegram_inviato': True,
         'payload_criptato': cripta_dati_sensibili(partite_reali),
         'partite': crea_partite_offuscate_per_sito(partite_reali)
     })
     salva_database_principale(db_principale)
-    print(f"Sigma Tennis: Schedina SALVATA! Quota {quota_totale} | Stake {stake_kelly}€")
-
-    # Invio della notifica su Telegram
-    tipo_giocata = "Colpo Mirato in Singola ATP/WTA." if len(partite_reali) == 1 else "Doppia Quantitativa Tennis."
-    msg = f"<b>🎾 MODELLO SIGMA | TENNIS LAB</b>\n\n<b>{html.escape(tipo_giocata)}</b>\n\n"
-    msg += f"📊 <b>Quota totale</b>: {quota_totale}\n💰 <b>Stake Kelly</b>: {stake_kelly}€\n\n"
-    for c in partite_reali:
-        msg += f"🎾 <b>{c['data']} | {html.escape(c['squadra_casa'])} vs {html.escape(c['squadra_trasferta'])}</b>\n"
-        msg += f"🎯 <b>Pronostico</b>: {html.escape(c['pronostico'].lower())} (@{c['quota']})\n🏦 <b>Bookmaker</b>: {html.escape(c['bookmaker'])}\n\n"
-    msg += "<b>#TennisBetting #ModelloSigma #ValueBetting</b>"
-
-    try:
-        requests.post(
-            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-            json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"},
-            timeout=10
-        )
-    except Exception as e:
-        print(f"Avviso invio Telegram Sigma: {e}")
+    print(f"Sigma Tennis: Schedina SALVATA e INVIATA su Telegram! Quota {quota_totale}")
 
 if __name__ == "__main__":
     esegui_sigma_tennis()
