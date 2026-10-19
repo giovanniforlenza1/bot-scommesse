@@ -3,8 +3,6 @@ import json
 import os
 import uuid
 import html
-import base64
-import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -45,9 +43,7 @@ def ottieni_pool_chiavi():
     return pool
 
 def esegui_richiesta_api(url_template):
-    chiavi = ottieni_pool_chiavi()
-    if not chiavi: return None
-    for chiave in chiavi:
+    for chiave in ottieni_pool_chiavi():
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=12)
@@ -55,20 +51,6 @@ def esegui_richiesta_api(url_template):
         except:
             pass
     return None
-
-def cripta_dati_sensibili(lista_partite):
-    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
-    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
-    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
-    return base64.b64encode(xored).decode('ascii')
-
-def crea_partite_offuscate_per_sito(lista_partite):
-    return [{
-        'id_partita': 'protetto', 'data': p.get('data', ''),
-        'squadra_casa': '🔒 Operazione', 'squadra_trasferta': 'In Corso',
-        'pronostico': 'Dettagli sul Canale Telegram', 'quota': p.get('quota', 1.0),
-        'stato': 'in attesa', 'risultato_reale': ''
-    } for p in lista_partite]
 
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
@@ -89,12 +71,11 @@ def carica_database_principale():
     return {'capitale_iniziale': 200.0, 'schedine': []}
 
 def salva_database_principale(db):
-    with open('database.json', 'w', encoding='utf-8') as f: json.dump(db, f, indent=4, ensure_ascii=False)
+    with open('database.json', 'w', encoding='utf-8') as f:
+        json.dump(db, f, indent=4, ensure_ascii=False)
 
 def priorita_lega(lega):
-    if 'uefa' in lega or 'italy_serie_a' in lega:
-        return 0
-    return 1
+    return 0 if ('uefa' in lega or 'italy_serie_a' in lega) else 1
 
 def esegui_alpha():
     fuso_italia = ZoneInfo("Europe/Rome")
@@ -104,10 +85,10 @@ def esegui_alpha():
     limite_temporale = oggi + timedelta(days=3)
     
     db_principale = carica_database_principale()
-    for s in db_principale['schedine']:
-        if s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str:
-            print("Alpha: Schedina odierna già presente.")
-            return
+    db_principale['schedine'] = [
+        s for s in db_principale.get('schedine', [])
+        if not (s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
+    ]
 
     id_esclusi_omega = carica_id_omega_oggi()
     candidati_alpha = []
@@ -139,22 +120,22 @@ def esegui_alpha():
                             elif out['name'] == trasf_orig: q2 = out['price']
                             elif out['name'].lower() == 'draw': qx = out['price']
                         
-                        if q1 and 1.35 <= q1 <= 1.95: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append(q1)
-                        if q2 and 1.35 <= q2 <= 1.95: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append(q2)
+                        if q1 and 1.38 <= q1 <= 1.95: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append(q1)
+                        if q2 and 1.38 <= q2 <= 1.95: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append(q2)
                         if q1 and qx and q2:
                             dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.96, 2)
                             dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.96, 2)
-                            if 1.32 <= dc_1x <= 1.75: opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append(dc_1x)
-                            if 1.32 <= dc_x2 <= 1.75: opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append(dc_x2)
+                            if 1.35 <= dc_1x <= 1.75: opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append(dc_1x)
+                            if 1.35 <= dc_x2 <= 1.75: opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append(dc_x2)
                             if qx >= 3.10:
-                                q_over15 = round(max(1.32, min(1.65, 1.85 / (qx * 0.44))), 2)
+                                q_over15 = round(max(1.35, min(1.65, 1.85 / (qx * 0.44))), 2)
                                 opzioni_match.setdefault("Over 1.5 Gol", []).append(q_over15)
 
             miglior_pick, miglior_score, quota_scelta = None, 0.0, 0.0
             for pick, quote_list in opzioni_match.items():
                 if not quote_list: continue
                 q_media = sum(quote_list) / len(quote_list)
-                if 1.32 <= q_media <= 1.88:
+                if 1.35 <= q_media <= 1.90:
                     bonus = 0.10 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
                     score = (1.0 / q_media) + bonus
                     if score > miglior_score:
@@ -174,31 +155,32 @@ def esegui_alpha():
 
     if not candidati_alpha: return
 
-    # ORDINE INTELLIGENTE: Prima le partite entro 24/48h (Coppe in settimana), poi Serie A/Coppe a parità di data
     ordinati = sorted(candidati_alpha, key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['score']))
 
     selezionati = []
     quota_totale = 1.0
     for c in ordinati:
-        if len(selezionati) < 3 and quota_totale < 2.60:
+        if len(selezionati) < 3 and quota_totale < 2.50:
             selezionati.append(c)
             quota_totale *= c['quota']
 
     quota_totale = round(quota_totale, 2)
-    if quota_totale < 2.00:
-        print(f"Alpha: Quota totale troppo bassa ({quota_totale}), scartata.")
-        return
-
     partite_pulite = [{k: v for k, v in c.items() if k not in ['score', 'giorni_attesa']} for c in selezionati]
     stake = 12.0
 
     db_principale['schedine'].append({
-        'id': str(uuid.uuid4())[:8], 'modello': 'alpha', 'data_creazione': data_oggi_str,
-        'importo': stake, 'quota_totale': quota_totale, 'ritorno_potenziale': round(stake * quota_totale, 2),
-        'stato_schedina': 'in attesa', 'telegram_inviato': True,
-        'payload_criptato': cripta_dati_sensibili(partite_pulite), 'partite': crea_partite_offuscate_per_sito(partite_pulite)
+        'id': str(uuid.uuid4())[:8],
+        'modello': 'alpha',
+        'data_creazione': data_oggi_str,
+        'importo': stake,
+        'quota_totale': quota_totale,
+        'ritorno_potenziale': round(stake * quota_totale, 2),
+        'stato_schedina': 'in attesa',
+        'telegram_inviato': True,
+        'partite': partite_pulite
     })
     salva_database_principale(db_principale)
+    print(f"ALPHA SALVATO IN DATABASE.JSON: Quota {quota_totale}")
 
     msg = f"<b>🚀 MODELLO ALPHA | MULTIPLA PROTETTA</b>\n\n📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n💰 <b>Stake</b>: {stake}€\n\n"
     for c in partite_pulite:
@@ -207,7 +189,7 @@ def esegui_alpha():
     try:
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
     except Exception as e:
-        print(f"Avviso invio Telegram Alpha: {e}")
+        print(f"Errore Telegram Alpha: {e}")
 
 if __name__ == "__main__":
     esegui_alpha()
