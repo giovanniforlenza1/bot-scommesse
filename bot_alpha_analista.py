@@ -142,23 +142,24 @@ def esegui_alpha():
                             elif out['name'] == trasf_orig: q2 = out['price']
                             elif out['name'].lower() == 'draw': qx = out['price']
                         
-                        if q1 and 1.20 <= q1 <= 1.75: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append(q1)
-                        if q2 and 1.20 <= q2 <= 1.75: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append(q2)
+                        # Selezioni protette con quote corpose (tra 1.35 e 1.95)
+                        if q1 and 1.35 <= q1 <= 1.95: opzioni_match.setdefault(f"Vittoria {casa_ita}", []).append(q1)
+                        if q2 and 1.35 <= q2 <= 1.95: opzioni_match.setdefault(f"Vittoria {trasf_ita}", []).append(q2)
                         if q1 and qx and q2:
                             dc_1x = round(1.0 / ((1.0/q1) + (1.0/qx)) * 0.96, 2)
                             dc_x2 = round(1.0 / ((1.0/q2) + (1.0/qx)) * 0.96, 2)
-                            if 1.18 <= dc_1x <= 1.65: opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append(dc_1x)
-                            if 1.18 <= dc_x2 <= 1.65: opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append(dc_x2)
-                            if qx >= 3.25:
-                                q_over15 = round(max(1.22, min(1.48, 1.85 / (qx * 0.40))), 2)
+                            if 1.30 <= dc_1x <= 1.75: opzioni_match.setdefault(f"Doppia Chance 1X ({casa_ita})", []).append(dc_1x)
+                            if 1.30 <= dc_x2 <= 1.75: opzioni_match.setdefault(f"Doppia Chance X2 ({trasf_ita})", []).append(dc_x2)
+                            if qx >= 3.00:
+                                q_over15 = round(max(1.30, min(1.65, 1.85 / (qx * 0.45))), 2)
                                 opzioni_match.setdefault("Over 1.5 Gol", []).append(q_over15)
 
             miglior_pick, miglior_score, quota_scelta = None, 0.0, 0.0
             for pick, quote_list in opzioni_match.items():
                 if not quote_list: continue
                 q_media = sum(quote_list) / len(quote_list)
-                if 1.18 <= q_media <= 1.78:
-                    bonus = 0.12 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
+                if 1.30 <= q_media <= 1.85:
+                    bonus = 0.10 if ("Doppia Chance" in pick or "Over 1.5" in pick) else 0.0
                     score = (1.0 / q_media) + bonus
                     if score > miglior_score:
                         miglior_score = score
@@ -169,7 +170,7 @@ def esegui_alpha():
                 candidati_alpha.append({
                     'id_partita': p['id'], 'data': data_ita.strftime("%d/%m %H:%M"),
                     'squadra_casa': casa_ita, 'squadra_trasferta': trasf_ita,
-                    'pronostico': miglior_pick, 'quota': min(1.80, quota_scelta), 'score': miglior_score,
+                    'pronostico': miglior_pick, 'quota': quota_scelta, 'score': miglior_score,
                     'lega': camp, 'stato': 'in attesa', 'risultato_reale': ''
                 })
 
@@ -182,11 +183,18 @@ def esegui_alpha():
     selezionati = []
     quota_totale = 1.0
     for c in ordinati:
-        if len(selezionati) < 3 and quota_totale < 2.35:
+        # Costruisce la multipla puntando a un target compreso tra 2.20 e 3.20 di quota totale
+        if len(selezionati) < 3 and quota_totale < 2.50:
             selezionati.append(c)
             quota_totale *= c['quota']
 
     quota_totale = round(quota_totale, 2)
+    
+    # Se per qualche motivo la quota totale resta sotto 2.00, scarta la giocata per evitare quote ridicole
+    if quota_totale < 2.00:
+        print(f"Alpha: Quota totale troppo bassa ({quota_totale}), giocata scartata.")
+        return
+
     partite_pulite = [{k: v for k, v in c.items() if k != 'score'} for c in selezionati]
     stake = 12.0
 
@@ -197,7 +205,7 @@ def esegui_alpha():
         'payload_criptato': cripta_dati_sensibili(partite_pulite), 'partite': crea_partite_offuscate_per_sito(partite_pulite)
     })
     salva_database_principale(db_principale)
-    print(f"Alpha: Multipla SALVATA con successo! Quota {quota_totale} ({len(partite_pulite)} match)")
+    print(f"Alpha: Multipla SALVATA con successo! Quota totale {quota_totale} ({len(partite_pulite)} match)")
 
     msg = f"<b>🚀 MODELLO ALPHA | MULTIPLA PROTETTA</b>\n\n📊 <b>Moltiplicatore Totale</b>: {quota_totale}\n💰 <b>Stake</b>: {stake}€\n\n"
     for c in partite_pulite:
