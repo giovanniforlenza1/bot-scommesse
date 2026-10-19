@@ -4,8 +4,6 @@ import os
 import uuid
 import math
 import html
-import base64
-import hashlib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -61,9 +59,7 @@ def ottieni_pool_chiavi():
     return pool
 
 def esegui_richiesta_api(url_template):
-    chiavi = ottieni_pool_chiavi()
-    if not chiavi: return None
-    for chiave in chiavi:
+    for chiave in ottieni_pool_chiavi():
         url = url_template.replace("API_KEY_SEGRETA", chiave)
         try:
             res = requests.get(url, timeout=12)
@@ -71,20 +67,6 @@ def esegui_richiesta_api(url_template):
         except:
             pass
     return None
-
-def cripta_dati_sensibili(lista_partite):
-    raw_bytes = json.dumps(lista_partite, ensure_ascii=False).encode('utf-8')
-    key_hash = hashlib.sha256(TELEGRAM_TOKEN.encode('utf-8')).digest()
-    xored = bytes([b ^ key_hash[i % len(key_hash)] for i, b in enumerate(raw_bytes)])
-    return base64.b64encode(xored).decode('ascii')
-
-def crea_partite_offuscate_per_sito(lista_partite):
-    return [{
-        'id_partita': 'protetto', 'data': p.get('data', ''),
-        'squadra_casa': '🔒 Singola Esotica', 'squadra_trasferta': 'In Corso',
-        'pronostico': 'Poisson Riservato', 'quota': p.get('quota', 1.0),
-        'stato': 'in attesa', 'risultato_reale': ''
-    } for p in lista_partite]
 
 def traduci_squadra(nome):
     nome_pulito = str(nome).strip()
@@ -101,7 +83,7 @@ def costruisci_storico_reale_espn():
     storico_squadre = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
-    date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7, 8]]
+    date_studio = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in [1, 2, 3, 4, 6, 7]]
 
     for _, lega_espn in MAPPA_CAMPIONATI_ESPN.items():
         for d_str in date_studio:
@@ -149,15 +131,6 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
-def calcola_cassa_beta(db):
-    cassa = 200.0
-    for s in db.get('schedine', []):
-        if s.get('modello') == 'beta' and s.get('stato_schedina') in ['vinta', 'persa']:
-            imp = float(s.get('importo', 10.0))
-            rit = float(s.get('ritorno_potenziale', 0.0))
-            cassa += (rit - imp) if s['stato_schedina'] == 'vinta' else -imp
-    return max(140.0, cassa)
-
 def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -166,10 +139,10 @@ def esegui_beta():
     limite_temporale = oggi + timedelta(days=3)
     
     db_principale = carica_database_principale()
-    for s in db_principale['schedine']:
-        if s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str:
-            print("Beta: Operazione odierna già presente.")
-            return
+    db_principale['schedine'] = [
+        s for s in db_principale.get('schedine', [])
+        if not (s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
+    ]
 
     storico_espn = costruisci_storico_reale_espn()
     candidati_beta = []
@@ -238,15 +211,10 @@ def esegui_beta():
 
     if not candidati_beta: return
 
-    # Dà priorità alle partite entro 24/48h (Coppe in settimana) e poi al miglior vantaggio matematico
     candidati_beta.sort(key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, -x['edge']))
     miglior_operazione = candidati_beta[0]
-
-    cassa_attuale = calcola_cassa_beta(db_principale)
-    b = miglior_operazione['quota'] - 1.0
     p_win = max(0.64, miglior_operazione['prob'])
-    kelly_fraction = ((b * p_win) - (1.0 - p_win)) / b
-    stake_kelly = round(max(12.0, min(22.0, cassa_attuale * (kelly_fraction * 0.35))), 1)
+    stake_kelly = 15.0
 
     partita_reale = [{
         'id_partita': miglior_operazione['id_partita'],
@@ -267,10 +235,10 @@ def esegui_beta():
         'quota_totale': miglior_operazione['quota'],
         'ritorno_potenziale': round(stake_kelly * miglior_operazione['quota'], 2),
         'stato_schedina': 'in attesa',
-        'payload_criptato': cripta_dati_sensibili(partita_reale),
-        'partite': crea_partite_offuscate_per_sito(partita_reale)
+        'partite': partita_reale
     })
     salva_database_principale(db_principale)
+    print("BETA SALVATO IN DATABASE.JSON!")
 
     c_casa = html.escape(miglior_operazione['squadra_casa'])
     c_trasf = html.escape(miglior_operazione['squadra_trasferta'])
@@ -285,13 +253,9 @@ def esegui_beta():
     msg += "<b>#ModelloBeta #Poisson #ValueBetting</b>"
 
     try:
-        requests.post(
-            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-            json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"},
-            timeout=10
-        )
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
     except Exception as e:
-        print(f"Avviso invio Telegram Beta: {e}")
+        print(f"Errore Telegram Beta: {e}")
 
 if __name__ == "__main__":
     esegui_beta()
