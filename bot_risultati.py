@@ -53,6 +53,34 @@ TRADUZIONI_SQUADRE = {
     "Brighton and Hove Albion": "Brighton", "West Ham United": "West Ham"
 }
 
+def ottieni_pool_chiavi():
+    nomi_secrets = [
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
+        "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
+    ]
+    pool = []
+    for nome in nomi_secrets:
+        val = os.environ.get(nome, "")
+        for k in val.split(","):
+            k_clean = k.strip()
+            if k_clean and k_clean not in pool:
+                pool.append(k_clean)
+    return pool
+
+def esegui_richiesta_odds(url_template):
+    chiavi = ottieni_pool_chiavi()
+    if not chiavi: return None
+    for chiave in chiavi:
+        url = url_template.replace("API_KEY_SEGRETA", chiave)
+        try:
+            res = requests.get(url, timeout=10)
+            if res.status_code == 200:
+                return res.json()
+        except:
+            pass
+    return None
+
 def decripta_dati_sensibili(payload_b64):
     try:
         xored = base64.b64decode(payload_b64.encode('ascii'))
@@ -91,21 +119,9 @@ def squadre_combaciano(nome_db, nome_api):
     n2 = normalizza_per_confronto(nome_api)
     if not n1 or not n2: return False
     if (n1 in n2) or (n2 in n1): return True
-    # Matching per cognome sui giocatori di Tennis (es. "Jannik Sinner" vs "J. Sinner")
     cognome1 = n1.split()[-1] if n1.split() else ""
     cognome2 = n2.split()[-1] if n2.split() else ""
     return len(cognome1) >= 4 and cognome1 == cognome2
-
-def esegui_richiesta_odds(url_template):
-    chiavi = [k.strip() for k in os.environ.get("ODDS_API_KEY", "").split(",") if k.strip()]
-    if not chiavi: return None
-    for chiave in chiavi:
-        url = url_template.replace("API_KEY_SEGRETA", chiave)
-        try:
-            res = requests.get(url, timeout=10)
-            if res.status_code == 200: return res.json()
-        except: pass
-    return None
 
 def leggi_statistiche_ufficiali_beta(lega, event_id):
     tot_corners, tot_cards = 0, 0
@@ -126,7 +142,8 @@ def leggi_statistiche_ufficiali_beta(lega, event_id):
                 tot_corners += angoli
                 tot_cards += (gialli + rossi)
             return tot_corners, tot_cards
-    except: pass
+    except:
+        pass
     return None, None
 
 def scarica_dati_completi_espn(serve_beta=False, serve_tennis=False):
@@ -171,9 +188,9 @@ def scarica_dati_completi_espn(serve_beta=False, serve_tennis=False):
                         'gol_casa': gol_casa, 'gol_trasf': gol_trasf,
                         'corners': tot_corners, 'cards': tot_cards
                     })
-            except: continue
+            except:
+                continue
 
-    # Se ci sono schedine Sigma (Tennis) in attesa, controlla anche lo Scoreboard gratuito ESPN Tennis ATP/WTA
     if serve_tennis:
         for circuito in ['atp', 'wta']:
             url_t = f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard"
@@ -243,9 +260,9 @@ def aggiorna_database():
                 dba = json.load(fa)
                 for item in dba.get('analisi', []):
                     mappa_quote_eque[item.get('id_partita')] = item.get('quota_equa')
-        except: pass
+        except:
+            pass
 
-    # Aggiunge in automatico i tornei di tennis presenti nelle schedine Sigma in attesa
     leghe_extra_tennis = set()
     for s in db.get('schedine', []):
         if s.get('modello') == 'sigma' and s.get('stato_schedina') == 'in attesa':
@@ -351,8 +368,8 @@ def aggiorna_database():
                     tutte_concluse = False
                     continue
 
-                p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t) else "Persa")
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
+                p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if vinta else "Persa")
                 p['stato'] = 'vinta' if vinta else 'persa'
                 if not vinta: schedina_persa = True
                 modifiche_effettuate = True
