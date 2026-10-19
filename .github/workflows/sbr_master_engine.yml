@@ -3,7 +3,7 @@ name: SBR Master Engine
 on:
   schedule:
     - cron: '45 7 * * *'
-    - cron: '15 21 * * *'
+    - cron: '15 16 * * *'
   workflow_dispatch:
 
 permissions:
@@ -43,28 +43,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: 4. Aggiorna Risultati Concluse
-        run: |
-          python aggiorna_risultati.py
-
-      - name: 5. Esegui Modello OMEGA
+      - name: 4. Esegui Modello OMEGA (Analista + Studio Squadre + Cecchino)
         run: |
           python bot_omega_analista.py
           python bot_omega_cecchino.py
 
-      - name: 6. Esegui Modello ALPHA
+      - name: 5. Esegui Modello ALPHA (Multipla Protetta Anti-Correlazione)
         run: |
           python bot_alpha_analista.py
 
-      - name: 7. Esegui Modello BETA
+      - name: 6. Esegui Modello BETA (Inferenza Poisson Corner & Cartellini)
         run: |
           python bot_beta.py
 
-      - name: 8. Esegui Modello SIGMA (Tennis)
+      - name: 7. Esegui Modello SIGMA (Tennis ATP/WTA)
         run: |
-          python bot_sigma_tennis.py
+          if [ -f "bot_sigma_tennis.py" ]; then python bot_sigma_tennis.py; fi
 
-      - name: 9. Salva e pubblica i Database aggiornati sul Sito
+      - name: 8. Salva e pubblica i Database aggiornati sul Sito
         run: |
           git config --global user.name "SBR Quant Engine"
           git config --global user.email "bot@sbr-routing.com"
