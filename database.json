@@ -1392,15 +1392,15 @@
             "importo": 10.0,
             "quota_totale": 1.56,
             "ritorno_potenziale": 15.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "squadra_casa": "Hamburger SV",
                     "squadra_trasferta": "VfB Stuttgart",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.56,
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "vinta",
+                    "risultato_reale": "14",
                     "clv_edge": "+4.7%"
                 }
             ]
@@ -1555,8 +1555,8 @@
                     "bookmaker": "Betfair",
                     "score": 0.02,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "persa",
+                    "risultato_reale": "0-3",
                     "clv_edge": "+2.3%"
                 }
             ]
@@ -1816,8 +1816,8 @@
                     "pronostico": "Over 2.5 Gol",
                     "quota": 1.67,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4"
                 },
                 {
                     "id_partita": "18d478f469da3bcc654dd4555b85c7e3",
@@ -1827,8 +1827,8 @@
                     "pronostico": "Vittoria Roma",
                     "quota": 1.62,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -1887,8 +1887,8 @@
                     "bookmaker": "1xBet",
                     "score": 0.0,
                     "lega": "soccer_epl",
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "vinta",
+                    "risultato_reale": "0-1",
                     "clv_edge": "+1.2%"
                 }
             ]
