@@ -1839,7 +1839,7 @@
             "importo": 16.7,
             "quota_totale": 1.8,
             "ritorno_potenziale": 30.06,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "9baaf4e48b041cfef04e70e42532502e",
@@ -1848,8 +1848,8 @@
                     "squadra_trasferta": "Coventry City",
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
-                    "stato": "in attesa",
-                    "risultato_reale": "",
+                    "stato": "persa",
+                    "risultato_reale": "9 Angoli",
                     "clv_edge": "+16.9%"
                 }
             ]
@@ -1968,7 +1968,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "0686ce05e8489734fd66e5ee97fbbfa2",
@@ -1977,8 +1977,8 @@
                     "squadra_trasferta": "PSV Eindhoven",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "9 Angoli"
                 }
             ]
         },
