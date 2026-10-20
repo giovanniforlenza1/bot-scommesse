@@ -1900,7 +1900,7 @@
             "importo": 15.0,
             "quota_totale": 1.6,
             "ritorno_potenziale": 24.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "b9567e9c3df909f8f6f21425b4b38d3f",
@@ -1911,8 +1911,8 @@
                     "quota": 1.6,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-3"
                 }
             ]
         },
@@ -1923,7 +1923,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -1934,8 +1934,8 @@
                     "pronostico": "Doppia Chance X2 (Atlético Madrid)",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "464c74a35c648d4910cc16976ce2f7cd",
@@ -1945,8 +1945,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "16e237246e9bef441e69998d1ef9536d",
@@ -1956,8 +1956,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-2"
                 }
             ]
         },
@@ -2082,7 +2082,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2093,8 +2093,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5-1"
                 },
                 {
                     "id_partita": "56989e10c299aba1a0fce210bb214775",
@@ -2104,8 +2104,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "46b790335fa98338b7e1ed0b614078fb",
@@ -2115,8 +2115,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-2"
                 }
             ]
         },
