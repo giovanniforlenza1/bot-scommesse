@@ -2006,7 +2006,7 @@
                 }
             ]
         },
-                {
+        {
             "id": "sig1910w",
             "modello": "sigma",
             "data_creazione": "19/10/2026",
@@ -2037,6 +2037,131 @@
                     "bookmaker": "Bet365 / Snai",
                     "stato": "vinta",
                     "risultato_reale": "Vinta"
+                }
+            ]
+        },
+        {
+            "id": "679f721a",
+            "modello": "omega",
+            "data_creazione": "20/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.63,
+            "ritorno_potenziale": 24.45,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "d3b3e714b6af9e5430e3030ed639e6dd",
+                    "data": "21/10 21:00",
+                    "squadra_casa": "Aston Villa",
+                    "squadra_trasferta": "Viking FK",
+                    "pronostico": "Vittoria Aston Villa",
+                    "quota": 1.26,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "30f27b8e9719e9ae71c25b4c8aa265f7",
+                    "data": "21/10 21:00",
+                    "squadra_casa": "Real Madrid",
+                    "squadra_trasferta": "RB Leipzig",
+                    "pronostico": "Vittoria Real Madrid",
+                    "quota": 1.29,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "6be1923b",
+            "modello": "alpha",
+            "data_creazione": "20/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "464c74a35c648d4910cc16976ce2f7cd",
+                    "data": "20/10 18:45",
+                    "squadra_casa": "Sabah FK",
+                    "squadra_trasferta": "Borussia Dortmund",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "16e237246e9bef441e69998d1ef9536d",
+                    "data": "20/10 18:45",
+                    "squadra_casa": "Fenerbahce",
+                    "squadra_trasferta": "Slavia Praha",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "00625830dd764a06f12f78c0d0a72ff8",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "Manchester City",
+                    "squadra_trasferta": "AEK Athens",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "85a86755",
+            "modello": "beta",
+            "data_creazione": "20/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "2ebbccdeea2dab59717d5c3d802c3fed",
+                    "data": "21/10 21:00",
+                    "squadra_casa": "Bayern Monaco",
+                    "squadra_trasferta": "Arsenal",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ea397305",
+            "modello": "sigma",
+            "data_creazione": "20/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.42,
+            "ritorno_potenziale": 21.3,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "6d35a679c6d7ad7551c06bf07a240079",
+                    "data": "21/10 08:10",
+                    "squadra_casa": "Leylah Fernandez",
+                    "squadra_trasferta": "Aliaksandra Sasnovich",
+                    "pronostico": "Vittoria Leylah Fernandez",
+                    "quota": 1.42,
+                    "bookmaker": "Winamax (FR)",
+                    "lega": "tennis_wta_ningbo_open",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 }
             ]
         }
