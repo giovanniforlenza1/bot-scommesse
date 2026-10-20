@@ -2,34 +2,45 @@ name: Aggiorna Risultati Dashboard
 
 on:
   schedule:
-    - cron: '0 */4 * * *' # Si attiva ogni 4 ore (00:00, 04:00, 08:00, 12:00, ecc.)
-  workflow_dispatch:
+    - cron: '0 */3 * * *' # Gira ogni 3 ore in automatico
+  workflow_dispatch: # Permette di lanciarlo manualmente col tasto che usi tu
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  aggiorna-risultati:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout del repository
-        uses: actions/checkout@v3
+      - name: 1. Scarica il codice dal repository
+        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: 2. Configura Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Installa dipendenze
-        run: pip install requests tzdata
-
-      - name: Lancia Bot Risultati
-        env:
-          ODDS_API_KEY: ${{ secrets.API_KEY_ARBITRO }}
-        run: python bot_risultati.py
-
-      - name: Pubblica sul sito web
+      - name: 3. Installa librerie necessarie
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: 4. Esegui Bot Risultati
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHIAVE_A: ${{ secrets.CHIAVE_A }}
+          CHIAVE_B: ${{ secrets.CHIAVE_B }}
+          CHIAVE_C: ${{ secrets.CHIAVE_C }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          python bot_risultati.py
+
+      - name: 5. Pubblica il Database aggiornato sul Sito
+        run: |
+          git config --global user.name "SBR Results Bot"
+          git config --global user.email "bot@sbr-results.com"
+          git status
           git add database.json
-          git commit -m "Aggiornamento Risultati Schedine" || echo "Nessuna modifica"
-          git push
+          git commit -m "Aggiornamento automatico esiti partite" || echo "Nessuna modifica da committare"
+          git push origin HEAD
