@@ -2041,7 +2041,7 @@
             ]
         },
         {
-            "id": "679f721a",
+            "id": "9cd5c3a3",
             "modello": "omega",
             "data_creazione": "20/10/2026",
             "importo": 15.0,
@@ -2076,7 +2076,7 @@
             ]
         },
         {
-            "id": "6be1923b",
+            "id": "61f08122",
             "modello": "alpha",
             "data_creazione": "20/10/2026",
             "importo": 12.0,
@@ -2085,28 +2085,6 @@
             "stato_schedina": "in attesa",
             "telegram_inviato": true,
             "partite": [
-                {
-                    "id_partita": "464c74a35c648d4910cc16976ce2f7cd",
-                    "data": "20/10 18:45",
-                    "squadra_casa": "Sabah FK",
-                    "squadra_trasferta": "Borussia Dortmund",
-                    "pronostico": "Over 1.5 Gol",
-                    "quota": 1.35,
-                    "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
-                {
-                    "id_partita": "16e237246e9bef441e69998d1ef9536d",
-                    "data": "20/10 18:45",
-                    "squadra_casa": "Fenerbahce",
-                    "squadra_trasferta": "Slavia Praha",
-                    "pronostico": "Over 1.5 Gol",
-                    "quota": 1.35,
-                    "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
-                },
                 {
                     "id_partita": "00625830dd764a06f12f78c0d0a72ff8",
                     "data": "20/10 21:00",
@@ -2117,11 +2095,33 @@
                     "lega": "soccer_uefa_champs_league",
                     "stato": "in attesa",
                     "risultato_reale": ""
+                },
+                {
+                    "id_partita": "56989e10c299aba1a0fce210bb214775",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "VfB Stuttgart",
+                    "squadra_trasferta": "Atlético Madrid",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "46b790335fa98338b7e1ed0b614078fb",
+                    "data": "20/10 21:00",
+                    "squadra_casa": "PSG",
+                    "squadra_trasferta": "Barcelona",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 }
             ]
         },
         {
-            "id": "85a86755",
+            "id": "e4c44179",
             "modello": "beta",
             "data_creazione": "20/10/2026",
             "importo": 15.0,
@@ -2142,7 +2142,7 @@
             ]
         },
         {
-            "id": "ea397305",
+            "id": "6debb315",
             "modello": "sigma",
             "data_creazione": "20/10/2026",
             "importo": 15.0,
