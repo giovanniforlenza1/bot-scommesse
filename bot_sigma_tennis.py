@@ -48,11 +48,33 @@ def esegui_sigma_tennis():
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
 
+    # Finestra rigorosamente futura: la partita deve iniziare almeno tra 30 minuti (mai partite già iniziate!)
+    inizio_minimo = oggi + timedelta(minutes=30)
+    limite_massimo = oggi + timedelta(hours=36)
+
     db_principale = carica_database_principale()
-    db_principale['schedine'] = [
-        s for s in db_principale.get('schedine', [])
-        if not (s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
-    ]
+
+    # Pulisce automaticamente solo la giocata errata delle 14:30 se creata oggi ed è già iniziata,
+    # ma blocca qualsiasi doppio invio se c'è già una schedina valida di oggi
+    schedine_valide = []
+    gia_inviata_oggi = False
+    for s in db_principale.get('schedine', []):
+        if s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str:
+            partite_s = s.get('partite', [])
+            # Verifica se la schedina di oggi contiene la partita errata delle 14:30
+            orario_partita = partite_s[0].get('data', '') if partite_s else ''
+            if "14:30" in orario_partita and s.get('stato_schedina') == 'in attesa':
+                print("[SIGMA] Rimossa schedina errata delle 14:30 iniziata prima dell'invio.")
+                continue
+            gia_inviata_oggi = True
+        schedine_valide.append(s)
+
+    db_principale['schedine'] = schedine_valide
+
+    if gia_inviata_oggi:
+        print(f"[SIGMA] Giocata del {data_oggi_str} già presente nel database. Salto.")
+        salva_database_principale(db_principale)
+        return
 
     dati_sport = esegui_richiesta_api("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
     tornei_tennis = [s['key'] for s in (dati_sport or []) if 'tennis' in s.get('key', '').lower() and s.get('active')]
@@ -64,8 +86,11 @@ def esegui_sigma_tennis():
         if dati_odds:
             for m_curr in dati_odds:
                 data_ita = datetime.strptime(m_curr['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-                if data_ita < oggi - timedelta(hours=2):
+                
+                # FILTRO FERREO ORARIO ITALIANO: accetta solo partite che iniziano almeno tra 30 minuti!
+                if data_ita < inizio_minimo or data_ita > limite_massimo:
                     continue
+
                 g1 = m_curr.get('home_team', '')
                 g2 = m_curr.get('away_team', '')
                 for book in m_curr.get('bookmakers', []):
@@ -73,7 +98,7 @@ def esegui_sigma_tennis():
                         if m.get('key') == 'h2h':
                             for out in m.get('outcomes', []):
                                 q = float(out.get('price', 0))
-                                if 1.38 <= q <= 2.15:
+                                if 1.40 <= q <= 2.10:
                                     partita_scelta = {
                                         'id_partita': m_curr.get('id'),
                                         'data': data_ita.strftime("%d/%m %H:%M"),
@@ -93,7 +118,8 @@ def esegui_sigma_tennis():
         if partita_scelta: break
 
     if not partita_scelta:
-        print("Sigma Tennis: Nessun match ATP/WTA attivo in questo momento.")
+        print("Sigma Tennis: Nessun match futuro valido nelle prossime 36 ore.")
+        salva_database_principale(db_principale)
         return
 
     quota_totale = partita_scelta['quota']
@@ -111,7 +137,7 @@ def esegui_sigma_tennis():
         'partite': [partita_scelta]
     })
     salva_database_principale(db_principale)
-    print("SIGMA TENNIS SALVATO IN DATABASE.JSON!")
+    print(f"SIGMA TENNIS SALVATO IN DATABASE.JSON: {partita_scelta['data']} {partita_scelta['squadra_casa']} - {partita_scelta['squadra_trasferta']}")
 
     msg = "<b>🎾 MODELLO SIGMA | TENNIS ATP & WTA</b>\n\n"
     msg += f"🎾 <b>{partita_scelta['data']} | {html.escape(partita_scelta['squadra_casa'])} - {html.escape(partita_scelta['squadra_trasferta'])}</b>\n"
