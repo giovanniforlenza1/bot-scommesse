@@ -1989,20 +1989,20 @@
             "importo": 15.0,
             "quota_totale": 1.93,
             "ritorno_potenziale": 28.95,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
                     "id_partita": "382e298ed707ab99e1aea406cebbb42f",
                     "data": "20/10 06:00",
                     "squadra_casa": "Sara Bejlek",
-                    "squadra_trasferta": "Xiyu Wang",
+                    "squadra_trasferta": "Alycia Parks",
                     "pronostico": "Vittoria Sara Bejlek",
                     "quota": 1.93,
                     "bookmaker": "Unibet (NL)",
                     "lega": "tennis_wta_ningbo_open",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         },
