@@ -135,14 +135,17 @@ def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    inizio_finestra = oggi - timedelta(hours=2)
+    
+    # Prende SOLO partite che iniziano almeno 30 minuti DOPO l'avvio del bot (orario italiano)
+    inizio_finestra = oggi + timedelta(minutes=30)
     limite_temporale = oggi + timedelta(days=3)
     
     db_principale = carica_database_principale()
-    db_principale['schedine'] = [
-        s for s in db_principale.get('schedine', [])
-        if not (s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
-    ]
+
+    # Blocco anti-duplicati: se la giocata Beta di oggi è già stata creata la mattina, si ferma subito
+    if any(s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
+        print(f"[BETA] Giocata del {data_oggi_str} già presente nel database. Salto.")
+        return
 
     storico_espn = costruisci_storico_reale_espn()
     candidati_beta = []
