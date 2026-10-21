@@ -2047,7 +2047,7 @@
             "importo": 15.0,
             "quota_totale": 1.63,
             "ritorno_potenziale": 24.45,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "d3b3e714b6af9e5430e3030ed639e6dd",
@@ -2058,8 +2058,8 @@
                     "quota": 1.26,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "30f27b8e9719e9ae71c25b4c8aa265f7",
@@ -2070,8 +2070,8 @@
                     "quota": 1.29,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 }
             ]
         },
@@ -2127,7 +2127,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "2ebbccdeea2dab59717d5c3d802c3fed",
@@ -2136,8 +2136,8 @@
                     "squadra_trasferta": "Arsenal",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "9 Angoli"
                 }
             ]
         },
@@ -2172,7 +2172,7 @@
             "importo": 15.0,
             "quota_totale": 1.61,
             "ritorno_potenziale": 24.15,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "30f27b8e9719e9ae71c25b4c8aa265f7",
@@ -2183,8 +2183,8 @@
                     "quota": 1.27,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 },
                 {
                     "id_partita": "d3b3e714b6af9e5430e3030ed639e6dd",
@@ -2195,8 +2195,8 @@
                     "quota": 1.27,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -2252,7 +2252,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "2ebbccdeea2dab59717d5c3d802c3fed",
@@ -2261,8 +2261,8 @@
                     "squadra_trasferta": "Arsenal",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "9 Angoli"
                 }
             ]
         },
