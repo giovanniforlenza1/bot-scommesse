@@ -2,8 +2,8 @@ name: SBR Master Engine
 
 on:
   schedule:
-    - cron: '45 7 * * *'
-    - cron: '15 16 * * *'
+    # 06:30 UTC corrispondono alle 08:30 del mattino in Italia (ora legale) / 07:30 (ora solare)
+    - cron: '30 6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -66,5 +66,5 @@ jobs:
           git config --global user.email "bot@sbr-routing.com"
           git status
           git add -A
-          git commit -m "Aggiornamento automatico SBR Engine" || echo "Nessuna modifica da salvare"
+          git commit -m "Aggiornamento mattutino SBR Engine" || echo "Nessuna modifica da salvare"
           git push origin HEAD
