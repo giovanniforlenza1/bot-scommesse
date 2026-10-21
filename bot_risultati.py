@@ -141,7 +141,8 @@ def chiave_canonica_squadra(nome):
                 return canonico
 
     stop_words = {"fc", "ac", "sc", "cf", "calcio", "club", "real", "sporting", "de", "1907", "1913", "1899", "1909", "bc", "us", "ss", "cfc", "as", "stade", "olympique", "united", "utd"}
-    parole = [w for w in n.split() if w not in stop_words and len(w) > 2]
+    # Mantiene parole >= 2 lettere (utile anche per cognomi o iniziali tennisti)
+    parole = [w for w in n.split() if w not in stop_words and len(w) >= 2]
     return " ".join(parole) if parole else n
 
 def squadre_combaciano(nome_db, nome_api):
@@ -158,12 +159,12 @@ def squadre_combaciano(nome_db, nome_api):
     if c1 == c2 or (c1 in c2) or (c2 in c1):
         return True
 
-    set1 = {w for w in c1.split() if len(w) >= 4}
-    set2 = {w for w in c2.split() if len(w) >= 4}
+    # Confronto su parole/cognomi significativi (>= 3 caratteri per coprire anche tennisti come Fils, Rune, Paul, Sinner)
+    set1 = {w for w in c1.split() if len(w) >= 3}
+    set2 = {w for w in c2.split() if len(w) >= 3}
     return bool(set1 and set2 and (set1 & set2))
 
 def estrai_statistiche_dettagliate_beta(match_info):
-    """Interroga ESPN solo per la singola partita Beta richiesta ed estrae Angoli e Cartellini da tutti i campi possibili"""
     corners_scoreboard = match_info.get('corners_dir')
     cards_scoreboard = match_info.get('cards_dir')
     lega = match_info.get('lega')
@@ -172,15 +173,12 @@ def estrai_statistiche_dettagliate_beta(match_info):
     tot_corners = None
     tot_cards = None
 
-    # 1. Interroga sempre l'endpoint Summary di ESPN per la singola partita
     if lega and event_id:
         url_summary = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/summary?event={event_id}"
         try:
             res = requests.get(url_summary, timeout=10)
             if res.status_code == 200:
                 data = res.json()
-                
-                # A) Lettura da boxscore -> teams -> statistics
                 teams_box = data.get('boxscore', {}).get('teams', [])
                 c_box, k_box = 0, 0
                 trovato_c, trovato_k = False, False
@@ -203,7 +201,6 @@ def estrai_statistiche_dettagliate_beta(match_info):
                 if trovato_k:
                     tot_cards = k_box
 
-                # B) Se i cartellini non sono in statistics, li conta uno per uno da keyEvents / details
                 if tot_cards is None or tot_cards == 0:
                     eventi_chiave = data.get('keyEvents', []) or data.get('details', [])
                     k_events = 0
@@ -216,19 +213,71 @@ def estrai_statistiche_dettagliate_beta(match_info):
         except Exception as e:
             print(f"   [WARN] Errore lettura summary Beta: {e}")
 
-    # 2. Fallback sui dati diretti dello scoreboard se il summary non li aveva
     if tot_corners is None and corners_scoreboard is not None:
         tot_corners = corners_scoreboard
     if tot_cards is None and cards_scoreboard is not None:
         tot_cards = cards_scoreboard
 
-    # 3. Fallback finale di sicurezza se la partita è ufficialmente conclusa ma il feed statistico non espone la voce
     if tot_corners is None:
         tot_corners = 9
     if tot_cards is None:
         tot_cards = 4
 
     return tot_corners, tot_cards
+
+def estrai_match_tennis_da_comp(comp, circuito, ev_id):
+    """Estrae vincitore e set da una competizione tennis di ESPN"""
+    st_type = comp.get('status', {}).get('type', {})
+    completed = st_type.get('completed', False) or str(st_type.get('state', '')).lower() == 'post'
+    if not completed:
+        return None
+
+    competitors = comp.get('competitors', [])
+    if len(competitors) < 2:
+        return None
+
+    c0, c1 = competitors[0], competitors[1]
+    p1_name = (c0.get('athlete', {}) or {}).get('displayName') or (c0.get('team', {}) or {}).get('displayName') or c0.get('displayName', '')
+    p2_name = (c1.get('athlete', {}) or {}).get('displayName') or (c1.get('team', {}) or {}).get('displayName') or c1.get('displayName', '')
+    if not p1_name or not p2_name:
+        return None
+
+    w1 = bool(c0.get('winner', False))
+    w2 = bool(c1.get('winner', False))
+
+    # Calcolo dei set vinti tramite linescores (se winner non è valorizzato direttamente)
+    s1, s2 = 0, 0
+    ls1 = c0.get('linescores', [])
+    ls2 = c1.get('linescores', [])
+    if ls1 and ls2 and len(ls1) == len(ls2):
+        for set_a, set_b in zip(ls1, ls2):
+            v_a = float(set_a.get('value', 0) or 0)
+            v_b = float(set_b.get('value', 0) or 0)
+            if v_a > v_b: s1 += 1
+            elif v_b > v_a: s2 += 1
+
+    if not w1 and not w2:
+        if s1 > s2: w1 = True
+        elif s2 > s1: w2 = True
+
+    if not w1 and not w2:
+        return None
+
+    gol_1 = s1 if (s1 > s2 and w1) else (2 if w1 else s1)
+    gol_2 = s2 if (s2 > s1 and w2) else (2 if w2 else s2)
+    if w1 and gol_1 <= gol_2: gol_1, gol_2 = 2, 0
+    if w2 and gol_2 <= gol_1: gol_1, gol_2 = 0, 2
+
+    return {
+        'event_id': ev_id,
+        'lega': circuito,
+        'casa_orig': p1_name,
+        'trasf_orig': p2_name,
+        'gol_casa': gol_1,
+        'gol_trasf': gol_2,
+        'corners_dir': None,
+        'cards_dir': None
+    }
 
 def scarica_dati_completi_espn():
     partite_espn = []
@@ -237,6 +286,7 @@ def scarica_dati_completi_espn():
     data_inizio = (oggi - timedelta(days=15)).strftime("%Y%m%d")
     data_fine = oggi.strftime("%Y%m%d")
 
+    # 1. Calcio (range 15 giorni)
     for lega in campionati_espn:
         url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/scoreboard?dates={data_inizio}-{data_fine}&limit=300"
         try:
@@ -270,12 +320,8 @@ def scarica_dati_completi_espn():
                             k_dir += val
                             ha_k_dir = True
 
-                # Conta eventuali cartellini presenti nei details dello scoreboard
                 if not ha_k_dir:
-                    det_cards = 0
-                    for d in comp.get('details', []):
-                        if d.get('yellowCard') or d.get('redCard'):
-                            det_cards += 1
+                    det_cards = sum(1 for d in comp.get('details', []) if d.get('yellowCard') or d.get('redCard'))
                     if det_cards > 0:
                         k_dir = det_cards
                         ha_k_dir = True
@@ -293,36 +339,31 @@ def scarica_dati_completi_espn():
         except:
             continue
 
+    # 2. Tennis ATP e WTA (scansione giornaliera sugli ultimi 7 giorni + scoreboard live)
+    date_tennis = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(7)]
     for circuito in ['atp', 'wta']:
-        url_t = f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard?dates={data_inizio}-{data_fine}&limit=300"
-        try:
-            res = requests.get(url_t, timeout=8)
-            if res.status_code != 200: continue
-            for ev in res.json().get('events', []):
-                for grouping in ev.get('groupings', []):
-                    for comp in grouping.get('competitions', []):
-                        if not comp.get('status', {}).get('type', {}).get('completed', False): continue
-                        competitors = comp.get('competitors', [])
-                        if len(competitors) < 2: continue
-                        p1_name = competitors[0].get('athlete', {}).get('displayName', '')
-                        p2_name = competitors[1].get('athlete', {}).get('displayName', '')
-                        w1 = competitors[0].get('winner', False)
-                        w2 = competitors[1].get('winner', False)
-                        if w1 or w2:
-                            partite_espn.append({
-                                'event_id': ev.get('id'),
-                                'lega': circuito,
-                                'casa_orig': p1_name,
-                                'trasf_orig': p2_name,
-                                'gol_casa': 2 if w1 else 0,
-                                'gol_trasf': 2 if w2 else 0,
-                                'corners_dir': None,
-                                'cards_dir': None
-                            })
-        except:
-            continue
+        urls_tennis = [f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard"] + [
+            f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard?dates={d_str}" for d_str in date_tennis
+        ]
+        for url_t in urls_tennis:
+            try:
+                res = requests.get(url_t, timeout=6)
+                if res.status_code != 200: continue
+                for ev in res.json().get('events', []):
+                    ev_id = ev.get('id')
+                    # Caso A: Partite dentro groupings -> competitions
+                    for grouping in ev.get('groupings', []):
+                        for comp in grouping.get('competitions', []):
+                            m_t = estrai_match_tennis_da_comp(comp, circuito, ev_id)
+                            if m_t: partite_espn.append(m_t)
+                    # Caso B: Partite direttamente dentro competitions
+                    for comp in ev.get('competitions', []):
+                        m_t = estrai_match_tennis_da_comp(comp, circuito, ev_id)
+                        if m_t: partite_espn.append(m_t)
+            except:
+                continue
 
-    print(f"[INFO] Partite concluse scaricate da ESPN (ultimi 15 giorni): {len(partite_espn)}")
+    print(f"[INFO] Partite concluse scaricate da ESPN (Calcio + Tennis): {len(partite_espn)}")
     return partite_espn
 
 def estrai_linea_numerica(pronostico_str, default_val):
@@ -363,24 +404,9 @@ def aggiorna_database():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
 
-    risultati_gol_odds = {}
-    for camp in campionati_odds:
-        url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
-        dati = esegui_richiesta_odds(url)
-        if not dati or not isinstance(dati, list): continue
-        for m in dati:
-            if m.get('completed') and m.get('scores'):
-                g_casa, g_trasf = 0, 0
-                for sc in m['scores']:
-                    val_s = str(sc.get('score', '0')).strip()
-                    punti_s = int(float(val_s)) if val_s.isdigit() else 0
-                    if sc['name'] == m['home_team']: g_casa = punti_s
-                    elif sc['name'] == m['away_team']: g_trasf = punti_s
-                risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
-
-    print(f"[INFO] Partite concluse scaricate da The Odds API: {len(risultati_gol_odds)}")
-    dati_espn = scarica_dati_completi_espn()
+    # Decripta subito eventuali schedine protette prima di raccogliere le leghe tennis
     modifiche_effettuate = False
+    leghe_tennis_db = set()
 
     for idx, schedina in enumerate(db.get('schedine', [])):
         if schedina.get('payload_criptato'):
@@ -390,10 +416,45 @@ def aggiorna_database():
                 schedina.pop('payload_criptato', None)
                 modifiche_effettuate = True
                 print(f"[DECRYPT] Sbloccata schedina criptata #{idx+1} ({schedina.get('modello')})")
+        
+        for p in schedina.get('partite', []):
+            lega_p = str(p.get('lega', '')).strip()
+            if 'tennis' in lega_p:
+                leghe_tennis_db.add(lega_p)
 
+    # Recupera anche tutti i tornei di tennis attualmente attivi su The Odds API
+    dati_sport = esegui_richiesta_odds("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
+    if isinstance(dati_sport, list):
+        for s in dati_sport:
+            k_sport = str(s.get('key', ''))
+            if 'tennis' in k_sport.lower():
+                leghe_tennis_db.add(k_sport)
+
+    tutte_leghe_odds = list(campionati_odds) + list(leghe_tennis_db)
+    risultati_gol_odds = {}
+
+    for camp in tutte_leghe_odds:
+        url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
+        dati = esegui_richiesta_odds(url)
+        if not dati or not isinstance(dati, list): continue
+        for m in dati:
+            if m.get('completed') and m.get('scores'):
+                g_casa, g_trasf = 0, 0
+                for sc in m['scores']:
+                    val_s = str(sc.get('score', '0')).strip()
+                    punti_s = int(float(val_s)) if val_s.replace('.', '', 1).isdigit() else 0
+                    if sc['name'] == m['home_team']: g_casa = punti_s
+                    elif sc['name'] == m['away_team']: g_trasf = punti_s
+                risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
+
+    print(f"[INFO] Partite concluse scaricate da The Odds API (Calcio + Tennis): {len(risultati_gol_odds)}")
+    dati_espn = scarica_dati_completi_espn()
+
+    for idx, schedina in enumerate(db.get('schedine', [])):
         partite_lavoro = schedina.get('partite', [])
         tutte_concluse = True
         schedina_persa = False
+        modello_schedina = schedina.get('modello', '').lower()
 
         for p in partite_lavoro:
             sq_c = p.get('squadra_casa', '')
@@ -408,10 +469,9 @@ def aggiorna_database():
 
             id_p = p.get('id_partita')
             pron = p.get('pronostico', '').lower()
-            modello_schedina = schedina.get('modello', '').lower()
             print(f"[CHECK] Cerco esito per: {sq_c} vs {sq_t} | Pronostico: {pron} | Modello: {modello_schedina}")
 
-            # Riconosce mercati Beta (Angoli, Corner, Cartellini, Ammonizioni)
+            # 1. Mercati Speciali Beta (Angoli / Cartellini)
             if any(k in pron for k in ['angol', 'corner', 'cartellin', 'card', 'ammoniz']) or modello_schedina == 'beta':
                 match_stat = next((
                     x for x in dati_espn 
@@ -419,7 +479,6 @@ def aggiorna_database():
                        (squadre_combaciano(sq_c, x['trasf_orig']) and squadre_combaciano(sq_t, x['casa_orig']))
                 ), None)
 
-                # Verifica anche se la partita risulta già conclusa su The Odds API
                 conclusa_su_odds = False
                 if not match_stat:
                     if id_p in risultati_gol_odds:
@@ -458,7 +517,7 @@ def aggiorna_database():
                 modifiche_effettuate = True
                 print(f"   -> AGGIORNATA BETA: {sq_c} - {sq_t} => {p['risultato_reale']} ({p['stato']})")
 
-            # Mercati Calcio Standard e Tennis
+            # 2. Mercati Calcio Standard e Tennis (Modello Sigma)
             else:
                 g_c, g_t = None, None
                 if id_p in risultati_gol_odds:
@@ -493,12 +552,12 @@ def aggiorna_database():
                     continue
 
                 vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
-                p['risultato_reale'] = f"{g_c}-{g_t}" if schedina.get('modello') != 'sigma' else ("Vinta" if vinta else "Persa")
+                p['risultato_reale'] = f"{g_c}-{g_t}" if modello_schedina != 'sigma' else ("Vinta" if vinta else "Persa")
                 p['stato'] = 'vinta' if vinta else 'persa'
                 if not vinta:
                     schedina_persa = True
                 modifiche_effettuate = True
-                print(f"   -> AGGIORNATA: {sq_c} {g_c}-{g_t} {sq_t} ({p['stato']})")
+                print(f"   -> AGGIORNATA ({modello_schedina.upper()}): {sq_c} {g_c}-{g_t} {sq_t} ({p['stato']})")
 
         for p in partite_lavoro:
             if p.get('stato') == 'persa':
