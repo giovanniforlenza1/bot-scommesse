@@ -93,18 +93,20 @@ def esegui_cecchino():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    inizio_finestra = oggi - timedelta(hours=2)
+    
+    # Prende SOLO partite che iniziano almeno 30 minuti DOPO l'avvio del bot (orario italiano)
+    inizio_finestra = oggi + timedelta(minutes=30)
     limite_temporale = oggi + timedelta(days=3)
     
     db_analisi = carica_database_analisi()
     if not db_analisi or not db_analisi.get('analisi'): return
     
     db_principale = carica_database_principale()
-    # Sostituisce eventuale schedina in attesa di oggi per garantire scrittura fresca
-    db_principale['schedine'] = [
-        s for s in db_principale.get('schedine', [])
-        if not (s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str and s.get('stato_schedina') == 'in attesa')
-    ]
+
+    # Blocco anti-duplicati: se la giocata Omega di oggi è già stata creata la mattina, si ferma subito
+    if any(s.get('modello') == 'omega' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
+        print(f"[OMEGA] Giocata del {data_oggi_str} già presente nel database. Salto.")
+        return
     
     candidati_valore = []
     
@@ -180,7 +182,6 @@ def esegui_cecchino():
     with open('omega_oggi.json', 'w', encoding='utf-8') as fo:
         json.dump([c['id_partita'] for c in partite_reali], fo)
 
-    # Salvataggio diretto e visibile in database.json (come il 17/10)
     db_principale['schedine'].append({
         'id': str(uuid.uuid4())[:8],
         'modello': 'omega',
