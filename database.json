@@ -2148,7 +2148,7 @@
             "importo": 15.0,
             "quota_totale": 1.42,
             "ritorno_potenziale": 21.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2160,8 +2160,8 @@
                     "quota": 1.42,
                     "bookmaker": "Winamax (FR)",
                     "lega": "tennis_wta_ningbo_open",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
