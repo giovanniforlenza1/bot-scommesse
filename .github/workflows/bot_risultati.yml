@@ -28,11 +28,17 @@ jobs:
 
       - name: 4. Esegui Bot Risultati
         env:
+                  env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHIAVE_A: ${{ secrets.CHIAVE_A }}
           CHIAVE_B: ${{ secrets.CHIAVE_B }}
           CHIAVE_C: ${{ secrets.CHIAVE_C }}
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          API_KEY_ALPHA: ${{ secrets.API_KEY_ALPHA }}
+          API_KEY_ARBITRO: ${{ secrets.API_KEY_ARBITRO }}
+          API_FOOTBALL_OMEGA_KEY: ${{ secrets.API_FOOTBALL_OMEGA_KEY }}
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: |
           python bot_risultati.py
 
