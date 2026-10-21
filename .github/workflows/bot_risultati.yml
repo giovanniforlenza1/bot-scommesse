@@ -2,8 +2,8 @@ name: Aggiorna Risultati Dashboard
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # Gira ogni 3 ore in automatico
-  workflow_dispatch: # Permette di lanciarlo manualmente col tasto che usi tu
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: 1. Scarica il codice dal repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 2. Configura Python 3.11
         uses: actions/setup-python@v5
@@ -28,7 +30,6 @@ jobs:
 
       - name: 4. Esegui Bot Risultati
         env:
-                  env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHIAVE_A: ${{ secrets.CHIAVE_A }}
           CHIAVE_B: ${{ secrets.CHIAVE_B }}
@@ -38,7 +39,7 @@ jobs:
           API_KEY_ARBITRO: ${{ secrets.API_KEY_ARBITRO }}
           API_FOOTBALL_OMEGA_KEY: ${{ secrets.API_FOOTBALL_OMEGA_KEY }}
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
+          FOOTBALL_DATA_KEY: ${{ secrets.API_FOOTBALL_KEY }}
         run: |
           python bot_risultati.py
 
