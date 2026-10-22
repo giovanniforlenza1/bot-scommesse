@@ -2398,20 +2398,20 @@
             "importo": 15.0,
             "quota_totale": 1.66,
             "ritorno_potenziale": 24.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
                     "id_partita": "f5c4465f64797dcb67aa1b42fd45292e",
                     "data": "23/10 07:00",
-                    "squadra_casa": "Sara Bejlek",
-                    "squadra_trasferta": "Marie Bouzkova",
+                    "squadra_casa": "Marie Bouzkova",
+                    "squadra_trasferta": "Anastasia Zakharova",
                     "pronostico": "Vittoria Marie Bouzkova",
                     "quota": 1.66,
                     "bookmaker": "Betfair",
                     "lega": "tennis_wta_ningbo_open",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
