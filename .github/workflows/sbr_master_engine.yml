@@ -3,7 +3,7 @@ name: SBR Master Engine
 on:
   schedule:
     # 06:30 UTC corrispondono alle 08:30 del mattino in Italia (ora legale) / 07:30 (ora solare)
-    - cron: '30 6 * * *'
+    - cron: '30 2 * * *'
   workflow_dispatch:
 
 permissions:
