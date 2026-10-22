@@ -74,6 +74,21 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
+def ottieni_partite_gia_giocate(db, modello_target):
+    """Restituisce gli ID e i nomi delle partite già giocate da questo modello nei giorni scorsi"""
+    id_giocati = set()
+    match_giocati = set()
+    for s in db.get('schedine', []):
+        if s.get('modello') == modello_target:
+            for p in s.get('partite', []):
+                if p.get('id_partita'):
+                    id_giocati.add(str(p.get('id_partita')))
+                c = str(p.get('squadra_casa', '')).lower().strip()
+                t = str(p.get('squadra_trasferta', '')).lower().strip()
+                if c and t:
+                    match_giocati.add(f"{c} - {t}")
+    return id_giocati, match_giocati
+
 def priorita_lega(lega):
     return 0 if ('uefa' in lega or 'italy_serie_a' in lega) else 1
 
@@ -82,18 +97,17 @@ def esegui_alpha():
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
     
-    # Prende SOLO partite che iniziano almeno 30 minuti DOPO l'avvio del bot (orario italiano)
     inizio_finestra = oggi + timedelta(minutes=30)
     limite_temporale = oggi + timedelta(days=3)
     
     db_principale = carica_database_principale()
 
-    # Blocco anti-duplicati: se la giocata Alpha di oggi è già stata creata la mattina, si ferma subito
     if any(s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
         print(f"[ALPHA] Giocata del {data_oggi_str} già presente nel database. Salto.")
         return
 
     id_esclusi_omega = carica_id_omega_oggi()
+    id_gia_giocati, match_gia_giocati = ottieni_partite_gia_giocate(db_principale, 'alpha')
     candidati_alpha = []
 
     for camp in campionati:
@@ -109,6 +123,12 @@ def esegui_alpha():
 
             casa_orig, trasf_orig = p['home_team'], p['away_team']
             casa_ita, trasf_ita = traduci_squadra(casa_orig), traduci_squadra(trasf_orig)
+            match_intero = f"{casa_ita} - {trasf_ita}".lower()
+
+            # BLOCCO ANTI-RIPETIZIONE: Salta la partita se è già stata giocata da Alpha ieri o nei giorni scorsi!
+            if str(p['id']) in id_gia_giocati or match_intero in match_gia_giocati:
+                print(f"[ALPHA SKIP] Partita già giocata in precedenza: {casa_ita} - {trasf_ita}")
+                continue
 
             opzioni_match = {}
             for book in p.get('bookmakers', []):
