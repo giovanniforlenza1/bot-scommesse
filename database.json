@@ -2289,6 +2289,131 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "0e293b7b",
+            "modello": "omega",
+            "data_creazione": "22/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.69,
+            "ritorno_potenziale": 25.35,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "63b70726ca31b8e4ed61f37edfba2989",
+                    "data": "22/10 18:45",
+                    "squadra_casa": "Trabzonspor",
+                    "squadra_trasferta": "Hearts",
+                    "pronostico": "Vittoria Trabzonspor",
+                    "quota": 1.28,
+                    "bookmaker": "Bet365 / Snai",
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4e761167a147b5282b086d0f801819d3",
+                    "data": "22/10 18:45",
+                    "squadra_casa": "Ferencváros TC",
+                    "squadra_trasferta": "Torreense",
+                    "pronostico": "Vittoria Ferencváros TC",
+                    "quota": 1.32,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ee3d8f15",
+            "modello": "alpha",
+            "data_creazione": "22/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "b3c60081286aa25692de7e0a482b6c01",
+                    "data": "22/10 21:00",
+                    "squadra_casa": "TSG Hoffenheim",
+                    "squadra_trasferta": "Lyon",
+                    "pronostico": "Doppia Chance 1X (TSG Hoffenheim)",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "330997c9e81a23c5ebe39ade1d6a6e12",
+                    "data": "22/10 18:45",
+                    "squadra_casa": "FC Nordsjaelland",
+                    "squadra_trasferta": "PFC CSKA Sofia",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "6b5caf555b23eba02e4d090c61e8f665",
+                    "data": "22/10 18:45",
+                    "squadra_casa": "FK Kauno Žalgiris",
+                    "squadra_trasferta": "SK Brann",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ca2a6048",
+            "modello": "beta",
+            "data_creazione": "22/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "d4d56a31d8ccd432e3a6183180e093f3",
+                    "data": "23/10 20:30",
+                    "squadra_casa": "VfB Stuttgart",
+                    "squadra_trasferta": "Borussia Monchengladbach",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "940c9fdf",
+            "modello": "sigma",
+            "data_creazione": "22/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.66,
+            "ritorno_potenziale": 24.9,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "f5c4465f64797dcb67aa1b42fd45292e",
+                    "data": "23/10 07:00",
+                    "squadra_casa": "Sara Bejlek",
+                    "squadra_trasferta": "Marie Bouzkova",
+                    "pronostico": "Vittoria Marie Bouzkova",
+                    "quota": 1.66,
+                    "bookmaker": "Betfair",
+                    "lega": "tennis_wta_ningbo_open",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
