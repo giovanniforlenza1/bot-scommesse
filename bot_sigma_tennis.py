@@ -43,38 +43,36 @@ def salva_database_principale(db):
     with open('database.json', 'w', encoding='utf-8') as f:
         json.dump(db, f, indent=4, ensure_ascii=False)
 
+def ottieni_partite_gia_giocate(db, modello_target):
+    """Restituisce gli ID e i nomi delle partite già giocate da questo modello nei giorni scorsi"""
+    id_giocati = set()
+    match_giocati = set()
+    for s in db.get('schedine', []):
+        if s.get('modello') == modello_target:
+            for p in s.get('partite', []):
+                if p.get('id_partita'):
+                    id_giocati.add(str(p.get('id_partita')))
+                c = str(p.get('squadra_casa', '')).lower().strip()
+                t = str(p.get('squadra_trasferta', '')).lower().strip()
+                if c and t:
+                    match_giocati.add(f"{c} - {t}")
+    return id_giocati, match_giocati
+
 def esegui_sigma_tennis():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
 
-    # Finestra rigorosamente futura: la partita deve iniziare almeno tra 30 minuti (mai partite già iniziate!)
     inizio_minimo = oggi + timedelta(minutes=30)
     limite_massimo = oggi + timedelta(hours=36)
 
     db_principale = carica_database_principale()
 
-    # Pulisce automaticamente solo la giocata errata delle 14:30 se creata oggi ed è già iniziata,
-    # ma blocca qualsiasi doppio invio se c'è già una schedina valida di oggi
-    schedine_valide = []
-    gia_inviata_oggi = False
-    for s in db_principale.get('schedine', []):
-        if s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str:
-            partite_s = s.get('partite', [])
-            # Verifica se la schedina di oggi contiene la partita errata delle 14:30
-            orario_partita = partite_s[0].get('data', '') if partite_s else ''
-            if "14:30" in orario_partita and s.get('stato_schedina') == 'in attesa':
-                print("[SIGMA] Rimossa schedina errata delle 14:30 iniziata prima dell'invio.")
-                continue
-            gia_inviata_oggi = True
-        schedine_valide.append(s)
-
-    db_principale['schedine'] = schedine_valide
-
-    if gia_inviata_oggi:
+    if any(s.get('modello') == 'sigma' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
         print(f"[SIGMA] Giocata del {data_oggi_str} già presente nel database. Salto.")
-        salva_database_principale(db_principale)
         return
+
+    id_gia_giocati, match_gia_giocati = ottieni_partite_gia_giocate(db_principale, 'sigma')
 
     dati_sport = esegui_richiesta_api("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
     tornei_tennis = [s['key'] for s in (dati_sport or []) if 'tennis' in s.get('key', '').lower() and s.get('active')]
@@ -86,13 +84,18 @@ def esegui_sigma_tennis():
         if dati_odds:
             for m_curr in dati_odds:
                 data_ita = datetime.strptime(m_curr['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
-                
-                # FILTRO FERREO ORARIO ITALIANO: accetta solo partite che iniziano almeno tra 30 minuti!
                 if data_ita < inizio_minimo or data_ita > limite_massimo:
                     continue
 
                 g1 = m_curr.get('home_team', '')
                 g2 = m_curr.get('away_team', '')
+                match_intero = f"{g1} - {g2}".lower()
+
+                # BLOCCO ANTI-RIPETIZIONE: Salta il match se è già stato giocato da Sigma nei giorni scorsi!
+                if str(m_curr.get('id')) in id_gia_giocati or match_intero in match_gia_giocati:
+                    print(f"[SIGMA SKIP] Partita tennis già giocata in precedenza: {g1} - {g2}")
+                    continue
+
                 for book in m_curr.get('bookmakers', []):
                     for m in book.get('markets', []):
                         if m.get('key') == 'h2h':
@@ -118,8 +121,7 @@ def esegui_sigma_tennis():
         if partita_scelta: break
 
     if not partita_scelta:
-        print("Sigma Tennis: Nessun match futuro valido nelle prossime 36 ore.")
-        salva_database_principale(db_principale)
+        print("Sigma Tennis: Nessun match futuro nuovo nelle prossime 36 ore.")
         return
 
     quota_totale = partita_scelta['quota']
