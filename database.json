@@ -2207,7 +2207,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2218,8 +2218,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-5"
                 },
                 {
                     "id_partita": "aa68244bf5096be895007004fab71a05",
@@ -2229,8 +2229,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 },
                 {
                     "id_partita": "92763f910f6f9d76ccffca6e6d1a13ae",
@@ -2240,8 +2240,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-2"
                 }
             ]
         },
@@ -2297,7 +2297,7 @@
             "importo": 15.0,
             "quota_totale": 1.69,
             "ritorno_potenziale": 25.35,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "63b70726ca31b8e4ed61f37edfba2989",
@@ -2308,8 +2308,8 @@
                     "quota": 1.28,
                     "bookmaker": "Bet365 / Snai",
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "4e761167a147b5282b086d0f801819d3",
@@ -2320,8 +2320,8 @@
                     "quota": 1.32,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 }
             ]
         },
@@ -2354,8 +2354,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-2"
                 },
                 {
                     "id_partita": "6b5caf555b23eba02e4d090c61e8f665",
@@ -2365,8 +2365,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-4"
                 }
             ]
         },
