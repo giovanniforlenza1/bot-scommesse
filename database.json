@@ -2127,7 +2127,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "vinta",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "2ebbccdeea2dab59717d5c3d802c3fed",
@@ -2136,8 +2136,8 @@
                     "squadra_trasferta": "Arsenal",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "vinta",
-                    "risultato_reale": "9 Angoli"
+                    "stato": "persa",
+                    "risultato_reale": "8 Angoli"
                 }
             ]
         },
@@ -2252,7 +2252,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "vinta",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "2ebbccdeea2dab59717d5c3d802c3fed",
@@ -2261,8 +2261,8 @@
                     "squadra_trasferta": "Arsenal",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "vinta",
-                    "risultato_reale": "9 Angoli"
+                    "stato": "persa",
+                    "risultato_reale": "8 Angoli"
                 }
             ]
         },
