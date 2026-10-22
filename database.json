@@ -2332,7 +2332,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2343,8 +2343,8 @@
                     "pronostico": "Doppia Chance 1X (TSG Hoffenheim)",
                     "quota": 1.35,
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "330997c9e81a23c5ebe39ade1d6a6e12",
