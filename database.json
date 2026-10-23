@@ -2414,6 +2414,107 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "4736d561",
+            "modello": "omega",
+            "data_creazione": "23/10/2026",
+            "importo": 15.0,
+            "quota_totale": 2.25,
+            "ritorno_potenziale": 33.75,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "b27cb3ea731fa3f18d05e6a627bdf984",
+                    "data": "24/10 20:45",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Parma",
+                    "pronostico": "Vittoria Lazio",
+                    "quota": 1.44,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "08ffd99b2249c81d8a7410598f32b9b0",
+                    "data": "24/10 15:00",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Vittoria Como",
+                    "quota": 1.56,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "4d698588",
+            "modello": "alpha",
+            "data_creazione": "23/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.48,
+            "ritorno_potenziale": 29.76,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "124c70f8f3248a845bdb983a54e74720",
+                    "data": "23/10 20:45",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "0b4894e9fb123ef3045269f97e339eba",
+                    "data": "24/10 18:00",
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "b7f0880e3da978f9481f7cb5697e2aa5",
+                    "data": "24/10 15:00",
+                    "squadra_casa": "Cagliari",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.36,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "99003524",
+            "modello": "beta",
+            "data_creazione": "23/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "04bb232a2940fcf03abf05b308e27577",
+                    "data": "24/10 15:30",
+                    "squadra_casa": "Augsburg",
+                    "squadra_trasferta": "Union Berlin",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
