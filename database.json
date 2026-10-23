@@ -2468,8 +2468,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-2"
                 },
                 {
                     "id_partita": "0b4894e9fb123ef3045269f97e339eba",
