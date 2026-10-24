@@ -1,30 +1,30 @@
 {
-    "ultimo_aggiornamento": "23/10/2026 09:50",
-    "totale_squadre_schedate": 178,
+    "ultimo_aggiornamento": "24/10/2026 09:32",
+    "totale_squadre_schedate": 180,
     "squadre": {
         "como": {
             "nome": "Como",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 3.0,
-            "media_gol_subiti": 1.67,
-            "media_tiri_porta": 7.0,
-            "media_tiri_concessi": 5.33,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 3.5,
+            "media_gol_subiti": 1.0,
+            "media_tiri_porta": 8.0,
+            "media_tiri_concessi": 5.5,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.028,
-            "rating_casa": 1.052,
-            "rating_trasferta": 1.032
+            "rating_tattico": 1.06,
+            "rating_casa": 1.084,
+            "rating_trasferta": 1.087
         },
         "manchester": {
             "nome": "Manchester United",
-            "gare_analizzate": 5,
-            "media_gol_fatti": 2.4,
-            "media_gol_subiti": 2.4,
-            "media_tiri_porta": 5.8,
-            "media_tiri_concessi": 5.8,
+            "gare_analizzate": 4,
+            "media_gol_fatti": 2.5,
+            "media_gol_subiti": 2.0,
+            "media_tiri_porta": 5.0,
+            "media_tiri_concessi": 4.75,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.0,
-            "rating_casa": 1.009,
-            "rating_trasferta": 0.99
+            "rating_tattico": 1.011,
+            "rating_casa": 1.035,
+            "rating_trasferta": 1.0
         },
         "lille": {
             "nome": "Lille",
@@ -52,15 +52,15 @@
         },
         "aston villa": {
             "nome": "Aston Villa",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 3.33,
-            "media_gol_subiti": 0.33,
-            "media_tiri_porta": 8.0,
-            "media_tiri_concessi": 2.67,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 2.0,
+            "media_gol_subiti": 0.5,
+            "media_tiri_porta": 6.5,
+            "media_tiri_concessi": 2.0,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.083,
-            "rating_casa": 1.107,
-            "rating_trasferta": 1.11
+            "rating_tattico": 1.076,
+            "rating_casa": 1.1,
+            "rating_trasferta": 1.103
         },
         "viking fk": {
             "nome": "Viking FK",
@@ -136,51 +136,51 @@
         },
         "shakhtar donetsk": {
             "nome": "Shakhtar Donetsk",
-            "gare_analizzate": 2,
-            "media_gol_fatti": 1.5,
+            "gare_analizzate": 1,
+            "media_gol_fatti": 0.0,
             "media_gol_subiti": 1.0,
             "media_tiri_porta": 4.0,
-            "media_tiri_concessi": 4.0,
+            "media_tiri_concessi": 5.0,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.002,
-            "rating_casa": 1.026,
-            "rating_trasferta": 0.984
+            "rating_tattico": 0.957,
+            "rating_casa": 0.936,
+            "rating_trasferta": 0.939
         },
         "betis siviglia": {
             "nome": "Betis Siviglia",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 2.0,
-            "media_gol_subiti": 2.33,
-            "media_tiri_porta": 7.33,
-            "media_tiri_concessi": 5.67,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.5,
+            "media_gol_subiti": 2.5,
+            "media_tiri_porta": 7.5,
+            "media_tiri_concessi": 6.0,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.028,
-            "rating_casa": 1.037,
-            "rating_trasferta": 1.04
+            "rating_tattico": 1.014,
+            "rating_casa": 1.016,
+            "rating_trasferta": 1.018
         },
         "feyenoord": {
             "nome": "Feyenoord",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 2.33,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 2.0,
             "media_gol_subiti": 2.0,
-            "media_tiri_porta": 6.0,
-            "media_tiri_concessi": 8.0,
+            "media_tiri_porta": 6.5,
+            "media_tiri_concessi": 9.5,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 0.999,
-            "rating_casa": 1.023,
-            "rating_trasferta": 1.004
+            "rating_tattico": 0.978,
+            "rating_casa": 0.98,
+            "rating_trasferta": 0.982
         },
         "real madrid": {
             "nome": "Real Madrid",
-            "gare_analizzate": 3,
+            "gare_analizzate": 2,
             "media_gol_fatti": 4.0,
-            "media_gol_subiti": 1.67,
-            "media_tiri_porta": 9.0,
-            "media_tiri_concessi": 6.0,
+            "media_gol_subiti": 1.0,
+            "media_tiri_porta": 9.5,
+            "media_tiri_concessi": 5.5,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 1.064,
-            "rating_casa": 1.088,
-            "rating_trasferta": 1.091
+            "rating_tattico": 1.072,
+            "rating_casa": 1.096,
+            "rating_trasferta": 1.099
         },
         "lipsia": {
             "nome": "Lipsia",
@@ -208,27 +208,27 @@
         },
         "lask linz": {
             "nome": "LASK Linz",
-            "gare_analizzate": 2,
+            "gare_analizzate": 1,
             "media_gol_fatti": 3.0,
-            "media_gol_subiti": 4.0,
-            "media_tiri_porta": 5.5,
-            "media_tiri_concessi": 6.5,
+            "media_gol_subiti": 2.0,
+            "media_tiri_porta": 7.0,
+            "media_tiri_concessi": 4.0,
             "ultima_partita": "2026-10-21",
-            "rating_tattico": 0.994,
-            "rating_casa": 0.973,
-            "rating_trasferta": 1.021
+            "rating_tattico": 1.064,
+            "rating_casa": 1.088,
+            "rating_trasferta": 1.091
         },
         "fenerbahce": {
             "nome": "Fenerbahce",
-            "gare_analizzate": 2,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 4.0,
+            "gare_analizzate": 1,
+            "media_gol_fatti": 2.0,
+            "media_gol_subiti": 2.0,
             "media_tiri_porta": 4.0,
-            "media_tiri_concessi": 7.5,
+            "media_tiri_concessi": 4.0,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 0.95,
-            "rating_casa": 0.944,
-            "rating_trasferta": 0.932
+            "rating_tattico": 0.99,
+            "rating_casa": 0.984,
+            "rating_trasferta": 0.987
         },
         "slavia prague": {
             "nome": "Slavia Prague",
@@ -256,35 +256,35 @@
         },
         "dortmund": {
             "nome": "Dortmund",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 0.67,
-            "media_gol_subiti": 0.67,
-            "media_tiri_porta": 5.0,
-            "media_tiri_concessi": 2.67,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.0,
+            "media_gol_subiti": 0.5,
+            "media_tiri_porta": 5.5,
+            "media_tiri_concessi": 2.5,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 1.017,
-            "rating_casa": 1.016,
-            "rating_trasferta": 1.019
+            "rating_tattico": 1.039,
+            "rating_casa": 1.048,
+            "rating_trasferta": 1.051
         },
         "roma": {
             "nome": "Roma",
-            "gare_analizzate": 3,
+            "gare_analizzate": 2,
             "media_gol_fatti": 3.0,
-            "media_gol_subiti": 1.33,
-            "media_tiri_porta": 7.33,
-            "media_tiri_concessi": 3.33,
+            "media_gol_subiti": 0.0,
+            "media_tiri_porta": 7.5,
+            "media_tiri_concessi": 1.0,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 1.047,
-            "rating_casa": 1.056,
-            "rating_trasferta": 1.059
+            "rating_tattico": 1.092,
+            "rating_casa": 1.116,
+            "rating_trasferta": 1.119
         },
         "slovan bratislava": {
             "nome": "Slovan Bratislava",
-            "gare_analizzate": 2,
+            "gare_analizzate": 1,
             "media_gol_fatti": 0.0,
-            "media_gol_subiti": 3.5,
+            "media_gol_subiti": 4.0,
             "media_tiri_porta": 1.0,
-            "media_tiri_concessi": 9.0,
+            "media_tiri_concessi": 10.0,
             "ultima_partita": "2026-10-20",
             "rating_tattico": 0.92,
             "rating_casa": 0.899,
@@ -292,15 +292,15 @@
         },
         "porto": {
             "nome": "FC Porto",
-            "gare_analizzate": 2,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 2.0,
-            "media_tiri_porta": 4.5,
-            "media_tiri_concessi": 5.0,
+            "gare_analizzate": 1,
+            "media_gol_fatti": 0.0,
+            "media_gol_subiti": 1.0,
+            "media_tiri_porta": 4.0,
+            "media_tiri_concessi": 3.0,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 0.961,
-            "rating_casa": 0.94,
-            "rating_trasferta": 0.943
+            "rating_tattico": 0.973,
+            "rating_casa": 0.952,
+            "rating_trasferta": 0.955
         },
         "psv": {
             "nome": "PSV",
@@ -316,15 +316,15 @@
         },
         "liverpool": {
             "nome": "Liverpool",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 4.0,
-            "media_gol_subiti": 2.33,
-            "media_tiri_porta": 7.0,
-            "media_tiri_concessi": 3.67,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 3.0,
+            "media_gol_subiti": 2.0,
+            "media_tiri_porta": 6.0,
+            "media_tiri_concessi": 3.5,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 1.067,
-            "rating_casa": 1.091,
-            "rating_trasferta": 1.094
+            "rating_tattico": 1.06,
+            "rating_casa": 1.084,
+            "rating_trasferta": 1.087
         },
         "villarreal": {
             "nome": "Villarreal",
@@ -340,15 +340,15 @@
         },
         "aek athens": {
             "nome": "AEK Athens",
-            "gare_analizzate": 2,
+            "gare_analizzate": 1,
             "media_gol_fatti": 1.0,
-            "media_gol_subiti": 4.0,
+            "media_gol_subiti": 5.0,
             "media_tiri_porta": 3.0,
-            "media_tiri_concessi": 5.5,
+            "media_tiri_concessi": 7.0,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 0.945,
-            "rating_casa": 0.924,
-            "rating_trasferta": 0.927
+            "rating_tattico": 0.933,
+            "rating_casa": 0.912,
+            "rating_trasferta": 0.915
         },
         "napoli": {
             "nome": "Napoli",
@@ -364,27 +364,27 @@
         },
         "bodo/glimt": {
             "nome": "Bodo/Glimt",
-            "gare_analizzate": 2,
-            "media_gol_fatti": 2.0,
-            "media_gol_subiti": 2.0,
-            "media_tiri_porta": 4.5,
-            "media_tiri_concessi": 6.0,
+            "gare_analizzate": 1,
+            "media_gol_fatti": 3.0,
+            "media_gol_subiti": 4.0,
+            "media_tiri_porta": 6.0,
+            "media_tiri_concessi": 8.0,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 0.99,
-            "rating_casa": 1.014,
-            "rating_trasferta": 0.972
+            "rating_tattico": 0.949,
+            "rating_casa": 0.928,
+            "rating_trasferta": 0.931
         },
         "psg": {
             "nome": "PSG",
-            "gare_analizzate": 3,
-            "media_gol_fatti": 3.67,
-            "media_gol_subiti": 1.67,
-            "media_tiri_porta": 10.33,
-            "media_tiri_concessi": 7.33,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 3.5,
+            "media_gol_subiti": 1.5,
+            "media_tiri_porta": 10.5,
+            "media_tiri_concessi": 6.5,
             "ultima_partita": "2026-10-20",
-            "rating_tattico": 1.064,
-            "rating_casa": 1.088,
-            "rating_trasferta": 1.091
+            "rating_tattico": 1.072,
+            "rating_casa": 1.096,
+            "rating_trasferta": 1.099
         },
         "barcelona": {
             "nome": "Barcelona",
@@ -401,14 +401,14 @@
         "vfb stuttgart": {
             "nome": "VfB Stuttgart",
             "gare_analizzate": 3,
-            "media_gol_fatti": 1.33,
-            "media_gol_subiti": 0.67,
-            "media_tiri_porta": 6.0,
-            "media_tiri_concessi": 2.33,
-            "ultima_partita": "2026-10-20",
-            "rating_tattico": 1.028,
-            "rating_casa": 1.022,
-            "rating_trasferta": 1.032
+            "media_gol_fatti": 1.0,
+            "media_gol_subiti": 1.67,
+            "media_tiri_porta": 5.0,
+            "media_tiri_concessi": 4.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.981,
+            "rating_casa": 0.968,
+            "rating_trasferta": 0.963
         },
         "atlético madrid": {
             "nome": "Atlético Madrid",
@@ -1286,17 +1286,29 @@
             "rating_casa": 1.044,
             "rating_trasferta": 1.069
         },
+        "torino": {
+            "nome": "Torino",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 3.0,
+            "media_gol_subiti": 1.0,
+            "media_tiri_porta": 5.0,
+            "media_tiri_concessi": 5.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 1.036,
+            "rating_casa": 1.06,
+            "rating_trasferta": 1.063
+        },
         "monza": {
             "nome": "Monza",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 4.0,
-            "media_gol_subiti": 0.0,
-            "media_tiri_porta": 6.0,
-            "media_tiri_concessi": 5.0,
-            "ultima_partita": "2026-10-19",
-            "rating_tattico": 1.048,
-            "rating_casa": 1.072,
-            "rating_trasferta": 1.075
+            "gare_analizzate": 2,
+            "media_gol_fatti": 3.0,
+            "media_gol_subiti": 1.5,
+            "media_tiri_porta": 4.5,
+            "media_tiri_concessi": 6.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.99,
+            "rating_casa": 1.014,
+            "rating_trasferta": 0.972
         },
         "cagliari": {
             "nome": "Cagliari",
@@ -1321,18 +1333,6 @@
             "rating_tattico": 1.005,
             "rating_casa": 0.984,
             "rating_trasferta": 0.987
-        },
-        "torino": {
-            "nome": "Torino",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 3.0,
-            "media_gol_subiti": 0.0,
-            "media_tiri_porta": 3.0,
-            "media_tiri_concessi": 8.0,
-            "ultima_partita": "2026-10-19",
-            "rating_tattico": 1.0,
-            "rating_casa": 1.024,
-            "rating_trasferta": 1.027
         },
         "udinese": {
             "nome": "Udinese",
@@ -1442,6 +1442,30 @@
             "rating_casa": 0.912,
             "rating_trasferta": 0.915
         },
+        "ipswich town": {
+            "nome": "Ipswich Town",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.5,
+            "media_gol_subiti": 2.0,
+            "media_tiri_porta": 3.0,
+            "media_tiri_concessi": 5.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.958,
+            "rating_casa": 0.952,
+            "rating_trasferta": 0.94
+        },
+        "nottingham forest": {
+            "nome": "Nottingham Forest",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 0.5,
+            "media_gol_subiti": 1.0,
+            "media_tiri_porta": 3.5,
+            "media_tiri_concessi": 2.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.99,
+            "rating_casa": 0.969,
+            "rating_trasferta": 0.987
+        },
         "tottenham": {
             "nome": "Tottenham",
             "gare_analizzate": 1,
@@ -1477,18 +1501,6 @@
             "rating_tattico": 1.006,
             "rating_casa": 1.0,
             "rating_trasferta": 1.003
-        },
-        "nottingham forest": {
-            "nome": "Nottingham Forest",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 0.0,
-            "media_gol_subiti": 1.0,
-            "media_tiri_porta": 2.0,
-            "media_tiri_concessi": 1.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 0.973,
-            "rating_casa": 0.952,
-            "rating_trasferta": 0.955
         },
         "everton": {
             "nome": "Everton",
@@ -1550,18 +1562,6 @@
             "rating_casa": 0.904,
             "rating_trasferta": 0.907
         },
-        "ipswich town": {
-            "nome": "Ipswich Town",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 2.0,
-            "media_gol_subiti": 3.0,
-            "media_tiri_porta": 3.0,
-            "media_tiri_concessi": 6.0,
-            "ultima_partita": "2026-10-17",
-            "rating_tattico": 0.941,
-            "rating_casa": 0.92,
-            "rating_trasferta": 0.923
-        },
         "newcastle": {
             "nome": "Newcastle",
             "gare_analizzate": 1,
@@ -1573,6 +1573,30 @@
             "rating_tattico": 0.949,
             "rating_casa": 0.928,
             "rating_trasferta": 0.931
+        },
+        "alavés": {
+            "nome": "Alavés",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.0,
+            "media_gol_subiti": 1.5,
+            "media_tiri_porta": 6.5,
+            "media_tiri_concessi": 3.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 1.006,
+            "rating_casa": 1.0,
+            "rating_trasferta": 0.988
+        },
+        "málaga": {
+            "nome": "Málaga",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.5,
+            "media_gol_subiti": 3.0,
+            "media_tiri_porta": 4.5,
+            "media_tiri_concessi": 6.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.962,
+            "rating_casa": 0.941,
+            "rating_trasferta": 0.959
         },
         "levante": {
             "nome": "Levante",
@@ -1633,30 +1657,6 @@
             "rating_tattico": 0.92,
             "rating_casa": 0.899,
             "rating_trasferta": 0.902
-        },
-        "alavés": {
-            "nome": "Alavés",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 2.0,
-            "media_tiri_porta": 9.0,
-            "media_tiri_concessi": 3.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 1.013,
-            "rating_casa": 0.992,
-            "rating_trasferta": 0.995
-        },
-        "málaga": {
-            "nome": "Málaga",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 2.0,
-            "media_gol_subiti": 5.0,
-            "media_tiri_porta": 6.0,
-            "media_tiri_concessi": 9.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 0.941,
-            "rating_casa": 0.92,
-            "rating_trasferta": 0.923
         },
         "sevilla": {
             "nome": "Sevilla",
@@ -1720,15 +1720,15 @@
         },
         "borussia mönchengladbach": {
             "nome": "Borussia Mönchengladbach",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 1.0,
+            "gare_analizzate": 2,
+            "media_gol_fatti": 2.0,
             "media_gol_subiti": 2.0,
-            "media_tiri_porta": 3.0,
-            "media_tiri_concessi": 8.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 0.925,
-            "rating_casa": 0.904,
-            "rating_trasferta": 0.907
+            "media_tiri_porta": 4.5,
+            "media_tiri_concessi": 6.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.986,
+            "rating_casa": 0.965,
+            "rating_trasferta": 1.013
         },
         "1. union berlin": {
             "nome": "1. Union Berlin",
@@ -1850,6 +1850,30 @@
             "rating_casa": 0.912,
             "rating_trasferta": 0.915
         },
+        "brest": {
+            "nome": "Brest",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.0,
+            "media_gol_subiti": 1.5,
+            "media_tiri_porta": 4.5,
+            "media_tiri_concessi": 3.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.986,
+            "rating_casa": 0.965,
+            "rating_trasferta": 0.983
+        },
+        "nice": {
+            "nome": "Nice",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 1.5,
+            "media_gol_subiti": 1.5,
+            "media_tiri_porta": 3.5,
+            "media_tiri_concessi": 5.5,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.986,
+            "rating_casa": 0.988,
+            "rating_trasferta": 0.99
+        },
         "angers": {
             "nome": "Angers",
             "gare_analizzate": 1,
@@ -1910,18 +1934,6 @@
             "rating_casa": 1.08,
             "rating_trasferta": 1.083
         },
-        "nice": {
-            "nome": "Nice",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 2.0,
-            "media_tiri_porta": 5.0,
-            "media_tiri_concessi": 4.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 0.973,
-            "rating_casa": 0.952,
-            "rating_trasferta": 0.955
-        },
         "strasbourg": {
             "nome": "Strasbourg",
             "gare_analizzate": 1,
@@ -1933,18 +1945,6 @@
             "rating_tattico": 0.973,
             "rating_casa": 0.952,
             "rating_trasferta": 0.955
-        },
-        "brest": {
-            "nome": "Brest",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 1.0,
-            "media_tiri_porta": 2.0,
-            "media_tiri_concessi": 5.0,
-            "ultima_partita": "2026-10-17",
-            "rating_tattico": 0.966,
-            "rating_casa": 0.96,
-            "rating_trasferta": 0.963
         },
         "troyes": {
             "nome": "Troyes",
@@ -1982,6 +1982,30 @@
             "rating_casa": 1.096,
             "rating_trasferta": 1.099
         },
+        "go ahead eagles": {
+            "nome": "Go Ahead Eagles",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 2.0,
+            "media_gol_subiti": 3.0,
+            "media_tiri_porta": 6.5,
+            "media_tiri_concessi": 6.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 1.006,
+            "rating_casa": 1.03,
+            "rating_trasferta": 0.988
+        },
+        "telstar": {
+            "nome": "Telstar",
+            "gare_analizzate": 2,
+            "media_gol_fatti": 2.5,
+            "media_gol_subiti": 3.5,
+            "media_tiri_porta": 6.0,
+            "media_tiri_concessi": 9.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 0.941,
+            "rating_casa": 0.92,
+            "rating_trasferta": 0.923
+        },
         "pec zwolle": {
             "nome": "PEC Zwolle",
             "gare_analizzate": 1,
@@ -1993,18 +2017,6 @@
             "rating_tattico": 1.064,
             "rating_casa": 1.088,
             "rating_trasferta": 1.091
-        },
-        "go ahead eagles": {
-            "nome": "Go Ahead Eagles",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 1.0,
-            "media_gol_subiti": 4.0,
-            "media_tiri_porta": 6.0,
-            "media_tiri_concessi": 9.0,
-            "ultima_partita": "2026-10-18",
-            "rating_tattico": 0.941,
-            "rating_casa": 0.92,
-            "rating_trasferta": 0.923
         },
         "cambuur": {
             "nome": "SC Cambuur",
@@ -2066,18 +2078,6 @@
             "rating_casa": 1.072,
             "rating_trasferta": 1.075
         },
-        "telstar": {
-            "nome": "Telstar",
-            "gare_analizzate": 1,
-            "media_gol_fatti": 3.0,
-            "media_gol_subiti": 4.0,
-            "media_tiri_porta": 9.0,
-            "media_tiri_concessi": 11.0,
-            "ultima_partita": "2026-10-17",
-            "rating_tattico": 0.949,
-            "rating_casa": 0.928,
-            "rating_trasferta": 0.931
-        },
         "sparta rotterdam": {
             "nome": "Sparta Rotterdam",
             "gare_analizzate": 1,
@@ -2122,6 +2122,30 @@
             "media_tiri_porta": 1.0,
             "media_tiri_concessi": 7.0,
             "ultima_partita": "2026-10-16",
+            "rating_tattico": 0.92,
+            "rating_casa": 0.899,
+            "rating_trasferta": 0.902
+        },
+        "vitória de guimaraes": {
+            "nome": "Vitória de Guimaraes",
+            "gare_analizzate": 1,
+            "media_gol_fatti": 5.0,
+            "media_gol_subiti": 0.0,
+            "media_tiri_porta": 8.0,
+            "media_tiri_concessi": 2.0,
+            "ultima_partita": "2026-10-23",
+            "rating_tattico": 1.088,
+            "rating_casa": 1.112,
+            "rating_trasferta": 1.115
+        },
+        "maritimo": {
+            "nome": "Maritimo",
+            "gare_analizzate": 1,
+            "media_gol_fatti": 0.0,
+            "media_gol_subiti": 5.0,
+            "media_tiri_porta": 2.0,
+            "media_tiri_concessi": 8.0,
+            "ultima_partita": "2026-10-23",
             "rating_tattico": 0.92,
             "rating_casa": 0.899,
             "rating_trasferta": 0.902

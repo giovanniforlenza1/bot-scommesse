@@ -2515,6 +2515,131 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "f31c74c5",
+            "modello": "omega",
+            "data_creazione": "24/10/2026",
+            "importo": 15.0,
+            "quota_totale": 2.13,
+            "ritorno_potenziale": 31.95,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "c9b6c7048d8dc33dae618f67f462f67a",
+                    "data": "25/10 12:30",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Vittoria Inter",
+                    "quota": 1.41,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "63af660d4d0d52f8ac7685172ef939c4",
+                    "data": "25/10 18:00",
+                    "squadra_casa": "Lecce",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "Vittoria Juventus",
+                    "quota": 1.51,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "d77ba282",
+            "modello": "alpha",
+            "data_creazione": "24/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "08ffd99b2249c81d8a7410598f32b9b0",
+                    "data": "24/10 15:00",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "b27cb3ea731fa3f18d05e6a627bdf984",
+                    "data": "24/10 20:45",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Parma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "63aa6e3f679ee4c68de5b4bd8d3361bb",
+                    "data": "25/10 15:00",
+                    "squadra_casa": "Atalanta BC",
+                    "squadra_trasferta": "Frosinone",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "a8797b32",
+            "modello": "beta",
+            "data_creazione": "24/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "c9b6c7048d8dc33dae618f67f462f67a",
+                    "data": "25/10 12:30",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "101ef9cf",
+            "modello": "sigma",
+            "data_creazione": "24/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.53,
+            "ritorno_potenziale": 22.95,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "ae319b5b7c6cbef88dda71720672c0c6",
+                    "data": "24/10 11:30",
+                    "squadra_casa": "Elena Rybakina",
+                    "squadra_trasferta": "Diana Shnaider",
+                    "pronostico": "Vittoria Elena Rybakina",
+                    "quota": 1.53,
+                    "bookmaker": "Virgin Bet",
+                    "lega": "tennis_wta_ningbo_open",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
