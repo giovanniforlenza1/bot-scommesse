@@ -2445,8 +2445,8 @@
                     "quota": 1.56,
                     "bookmaker": "1xBet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -2490,8 +2490,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.36,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 }
             ]
         },
@@ -2569,8 +2569,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "b27cb3ea731fa3f18d05e6a627bdf984",
