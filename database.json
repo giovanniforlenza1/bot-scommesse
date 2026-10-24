@@ -2624,20 +2624,20 @@
             "importo": 15.0,
             "quota_totale": 1.53,
             "ritorno_potenziale": 22.95,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
                     "id_partita": "ae319b5b7c6cbef88dda71720672c0c6",
                     "data": "24/10 11:30",
                     "squadra_casa": "Elena Rybakina",
-                    "squadra_trasferta": "Diana Shnaider",
+                    "squadra_trasferta": "Polina Kudermetova",
                     "pronostico": "Vittoria Elena Rybakina",
                     "quota": 1.53,
                     "bookmaker": "Virgin Bet",
                     "lega": "tennis_wta_ningbo_open",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "Persa"
                 }
             ]
         }
