@@ -2640,6 +2640,95 @@
                     "risultato_reale": "Persa"
                 }
             ]
+        },
+        {
+            "id": "aad51f09",
+            "modello": "omega",
+            "data_creazione": "25/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.87,
+            "ritorno_potenziale": 28.05,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3564688383b255192409c9deb8e526ed",
+                    "data": "25/10 20:45",
+                    "squadra_casa": "Udinese",
+                    "squadra_trasferta": "Milan",
+                    "pronostico": "Vittoria Milan",
+                    "quota": 1.87,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "f23c01b7",
+            "modello": "alpha",
+            "data_creazione": "25/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.48,
+            "ritorno_potenziale": 29.76,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "c9b6c7048d8dc33dae618f67f462f67a",
+                    "data": "25/10 12:30",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "63af660d4d0d52f8ac7685172ef939c4",
+                    "data": "25/10 18:00",
+                    "squadra_casa": "Lecce",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "95cfaecfe96bb7ced1fb6af974a4110b",
+                    "data": "25/10 15:00",
+                    "squadra_casa": "Genoa",
+                    "squadra_trasferta": "Venezia",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.36,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "d820b9e2",
+            "modello": "beta",
+            "data_creazione": "25/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "9c4254cba9944a839b421db27260504d",
+                    "data": "25/10 14:00",
+                    "squadra_casa": "Athletic Bilbao",
+                    "squadra_trasferta": "Getafe",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
