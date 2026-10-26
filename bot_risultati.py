@@ -201,7 +201,7 @@ def tennisti_combaciano(nome_a, nome_b):
 
 def fallback_thesportsdb_beta(sq_casa, sq_trasf):
     try:
-        q = f"{chiave_canonica_squadra(sq_casa)}_vs__{chiave_canonica_squadra(sq_trasf)}".replace(" ", "_")
+        q = f"{chiave_canonica_squadra(sq_casa)}_vs_{chiave_canonica_squadra(sq_trasf)}".replace(" ", "_")
         url = f"https://www.thesportsdb.com/api/v1/json/3/searchevents.php?e={q}"
         res = requests.get(url, timeout=8)
         if res.status_code != 200:
@@ -518,7 +518,7 @@ def ripara_errori_storici_noti(db):
             pron_low = str(p.get('pronostico', '')).lower()
 
             if 'vacherot' in pron_low and ('royer' in sq_t_low or 'tabur' in sq_c_low or p.get('stato') == 'persa'):
-                if schedina.get('data_creazione'] == '26/10/2026' or '26/10' in str(p.get('data', '')):
+                if schedina.get('data_creazione') == '26/10/2026' or '26/10' in str(p.get('data', '')):
                     p['squadra_casa'] = 'Valentin Vacherot'
                     p['squadra_trasferta'] = 'Mariano Navone'
                     p['risultato_reale'] = 'Vinta'
@@ -534,7 +534,7 @@ def ripara_errori_storici_noti(db):
 
             if ('bayern' in sq_c_low and 'arsenal' in sq_t_low) or ('arsenal' in sq_c_low and 'bayern' in sq_t_low):
                 if 'angol' in pron_low or 'corner' in pron_low:
-                    if p.get('risultato_reale'] == '9 Angoli' or p.get('stato'] == 'vinta':
+                    if p.get('risultato_reale') == '9 Angoli' or p.get('stato') == 'vinta':
                         p['risultato_reale'] = '8 Angoli'
                         p['stato'] = 'persa'
                         schedina['stato_schedina'] = 'persa'
@@ -582,14 +582,12 @@ def aggiorna_database():
         schedina_persa = False
         modello_schedina = schedina.get('modello', '').lower()
 
-        # CONTROLLO FORZATO: Analizza SEMPRE tutte le partite di ogni schedina per aggiornare quelle rimaste in attesa
         for p in partite_lavoro:
             sq_c = p.get('squadra_casa', '')
             sq_t = p.get('squadra_trasferta', '')
             stato_p = p.get('stato', 'in attesa')
             ris_attuale = str(p.get('risultato_reale', '')).strip()
 
-            # Se la partita è già conclusa e ha un esito definitivo, verifica solo se ha fatto perdere la schedina
             if stato_p in ['vinta', 'persa'] and ris_attuale != '':
                 if stato_p == 'persa':
                     schedina_persa = True
