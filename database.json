@@ -2377,7 +2377,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "d4d56a31d8ccd432e3a6183180e093f3",
@@ -2386,8 +2386,8 @@
                     "squadra_trasferta": "Borussia Monchengladbach",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "11 Angoli"
                 }
             ]
         },
@@ -2502,7 +2502,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "04bb232a2940fcf03abf05b308e27577",
@@ -2511,8 +2511,8 @@
                     "squadra_trasferta": "Union Berlin",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "6 Angoli"
                 }
             ]
         },
@@ -2603,7 +2603,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "c9b6c7048d8dc33dae618f67f462f67a",
@@ -2612,8 +2612,8 @@
                     "squadra_trasferta": "Fiorentina",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "7 Angoli"
                 }
             ]
         },
@@ -2716,7 +2716,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "9c4254cba9944a839b421db27260504d",
@@ -2725,8 +2725,8 @@
                     "squadra_trasferta": "Getafe",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "6 Angoli"
                 }
             ]
         },
@@ -2817,7 +2817,7 @@
             "importo": 15.0,
             "quota_totale": 1.62,
             "ritorno_potenziale": 24.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "8664b2167f22c59026d86615421463b1",
@@ -2826,8 +2826,8 @@
                     "squadra_trasferta": "Lyon",
                     "pronostico": "Over 8.5 Calci d'Angolo",
                     "quota": 1.62,
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "11 Angoli"
                 }
             ]
         },
