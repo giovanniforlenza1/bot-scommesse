@@ -2794,8 +2794,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_spain_la_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "8664b2167f22c59026d86615421463b1",
@@ -2805,8 +2805,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_france_ligue_one",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
