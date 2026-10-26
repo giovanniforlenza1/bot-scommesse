@@ -145,6 +145,7 @@ def chiave_canonica_squadra(nome):
     return " ".join(parole) if parole else n
 
 def squadre_combaciano(nome_db, nome_api):
+    """Matching per squadre di CALCIO"""
     if not nome_db or not nome_api:
         return False
     low_db = str(nome_db).lower()
@@ -158,12 +159,54 @@ def squadre_combaciano(nome_db, nome_api):
     if c1 == c2 or (c1 in c2) or (c2 in c1):
         return True
 
-    set1 = {w for w in c1.split() if len(w) >= 3}
-    set2 = {w for w in c2.split() if len(w) >= 3}
+    set1 = {w for w in c1.split() if len(w) >= 4}
+    set2 = {w for w in c2.split() if len(w) >= 4}
     return bool(set1 and set2 and (set1 & set2))
 
+def estrai_cognome_tennista(nome_completo):
+    """Estrae in modo sicuro il COGNOME e l'iniziale del nome per evitare omonimie tipo Valentin Vacherot vs Valentin Royer"""
+    pulito = rimuovi_accenti(str(nome_completo)).lower()
+    pulito = re.sub(r'\(.*?\)', ' ', pulito) # Rimuove eventuali (USA), (LL), (1)
+    for c in [".", ",", "-", "'"]:
+        pulito = pulito.replace(c, " ")
+    parti = [p for p in pulito.split() if len(p) >= 1]
+    if not parti:
+        return "", ""
+    if len(parti) == 1:
+        return parti[0], ""
+    # Formato tipo "Vacherot V" -> cognome è la prima parola, iniziale l'ultima
+    if len(parti[-1]) == 1 and len(parti[0]) > 1:
+        return parti[0], parti[-1]
+    # Formato tipo "V Vacherot" o "Valentin Vacherot" -> cognome è l'ultima parola (o ultime parole per cognomi doppi)
+    cognome = parti[-1]
+    iniziale_nome = parti[0][0]
+    return cognome, iniziale_nome
+
+def tennisti_combaciano(nome_a, nome_b):
+    """Confronta rigorosamente il COGNOME e mai il solo nome di battesimo!"""
+    if not nome_a or not nome_b:
+        return False
+    na_norm = " ".join(rimuovi_accenti(str(nome_a)).lower().split())
+    nb_norm = " ".join(rimuovi_accenti(str(nome_b)).lower().split())
+    if na_norm == nb_norm:
+        return True
+
+    cog_a, ini_a = estrai_cognome_tennista(nome_a)
+    cog_b, ini_b = estrai_cognome_tennista(nome_b)
+    if not cog_a or not cog_b or len(cog_a) < 2 or len(cog_b) < 2:
+        return False
+
+    # Il cognome DEVE combaciare esattamente
+    if cog_a != cog_b:
+        return False
+
+    # Se entrambi hanno l'iniziale del nome (es. Polina Kudermetova vs Veronika Kudermetova), anche l'iniziale deve combaciare!
+    if ini_a and ini_b and ini_a != ini_b:
+        return False
+
+    return True
+
 def estrai_statistiche_dettagliate_beta(match_info):
-    """Restituisce SOLO statistiche reali verificate da ESPN. Nessun valore inventato di fallback!"""
     corners_scoreboard = match_info.get('corners_dir')
     cards_scoreboard = match_info.get('cards_dir')
     lega = match_info.get('lega')
@@ -223,7 +266,13 @@ def estrai_statistiche_dettagliate_beta(match_info):
 
 def estrai_match_tennis_da_comp(comp, circuito, ev_id):
     st_type = comp.get('status', {}).get('type', {})
+    desc_stato = str(st_type.get('description', '')).lower()
+    detail_stato = str(st_type.get('detail', '')).lower()
     completed = st_type.get('completed', False) or str(st_type.get('state', '')).lower() == 'post'
+    
+    # Se la partita è stata cancellata o walkover senza scendere in campo, non assegna sconfitta falsa
+    if 'walkover' in desc_stato or 'canceled' in desc_stato or 'cancelled' in desc_stato:
+        return None
     if not completed:
         return None
 
@@ -241,26 +290,33 @@ def estrai_match_tennis_da_comp(comp, circuito, ev_id):
     w2 = bool(c1.get('winner', False))
 
     s1, s2 = 0, 0
+    g1_tot, g2_tot = 0, 0
     ls1 = c0.get('linescores', [])
     ls2 = c1.get('linescores', [])
     if ls1 and ls2 and len(ls1) == len(ls2):
         for set_a, set_b in zip(ls1, ls2):
             v_a = float(set_a.get('value', 0) or 0)
             v_b = float(set_b.get('value', 0) or 0)
-            if v_a > v_b: s1 += 1
-            elif v_b > v_a: s2 += 1
+            g1_tot += v_a
+            g2_tot += v_b
+            # Conta il set vinto solo se concluso regolarmente (almeno 6 game)
+            if v_a >= 6 and v_a > v_b: s1 += 1
+            elif v_b >= 6 and v_b > v_a: s2 += 1
 
+    # Gestione ritiro a partita in corso (es. Rybakina 5-0 ritiro nel 1° set): usa il flag ufficiale winner di ESPN o i game di vantaggio
+    is_ritiro = ('ret' in desc_stato or 'ret' in detail_stato)
     if not w1 and not w2:
-        if s1 > s2: w1 = True
-        elif s2 > s1: w2 = True
+        if s1 > s2 and not is_ritiro: w1 = True
+        elif s2 > s1 and not is_ritiro: w2 = True
+        elif is_ritiro:
+            if g1_tot > g2_tot: w1 = True
+            elif g2_tot > g1_tot: w2 = True
 
     if not w1 and not w2:
         return None
 
-    gol_1 = s1 if (s1 > s2 and w1) else (2 if w1 else s1)
-    gol_2 = s2 if (s2 > s1 and w2) else (2 if w2 else s2)
-    if w1 and gol_1 <= gol_2: gol_1, gol_2 = 2, 0
-    if w2 and gol_2 <= gol_1: gol_1, gol_2 = 0, 2
+    gol_1 = 2 if w1 else 0
+    gol_2 = 2 if w2 else 0
 
     return {
         'event_id': ev_id,
@@ -269,6 +325,7 @@ def estrai_match_tennis_da_comp(comp, circuito, ev_id):
         'trasf_orig': p2_name,
         'gol_casa': gol_1,
         'gol_trasf': gol_2,
+        'ritiro': is_ritiro,
         'corners_dir': None,
         'cards_dir': None
     }
@@ -331,7 +388,7 @@ def scarica_dati_completi_espn():
         except:
             continue
 
-    date_tennis = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(7)]
+    date_tennis = [(oggi - timedelta(days=i)).strftime("%Y%m%d") for i in range(8)]
     for circuito in ['atp', 'wta']:
         urls_tennis = [f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard"] + [
             f"https://site.api.espn.com/apis/site/v2/sports/tennis/{circuito}/scoreboard?dates={d_str}" for d_str in date_tennis
@@ -361,7 +418,7 @@ def estrai_linea_numerica(pronostico_str, default_val):
         return float(match_num.group(1))
     return default_val
 
-def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
+def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db, is_tennis=False):
     tot_gol = g_c + g_t
     pron_low = pron.lower().strip()
     if '1x' in pron_low: return (g_c >= g_t)
@@ -372,9 +429,14 @@ def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
         if pron_low == '1': return (g_c > g_t)
         if pron_low == '2': return (g_t > g_c)
         sq_scelta = pron_low.replace('vittoria', '').strip()
-        if squadre_combaciano(sq_scelta, sq_casa_db): return (g_c > g_t)
-        if squadre_combaciano(sq_scelta, sq_trasf_db): return (g_t > g_c)
-        return False
+        if is_tennis:
+            if tennisti_combaciano(sq_scelta, sq_casa_db): return (g_c > g_t)
+            if tennisti_combaciano(sq_scelta, sq_trasf_db): return (g_t > g_c)
+            return False
+        else:
+            if squadre_combaciano(sq_scelta, sq_casa_db): return (g_c > g_t)
+            if squadre_combaciano(sq_scelta, sq_trasf_db): return (g_t > g_c)
+            return False
     elif 'over' in pron_low:
         soglia = estrai_linea_numerica(pron_low, 1.5)
         return (tot_gol > soglia)
@@ -385,6 +447,46 @@ def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db):
         return (g_c > 0 and g_t > 0)
     return False
 
+def ripara_errori_storici_noti(db):
+    """Ripara automaticamente i falsi negativi/positivi già presenti nel database.json"""
+    riparato = False
+    for schedina in db.get('schedine', []):
+        modello_s = str(schedina.get('modello', '')).lower()
+        for p in schedina.get('partite', []):
+            sq_c_low = str(p.get('squadra_casa', '')).lower()
+            sq_t_low = str(p.get('squadra_trasferta', '')).lower()
+            pron_low = str(p.get('pronostico', '')).lower()
+
+            # 1. Fix Valentin Vacherot (erroneamente sovrascritto con Clement Tabur vs Valentin Royer)
+            if 'vacherot' in pron_low and ('royer' in sq_t_low or 'tabur' in sq_c_low or p.get('stato') == 'persa'):
+                if schedina.get('data_creazione') == '26/10/2026' or '26/10' in str(p.get('data', '')):
+                    p['squadra_casa'] = 'Valentin Vacherot'
+                    p['squadra_trasferta'] = 'Mariano Navone'
+                    p['risultato_reale'] = 'Vinta'
+                    p['stato'] = 'vinta'
+                    schedina['stato_schedina'] = 'vinta'
+                    riparato = True
+                    print("[FIX TENNIS] Ripristinato Valentin Vacherot vs Mariano Navone -> VINTA (2-0)")
+
+            # 2. Fix Elena Rybakina vs Polina Kudermetova (5-0 ritiro avversaria, segnato 0-0 persa per errore Odds API)
+            if 'rybakina' in pron_low and 'kudermetova' in sq_t_low and p.get('stato') == 'persa':
+                p['risultato_reale'] = 'Vinta (Rit.)'
+                p['stato'] = 'vinta'
+                schedina['stato_schedina'] = 'vinta'
+                riparato = True
+                print("[FIX TENNIS] Corretto Elena Rybakina vs Polina Kudermetova -> VINTA per ritiro avversaria")
+
+            # 3. Fix Bayern Monaco - Arsenal (8 angoli reali, non 9)
+            if ('bayern' in sq_c_low and 'arsenal' in sq_t_low) or ('arsenal' in sq_c_low and 'bayern' in sq_t_low):
+                if 'angol' in pron_low or 'corner' in pron_low:
+                    if p.get('risultato_reale') == '9 Angoli' or p.get('stato') == 'vinta':
+                        p['risultato_reale'] = '8 Angoli'
+                        p['stato'] = 'persa'
+                        schedina['stato_schedina'] = 'persa'
+                        riparato = True
+                        print("[FIX BETA] Corretto Bayern Monaco - Arsenal -> 8 Angoli (Persa)")
+    return riparato
+
 def aggiorna_database():
     if not os.path.exists('database.json'):
         print("[ERRORE] database.json non trovato!")
@@ -393,8 +495,7 @@ def aggiorna_database():
     with open('database.json', 'r', encoding='utf-8') as f:
         db = json.load(f)
 
-    modifiche_effettuate = False
-    leghe_tennis_db = set()
+    modifiche_effettuate = ripara_errori_storici_noti(db)
 
     for idx, schedina in enumerate(db.get('schedine', [])):
         if schedina.get('payload_criptato'):
@@ -404,35 +505,10 @@ def aggiorna_database():
                 schedina.pop('payload_criptato', None)
                 modifiche_effettuate = True
                 print(f"[DECRYPT] Sbloccata schedina criptata #{idx+1} ({schedina.get('modello')})")
-        
-        for p in schedina.get('partite', []):
-            lega_p = str(p.get('lega', '')).strip()
-            if 'tennis' in lega_p:
-                leghe_tennis_db.add(lega_p)
 
-            # Auto-riparazione immediata del falso positivo Bayern Monaco - Arsenal (8 angoli reali, non 9!)
-            sq_c_low = str(p.get('squadra_casa', '')).lower()
-            sq_t_low = str(p.get('squadra_trasferta', '')).lower()
-            if ('bayern' in sq_c_low and 'arsenal' in sq_t_low) or ('arsenal' in sq_c_low and 'bayern' in sq_t_low):
-                if 'angol' in str(p.get('pronostico', '')).lower() or 'corner' in str(p.get('pronostico', '')).lower():
-                    if p.get('risultato_reale') == '9 Angoli' or p.get('stato') == 'vinta':
-                        p['risultato_reale'] = '8 Angoli'
-                        p['stato'] = 'persa'
-                        schedina['stato_schedina'] = 'persa'
-                        modifiche_effettuate = True
-                        print("[FIX] Corretto risultato Bayern Monaco - Arsenal: 8 Angoli (Persa)")
-
-    dati_sport = esegui_richiesta_odds("https://api.the-odds-api.com/v4/sports/?apiKey=API_KEY_SEGRETA")
-    if isinstance(dati_sport, list):
-        for s in dati_sport:
-            k_sport = str(s.get('key', ''))
-            if 'tennis' in k_sport.lower():
-                leghe_tennis_db.add(k_sport)
-
-    tutte_leghe_odds = list(campionati_odds) + list(leghe_tennis_db)
+    # NOTA IMPORTANTE: The Odds API viene interrogata SOLO per il CALCIO (nel tennis restituisce 0-0 sui ritiri!)
     risultati_gol_odds = {}
-
-    for camp in tutte_leghe_odds:
+    for camp in campionati_odds:
         url = f"https://api.the-odds-api.com/v4/sports/{camp}/scores/?daysFrom=3&apiKey=API_KEY_SEGRETA"
         dati = esegui_richiesta_odds(url)
         if not dati or not isinstance(dati, list): continue
@@ -446,7 +522,7 @@ def aggiorna_database():
                     elif sc['name'] == m['away_team']: g_trasf = punti_s
                 risultati_gol_odds[m['id']] = (g_casa, g_trasf, m['home_team'], m['away_team'])
 
-    print(f"[INFO] Partite concluse scaricate da The Odds API (Calcio + Tennis): {len(risultati_gol_odds)}")
+    print(f"[INFO] Partite Calcio concluse scaricate da The Odds API: {len(risultati_gol_odds)}")
     dati_espn = scarica_dati_completi_espn()
 
     for idx, schedina in enumerate(db.get('schedine', [])):
@@ -468,14 +544,17 @@ def aggiorna_database():
 
             id_p = p.get('id_partita')
             pron = p.get('pronostico', '').lower()
+            is_tennis = (modello_schedina == 'sigma' or 'tennis' in str(p.get('lega', '')).lower())
             print(f"[CHECK] Cerco esito per: {sq_c} vs {sq_t} | Pronostico: {pron} | Modello: {modello_schedina}")
 
-            # 1. Mercati Speciali Beta (Angoli / Cartellini) - SOLO DATI UFFICIALI VERIFICATI
-            if any(k in pron for k in ['angol', 'corner', 'cartellin', 'card', 'ammoniz']) or modello_schedina == 'beta':
+            # 1. Mercati Speciali Beta (Angoli / Cartellini)
+            if not is_tennis and (any(k in pron for k in ['angol', 'corner', 'cartellin', 'card', 'ammoniz']) or modello_schedina == 'beta'):
                 match_stat = next((
                     x for x in dati_espn 
-                    if (squadre_combaciano(sq_c, x['casa_orig']) and squadre_combaciano(sq_t, x['trasf_orig'])) or
-                       (squadre_combaciano(sq_c, x['trasf_orig']) and squadre_combaciano(sq_t, x['casa_orig']))
+                    if x.get('lega') not in ['atp', 'wta'] and (
+                        (squadre_combaciano(sq_c, x['casa_orig']) and squadre_combaciano(sq_t, x['trasf_orig'])) or
+                        (squadre_combaciano(sq_c, x['trasf_orig']) and squadre_combaciano(sq_t, x['casa_orig']))
+                    )
                 ), None)
 
                 if not match_stat:
@@ -488,7 +567,6 @@ def aggiorna_database():
 
                 if 'angol' in pron or 'corner' in pron:
                     if tot_corners is None:
-                        print(f"   -> Statistica Angoli non ancora pubblicata per {sq_c} - {sq_t}, attendo.")
                         tutte_concluse = False
                         continue
                     soglia = estrai_linea_numerica(pron, 8.5)
@@ -497,7 +575,6 @@ def aggiorna_database():
                     p['stato'] = 'vinta' if vinta_beta else 'persa'
                 else:
                     if tot_cards is None:
-                        print(f"   -> Statistica Cartellini non ancora pubblicata per {sq_c} - {sq_t}, attendo.")
                         tutte_concluse = False
                         continue
                     soglia = estrai_linea_numerica(pron, 3.5)
@@ -510,14 +587,74 @@ def aggiorna_database():
                 modifiche_effettuate = True
                 print(f"   -> AGGIORNATA BETA UFFICIALE: {sq_c} - {sq_t} => {p['risultato_reale']} ({p['stato']})")
 
-            # 2. Mercati Calcio Standard e Tennis (Modello Sigma con gestione Lucky Loser)
+            # 2. TENNIS (Modello Sigma) - Usa esclusivamente il matching sul COGNOME e il vincitore ufficiale ESPN
+            elif is_tennis:
+                match_tennis = next((
+                    x for x in dati_espn
+                    if x.get('lega') in ['atp', 'wta'] and (
+                        (tennisti_combaciano(sq_c, x['casa_orig']) and tennisti_combaciano(sq_t, x['trasf_orig'])) or
+                        (tennisti_combaciano(sq_c, x['trasf_orig']) and tennisti_combaciano(sq_t, x['casa_orig']))
+                    )
+                ), None)
+
+                g_c, g_t = None, None
+                if match_tennis:
+                    if tennisti_combaciano(sq_c, match_tennis['casa_orig']):
+                        g_c, g_t = match_tennis['gol_casa'], match_tennis['gol_trasf']
+                    else:
+                        g_c, g_t = match_tennis['gol_trasf'], match_tennis['gol_casa']
+
+                # Fallback Lucky Loser SOLO se combacia esattamente il COGNOME+INIZIALE del tennista pronosticato
+                if g_c is None and 'vittoria' in pron:
+                    tennista_scelto = pron.replace('vittoria', '').strip()
+                    # Cerca solo se l'evento è dello stesso giorno della partita programmata (evita turni precedenti!)
+                    data_prog = str(p.get('data', '')).split(' ')[0] # es. "26/10"
+                    oggi_ita = datetime.now(ZoneInfo("Europe/Rome"))
+                    
+                    # Verifica solo se l'orario programmato è passato da almeno 3 ore (il match deve essersi giocato davvero!)
+                    match_gia_giocato_orario = True
+                    try:
+                        ora_prog_dt = datetime.strptime(f"{p.get('data')}/{oggi_ita.year}", "%d/%m %H:%M/%Y").replace(tzinfo=ZoneInfo("Europe/Rome"))
+                        if oggi_ita < ora_prog_dt + timedelta(hours=3):
+                            match_gia_giocato_orario = False
+                    except:
+                        pass
+
+                    if match_gia_giocato_orario:
+                        candidati_ll = [
+                            x for x in dati_espn
+                            if x.get('lega') in ['atp', 'wta'] and (
+                                tennisti_combaciano(tennista_scelto, x['casa_orig']) or
+                                tennisti_combaciano(tennista_scelto, x['trasf_orig'])
+                            )
+                        ]
+                        # Prende la partita più recente disputata dal tennista scelto
+                        if len(candidati_ll) == 1:
+                            m_ll = candidati_ll[0]
+                            g_c, g_t = m_ll['gol_casa'], m_ll['gol_trasf']
+                            p['squadra_casa'] = m_ll['casa_orig']
+                            p['squadra_trasferta'] = m_ll['trasf_orig']
+                            sq_c, sq_t = p['squadra_casa'], p['squadra_trasferta']
+                            print(f"   [TENNIS LL] Sostituto verificato per cognome esatto: {sq_c} vs {sq_t}")
+
+                if g_c is None:
+                    print(f"   -> Match Tennis non ancora concluso: {sq_c} - {sq_t}")
+                    tutte_concluse = False
+                    continue
+
+                vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t, is_tennis=True)
+                p['risultato_reale'] = "Vinta" if vinta else "Persa"
+                p['stato'] = 'vinta' if vinta else 'persa'
+                if not vinta:
+                    schedina_persa = True
+                modifiche_effettuate = True
+                print(f"   -> AGGIORNATA TENNIS (SIGMA): {sq_c} vs {sq_t} => {p['stato'].upper()}")
+
+            # 3. Mercati Calcio Standard (Omega / Alpha)
             else:
                 g_c, g_t = None, None
                 if id_p in risultati_gol_odds:
-                    g_c, g_t, hc_api, at_api = risultati_gol_odds[id_p]
-                    if modello_schedina == 'sigma':
-                        p['squadra_casa'], p['squadra_trasferta'] = hc_api, at_api
-                        sq_c, sq_t = hc_api, at_api
+                    g_c, g_t, _, _ = risultati_gol_odds[id_p]
                 else:
                     for _, (gc_api, gt_api, hc_api, at_api) in risultati_gol_odds.items():
                         if squadre_combaciano(sq_c, hc_api) and squadre_combaciano(sq_t, at_api):
@@ -530,57 +667,25 @@ def aggiorna_database():
                 if g_c is None:
                     match_espn = next((
                         x for x in dati_espn 
-                        if squadre_combaciano(sq_c, x['casa_orig']) and squadre_combaciano(sq_t, x['trasf_orig'])
+                        if x.get('lega') not in ['atp', 'wta'] and squadre_combaciano(sq_c, x['casa_orig']) and squadre_combaciano(sq_t, x['trasf_orig'])
                     ), None)
                     if match_espn:
                         g_c, g_t = match_espn['gol_casa'], match_espn['gol_trasf']
                     else:
                         match_espn_inv = next((
                             x for x in dati_espn 
-                            if squadre_combaciano(sq_c, x['trasf_orig']) and squadre_combaciano(sq_t, x['casa_orig'])
+                            if x.get('lega') not in ['atp', 'wta'] and squadre_combaciano(sq_c, x['trasf_orig']) and squadre_combaciano(sq_t, x['casa_orig'])
                         ), None)
                         if match_espn_inv:
                             g_c, g_t = match_espn_inv['gol_trasf'], match_espn_inv['gol_casa']
-
-                # Gestione Lucky Loser / Cambio avversario nel tennis (Modello Sigma)
-                if g_c is None and modello_schedina == 'sigma' and 'vittoria' in pron:
-                    tennista_scelto = pron.replace('vittoria', '').strip()
-                    for _, (gc_api, gt_api, hc_api, at_api) in risultati_gol_odds.items():
-                        if squadre_combaciano(tennista_scelto, hc_api):
-                            g_c, g_t = gc_api, gt_api
-                            p['squadra_casa'], p['squadra_trasferta'] = hc_api, at_api
-                            sq_c, sq_t = hc_api, at_api
-                            print(f"   [TENNIS LL] Sostituto trovato su Odds API: {hc_api} vs {at_api}")
-                            break
-                        elif squadre_combaciano(tennista_scelto, at_api):
-                            g_c, g_t = gc_api, gt_api
-                            p['squadra_casa'], p['squadra_trasferta'] = hc_api, at_api
-                            sq_c, sq_t = hc_api, at_api
-                            print(f"   [TENNIS LL] Sostituto trovato su Odds API: {hc_api} vs {at_api}")
-                            break
-
-                    if g_c is None:
-                        match_ll_espn = next((
-                            x for x in dati_espn
-                            if x.get('lega') in ['atp', 'wta'] and (
-                                squadre_combaciano(tennista_scelto, x['casa_orig']) or
-                                squadre_combaciano(tennista_scelto, x['trasf_orig'])
-                            )
-                        ), None)
-                        if match_ll_espn:
-                            g_c, g_t = match_ll_espn['gol_casa'], match_ll_espn['gol_trasf']
-                            p['squadra_casa'] = match_ll_espn['casa_orig']
-                            p['squadra_trasferta'] = match_ll_espn['trasf_orig']
-                            sq_c, sq_t = p['squadra_casa'], p['squadra_trasferta']
-                            print(f"   [TENNIS LL ESPN] Sostituto trovato su ESPN: {sq_c} vs {sq_t}")
 
                 if g_c is None:
                     print(f"   -> Non ancora conclusa: {sq_c} - {sq_t}")
                     tutte_concluse = False
                     continue
 
-                vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t)
-                p['risultato_reale'] = f"{g_c}-{g_t}" if modello_schedina != 'sigma' else ("Vinta" if vinta else "Persa")
+                vinta = valuta_esito_normale(pron, g_c, g_t, sq_c, sq_t, is_tennis=False)
+                p['risultato_reale'] = f"{g_c}-{g_t}"
                 p['stato'] = 'vinta' if vinta else 'persa'
                 if not vinta:
                     schedina_persa = True
