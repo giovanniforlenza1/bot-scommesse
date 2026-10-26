@@ -2624,7 +2624,7 @@
             "importo": 15.0,
             "quota_totale": 1.53,
             "ritorno_potenziale": 22.95,
-            "stato_schedina": "persa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2636,8 +2636,8 @@
                     "quota": 1.53,
                     "bookmaker": "Virgin Bet",
                     "lega": "tennis_wta_ningbo_open",
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta (Rit.)"
                 }
             ]
         },
@@ -2838,20 +2838,20 @@
             "importo": 15.0,
             "quota_totale": 1.52,
             "ritorno_potenziale": 22.8,
-            "stato_schedina": "persa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
                     "id_partita": "4fcca39f1c6a31253c07fe75fbb849c8",
                     "data": "26/10 13:30",
-                    "squadra_casa": "Clement Tabur",
-                    "squadra_trasferta": "Valentin Royer",
+                    "squadra_casa": "Valentin Vacherot",
+                    "squadra_trasferta": "Mariano Navone",
                     "pronostico": "Vittoria Valentin Vacherot",
                     "quota": 1.52,
                     "bookmaker": "Pinnacle",
                     "lega": "tennis_atp_swiss_indoors",
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
