@@ -2729,6 +2729,131 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "909962dd",
+            "modello": "omega",
+            "data_creazione": "26/10/2026",
+            "importo": 15.0,
+            "quota_totale": 2.53,
+            "ritorno_potenziale": 37.95,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "7eecf109ae6a5f87441a79b0e4111982",
+                    "data": "27/10 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Cagliari",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.39,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "7d989a0a7bae47eb957731e97c5bd9c1",
+                    "data": "27/10 20:45",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Como",
+                    "pronostico": "Vittoria Como",
+                    "quota": 1.82,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "87c83029",
+            "modello": "alpha",
+            "data_creazione": "26/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "c7445242bf16a8f37afef7863af45a78",
+                    "data": "27/10 18:30",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Lazio",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "85e464708d03287f24590e1478aeca31",
+                    "data": "26/10 21:00",
+                    "squadra_casa": "Sevilla",
+                    "squadra_trasferta": "CA Osasuna",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_spain_la_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "8664b2167f22c59026d86615421463b1",
+                    "data": "26/10 20:30",
+                    "squadra_casa": "PSG",
+                    "squadra_trasferta": "Lyon",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_france_ligue_one",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "3c66013b",
+            "modello": "beta",
+            "data_creazione": "26/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.62,
+            "ritorno_potenziale": 24.3,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "8664b2167f22c59026d86615421463b1",
+                    "data": "26/10 20:30",
+                    "squadra_casa": "PSG",
+                    "squadra_trasferta": "Lyon",
+                    "pronostico": "Over 8.5 Calci d'Angolo",
+                    "quota": 1.62,
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "056a6c7a",
+            "modello": "sigma",
+            "data_creazione": "26/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.52,
+            "ritorno_potenziale": 22.8,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "4fcca39f1c6a31253c07fe75fbb849c8",
+                    "data": "26/10 13:30",
+                    "squadra_casa": "Valentin Vacherot",
+                    "squadra_trasferta": "Mariano Navone",
+                    "pronostico": "Vittoria Valentin Vacherot",
+                    "quota": 1.52,
+                    "bookmaker": "Pinnacle",
+                    "lega": "tennis_atp_swiss_indoors",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
