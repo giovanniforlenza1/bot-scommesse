@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            width: 1080px; height: 1350px; margin: 0; padding: 90px;
+            background: linear-gradient(160deg, #102542 0%, #0a172a 100%);
+            color: #FFFFFF; font-family: 'Inter', sans-serif;
+            display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .badge { background: rgba(34,197,94,0.18); color: #22c55e; border: 1px solid #22c55e; padding: 12px 26px; border-radius: 30px; font-weight: 800; font-size: 24px; text-transform: uppercase; }
+        .title { font-size: 74px; font-weight: 800; line-height: 1.1; margin: 40px 0 15px; letter-spacing: -2px; }
+        .sub { font-size: 34px; color: #B3A394; margin-bottom: 45px; }
+        .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 45px; }
+        .kpi { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 40px; }
+        .kpi-label { font-size: 26px; color: #B3A394; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .kpi-val { font-family: 'JetBrains Mono', monospace; font-size: 64px; font-weight: 700; color: #22c55e; }
+        .kpi-val.neutral { color: #FFFFFF; }
+        .list-box { background: rgba(255,255,255,0.03); border-radius: 22px; padding: 40px; border-left: 8px solid #B3A394; }
+        .list-item { font-size: 32px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; }
+        .list-item:last-child { border-bottom: none; }
+        .accent { color: #F87060; }
+        .footer { display: flex; justify-content: space-between; align-items: center; border-top: 2px solid rgba(179,163,148,0.25); padding-top: 35px; font-size: 30px; color: #B3A394; }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="header">
+            <span class="badge">✓ STORICO CERTIFICATO</span>
+            <span style="font-family:'JetBrains Mono'; font-size:26px; color:#B3A394;">{{PERIODO}}</span>
+        </div>
+        <div class="title">Il campo parla sempre <span class="accent">chiaro</span>.</div>
+        <div class="sub">Zero promesse da bar: ecco i numeri reali registrati a database.</div>
+
+        <div class="kpi-grid">
+            <div class="kpi">
+                <div class="kpi-label">Yield (ROI)</div>
+                <div class="kpi-val">{{YIELD}}</div>
+            </div>
+            <div class="kpi">
+                <div class="kpi-label">Win Rate</div>
+                <div class="kpi-val neutral">{{WINRATE}}</div>
+            </div>
+        </div>
+
+        <div class="list-box">
+            {{RIGHE_OPERAZIONI}}
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>Storico pubblico integrale nel Link in Bio</span>
+        <span style="color:#FFF; font-weight:800;">SBR <span class="accent">LAB</span></span>
+    </div>
+</body>
+</html>
