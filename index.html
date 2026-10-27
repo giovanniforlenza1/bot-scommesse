@@ -497,7 +497,8 @@
 
             const oggi = new Date();
             const schedineModello = databaseGlobale.schedine.filter(sc => {
-                let mod = sc.modello ? sc.modello.toLowerCase() : 'alpha';
+                let mod = sc.modello ? sc.modello.toLowerCase() : '';
+if (!mod || mod !== modelloAttuale) return false;
                 if (mod !== modelloAttuale || sc.stato_schedina === 'in attesa') return false;
                 if (giorniPeriodo < 9000) {
                     const dt = parseDataItaliana(sc.data_creazione);
