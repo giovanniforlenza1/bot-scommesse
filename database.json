@@ -2942,7 +2942,7 @@
             "importo": 15.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 23.55,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -2954,8 +2954,8 @@
                     "quota": 1.57,
                     "bookmaker": "Grosvenor",
                     "lega": "tennis_atp_swiss_indoors",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
