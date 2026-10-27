@@ -41,7 +41,7 @@ def genera_copy_caldo_con_ai(tipo_post, dati_contesto):
     - "testo_grafica": massimo 24 parole di racconto tattico/statistico chiaro e coinvolgente (niente HTML)
     - "caption_instagram": testo scorrevole (max 110 parole) che unisce emozione sportiva e lettura numerica, chiudendo con l'invito al canale Telegram gratuito (Alpha, Beta e Tennis) dal link in bio + 5 hashtag SEO.
     """
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"responseMimeType": "application/json"}
