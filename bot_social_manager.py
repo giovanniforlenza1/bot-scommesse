@@ -6,31 +6,40 @@ import requests
 from datetime import datetime
 from playwright.sync_api import sync_playwright
 
-# Variabili d'ambiente da salvare nei Secrets di GitHub
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-ADMIN_CHAT_ID = os.environ.get("ADMIN_CHAT_ID")       # Il TUO ID Telegram personale (non il canale pubblico!)
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")     # Chiave gratuita Google AI Studio
-IG_USER_ID = os.environ.get("IG_USER_ID")             # ID del tuo account Instagram Business
-IG_ACCESS_TOKEN = os.environ.get("IG_ACCESS_TOKEN")   # Token Meta Graph API
-GITHUB_RAW_BASE = os.environ.get("GITHUB_RAW_BASE")   # Es: https://raw.githubusercontent.com/tuo-user/tuo-repo/main
+ADMIN_CHAT_ID = os.environ.get("ADMIN_CHAT_ID")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+IG_USER_ID = os.environ.get("IG_USER_ID")
+IG_ACCESS_TOKEN = os.environ.get("IG_ACCESS_TOKEN")
+GITHUB_RAW_BASE = os.environ.get("GITHUB_RAW_BASE")
 
 STATE_FILE = "pending_social_post.json"
 IMAGE_FILE = "social_post_ready.png"
 
+# PALETTE PIATTA UFFICIALE SBR PER SINGOLO BOT
+STILE_BOT = {
+    "alpha": {"colore": "#F87060", "etichetta": "MODELLO ALPHA • ALTO RENDIMENTO"},
+    "beta":  {"colore": "#B3A394", "etichetta": "MODELLO BETA • POISSON"},
+    "sigma": {"colore": "#2D6A4F", "etichetta": "MODELLO SIGMA • TENNIS LAB"},
+    "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANTITATIVO"}
+}
+
 
 def genera_copy_caldo_con_ai(tipo_post, dati_contesto):
-    """Chiede a Gemini di creare testi narrativi, caldi e anti-ban (stile editoriale sportivo)."""
     prompt = f"""
-    Sei il direttore creativo di SBR Lab (@sbr.lab), un progetto italiano di analisi sportiva e data science.
-    Tono di voce: appassionato di sport, narrativo, elegante, MAI freddo/robotico e MAI da scommettitore (VIETATE parole come: scommessa, puntata, soldi facili, cassa sicura, bookmaker).
+    Sei l'editor sportivo di SBR Lab (@sbr.lab), studio italiano di analisi dati applicata a calcio e tennis.
+    Stile: caldo, appassionato di campo e tattica, autorevole, pulito.
+    REGOLE TASSATIVE:
+    1. NON inserire MAI tag HTML o span colorati nel testo: restituisci solo testo puro.
+    2. Evita termini da scommesse (vietati: puntata, scommessa, bookmaker, cassa facile, vincita sicura).
     
-    Tipo di post di oggi: {tipo_post}
-    Dati reali dal nostro database: {json.dumps(dati_contesto, ensure_ascii=False)}
+    Rubrica di oggi: {tipo_post}
+    Dati reali dal database: {json.dumps(dati_contesto, ensure_ascii=False)}
     
-    Rispondi ESCLUSIVAMENTE con un JSON valido con queste chiavi:
-    - "titolo_grafica": massimo 7 parole d'impatto (puoi racchiudere 1-2 parole chiave in <span class='accent'>...</span>)
-    - "testo_grafica": massimo 24 parole di storytelling tattico sulla partita o sul laboratorio
-    - "caption_instagram": didascalia coinvolgente (massimo 120 parole) con invito finale a entrare nel canale Telegram gratuito dal link in bio + 5 hashtag SEO sportivi.
+    Rispondi SOLO con un JSON valido con queste 3 chiavi:
+    - "titolo_grafica": massimo 7 parole incisive e sportive (niente HTML)
+    - "testo_grafica": massimo 24 parole di racconto tattico/statistico chiaro e coinvolgente (niente HTML)
+    - "caption_instagram": testo scorrevole (max 110 parole) che unisce emozione sportiva e lettura numerica, chiudendo con l'invito al canale Telegram gratuito (Alpha, Beta e Tennis) dal link in bio + 5 hashtag SEO.
     """
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {
@@ -39,12 +48,10 @@ def genera_copy_caldo_con_ai(tipo_post, dati_contesto):
     }
     r = requests.post(url, json=payload, timeout=30)
     r.raise_for_status()
-    testo_json = r.json()["candidates"][0]["content"]["parts"][0]["text"]
-    return json.loads(testo_json)
+    return json.loads(r.json()["candidates"][0]["content"]["parts"][0]["text"])
 
 
 def renderizza_html_in_png(template_path, sostituzioni, output_png):
-    """Compila il template HTML e scatta uno screenshot 1080x1350 nitido."""
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
 
@@ -66,8 +73,33 @@ def renderizza_html_in_png(template_path, sostituzioni, output_png):
         os.remove(temp_html)
 
 
+def trova_ultimo_match_in_chiaro(schedine):
+    """Cerca l'ultima giocata di Alpha, Beta o Tennis con nomi squadre visibili (ignora i match criptati VIP)."""
+    if os.path.exists("tennis_test.json") and datetime.now().weekday() == 2:  # Mercoledì focus Tennis
+        try:
+            with open("tennis_test.json", "r", encoding="utf-8") as ft:
+                t_db = json.load(ft)
+            lista_t = t_db.get("schedine", []) if isinstance(t_db, dict) else t_db
+            if lista_t:
+                ult = lista_t[-1]
+                p = ult.get("partite", [ult])[0]
+                match_str = f"{p.get('squadra_casa', p.get('giocatore_1', 'ATP'))} - {p.get('squadra_trasferta', p.get('giocatore_2', 'Tour'))}"
+                return "sigma", match_str, p.get("pronostico", "Analisi Superficie")
+        except Exception:
+            pass
+
+    for s in reversed(schedine):
+        mod = s.get("modello", "beta").lower()
+        if mod in ("alpha", "beta") and s.get("partite"):
+            p = s["partite"][0]
+            casa = p.get("squadra_casa", "")
+            if "🔒" not in casa and "Operazione" not in casa:
+                return mod, f"{casa} - {p.get('squadra_trasferta', '')}", p.get("pronostico", "Lettura Statistica")
+
+    return "beta", "Serie A • Analisi Tattica", "Pressione Offensiva & Corner"
+
+
 def invia_anteprima_su_telegram(image_path, caption_ig):
-    """Manda a TE sul telefono la grafica pronta con i pulsanti Approva / Scarta."""
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto"
     tastiera = {
         "inline_keyboard": [[
@@ -75,7 +107,7 @@ def invia_anteprima_su_telegram(image_path, caption_ig):
             {"text": "❌ Scarta Bozza", "callback_data": "SCARTA_IG"}
         ]]
     }
-    testo_admin = f"🎨 *ANTEPRIMA POST INSTAGRAM PRONTA*\n\n📝 *Caption proposta:*\n{caption_ig}"
+    testo_admin = f"🎨 *ANTEPRIMA POST INSTAGRAM*\n\n📝 *Caption:*\n{caption_ig}"
     with open(image_path, "rb") as img:
         r = requests.post(
             url,
@@ -92,72 +124,70 @@ def invia_anteprima_su_telegram(image_path, caption_ig):
 
 
 def fase_1_genera_proposta():
-    """Legge database.json, sceglie il format del giorno, crea la grafica e te la manda su Telegram."""
-    with open("database.json", "r", encoding="utf-8") as f:
-        db = json.load(f)
+    db = {"schedine": []}
+    if os.path.exists("database.json"):
+        with open("database.json", "r", encoding="utf-8") as f:
+            db = json.load(f)
 
     schedine = db.get("schedine", [])
     oggi_str = datetime.now().strftime("%d/%m/%Y")
-    giorno_settimana = datetime.now().weekday()  # 0=Lun, 4=Ven, ecc.
+    giorno = datetime.now().weekday()  # 0=Lun, 2=Mer, 4=Ven, 5=Sab
 
-    # Lunedì: Verdetto del Campo | Venerdì: Hype Omega | Altri giorni: L'Occhio Clinico
-    if giorno_settimana == 0 and schedine:
-        concluse = [s for s in schedine if s.get("stato_schedina") in ("vinta", "persa")]
+    if giorno == 0 and schedine:
+        concluse = [s for s in schedine if s.get("stato_schedina") in ("vinta", "persa") and s.get("modello") in ("alpha", "beta")]
         vinte = [s for s in concluse if s.get("stato_schedina") == "vinta"]
         winrate = f"{round((len(vinte)/len(concluse))*100)}%" if concluse else "--%"
         ultime_3 = concluse[-3:]
-        righe_html = "".join([
-            f"<div class='list-item'><span>{s['partite'][0]['squadra_casa']} - {s['partite'][0]['squadra_trasferta']}</span>"
-            f"<span style='color:{'#22c55e' if s['stato_schedina']=='vinta' else '#ef4444'};'>{s['stato_schedina'].upper()}</span></div>"
-            for s in ultime_3 if s.get("partite")
-        ])
-        copy_ai = genera_copy_caldo_con_ai("Verdetto del Campo (Trasparenza risultati)", {"winrate": winrate, "totale_analizzate": len(concluse)})
+        righe_html = ""
+        for s in ultime_3:
+            if not s.get("partite"):
+                continue
+            p0 = s["partite"][0]
+            mod_label = s.get("modello", "SBR").upper()
+            is_win = s["stato_schedina"] == "vinta"
+            badge = "<span class='esito-vinto'>✓ Presa</span>" if is_win else "<span class='esito-perso'>✕ Saltata</span>"
+            righe_html += (
+                f"<div class='row'>"
+                f"<div><span class='mod-pill'>{mod_label}</span>{p0['squadra_casa']} - {p0['squadra_trasferta']}</div>"
+                f"{badge}</div>"
+            )
+        copy_ai = genera_copy_caldo_con_ai("Verdetto del Campo (Report trasparenza risultati)", {"winrate": winrate, "chiuse": len(concluse)})
         renderizza_html_in_png("templates_social/template_risultati.html", {
-            "PERIODO": f"REPORT AL {oggi_str}",
-            "YIELD": "CERTIFICATO",
+            "PERIODO": f"AGGIORNATO AL {oggi_str}",
+            "TOTALE_CHIUSE": len(concluse),
             "WINRATE": winrate,
-            "RIGHE_OPERAZIONI": righe_html
+            "RIGHE_OPERAZIONI": righe_html or "<div class='row'><span>Storico in aggiornamento</span></div>"
         }, IMAGE_FILE)
 
-    elif giorno_settimana == 4:
-        copy_ai = genera_copy_caldo_con_ai("Diario Laboratorio Modello Omega (10.000 simulazioni Monte Carlo in fase di calibrazione privata)", {})
+    elif giorno == 4:
+        copy_ai = genera_copy_caldo_con_ai("Diario Laboratorio Omega (10.000 simulazioni Monte Carlo attualmente in calibrazione privata)", {})
         renderizza_html_in_png("templates_social/template_omega.html", {
             "TITOLO_OMEGA": copy_ai["titolo_grafica"],
             "TESTO_OMEGA": copy_ai["testo_grafica"]
         }, IMAGE_FILE)
 
     else:
-        # Prende l'ultima operazione generata (Alpha o Beta) per raccontare il pre-match
-        ultima = schedine[-1] if schedine else {"modello": "BETA", "partite": [{"squadra_casa": "Big Match", "squadra_trasferta": "Serie A", "pronostico": "Pressione Corner"}]}
-        partita = ultima["partite"][0]
-        match_nome = f"{partita['squadra_casa']} - {partita['squadra_trasferta']}"
-        copy_ai = genera_copy_caldo_con_ai("Analisi Tattica Pre-Match", {"match": match_nome, "modello": ultima.get("modello", "beta"), "focus": partita.get("pronostico", "")})
+        mod_key, match_nome, mercato = trova_ultimo_match_in_chiaro(schedine)
+        stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
+        copy_ai = genera_copy_caldo_con_ai("Analisi Pre-Match", {"modello": mod_key.upper(), "match": match_nome, "focus": mercato})
         renderizza_html_in_png("templates_social/template_analisi.html", {
-            "MODELLO": ultima.get("modello", "BETA").upper(),
+            "COLORE_BOT": stile["colore"],
+            "ETICHETTA_BOT": stile["etichetta"],
             "DATA_OGGI": oggi_str,
             "TITOLO_CALDO": copy_ai["titolo_grafica"],
             "MATCH": match_nome,
             "TESTO_STORYTELLING": copy_ai["testo_grafica"],
-            "MERCATO_CHIAVE": partita.get("pronostico", "Analisi Ritmo")
+            "MERCATO_CHIAVE": mercato
         }, IMAGE_FILE)
 
-    # Salva stato in attesa del tuo OK
     with open(STATE_FILE, "w", encoding="utf-8") as f:
-        json.dump({
-            "status": "WAITING_APPROVAL",
-            "caption": copy_ai["caption_instagram"],
-            "created_at": oggi_str
-        }, f, ensure_ascii=False, indent=2)
+        json.dump({"status": "WAITING_APPROVAL", "caption": copy_ai["caption_instagram"], "created_at": oggi_str}, f, ensure_ascii=False, indent=2)
 
     invia_anteprima_su_telegram(IMAGE_FILE, copy_ai["caption_instagram"])
-    print("Bozza creata e inviata su Telegram per approvazione.")
 
 
 def pubblica_su_instagram(image_public_url, caption):
-    """Pubblica automaticamente su Instagram tramite le API ufficiali Meta."""
-    # Step 1: Crea il contenitore media su Meta
-    url_container = f"https://graph.facebook.com/v20.0/{IG_USER_ID}/media"
-    r1 = requests.post(url_container, data={
+    r1 = requests.post(f"https://graph.facebook.com/v20.0/{IG_USER_ID}/media", data={
         "image_url": image_public_url,
         "caption": caption,
         "access_token": IG_ACCESS_TOKEN
@@ -165,11 +195,9 @@ def pubblica_su_instagram(image_public_url, caption):
     r1.raise_for_status()
     creation_id = r1.json()["id"]
 
-    time.sleep(8)  # Attesa tecnica elaborazione immagine lato Instagram
+    time.sleep(8)
 
-    # Step 2: Pubblica definitivamente nel feed
-    url_publish = f"https://graph.facebook.com/v20.0/{IG_USER_ID}/media_publish"
-    r2 = requests.post(url_publish, data={
+    r2 = requests.post(f"https://graph.facebook.com/v20.0/{IG_USER_ID}/media_publish", data={
         "creation_id": creation_id,
         "access_token": IG_ACCESS_TOKEN
     }, timeout=30)
@@ -178,19 +206,15 @@ def pubblica_su_instagram(image_public_url, caption):
 
 
 def fase_2_controlla_ok_e_pubblica():
-    """Controlla se hai premuto 'Approva' su Telegram e pubblica su Instagram."""
     if not os.path.exists(STATE_FILE):
         return
-
     with open(STATE_FILE, "r", encoding="utf-8") as f:
         stato = json.load(f)
-
     if stato.get("status") != "WAITING_APPROVAL":
         return
 
     updates = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates", timeout=15).json()
     azione_scelta = None
-
     for u in updates.get("result", []):
         cb = u.get("callback_query", {})
         if str(cb.get("from", {}).get("id")) == str(ADMIN_CHAT_ID):
@@ -204,7 +228,7 @@ def fase_2_controlla_ok_e_pubblica():
         with open(STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(stato, f, indent=2)
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-                      json={"chat_id": ADMIN_CHAT_ID, "text": "🚀 *Post pubblicato con successo su Instagram!*", "parse_mode": "Markdown"})
+                      json={"chat_id": ADMIN_CHAT_ID, "text": "✅ Post pubblicato in automatico su Instagram!"})
 
     elif azione_scelta == "SCARTA_IG":
         stato["status"] = "DISCARDED"
