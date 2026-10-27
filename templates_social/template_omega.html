@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            width: 1080px; height: 1350px; margin: 0; padding: 95px;
+            background: radial-gradient(circle at bottom left, rgba(248,112,96,0.22) 0%, #102542 55%, #081221 100%);
+            color: #FFFFFF; font-family: 'Inter', sans-serif;
+            display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;
+        }
+        .badge-lab { align-self: flex-start; background: #F87060; color: #FFFFFF; font-weight: 800; font-size: 24px; padding: 12px 28px; border-radius: 8px; letter-spacing: 2px; text-transform: uppercase; }
+        .center { margin: auto 0; }
+        .chapter { font-family: 'JetBrains Mono', monospace; color: #B3A394; font-size: 30px; margin-bottom: 25px; }
+        .big-title { font-size: 84px; font-weight: 800; line-height: 1.06; letter-spacing: -2.5px; margin-bottom: 45px; }
+        .accent { color: #F87060; }
+        .narrative { font-size: 40px; line-height: 1.55; color: #CDD7D6; border-left: 6px solid #B3A394; padding-left: 40px; }
+        .status-bar { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; margin-top: 60px; }
+        .status-text { font-family: 'JetBrains Mono', monospace; font-size: 28px; color: #FFFFFF; }
+        .footer { display: flex; justify-content: space-between; border-top: 2px solid rgba(255,255,255,0.1); padding-top: 35px; font-size: 30px; color: #B3A394; }
+    </style>
+</head>
+<body>
+    <div class="badge-lab">🧪 DIARIO DAL LABORATORIO</div>
+
+    <div class="center">
+        <div class="chapter">// PROGETTO OMEGA • IN CALIBRAZIONE</div>
+        <div class="big-title">{{TITOLO_OMEGA}}</div>
+        <div class="narrative">{{TESTO_OMEGA}}</div>
+
+        <div class="status-bar">
+            <span class="status-text">Motore Monte Carlo (10.000 run)</span>
+            <span style="color:#F87060; font-weight:800; font-size:28px;">FASE PRIVATA 🔒</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>Alpha, Beta & Tennis già attivi gratis su Telegram</span>
+        <span style="color:#FFF; font-weight:800;">@sbr.lab</span>
+    </div>
+</body>
+</html>
