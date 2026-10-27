@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            width: 1080px; height: 1350px; margin: 0;
+            background-color: #102542; color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex; flex-direction: column; justify-content: center;
+            box-sizing: border-box; padding: 120px;
+        }
+        .header { font-size: 35px; color: #B3A394; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 30px; font-weight: 600; }
+        .title { font-size: 85px; font-weight: bold; line-height: 1.1; margin-bottom: 70px; }
+        .accent { color: #F87060; }
+        .data-box { background: rgba(255,255,255,0.03); border-left: 12px solid #F87060; padding: 50px; border-radius: 0 25px 25px 0; }
+        .match { font-size: 55px; font-weight: bold; margin-bottom: 25px; letter-spacing: -1px;}
+        .insight { font-size: 42px; color: #B3A394; line-height: 1.5; font-weight: 300; }
+        .footer { margin-top: auto; font-size: 35px; border-top: 2px solid rgba(255,255,255,0.1); padding-top: 40px; display: flex; justify-content: space-between; color: #ffffff; }
+    </style>
+</head>
+<body>
+    <div class="header">L'Occhio Clinico | Modello {{NOME_MODELLO}}</div>
+    <div class="title">Perché stasera ci aspettiamo <span class="accent">un assedio</span>.</div>
+    
+    <div class="data-box">
+        <div class="match">{{SQUADRA_CASA}} - {{SQUADRA_TRASFERTA}}</div>
+        <div class="insight">L'algoritmo rileva un profondo squilibrio tattico. Le probabilità matematiche di un alto numero di {{TIPO_MERCATO}} superano il <span class="accent">{{PROBABILITA}}%</span>.</div>
+    </div>
+
+    <div class="footer">
+        <span>Analisi completa su Telegram</span>
+        <span class="accent">@sbr.lab</span>
+    </div>
+</body>
+</html>
