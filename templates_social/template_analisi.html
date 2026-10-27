@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -10,90 +10,131 @@
             background-color: #FFFFFF;
             color: #102542;
             font-family: 'Inter', sans-serif;
-            padding: 85px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            border-top: 18px solid {{COLORE_BOT}};
+            display: flex; flex-direction: column;
         }
-        .top-bar {
+        /* META SUPERIORE: FOTO HD SQUADRA / GIOCATORI */
+        .hero-photo {
+            width: 1080px; height: 590px;
+            position: relative;
+            background-color: #102542;
+            overflow: hidden;
+            border-bottom: 14px solid {{COLORE_BOT}};
+        }
+        .hero-photo img.bg {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center 20%;
+        }
+        .top-pill-bar {
+            position: absolute; top: 42px; left: 55px; right: 55px;
             display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 35px; border-bottom: 2px solid #CDD7D6;
         }
         .model-badge {
             background-color: {{COLORE_BOT}};
             color: #FFFFFF;
-            font-size: 22px; font-weight: 700; text-transform: uppercase;
+            font-size: 21px; font-weight: 800; text-transform: uppercase;
             letter-spacing: 1.5px; padding: 12px 24px; border-radius: 6px;
         }
-        .date { font-size: 26px; font-weight: 600; color: #576574; }
+        .date-badge {
+            background-color: #FFFFFF; color: #102542;
+            font-size: 22px; font-weight: 800; padding: 11px 22px; border-radius: 6px;
+        }
 
-        .main { margin: auto 0; }
+        /* META INFERIORE: BIANCO PURO E TINTE PIATTE */
+        .content-wrap {
+            flex: 1;
+            padding: 0 70px 55px 70px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        /* Card Match a cavallo del taglio foto */
+        .match-banner {
+            margin-top: -58px;
+            position: relative; z-index: 5;
+            background-color: #FFFFFF;
+            border: 3px solid #102542;
+            border-radius: 12px;
+            padding: 26px 36px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .team-side {
+            display: flex; align-items: center; gap: 18px;
+            font-size: 33px; font-weight: 800; color: #102542; letter-spacing: -0.5px;
+        }
+        .team-logo {
+            width: 58px; height: 58px; object-fit: contain;
+        }
+        .vs-pill {
+            background-color: #F4F6F6; color: #576574;
+            font-size: 20px; font-weight: 800; padding: 8px 16px; border-radius: 6px;
+            border: 2px solid #CDD7D6;
+        }
+
+        .editorial { margin: auto 0; padding-top: 20px; }
         .eyebrow {
-            font-size: 26px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; color: #576574; margin-bottom: 18px;
+            font-size: 22px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 2px; color: {{COLORE_BOT}}; margin-bottom: 12px;
         }
         .headline {
-            font-size: 68px; font-weight: 800; line-height: 1.12;
-            letter-spacing: -1.5px; color: #102542; margin-bottom: 50px;
-        }
-
-        .match-card {
-            background-color: #F4F6F6;
-            border: 2px solid #CDD7D6;
-            border-left: 12px solid {{COLORE_BOT}};
-            border-radius: 12px;
-            padding: 50px;
-        }
-        .teams {
-            font-size: 46px; font-weight: 800; color: #102542;
-            margin-bottom: 22px; letter-spacing: -0.5px;
+            font-size: 58px; font-weight: 900; line-height: 1.08;
+            letter-spacing: -1.5px; color: #102542; margin-bottom: 26px;
         }
         .story {
-            font-size: 34px; line-height: 1.55; color: #576574;
-            font-weight: 400; margin-bottom: 38px;
+            font-size: 31px; line-height: 1.5; color: #576574;
+            font-weight: 500; margin-bottom: 34px;
         }
-        .pick-row {
-            display: inline-flex; align-items: center; gap: 14px;
-            background-color: #FFFFFF; border: 2px solid #CDD7D6;
-            padding: 16px 28px; border-radius: 8px;
-            font-size: 28px; font-weight: 700; color: #102542;
+        .focus-box {
+            background-color: #F4F6F6;
+            border-left: 10px solid {{COLORE_BOT}};
+            padding: 22px 30px; border-radius: 0 10px 10px 0;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .dot {
-            width: 14px; height: 14px; border-radius: 50%;
-            background-color: {{COLORE_BOT}};
-        }
+        .focus-label { font-size: 22px; font-weight: 700; color: #576574; text-transform: uppercase; }
+        .focus-val { font-size: 28px; font-weight: 800; color: #102542; }
 
         .footer {
             display: flex; justify-content: space-between; align-items: center;
-            padding-top: 35px; border-top: 2px solid #CDD7D6;
+            padding-top: 28px; border-top: 2px solid #CDD7D6;
         }
-        .cta { font-size: 26px; font-weight: 600; color: #576574; }
-        .brand { font-size: 32px; font-weight: 800; color: #102542; letter-spacing: -0.5px; }
+        .cta { font-size: 24px; font-weight: 700; color: #576574; }
+        .brand { font-size: 30px; font-weight: 900; color: #102542; }
         .brand span { color: #F87060; }
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <span class="model-badge">{{ETICHETTA_BOT}}</span>
-        <span class="date">{{DATA_OGGI}}</span>
-    </div>
-
-    <div class="main">
-        <div class="eyebrow">L'Occhio Clinico • Analisi Pre-Match</div>
-        <div class="headline">{{TITOLO_CALDO}}</div>
-
-        <div class="match-card">
-            <div class="teams">{{MATCH}}</div>
-            <div class="story">{{TESTO_STORYTELLING}}</div>
-            <div class="pick-row">
-                <span class="dot"></span>
-                <span>Focus Modello: {{MERCATO_CHIAVE}}</span>
-            </div>
+    <div class="hero-photo">
+        <img class="bg" src="{{FOTO_HD_URL}}" alt="Match Action">
+        <div class="top-pill-bar">
+            <span class="model-badge">{{ETICHETTA_BOT}}</span>
+            <span class="date-badge">{{DATA_OGGI}}</span>
         </div>
     </div>
 
-    <div class="footer">
-        <span class="cta">Canale Telegram gratuito • Link in Bio</span>
-        <span class="brand">SBR <span>LAB</span></span>
+    <div class="content-wrap">
+        <div class="match-banner">
+            <div class="team-side">
+                {{LOGO_CASA_HTML}}
+                <span>{{SQUADRA_CASA}}</span>
+            </div>
+            <span class="vs-pill">VS</span>
+            <div class="team-side">
+                <span>{{SQUADRA_TRASFERTA}}</span>
+                {{LOGO_TRASFERTA_HTML}}
+            </div>
+        </div>
+
+        <div class="editorial">
+            <div class="eyebrow">L'Occhio Clinico • Analisi sul Campo</div>
+            <div class="headline">{{TITOLO_CALDO}}</div>
+            <div class="story">{{TESTO_STORYTELLING}}</div>
+            <div class="focus-box">
+                <span class="focus-label">Parametro Chiave</span>
+                <span class="focus-val">{{MERCATO_CHIAVE}}</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="cta">📲 Analisi completa nel Telegram gratis • Link in Bio</span>
+            <span class="brand">SBR <span>LAB</span></span>
+        </div>
     </div>
 </body>
 </html>
