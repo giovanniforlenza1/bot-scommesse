@@ -1,0 +1,44 @@
+name: SBR Social Manager Auto
+
+on:
+  schedule:
+    - cron: '30 9 * * 1,3,5,6'   # Lun, Mer, Ven, Sab ore 10:30 italiane genera la grafica
+    - cron: '*/20 10-14 * * *'   # Controlla ogni 20 min se hai premuto "Approva" su Telegram
+  workflow_dispatch:             # Ti permette di lanciarlo a mano per fare un test subito!
+
+permissions:
+  contents: write
+
+jobs:
+  social_bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Installa dipendenze e browser grafico
+        run: |
+          pip install requests playwright
+          playwright install chromium
+      - name: Esegui generazione o pubblicazione
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GITHUB_RAW_BASE: https://raw.githubusercontent.com/${{ github.repository }}/main
+        run: |
+          if [ "${{ github.event.schedule }}" = "*/20 10-14 * * *" ]; then
+            python bot_social_manager.py pubblica
+          else
+            python bot_social_manager.py genera
+          fi
+      - name: Salva immagine e stato nel repository
+        run: |
+          git config user.name "SBR Social Bot"
+          git config user.email "bot@sbr.lab"
+          git add social_post_ready.png pending_social_post.json || true
+          git diff --staged --quiet || git commit -m "Update bozza social"
+          git push
