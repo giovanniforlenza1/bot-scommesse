@@ -2958,6 +2958,98 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "702580e4",
+            "modello": "omega",
+            "data_creazione": "28/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.78,
+            "ritorno_potenziale": 26.7,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "667cf69986b200753742c90cb9c5126c",
+                    "data": "29/10 18:30",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Lecce",
+                    "pronostico": "Vittoria Frosinone",
+                    "quota": 1.78,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "5ebe5aff",
+            "modello": "alpha",
+            "data_creazione": "28/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "3d0b0fbec194258530882514714c74be",
+                    "data": "28/10 18:30",
+                    "squadra_casa": "Milan",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "33320ad169692216a91dec030e7ef6a6",
+                    "data": "28/10 18:30",
+                    "squadra_casa": "Venezia",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "abec89862e33762414fcb8b2232aba08",
+                    "data": "28/10 20:45",
+                    "squadra_casa": "Monza",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "da26b506",
+            "modello": "sigma",
+            "data_creazione": "28/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.82,
+            "ritorno_potenziale": 27.3,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "8f999f650b2a7e10b180a15fc7f863c1",
+                    "data": "28/10 12:10",
+                    "squadra_casa": "Yannick Hanfmann",
+                    "squadra_trasferta": "Jan-Lennard Struff",
+                    "pronostico": "Vittoria Jan-Lennard Struff",
+                    "quota": 1.82,
+                    "bookmaker": "Matchbook",
+                    "lega": "tennis_atp_swiss_indoors",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
