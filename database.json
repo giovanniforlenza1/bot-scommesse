@@ -3034,7 +3034,7 @@
             "importo": 15.0,
             "quota_totale": 1.82,
             "ritorno_potenziale": 27.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3046,8 +3046,8 @@
                     "quota": 1.82,
                     "bookmaker": "Matchbook",
                     "lega": "tennis_atp_swiss_indoors",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
