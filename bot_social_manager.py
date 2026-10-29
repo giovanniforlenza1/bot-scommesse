@@ -26,7 +26,6 @@ STILE_BOT = {
     "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANT"}
 }
 
-# Nomi esatti per TheSportsDB + Giocatori reali per estrarre foto vere in maglia da Wikipedia/TheSportsDB
 SQUADRE_SERIE_A_E_BIG = {
     "Inter": {"tsdb": "Internazionale", "wiki": "Inter Milan", "players": ["Lautaro Martínez", "Nicolò Barella", "Marcus Thuram", "Federico Dimarco", "Hakan Çalhanoğlu"]},
     "Milan": {"tsdb": "AC Milan", "wiki": "AC Milan", "players": ["Rafael Leão", "Christian Pulisic", "Theo Hernández", "Mike Maignan", "Tijjani Reijnders"]},
@@ -64,7 +63,6 @@ FOTO_FALLBACK_CALCIO = [
 
 
 def cerca_foto_wikipedia_hd(titolo_pagina):
-    """Estrae la foto ufficiale ad alta risoluzione (1200px) dalla voce Wikipedia del giocatore o del club."""
     headers = {"User-Agent": "SBRLabEditorialBot/3.0"}
     for lang in ("en", "it"):
         try:
@@ -86,13 +84,12 @@ def cerca_foto_wikipedia_hd(titolo_pagina):
 
 
 def cerca_logo_espn(nome_squadra):
-    """Recupera il logo ufficiale in alta definizione direttamente da ESPN Serie A / Europa."""
     headers = {"User-Agent": "Mozilla/5.0"}
     for lega in ("ita.1", "eng.1", "esp.1", "ger.1", "fra.1", "uefa.champions"):
         try:
             r = requests.get(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/teams", headers=headers, timeout=5)
             if r.status_code == 200:
-                 sports = r.json().get("sports", [{}])[0].get("leagues", [{}])[0].get("teams", [])
+                sports = r.json().get("sports", [{}])[0].get("leagues", [{}])[0].get("teams", [])
                 for item in sports:
                     tm = item.get("team", {})
                     d_name = str(tm.get("displayName", "")).lower()
@@ -107,12 +104,6 @@ def cerca_logo_espn(nome_squadra):
 
 
 def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
-    """
-    Recupera FOTO VERE dei giocatori/squadra di Serie A e il LOGO ufficiale:
-    1. Cerca i giocatori stella della squadra su TheSportsDB (fanart d'azione) e Wikipedia HD
-    2. Cerca le fanart da stadio del club su TheSportsDB
-    3. Cerca scatti del club su Wikimedia Commons
-    """
     if foto_gia_usate is None:
         foto_gia_usate = []
 
@@ -121,7 +112,6 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
     pool_foto = []
     logo_url = None
 
-    # 1. Cerca squadra su TheSportsDB con il nome esatto (es. Internazionale, AS Roma, SSC Napoli)
     try:
         r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(info_club['tsdb'])}", headers=headers, timeout=7)
         if r.status_code == 200 and r.json().get("teams"):
@@ -135,11 +125,9 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
     except Exception:
         pass
 
-    # Fallback logo ufficiale da ESPN se TheSportsDB non lo ha restituito
     if not logo_url:
         logo_url = cerca_logo_espn(nome_squadra)
 
-    # 2. Cerca foto d'azione dei GIOCATORI VERI della squadra (TheSportsDB + Wikipedia 1200px)
     giocatori = list(info_club.get("players", []))
     random.shuffle(giocatori)
     for gioc in giocatori[:3]:
@@ -149,7 +137,7 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
                 pl = rp.json()["player"][0]
                 for c in ("strFanart1", "strFanart2", "strFanart3", "strCutout", "strThumb"):
                     if pl.get(c) and not str(pl.get(c)).endswith(".png"):
-                        pool_foto.insert(0, pl[c])  # Priorità massima alle fanart dei calciatori
+                        pool_foto.insert(0, pl[c])
         except Exception:
             pass
 
@@ -157,7 +145,6 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
         if foto_wiki_pl:
             pool_foto.append(foto_wiki_pl)
 
-    # 3. Ricerca fotografica su Wikimedia Commons per i giocatori / match del club
     if len(pool_foto) < 2:
         try:
             q_wiki = f"{info_club['wiki']} player"
@@ -248,7 +235,7 @@ def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
                 f"⚽ Il tifoso guarda il nome sulla maglia, i nostri modelli guardano cosa succede davvero nei 90 minuti.\n\nOggi il radar del Modello ALPHA punta dritto su {match} (segnale: {focus}).",
                 f"🚀 C'è chi si affida all'istinto dell'ultimo minuto e chi studia le anomalie di rendimento.\n\nSu {match} il motore ALPHA ha isolato uno scenario ad altissima tenuta tattica: {focus}."
             ]
-        else:  # BETA
+        else:
             titoli = [
                 "FASCE IN FIAMME.", "AREA SOTTO ASSEDIO.",
                 "PARTITA AD ALTA TENSIONE.", "PIOGGIA DI DUELLI.",
@@ -284,7 +271,7 @@ def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
         )
         return {"titolo_grafica": titolo_scelto, "testo_grafica": "", "caption_instagram": caption}
 
-    else:  # OMEGA
+    else:
         titoli_omega = [
             "Giocare il match 10.000 volte.",
             "Cosa vede davvero Omega?",
@@ -329,7 +316,6 @@ def renderizza_html_in_png(template_path, sostituzioni, output_png):
 
 
 def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
-    """Dà priorità alle partite di Serie A e big europee presenti nel database, senza ripeterle."""
     pool_serie_a = []
     pool_altro_calcio = []
 
@@ -418,8 +404,6 @@ def fase_1_genera_proposta(forza_tipo=None):
     usate_foto = stato_prec.get("ultime_foto_usate", [])[-10:]
     idx_rot = int(stato_prec.get("indice_rotazione", 0))
 
-    # ROTAZIONE AUTOMATICA DEI 3 FORMATI:
-    # Giro 0: PRE_MATCH (Foto Calcio) -> Giro 1: RISULTATI (Tinta Piatta) -> Giro 2: PRE_MATCH (Foto Calcio) -> Giro 3: OMEGA (Tinta Piatta)
     sequenza_formati = ["PRE_MATCH", "RISULTATI", "PRE_MATCH", "OMEGA"]
     tipo_post = forza_tipo if forza_tipo in ("PRE_MATCH", "RISULTATI", "OMEGA") else sequenza_formati[idx_rot % len(sequenza_formati)]
 
