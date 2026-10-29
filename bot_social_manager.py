@@ -26,110 +26,165 @@ STILE_BOT = {
     "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANT"}
 }
 
-FOTO_FALLBACK_CALCIO = [
-    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?q=85&w=1200&auto=format&fit=crop"
-]
-
-FOTO_FALLBACK_TENNIS = [
-    "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=85&w=1200&auto=format&fit=crop"
-]
-
-MAPPA_RICERCA_CLUB = {
-    "Inter": "Inter Milan", "Milan": "AC Milan", "Juventus": "Juventus", "Napoli": "Napoli",
-    "Roma": "AS Roma", "Lazio": "Lazio", "Atalanta": "Atalanta", "Fiorentina": "Fiorentina",
-    "Bologna": "Bologna", "Torino": "Torino", "Verona": "Hellas Verona", "Como": "Como",
-    "Parma": "Parma", "Udinese": "Udinese", "Genoa": "Genoa", "Lecce": "Lecce", "Empoli": "Empoli",
-    "Venezia": "Venezia", "Cagliari": "Cagliari", "Monza": "Monza", "PSG": "Paris SG",
-    "Bayern Monaco": "Bayern Munich", "Dortmund": "Borussia Dortmund", "Lipsia": "RB Leipzig",
-    "Francoforte": "Eintracht Frankfurt", "Sporting Lisbona": "Sporting CP",
-    "Betis Siviglia": "Real Betis", "Athletic Bilbao": "Athletic Bilbao",
-    "Manchester United": "Manchester United", "Manchester City": "Manchester City",
-    "Tottenham": "Tottenham", "Newcastle": "Newcastle", "Arsenal": "Arsenal",
-    "Chelsea": "Chelsea", "Liverpool": "Liverpool", "Real Madrid": "Real Madrid",
-    "Barcellona": "Barcelona", "Atletico Madrid": "Atletico Madrid"
+# Nomi esatti per TheSportsDB + Giocatori reali per estrarre foto vere in maglia da Wikipedia/TheSportsDB
+SQUADRE_SERIE_A_E_BIG = {
+    "Inter": {"tsdb": "Internazionale", "wiki": "Inter Milan", "players": ["Lautaro Martínez", "Nicolò Barella", "Marcus Thuram", "Federico Dimarco", "Hakan Çalhanoğlu"]},
+    "Milan": {"tsdb": "AC Milan", "wiki": "AC Milan", "players": ["Rafael Leão", "Christian Pulisic", "Theo Hernández", "Mike Maignan", "Tijjani Reijnders"]},
+    "Juventus": {"tsdb": "Juventus", "wiki": "Juventus FC", "players": ["Dušan Vlahović", "Kenan Yıldız", "Gleison Bremer", "Teun Koopmeiners", "Andrea Cambiaso"]},
+    "Napoli": {"tsdb": "Napoli", "wiki": "SSC Napoli", "players": ["Romelu Lukaku", "Khvicha Kvaratskhelia", "Scott McTominay", "Giovanni Di Lorenzo", "Alessandro Buongiorno"]},
+    "Roma": {"tsdb": "AS Roma", "wiki": "AS Roma", "players": ["Paulo Dybala", "Artem Dovbyk", "Lorenzo Pellegrini", "Gianluca Mancini"]},
+    "Lazio": {"tsdb": "Lazio", "wiki": "SS Lazio", "players": ["Mattia Zaccagni", "Valentín Castellanos", "Matteo Guendouzi", "Boulaye Dia"]},
+    "Atalanta": {"tsdb": "Atalanta", "wiki": "Atalanta BC", "players": ["Ademola Lookman", "Mateo Retegui", "Charles De Ketelaere", "Éderson"]},
+    "Fiorentina": {"tsdb": "Fiorentina", "wiki": "ACF Fiorentina", "players": ["Moise Kean", "David de Gea", "Albert Guðmundsson", "Robin Gosens"]},
+    "Bologna": {"tsdb": "Bologna", "wiki": "Bologna FC 1909", "players": ["Riccardo Orsolini", "Santiago Castro", "Dan Ndoye", "Lewis Ferguson"]},
+    "Torino": {"tsdb": "Torino", "wiki": "Torino FC", "players": ["Duván Zapata", "Samuele Ricci", "Che Adams", "Vanja Milinković-Savić"]},
+    "Udinese": {"tsdb": "Udinese", "wiki": "Udinese Calcio", "players": ["Lorenzo Lucca", "Florian Thauvin", "Jaka Bijol"]},
+    "Genoa": {"tsdb": "Genoa", "wiki": "Genoa CFC", "players": ["Andrea Pinamonti", "Morten Frendrup", "Milan Badelj"]},
+    "Como": {"tsdb": "Como", "wiki": "Como 1907", "players": ["Nico Paz", "Patrick Cutrone", "Sergi Roberto", "Andrea Belotti"]},
+    "Parma": {"tsdb": "Parma", "wiki": "Parma Calcio 1913", "players": ["Dennis Man", "Ange-Yoan Bonny", "Adrián Bernabé"]},
+    "Verona": {"tsdb": "Hellas Verona", "wiki": "Hellas Verona FC", "players": ["Casper Tengstedt", "Darko Lazović", "Ondrej Duda"]},
+    "Empoli": {"tsdb": "Empoli", "wiki": "Empoli FC", "players": ["Sebastiano Esposito", "Lorenzo Colombo", "Ardian Ismajli"]},
+    "Lecce": {"tsdb": "Lecce", "wiki": "US Lecce", "players": ["Nikola Krstović", "Patrick Dorgu", "Wladimiro Falcone"]},
+    "Cagliari": {"tsdb": "Cagliari", "wiki": "Cagliari Calcio", "players": ["Roberto Piccoli", "Zito Luvumbo", "Yerry Mina"]},
+    "Venezia": {"tsdb": "Venezia", "wiki": "Venezia FC", "players": ["Joel Pohjanpalo", "Gianluca Busio", "Hans Nicolussi Caviglia"]},
+    "Monza": {"tsdb": "Monza", "wiki": "AC Monza", "players": ["Daniel Maldini", "Dany Mota", "Matteo Pessina"]},
+    "Real Madrid": {"tsdb": "Real Madrid", "wiki": "Real Madrid CF", "players": ["Kylian Mbappé", "Vinícius Júnior", "Jude Bellingham"]},
+    "Barcellona": {"tsdb": "Barcelona", "wiki": "FC Barcelona", "players": ["Lamine Yamal", "Robert Lewandowski", "Pedri"]},
+    "Arsenal": {"tsdb": "Arsenal", "wiki": "Arsenal F.C.", "players": ["Bukayo Saka", "Martin Ødegaard", "Declan Rice"]},
+    "Manchester City": {"tsdb": "Manchester City", "wiki": "Manchester City F.C.", "players": ["Erling Haaland", "Phil Foden", "Kevin De Bruyne"]},
+    "Liverpool": {"tsdb": "Liverpool", "wiki": "Liverpool F.C.", "players": ["Mohamed Salah", "Virgil van Dijk", "Trent Alexander-Arnold"]},
+    "Bayern Monaco": {"tsdb": "Bayern Munich", "wiki": "FC Bayern Munich", "players": ["Harry Kane", "Jamal Musiala", "Joshua Kimmich"]},
+    "PSG": {"tsdb": "Paris SG", "wiki": "Paris Saint-Germain F.C.", "players": ["Ousmane Dembélé", "Achraf Hakimi", "Bradley Barcola"]}
 }
 
+FOTO_FALLBACK_CALCIO = [
+    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=85&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=85&w=1200&auto=format&fit=crop"
+]
 
-def cerca_media_squadra_o_giocatore(nome_squadra, is_tennis=False, foto_gia_usate=None):
-    """Cerca foto HD dei giocatori in azione e logo del club, evitando di ripetere sempre la stessa foto."""
+
+def cerca_foto_wikipedia_hd(titolo_pagina):
+    """Estrae la foto ufficiale ad alta risoluzione (1200px) dalla voce Wikipedia del giocatore o del club."""
+    headers = {"User-Agent": "SBRLabEditorialBot/3.0"}
+    for lang in ("en", "it"):
+        try:
+            url = (
+                f"https://{lang}.wikipedia.org/w/api.php?action=query"
+                f"&titles={requests.utils.quote(titolo_pagina)}"
+                "&prop=pageimages&pithumbsize=1200&format=json&redirects=1"
+            )
+            r = requests.get(url, headers=headers, timeout=6)
+            if r.status_code == 200:
+                pages = r.json().get("query", {}).get("pages", {})
+                for pg in pages.values():
+                    thumb = pg.get("thumbnail", {}).get("source", "")
+                    if thumb and not thumb.lower().endswith(".svg") and "crest" not in thumb.lower() and "logo" not in thumb.lower():
+                        return thumb
+        except Exception:
+            continue
+    return None
+
+
+def cerca_logo_espn(nome_squadra):
+    """Recupera il logo ufficiale in alta definizione direttamente da ESPN Serie A / Europa."""
+    headers = {"User-Agent": "Mozilla/5.0"}
+    for lega in ("ita.1", "eng.1", "esp.1", "ger.1", "fra.1", "uefa.champions"):
+        try:
+            r = requests.get(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/teams", headers=headers, timeout=5)
+            if r.status_code == 200:
+                 sports = r.json().get("sports", [{}])[0].get("leagues", [{}])[0].get("teams", [])
+                for item in sports:
+                    tm = item.get("team", {})
+                    d_name = str(tm.get("displayName", "")).lower()
+                    s_name = str(tm.get("shortDisplayName", "")).lower()
+                    if nome_squadra.lower() in d_name or nome_squadra.lower() in s_name:
+                        logos = tm.get("logos", [])
+                        if logos:
+                            return logos[0].get("href")
+        except Exception:
+            continue
+    return None
+
+
+def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
+    """
+    Recupera FOTO VERE dei giocatori/squadra di Serie A e il LOGO ufficiale:
+    1. Cerca i giocatori stella della squadra su TheSportsDB (fanart d'azione) e Wikipedia HD
+    2. Cerca le fanart da stadio del club su TheSportsDB
+    3. Cerca scatti del club su Wikimedia Commons
+    """
     if foto_gia_usate is None:
         foto_gia_usate = []
-    headers = {"User-Agent": "SBRLabSocialBot/2.0"}
-    query_nome = MAPPA_RICERCA_CLUB.get(nome_squadra, nome_squadra)
-    pool_foto_trovate = []
+
+    headers = {"User-Agent": "SBRLabEditorialBot/3.0"}
+    info_club = SQUADRE_SERIE_A_E_BIG.get(nome_squadra, {"tsdb": nome_squadra, "wiki": nome_squadra, "players": []})
+    pool_foto = []
     logo_url = None
 
+    # 1. Cerca squadra su TheSportsDB con il nome esatto (es. Internazionale, AS Roma, SSC Napoli)
     try:
-        if is_tennis:
-            r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p={query_nome}", headers=headers, timeout=8)
-            if r.status_code == 200 and r.json().get("player"):
-                for pl in r.json()["player"]:
-                    if "tennis" in str(pl.get("strSport", "")).lower():
-                        for c in ("strFanart1", "strFanart2", "strFanart3", "strFanart4", "strThumb"):
-                            if pl.get(c):
-                                pool_foto_trovate.append(pl[c])
-                        break
-        else:
-            r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={query_nome}", headers=headers, timeout=8)
-            if r.status_code == 200 and r.json().get("teams"):
-                for tm in r.json()["teams"]:
-                    if "soccer" in str(tm.get("strSport", "")).lower():
-                        logo_url = tm.get("strBadge") or tm.get("strLogo")
-                        id_team = tm.get("idTeam")
+        r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(info_club['tsdb'])}", headers=headers, timeout=7)
+        if r.status_code == 200 and r.json().get("teams"):
+            for tm in r.json()["teams"]:
+                if "soccer" in str(tm.get("strSport", "")).lower():
+                    logo_url = tm.get("strBadge") or tm.get("strLogo")
+                    for campo in ("strFanart1", "strFanart2", "strFanart3", "strFanart4", "strStadiumThumb"):
+                        if tm.get(campo):
+                            pool_foto.append(tm[campo])
+                    break
+    except Exception:
+        pass
 
-                        # 1. Foto in azione dei giocatori della rosa
-                        if id_team:
-                            rp = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/lookup_all_players.php?id={id_team}", headers=headers, timeout=8)
-                            if rp.status_code == 200 and rp.json().get("player"):
-                                for pl in rp.json()["player"]:
-                                    for campo in ("strFanart1", "strFanart2", "strFanart3"):
-                                        if pl.get(campo):
-                                            pool_foto_trovate.append(pl[campo])
+    # Fallback logo ufficiale da ESPN se TheSportsDB non lo ha restituito
+    if not logo_url:
+        logo_url = cerca_logo_espn(nome_squadra)
 
-                        # 2. Fanart HD del club
-                        for campo_tm in ("strFanart1", "strFanart2", "strFanart3", "strFanart4"):
-                            if tm.get(campo_tm):
-                                pool_foto_trovate.append(tm[campo_tm])
-                        break
+    # 2. Cerca foto d'azione dei GIOCATORI VERI della squadra (TheSportsDB + Wikipedia 1200px)
+    giocatori = list(info_club.get("players", []))
+    random.shuffle(giocatori)
+    for gioc in giocatori[:3]:
+        try:
+            rp = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p={requests.utils.quote(gioc)}", headers=headers, timeout=6)
+            if rp.status_code == 200 and rp.json().get("player"):
+                pl = rp.json()["player"][0]
+                for c in ("strFanart1", "strFanart2", "strFanart3", "strCutout", "strThumb"):
+                    if pl.get(c) and not str(pl.get(c)).endswith(".png"):
+                        pool_foto.insert(0, pl[c])  # Priorità massima alle fanart dei calciatori
+        except Exception:
+            pass
 
-        # 3. Wikimedia Commons HD se il pool è vuoto
-        if not pool_foto_trovate:
-            q_wiki = f"{query_nome} {'tennis player' if is_tennis else 'football player match'}"
+        foto_wiki_pl = cerca_foto_wikipedia_hd(gioc)
+        if foto_wiki_pl:
+            pool_foto.append(foto_wiki_pl)
+
+    # 3. Ricerca fotografica su Wikimedia Commons per i giocatori / match del club
+    if len(pool_foto) < 2:
+        try:
+            q_wiki = f"{info_club['wiki']} player"
             w_url = (
                 "https://commons.wikimedia.org/w/api.php?action=query&generator=search"
                 f"&gsrsearch={requests.utils.quote(q_wiki)}&gsrnamespace=6&gsrlimit=8"
                 "&prop=imageinfo&iiprop=url|dimensions&format=json"
             )
-            rw = requests.get(w_url, headers=headers, timeout=8)
+            rw = requests.get(w_url, headers=headers, timeout=6)
             if rw.status_code == 200:
                 pages = rw.json().get("query", {}).get("pages", {})
                 for pg in pages.values():
                     ii = (pg.get("imageinfo") or [{}])[0]
                     u = ii.get("url", "")
                     w = ii.get("width", 0)
-                    h = ii.get("height", 0)
-                    if w >= 900 and w >= h and any(u.lower().endswith(ext) for ext in (".jpg", ".jpeg", ".png")):
-                        pool_foto_trovate.append(u)
-    except Exception as e:
-        print(f"[MEDIA WARN] {nome_squadra}: {e}")
+                    if w >= 800 and any(u.lower().endswith(ext) for ext in (".jpg", ".jpeg")) and "logo" not in u.lower():
+                        pool_foto.append(u)
+        except Exception:
+            pass
 
-    # Filtra foto non ancora usate di recente
-    fresche = [f for f in pool_foto_trovate if f not in foto_gia_usate]
+    fresche = [f for f in pool_foto if f not in foto_gia_usate]
     if fresche:
-        return random.choice(fresche), logo_url, True
-    if pool_foto_trovate:
-        return random.choice(pool_foto_trovate), logo_url, True
+        return fresche[0], logo_url, True
+    if pool_foto:
+        return random.choice(pool_foto), logo_url, True
 
-    fallback_list = FOTO_FALLBACK_TENNIS if is_tennis else FOTO_FALLBACK_CALCIO
-    fresche_fb = [f for f in fallback_list if f not in foto_gia_usate]
-    return random.choice(fresche_fb if fresche_fb else fallback_list), logo_url, False
+    return random.choice(FOTO_FALLBACK_CALCIO), logo_url, False
 
 
 def decripta_payload_se_presente(schedina):
@@ -160,85 +215,62 @@ def scegli_senza_ripetere(lista_opzioni, usati_recenti):
 
 
 def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
-    """Titoli corti, punchy ed enormi per la grafica + caption narrativa calda per Instagram."""
     modello = dati_contesto.get("modello", "BETA").upper()
     match = dati_contesto.get("match", "il big match")
     focus = dati_contesto.get("focus", "Analisi Tattica")
 
     hashtag_pool = [
-        "#SBRLab #Calcio #SerieA #ChampionsLeague #AnalisiTattica #StatisticheCalcio",
-        "#SBRLab #SportAnalytics #NumeriDelCalcio #TatticaCalcistica #FootballData",
-        "#SBRLab #CalcioEuropeo #ModelliMatematici #MatchAnalysis #DataScience",
-        "#SBRLab #InsiderSportivo #StatisticaSportiva #StudioDelMatch #CalcioVero"
+        "#SBRLab #SerieA #Calcio #AnalisiTattica #StatisticheCalcio",
+        "#SBRLab #SportAnalytics #NumeriDelCalcio #TatticaCalcistica #SerieATim",
+        "#SBRLab #CalcioItaliano #ModelliMatematici #MatchAnalysis #DataScience"
     ]
 
     cta_pool = [
-        "📲 L'analisi completa è già nel canale Telegram GRATUITO (Link in Bio).",
+        "📲 L'analisi completa è nel canale Telegram GRATUITO (Link in Bio).",
         "🔓 Entra GRATIS nel club su Telegram dal Link in Bio prima del fischio d'inizio.",
-        "👉 Passa dal Link in Bio: Alpha, Beta e Tennis sono gratuiti sul nostro Telegram.",
-        "📲 Unisciti gratis su Telegram (Link in Bio) e ricevi tutte le letture ogni mattina."
+        "👉 Passa dal Link in Bio: Alpha, Beta e Tennis sono gratuiti sul nostro Telegram."
     ]
 
     if tipo_post == "PRE_MATCH":
         if modello == "ALPHA":
-            # Titoli da 2-4 parole per impatto visivo gigante (74px)
             titoli = [
                 "FAVORITA BLINDATA.", "RITMO DA ASSEDIO.",
                 "NUMERI A SENSO UNICO.", "SCUDO SULLA GARA.",
                 "DIVARIO NETTO.", "ZERO SPAZIO AL CASO.",
-                "FATTORE CAMPO DECISIVO.", "DOMINIO TERRITORIALE.",
-                "SOLO DATI REALI.", "LA SCELTA CHIRURGICA."
+                "FATTORE CAMPO DECISIVO.", "DOMINIO TERRITORIALE."
             ]
             sottotitoli = [
                 f"Forma, tiri e tenuta difensiva: in {match} i parametri pendono da una sola parte.",
                 f"Il Modello Alpha incrocia i flussi offensivi di {match} e attiva la copertura.",
-                f"Quando il divario tecnico si unisce ai numeri, {match} diventa il bersaglio perfetto.",
-                f"Niente tifo, solo freddezza: ecco cosa dicono gli algoritmi sui 90 minuti di {match}.",
-                f"Continuità e peso offensivo: perché {match} guida la selezione Alpha di oggi."
+                f"Niente tifo, solo freddezza: ecco cosa dicono gli algoritmi sui 90 minuti di {match}."
             ]
             aperture_caption = [
                 f"⚽ Il tifoso guarda il nome sulla maglia, i nostri modelli guardano cosa succede davvero nei 90 minuti.\n\nOggi il radar del Modello ALPHA punta dritto su {match} (segnale: {focus}).",
-                f"🚀 C'è chi si affida all'istinto dell'ultimo minuto e chi studia le anomalie di rendimento.\n\nSu {match} il motore ALPHA ha isolato uno scenario ad altissima tenuta tattica: {focus}.",
-                f"🏟️ Quando i ritmi offensivi e la solidità difensiva divergono così tanto, i numeri parlano prima del campo.\n\nFocus ALPHA del giorno su {match} 👉 {focus}."
+                f"🚀 C'è chi si affida all'istinto dell'ultimo minuto e chi studia le anomalie di rendimento.\n\nSu {match} il motore ALPHA ha isolato uno scenario ad altissima tenuta tattica: {focus}."
             ]
-        elif modello == "BETA":
+        else:  # BETA
             titoli = [
                 "FASCE IN FIAMME.", "AREA SOTTO ASSEDIO.",
                 "PARTITA AD ALTA TENSIONE.", "PIOGGIA DI DUELLI.",
                 "NERVI A FIOR DI PELLE.", "SPINTA FINO AL 90°.",
-                "RITMO FUORI SCALA.", "ANOMALIA POISSON.",
-                "PRESSIONE COSTANTE.", "SCINTILLE IN CAMPO."
+                "RITMO FUORI SCALA.", "ANOMALIA POISSON."
             ]
             sottotitoli = [
                 f"Lo storico reale degli ultimi match accende {match}: volume di gioco altissimo.",
                 f"Non guardiamo chi vince, ma come attacca: {match} promette scintille sulle corsie.",
-                f"La curva di Poisson intercetta un valore netto su {match} incrociando le medie ESPN.",
-                f"Baricentro alto e duelli continui: i numeri di {match} puntano dritti sul ritmo gara.",
-                f"Cross, ribattute e contrasti: perché {match} è la singola perfetta per il Modello Beta."
+                f"La curva di Poisson intercetta un valore netto su {match} incrociando le medie ESPN."
             ]
             aperture_caption = [
                 f"🔥 Alcune partite si leggono molto prima del risultato finale: basta osservare l'ampiezza sulle fasce e l'intensità dei contrasti.\n\nPer {match} il Modello BETA segnala un valore netto su: {focus}.",
-                f"⚡ Mentre tutti cercano d'indovinare il marcatore, la distribuzione di Poisson analizza il volume reale di gioco.\n\nI dati storici di {match} accendono il semaforo verde del Modello BETA ({focus}).",
-                f"📐 Storico ESPN verificato e calcolo delle probabilità pure: ecco perché oggi gli occhi del laboratorio sono tutti su {match}."
-            ]
-        else:  # SIGMA TENNIS
-            titoli = [
-                "DOMINIO DA FONDO.", "SUPERFICIE DECISIVA.",
-                "ZERO PAREGGI.", "SERVIZIO INGIOCABILE.",
-                "RITMO INSOPPORTABILE.", "VANTAGGIO NETTO."
-            ]
-            sottotitoli = [
-                f"In {match} la resa sulla superficie e i turni di battuta scavano un solco profondo.",
-                f"Uno contro uno, zero alibi: il laboratorio Sigma isola un vantaggio chiaro su {match}."
-            ]
-            aperture_caption = [
-                f"🎾 Uno contro uno, dove i numeri al servizio e in risposta decidono ogni singolo set.\n\nAnalisi Sigma su {match}: {focus}."
+                f"⚡ Mentre tutti cercano d'indovinare il marcatore, la distribuzione di Poisson analizza il volume reale di gioco.\n\nI dati storici di {match} accendono il semaforo verde del Modello BETA ({focus})."
             ]
 
         titolo_scelto = scegli_senza_ripetere(titoli, usati_recenti)
-        sotto_scelto = random.choice(sottotitoli)
-        caption = f"{random.choice(aperture_caption)}\n\n{random.choice(cta_pool)}\n\n{random.choice(hashtag_pool)}"
-        return {"titolo_grafica": titolo_scelto, "testo_grafica": sotto_scelto, "caption_instagram": caption}
+        return {
+            "titolo_grafica": titolo_scelto,
+            "testo_grafica": random.choice(sottotitoli),
+            "caption_instagram": f"{random.choice(aperture_caption)}\n\n{random.choice(cta_pool)}\n\n{random.choice(hashtag_pool)}"
+        }
 
     elif tipo_post == "RISULTATI":
         winrate = dati_contesto.get("winrate", "--%")
@@ -252,11 +284,17 @@ def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
         )
         return {"titolo_grafica": titolo_scelto, "testo_grafica": "", "caption_instagram": caption}
 
-    else:
-        titoli_omega = ["Giocare il match 10.000 volte.", "Cosa vede davvero Omega?", "La calma di Monte Carlo."]
+    else:  # OMEGA
+        titoli_omega = [
+            "Giocare il match 10.000 volte.",
+            "Cosa vede davvero Omega?",
+            "La calma fredda di Monte Carlo.",
+            "Perché Omega è ancora chiuso."
+        ]
         testi_omega = [
             "Prima del fischio d'inizio, il motore Omega simula l'incontro diecimila volte pesando attacco, difesa e fatica per isolare la probabilità pura.",
-            "Omega nasce con un freno automatico: se il vantaggio matematico reale scende sotto soglia, il sistema blocca tutto. Fase privata in corso."
+            "Omega nasce con un freno automatico: se il vantaggio matematico reale scende sotto soglia, il sistema blocca tutto. Fase privata in corso.",
+            "Mentre Alpha, Beta e Sigma lavorano gratis ogni giorno, in background Omega macina dati europei per costruire il nostro nucleo quantitativo di punta."
         ]
         titolo_scelto = scegli_senza_ripetere(titoli_omega, usati_recenti)
         caption = (
@@ -290,14 +328,11 @@ def renderizza_html_in_png(template_path, sostituzioni, output_png):
         os.remove(temp_html)
 
 
-def scegli_match_calcio_protagonista(schedine, match_gia_usati):
-    """
-    90% CALCIO (Alpha e Beta), 10% Tennis.
-    Non ripete MAI lo stesso match se lanci il bot più volte di fila!
-    """
-    pool_calcio = []
+def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
+    """Dà priorità alle partite di Serie A e big europee presenti nel database, senza ripeterle."""
+    pool_serie_a = []
+    pool_altro_calcio = []
 
-    # Raccoglie tutte le ultime partite di CALCIO (sia singole Beta che i singoli match delle multiple Alpha)
     for s in reversed(schedine):
         mod = s.get("modello", "").lower()
         if mod in ("alpha", "beta"):
@@ -306,29 +341,35 @@ def scegli_match_calcio_protagonista(schedine, match_gia_usati):
                 casa = str(p.get("squadra_casa", "")).strip()
                 trasf = str(p.get("squadra_trasferta", "")).strip()
                 pron = str(p.get("pronostico", "Analisi Tattica")).strip()
+                lega = str(p.get("lega", "")).lower()
                 if casa and trasf and "🔒" not in casa and "Operazione" not in casa and "Singola" not in casa:
                     chiave_m = f"{casa} - {trasf}"
-                    if not any(x[1] == casa and x[2] == trasf for x in pool_calcio):
-                        pool_calcio.append((mod, casa, trasf, pron, chiave_m))
-        if len(pool_calcio) >= 12:
-            break
+                    item = (mod, casa, trasf, pron, chiave_m)
+                    if "serie_a" in lega or casa in SQUADRE_SERIE_A_E_BIG or trasf in SQUADRE_SERIE_A_E_BIG:
+                        if not any(x[4] == chiave_m for x in pool_serie_a):
+                            pool_serie_a.append(item)
+                    else:
+                        if not any(x[4] == chiave_m for x in pool_altro_calcio):
+                            pool_altro_calcio.append(item)
 
-    # Filtra i match di calcio che NON hai ancora generato negli ultimi invii
-    calcio_fresco = [m for m in pool_calcio if m[4] not in match_gia_usati]
-
-    # Il Calcio è sempre la priorità assoluta
-    if calcio_fresco:
-        scelto = calcio_fresco[0]
+    freschi_sa = [m for m in pool_serie_a if m[4] not in match_gia_usati]
+    if freschi_sa:
+        scelto = freschi_sa[0]
         return scelto[0], scelto[1], scelto[2], scelto[3]
 
-    if pool_calcio:
-        scelto = random.choice(pool_calcio)
+    freschi_altri = [m for m in pool_altro_calcio if m[4] not in match_gia_usati]
+    if freschi_altri:
+        scelto = freschi_altri[0]
         return scelto[0], scelto[1], scelto[2], scelto[3]
 
-    return "beta", "Inter", "Juventus", "Over 8.5 Calci d'Angolo"
+    if pool_serie_a:
+        scelto = random.choice(pool_serie_a)
+        return scelto[0], scelto[1], scelto[2], scelto[3]
+
+    return "beta", "Inter", "Milan", "Over 8.5 Calci d'Angolo"
 
 
-def invia_anteprima_su_telegram(image_path, caption_ig):
+def invia_anteprima_su_telegram(image_path, caption_ig, tipo_format):
     if not TELEGRAM_TOKEN or not ADMIN_CHAT_ID:
         print("ERRORE: TELEGRAM_TOKEN o ADMIN_CHAT_ID mancanti nei Secrets!")
         return
@@ -340,7 +381,7 @@ def invia_anteprima_su_telegram(image_path, caption_ig):
             {"text": "❌ Scarta Bozza", "callback_data": "SCARTA_IG"}
         ]]
     }
-    testo_admin = f"🎨 *ANTEPRIMA POST INSTAGRAM PRONTA*\n\n📝 *Caption proposta:*\n\n{caption_ig}"
+    testo_admin = f"🎨 *ANTEPRIMA POST ({tipo_format})*\n\n📝 *Caption proposta:*\n\n{caption_ig}"
     with open(image_path, "rb") as img:
         r = requests.post(
             url,
@@ -362,10 +403,10 @@ def carica_stato_precedente():
                 return json.load(f)
         except Exception:
             pass
-    return {"ultimi_titoli_usati": [], "ultimi_match_usati": [], "ultime_foto_usate": []}
+    return {"ultimi_titoli_usati": [], "ultimi_match_usati": [], "ultime_foto_usate": [], "indice_rotazione": 0}
 
 
-def fase_1_genera_proposta():
+def fase_1_genera_proposta(forza_tipo=None):
     db = {"schedine": []}
     if os.path.exists("database.json"):
         with open("database.json", "r", encoding="utf-8") as f:
@@ -375,49 +416,87 @@ def fase_1_genera_proposta():
     usati_titoli = stato_prec.get("ultimi_titoli_usati", [])[-10:]
     usati_match = stato_prec.get("ultimi_match_usati", [])[-8:]
     usate_foto = stato_prec.get("ultime_foto_usate", [])[-10:]
+    idx_rot = int(stato_prec.get("indice_rotazione", 0))
+
+    # ROTAZIONE AUTOMATICA DEI 3 FORMATI:
+    # Giro 0: PRE_MATCH (Foto Calcio) -> Giro 1: RISULTATI (Tinta Piatta) -> Giro 2: PRE_MATCH (Foto Calcio) -> Giro 3: OMEGA (Tinta Piatta)
+    sequenza_formati = ["PRE_MATCH", "RISULTATI", "PRE_MATCH", "OMEGA"]
+    tipo_post = forza_tipo if forza_tipo in ("PRE_MATCH", "RISULTATI", "OMEGA") else sequenza_formati[idx_rot % len(sequenza_formati)]
 
     schedine = db.get("schedine", [])
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi_str = datetime.now(fuso_italia).strftime("%d/%m/%Y")
 
-    # Genera il post Pre-Match sul CALCIO con Foto Grande + Titoli Enormi
-    mod_key, sq_casa, sq_trasf, mercato = scegli_match_calcio_protagonista(schedine, usati_match)
-    is_tennis = (mod_key == "sigma")
-    stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
+    if tipo_post == "RISULTATI" and schedine:
+        concluse = [s for s in schedine if s.get("stato_schedina") in ("vinta", "persa") and s.get("modello") in ("alpha", "beta", "sigma")]
+        vinte = [s for s in concluse if s.get("stato_schedina") == "vinta"]
+        winrate = f"{round((len(vinte)/len(concluse))*100)}%" if concluse else "--%"
+        ultime_3 = concluse[-3:]
+        righe_html = ""
+        for s in ultime_3:
+            partite_vere = decripta_payload_se_presente(s) or s.get("partite", [])
+            if not partite_vere:
+                continue
+            p0 = partite_vere[0]
+            mod_label = s.get("modello", "SBR").upper()
+            is_win = s["stato_schedina"] == "vinta"
+            badge = "<span class='esito-vinto'>✓ Presa</span>" if is_win else "<span class='esito-perso'>✕ Saltata</span>"
+            righe_html += (
+                f"<div class='row'>"
+                f"<div><span class='mod-pill'>{mod_label}</span>{p0['squadra_casa']} - {p0['squadra_trasferta']}</div>"
+                f"{badge}</div>"
+            )
+        copy_scelto = genera_copy_catchy("RISULTATI", {"winrate": winrate, "chiuse": len(concluse)}, usati_titoli)
+        renderizza_html_in_png("templates_social/template_risultati.html", {
+            "PERIODO": f"AGGIORNATO AL {oggi_str}",
+            "TOTALE_CHIUSE": len(concluse),
+            "WINRATE": winrate,
+            "RIGHE_OPERAZIONI": righe_html or "<div class='row'><span>Storico in aggiornamento</span></div>"
+        }, IMAGE_FILE)
 
-    foto_casa, logo_casa, trovata_vera_c = cerca_media_squadra_o_giocatore(sq_casa, is_tennis=is_tennis, foto_gia_usate=usate_foto)
-    foto_trasf, logo_trasf, trovata_vera_t = cerca_media_squadra_o_giocatore(sq_trasf, is_tennis=is_tennis, foto_gia_usate=usate_foto)
+    elif tipo_post == "OMEGA":
+        copy_scelto = genera_copy_catchy("OMEGA", {}, usati_titoli)
+        renderizza_html_in_png("templates_social/template_omega.html", {
+            "TITOLO_OMEGA": copy_scelto["titolo_grafica"],
+            "TESTO_OMEGA": copy_scelto["testo_grafica"]
+        }, IMAGE_FILE)
 
-    # Usa la foto reale dei giocatori della squadra che ha la miglior immagine disponibile
-    if trovata_vera_c and trovata_vera_t:
-        foto_scelta = random.choice([foto_casa, foto_trasf])
-    elif trovata_vera_t and not trovata_vera_c:
-        foto_scelta = foto_trasf
     else:
-        foto_scelta = foto_casa
+        mod_key, sq_casa, sq_trasf, mercato = scegli_match_calcio_serie_a_prioritario(schedine, usati_match)
+        stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
 
-    logo_c_html = f"<img class='team-logo' src='{logo_casa}' alt=''>" if logo_casa else ""
-    logo_t_html = f"<img class='team-logo' src='{logo_trasf}' alt=''>" if logo_trasf else ""
-    match_nome = f"{sq_casa} - {sq_trasf}"
+        foto_casa, logo_casa, vera_c = cerca_media_reali_squadra(sq_casa, foto_gia_usate=usate_foto)
+        foto_trasf, logo_trasf, vera_t = cerca_media_reali_squadra(sq_trasf, foto_gia_usate=usate_foto)
 
-    copy_scelto = genera_copy_catchy("PRE_MATCH", {"modello": mod_key.upper(), "match": match_nome, "focus": mercato}, usati_titoli)
-    renderizza_html_in_png("templates_social/template_analisi.html", {
-        "FOTO_HD_URL": foto_scelta,
-        "COLORE_BOT": stile["colore"],
-        "ETICHETTA_BOT": stile["etichetta"],
-        "DATA_OGGI": oggi_str,
-        "LOGO_CASA_HTML": logo_c_html,
-        "LOGO_TRASFERTA_HTML": logo_t_html,
-        "SQUADRA_CASA": sq_casa,
-        "SQUADRA_TRASFERTA": sq_trasf,
-        "TITOLO_CALDO": copy_scelto["titolo_grafica"],
-        "TESTO_STORYTELLING": copy_scelto["testo_grafica"],
-        "MERCATO_CHIAVE": mercato
-    }, IMAGE_FILE)
+        if vera_c and vera_t:
+            foto_scelta = foto_casa if sq_casa in SQUADRE_SERIE_A_E_BIG else foto_trasf
+        elif vera_t and not vera_c:
+            foto_scelta = foto_trasf
+        else:
+            foto_scelta = foto_casa
+
+        logo_c_html = f"<img class='team-logo' src='{logo_casa}' alt=''>" if logo_casa else ""
+        logo_t_html = f"<img class='team-logo' src='{logo_trasf}' alt=''>" if logo_trasf else ""
+        match_nome = f"{sq_casa} - {sq_trasf}"
+
+        copy_scelto = genera_copy_catchy("PRE_MATCH", {"modello": mod_key.upper(), "match": match_nome, "focus": mercato}, usati_titoli)
+        renderizza_html_in_png("templates_social/template_analisi.html", {
+            "FOTO_HD_URL": foto_scelta,
+            "COLORE_BOT": stile["colore"],
+            "ETICHETTA_BOT": stile["etichetta"],
+            "DATA_OGGI": oggi_str,
+            "LOGO_CASA_HTML": logo_c_html,
+            "LOGO_TRASFERTA_HTML": logo_t_html,
+            "SQUADRA_CASA": sq_casa,
+            "SQUADRA_TRASFERTA": sq_trasf,
+            "TITOLO_CALDO": copy_scelto["titolo_grafica"],
+            "TESTO_STORYTELLING": copy_scelto["testo_grafica"],
+            "MERCATO_CHIAVE": mercato
+        }, IMAGE_FILE)
+        usati_match.append(match_nome)
+        usate_foto.append(foto_scelta)
 
     usati_titoli.append(copy_scelto["titolo_grafica"])
-    usati_match.append(match_nome)
-    usate_foto.append(foto_scelta)
 
     with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump({
@@ -426,11 +505,12 @@ def fase_1_genera_proposta():
             "created_at": oggi_str,
             "ultimi_titoli_usati": usati_titoli[-10:],
             "ultimi_match_usati": usati_match[-8:],
-            "ultime_foto_usate": usate_foto[-10:]
+            "ultime_foto_usate": usate_foto[-10:],
+            "indice_rotazione": idx_rot + 1
         }, f, ensure_ascii=False, indent=2)
 
-    invia_anteprima_su_telegram(IMAGE_FILE, copy_scelto["caption_instagram"])
-    print(f"Post Calcio generato su {match_nome} ({mod_key.upper()}) e inviato su Telegram!")
+    invia_anteprima_su_telegram(IMAGE_FILE, copy_scelto["caption_instagram"], tipo_post)
+    print(f"Post {tipo_post} generato e inviato su Telegram!")
 
 
 def pubblica_su_instagram(image_public_url, caption):
@@ -492,12 +572,13 @@ def fase_2_controlla_ok_e_pubblica():
         if ultimo_update_id:
             requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates?offset={ultimo_update_id + 1}", timeout=10)
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-                      json={"chat_id": ADMIN_CHAT_ID, "text": "🗑️ Bozza scartata. Rilancia il workflow per ricevere subito un'altra partita!"})
+                      json={"chat_id": ADMIN_CHAT_ID, "text": "🗑️ Bozza scartata. Rilancia il workflow per passare al formato/match successivo!"})
 
 
 if __name__ == "__main__":
     modalita = sys.argv[1] if len(sys.argv) > 1 else "genera"
+    forza = sys.argv[2].upper() if len(sys.argv) > 2 else None
     if modalita == "genera":
-        fase_1_genera_proposta()
+        fase_1_genera_proposta(forza_tipo=forza)
     elif modalita == "pubblica":
         fase_2_controlla_ok_e_pubblica()
