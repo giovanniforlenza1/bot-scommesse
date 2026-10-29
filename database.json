@@ -2966,7 +2966,7 @@
             "importo": 15.0,
             "quota_totale": 1.78,
             "ritorno_potenziale": 26.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "667cf69986b200753742c90cb9c5126c",
@@ -2977,8 +2977,8 @@
                     "quota": 1.78,
                     "bookmaker": "1xBet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5-1"
                 }
             ]
         },
