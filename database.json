@@ -3050,6 +3050,98 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "8b03629b",
+            "modello": "omega",
+            "data_creazione": "30/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.76,
+            "ritorno_potenziale": 26.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "04aa939b89001eedf55668e66c74836e",
+                    "data": "31/10 15:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "Vittoria Bologna",
+                    "quota": 1.76,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "7a419ca5",
+            "modello": "alpha",
+            "data_creazione": "30/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "34cd26b96f78bd7aa3dbff3d1daca7a7",
+                    "data": "31/10 18:00",
+                    "squadra_casa": "Udinese",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e82f25e981f2ebc731cfaf5716231af5",
+                    "data": "31/10 20:45",
+                    "squadra_casa": "Milan",
+                    "squadra_trasferta": "Inter",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "c27c8af8c7ee29d153de0b9999ea0434",
+                    "data": "31/10 18:45",
+                    "squadra_casa": "Heerenveen",
+                    "squadra_trasferta": "NEC Nijmegen",
+                    "pronostico": "Doppia Chance 1X (Heerenveen)",
+                    "quota": 1.35,
+                    "lega": "soccer_netherlands_eredivisie",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "4ec8e495",
+            "modello": "sigma",
+            "data_creazione": "30/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.65,
+            "ritorno_potenziale": 24.75,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "4eebb3b42f713eff0e760f9abef41572",
+                    "data": "30/10 14:00",
+                    "squadra_casa": "Holger Rune",
+                    "squadra_trasferta": "Valentin Vacherot",
+                    "pronostico": "Vittoria Holger Rune",
+                    "quota": 1.65,
+                    "bookmaker": "Marathon Bet",
+                    "lega": "tennis_atp_swiss_indoors",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
