@@ -26,61 +26,51 @@ STILE_BOT = {
     "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANT"}
 }
 
-SQUADRE_SERIE_A_E_BIG = {
-    "Inter": {"tsdb": "Internazionale", "wiki": "Inter Milan", "players": ["Lautaro Martínez", "Nicolò Barella", "Marcus Thuram", "Federico Dimarco", "Hakan Çalhanoğlu"]},
-    "Milan": {"tsdb": "AC Milan", "wiki": "AC Milan", "players": ["Rafael Leão", "Christian Pulisic", "Theo Hernández", "Mike Maignan", "Tijjani Reijnders"]},
-    "Juventus": {"tsdb": "Juventus", "wiki": "Juventus FC", "players": ["Dušan Vlahović", "Kenan Yıldız", "Gleison Bremer", "Teun Koopmeiners", "Andrea Cambiaso"]},
-    "Napoli": {"tsdb": "Napoli", "wiki": "SSC Napoli", "players": ["Romelu Lukaku", "Khvicha Kvaratskhelia", "Scott McTominay", "Giovanni Di Lorenzo", "Alessandro Buongiorno"]},
-    "Roma": {"tsdb": "AS Roma", "wiki": "AS Roma", "players": ["Paulo Dybala", "Artem Dovbyk", "Lorenzo Pellegrini", "Gianluca Mancini"]},
-    "Lazio": {"tsdb": "Lazio", "wiki": "SS Lazio", "players": ["Mattia Zaccagni", "Valentín Castellanos", "Matteo Guendouzi", "Boulaye Dia"]},
-    "Atalanta": {"tsdb": "Atalanta", "wiki": "Atalanta BC", "players": ["Ademola Lookman", "Mateo Retegui", "Charles De Ketelaere", "Éderson"]},
-    "Fiorentina": {"tsdb": "Fiorentina", "wiki": "ACF Fiorentina", "players": ["Moise Kean", "David de Gea", "Albert Guðmundsson", "Robin Gosens"]},
-    "Bologna": {"tsdb": "Bologna", "wiki": "Bologna FC 1909", "players": ["Riccardo Orsolini", "Santiago Castro", "Dan Ndoye", "Lewis Ferguson"]},
-    "Torino": {"tsdb": "Torino", "wiki": "Torino FC", "players": ["Duván Zapata", "Samuele Ricci", "Che Adams", "Vanja Milinković-Savić"]},
-    "Udinese": {"tsdb": "Udinese", "wiki": "Udinese Calcio", "players": ["Lorenzo Lucca", "Florian Thauvin", "Jaka Bijol"]},
-    "Genoa": {"tsdb": "Genoa", "wiki": "Genoa CFC", "players": ["Andrea Pinamonti", "Morten Frendrup", "Milan Badelj"]},
-    "Como": {"tsdb": "Como", "wiki": "Como 1907", "players": ["Nico Paz", "Patrick Cutrone", "Sergi Roberto", "Andrea Belotti"]},
-    "Parma": {"tsdb": "Parma", "wiki": "Parma Calcio 1913", "players": ["Dennis Man", "Ange-Yoan Bonny", "Adrián Bernabé"]},
-    "Verona": {"tsdb": "Hellas Verona", "wiki": "Hellas Verona FC", "players": ["Casper Tengstedt", "Darko Lazović", "Ondrej Duda"]},
-    "Empoli": {"tsdb": "Empoli", "wiki": "Empoli FC", "players": ["Sebastiano Esposito", "Lorenzo Colombo", "Ardian Ismajli"]},
-    "Lecce": {"tsdb": "Lecce", "wiki": "US Lecce", "players": ["Nikola Krstović", "Patrick Dorgu", "Wladimiro Falcone"]},
-    "Cagliari": {"tsdb": "Cagliari", "wiki": "Cagliari Calcio", "players": ["Roberto Piccoli", "Zito Luvumbo", "Yerry Mina"]},
-    "Venezia": {"tsdb": "Venezia", "wiki": "Venezia FC", "players": ["Joel Pohjanpalo", "Gianluca Busio", "Hans Nicolussi Caviglia"]},
-    "Monza": {"tsdb": "Monza", "wiki": "AC Monza", "players": ["Daniel Maldini", "Dany Mota", "Matteo Pessina"]},
-    "Real Madrid": {"tsdb": "Real Madrid", "wiki": "Real Madrid CF", "players": ["Kylian Mbappé", "Vinícius Júnior", "Jude Bellingham"]},
-    "Barcellona": {"tsdb": "Barcelona", "wiki": "FC Barcelona", "players": ["Lamine Yamal", "Robert Lewandowski", "Pedri"]},
-    "Arsenal": {"tsdb": "Arsenal", "wiki": "Arsenal F.C.", "players": ["Bukayo Saka", "Martin Ødegaard", "Declan Rice"]},
-    "Manchester City": {"tsdb": "Manchester City", "wiki": "Manchester City F.C.", "players": ["Erling Haaland", "Phil Foden", "Kevin De Bruyne"]},
-    "Liverpool": {"tsdb": "Liverpool", "wiki": "Liverpool F.C.", "players": ["Mohamed Salah", "Virgil van Dijk", "Trent Alexander-Arnold"]},
-    "Bayern Monaco": {"tsdb": "Bayern Munich", "wiki": "FC Bayern Munich", "players": ["Harry Kane", "Jamal Musiala", "Joshua Kimmich"]},
-    "PSG": {"tsdb": "Paris SG", "wiki": "Paris Saint-Germain F.C.", "players": ["Ousmane Dembélé", "Achraf Hakimi", "Bradley Barcola"]}
+# Solo riferimenti UFFICIALI DEL CLUB (nessun nome di calciatore per evitare ex giocatori trasferiti!)
+CLUB_SERIE_A_EUROPA = {
+    "Inter": {"tsdb": "Internazionale", "wiki": "Inter Milan"},
+    "Milan": {"tsdb": "AC Milan", "wiki": "AC Milan"},
+    "Juventus": {"tsdb": "Juventus", "wiki": "Juventus FC"},
+    "Napoli": {"tsdb": "Napoli", "wiki": "SSC Napoli"},
+    "Roma": {"tsdb": "AS Roma", "wiki": "AS Roma"},
+    "Lazio": {"tsdb": "Lazio", "wiki": "SS Lazio"},
+    "Atalanta": {"tsdb": "Atalanta", "wiki": "Atalanta BC"},
+    "Fiorentina": {"tsdb": "Fiorentina", "wiki": "ACF Fiorentina"},
+    "Bologna": {"tsdb": "Bologna", "wiki": "Bologna FC 1909"},
+    "Torino": {"tsdb": "Torino", "wiki": "Torino FC"},
+    "Udinese": {"tsdb": "Udinese", "wiki": "Udinese Calcio"},
+    "Genoa": {"tsdb": "Genoa", "wiki": "Genoa CFC"},
+    "Como": {"tsdb": "Como", "wiki": "Como 1907"},
+    "Parma": {"tsdb": "Parma", "wiki": "Parma Calcio 1913"},
+    "Verona": {"tsdb": "Hellas Verona", "wiki": "Hellas Verona FC"},
+    "Empoli": {"tsdb": "Empoli", "wiki": "Empoli FC"},
+    "Lecce": {"tsdb": "Lecce", "wiki": "US Lecce"},
+    "Cagliari": {"tsdb": "Cagliari", "wiki": "Cagliari Calcio"},
+    "Venezia": {"tsdb": "Venezia", "wiki": "Venezia FC"},
+    "Monza": {"tsdb": "Monza", "wiki": "AC Monza"},
+    "Real Madrid": {"tsdb": "Real Madrid", "wiki": "Real Madrid CF"},
+    "Barcellona": {"tsdb": "Barcelona", "wiki": "FC Barcelona"},
+    "Arsenal": {"tsdb": "Arsenal", "wiki": "Arsenal F.C."},
+    "Manchester City": {"tsdb": "Manchester City", "wiki": "Manchester City F.C."},
+    "Manchester United": {"tsdb": "Manchester United", "wiki": "Manchester United F.C."},
+    "Liverpool": {"tsdb": "Liverpool", "wiki": "Liverpool F.C."},
+    "Chelsea": {"tsdb": "Chelsea", "wiki": "Chelsea F.C."},
+    "Tottenham": {"tsdb": "Tottenham", "wiki": "Tottenham Hotspur F.C."},
+    "Newcastle": {"tsdb": "Newcastle", "wiki": "Newcastle United F.C."},
+    "Bayern Monaco": {"tsdb": "Bayern Munich", "wiki": "FC Bayern Munich"},
+    "Dortmund": {"tsdb": "Borussia Dortmund", "wiki": "Borussia Dortmund"},
+    "PSG": {"tsdb": "Paris SG", "wiki": "Paris Saint-Germain F.C."}
 }
 
-FOTO_FALLBACK_CALCIO = [
+# Scatti close-up di solo busto/gambe/pallone/maglia senza volti riconoscibili
+FOTO_DETTAGLIO_MAGLIA_CAMPO = [
+    "https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=85&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=85&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1551958219-acbc608c6377?q=85&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=85&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=85&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?q=85&w=1200&auto=format&fit=crop"
 ]
-
-
-def cerca_foto_wikipedia_hd(titolo_pagina):
-    headers = {"User-Agent": "SBRLabEditorialBot/3.0"}
-    for lang in ("en", "it"):
-        try:
-            url = (
-                f"https://{lang}.wikipedia.org/w/api.php?action=query"
-                f"&titles={requests.utils.quote(titolo_pagina)}"
-                "&prop=pageimages&pithumbsize=1200&format=json&redirects=1"
-            )
-            r = requests.get(url, headers=headers, timeout=6)
-            if r.status_code == 200:
-                pages = r.json().get("query", {}).get("pages", {})
-                for pg in pages.values():
-                    thumb = pg.get("thumbnail", {}).get("source", "")
-                    if thumb and not thumb.lower().endswith(".svg") and "crest" not in thumb.lower() and "logo" not in thumb.lower():
-                        return thumb
-        except Exception:
-            continue
-    return None
 
 
 def cerca_logo_espn(nome_squadra):
@@ -103,22 +93,28 @@ def cerca_logo_espn(nome_squadra):
     return None
 
 
-def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
+def cerca_media_solo_club_e_maglia(nome_squadra, foto_gia_usate=None):
+    """
+    NON cerca mai singoli giocatori (così non escono mai ex giocatori trasferiti come Lukaku alla Roma).
+    Cerca SOLO fanart generali del club/maglia/stadio e applica il crop sul busto/campo.
+    """
     if foto_gia_usate is None:
         foto_gia_usate = []
 
-    headers = {"User-Agent": "SBRLabEditorialBot/3.0"}
-    info_club = SQUADRE_SERIE_A_E_BIG.get(nome_squadra, {"tsdb": nome_squadra, "wiki": nome_squadra, "players": []})
+    headers = {"User-Agent": "SBRLabEditorialBot/4.0"}
+    info_club = CLUB_SERIE_A_EUROPA.get(nome_squadra, {"tsdb": nome_squadra, "wiki": nome_squadra})
     pool_foto = []
     logo_url = None
 
+    # 1. Fanart generali del Club e dello Stadio da TheSportsDB (NO ricerca singoli calciatori)
     try:
         r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(info_club['tsdb'])}", headers=headers, timeout=7)
         if r.status_code == 200 and r.json().get("teams"):
             for tm in r.json()["teams"]:
                 if "soccer" in str(tm.get("strSport", "")).lower():
                     logo_url = tm.get("strBadge") or tm.get("strLogo")
-                    for campo in ("strFanart1", "strFanart2", "strFanart3", "strFanart4", "strStadiumThumb"):
+                    # Usa prima lo stadio/tifosi e le fanart corali del club
+                    for campo in ("strStadiumThumb", "strFanart1", "strFanart2", "strFanart3", "strFanart4"):
                         if tm.get(campo):
                             pool_foto.append(tm[campo])
                     break
@@ -128,42 +124,27 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
     if not logo_url:
         logo_url = cerca_logo_espn(nome_squadra)
 
-    giocatori = list(info_club.get("players", []))
-    random.shuffle(giocatori)
-    for gioc in giocatori[:3]:
-        try:
-            rp = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p={requests.utils.quote(gioc)}", headers=headers, timeout=6)
-            if rp.status_code == 200 and rp.json().get("player"):
-                pl = rp.json()["player"][0]
-                for c in ("strFanart1", "strFanart2", "strFanart3", "strCutout", "strThumb"):
-                    if pl.get(c) and not str(pl.get(c)).endswith(".png"):
-                        pool_foto.insert(0, pl[c])
-        except Exception:
-            pass
-
-        foto_wiki_pl = cerca_foto_wikipedia_hd(gioc)
-        if foto_wiki_pl:
-            pool_foto.append(foto_wiki_pl)
-
-    if len(pool_foto) < 2:
-        try:
-            q_wiki = f"{info_club['wiki']} player"
-            w_url = (
-                "https://commons.wikimedia.org/w/api.php?action=query&generator=search"
-                f"&gsrsearch={requests.utils.quote(q_wiki)}&gsrnamespace=6&gsrlimit=8"
-                "&prop=imageinfo&iiprop=url|dimensions&format=json"
-            )
-            rw = requests.get(w_url, headers=headers, timeout=6)
-            if rw.status_code == 200:
-                pages = rw.json().get("query", {}).get("pages", {})
-                for pg in pages.values():
-                    ii = (pg.get("imageinfo") or [{}])[0]
-                    u = ii.get("url", "")
-                    w = ii.get("width", 0)
-                    if w >= 800 and any(u.lower().endswith(ext) for ext in (".jpg", ".jpeg")) and "logo" not in u.lower():
-                        pool_foto.append(u)
-        except Exception:
-            pass
+    # 2. Cerca scatti panoramici di maglia/tifosi/match del club su Wikimedia (solo formato orizzontale, mai ritratti verticali di facce)
+    try:
+        q_wiki = f'"{info_club["wiki"]}" match shirt OR stadium'
+        w_url = (
+            "https://commons.wikimedia.org/w/api.php?action=query&generator=search"
+            f"&gsrsearch={requests.utils.quote(q_wiki)}&gsrnamespace=6&gsrlimit=8"
+            "&prop=imageinfo&iiprop=url|dimensions&format=json"
+        )
+        rw = requests.get(w_url, headers=headers, timeout=6)
+        if rw.status_code == 200:
+            pages = rw.json().get("query", {}).get("pages", {})
+            for pg in pages.values():
+                ii = (pg.get("imageinfo") or [{}])[0]
+                u = ii.get("url", "")
+                w = ii.get("width", 0)
+                h = ii.get("height", 0)
+                # Solo foto orizzontali larghe (w > h * 1.25) così non sono mai primi piani del volto di un singolo giocatore
+                if w >= 1000 and w > (h * 1.25) and any(u.lower().endswith(ext) for ext in (".jpg", ".jpeg")) and "logo" not in u.lower():
+                    pool_foto.append(u)
+    except Exception:
+        pass
 
     fresche = [f for f in pool_foto if f not in foto_gia_usate]
     if fresche:
@@ -171,7 +152,8 @@ def cerca_media_reali_squadra(nome_squadra, foto_gia_usate=None):
     if pool_foto:
         return random.choice(pool_foto), logo_url, True
 
-    return random.choice(FOTO_FALLBACK_CALCIO), logo_url, False
+    fresche_fb = [f for f in FOTO_DETTAGLIO_MAGLIA_CAMPO if f not in foto_gia_usate]
+    return random.choice(fresche_fb if fresche_fb else FOTO_DETTAGLIO_MAGLIA_CAMPO), logo_url, False
 
 
 def decripta_payload_se_presente(schedina):
@@ -331,7 +313,7 @@ def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
                 if casa and trasf and "🔒" not in casa and "Operazione" not in casa and "Singola" not in casa:
                     chiave_m = f"{casa} - {trasf}"
                     item = (mod, casa, trasf, pron, chiave_m)
-                    if "serie_a" in lega or casa in SQUADRE_SERIE_A_E_BIG or trasf in SQUADRE_SERIE_A_E_BIG:
+                    if "serie_a" in lega or casa in CLUB_SERIE_A_EUROPA or trasf in CLUB_SERIE_A_EUROPA:
                         if not any(x[4] == chiave_m for x in pool_serie_a):
                             pool_serie_a.append(item)
                     else:
@@ -449,11 +431,11 @@ def fase_1_genera_proposta(forza_tipo=None):
         mod_key, sq_casa, sq_trasf, mercato = scegli_match_calcio_serie_a_prioritario(schedine, usati_match)
         stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
 
-        foto_casa, logo_casa, vera_c = cerca_media_reali_squadra(sq_casa, foto_gia_usate=usate_foto)
-        foto_trasf, logo_trasf, vera_t = cerca_media_reali_squadra(sq_trasf, foto_gia_usate=usate_foto)
+        foto_casa, logo_casa, vera_c = cerca_media_solo_club_e_maglia(sq_casa, foto_gia_usate=usate_foto)
+        foto_trasf, logo_trasf, vera_t = cerca_media_solo_club_e_maglia(sq_trasf, foto_gia_usate=usate_foto)
 
         if vera_c and vera_t:
-            foto_scelta = foto_casa if sq_casa in SQUADRE_SERIE_A_E_BIG else foto_trasf
+            foto_scelta = foto_casa if sq_casa in CLUB_SERIE_A_EUROPA else foto_trasf
         elif vera_t and not vera_c:
             foto_scelta = foto_trasf
         else:
