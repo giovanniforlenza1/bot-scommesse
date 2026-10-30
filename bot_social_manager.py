@@ -26,56 +26,178 @@ STILE_BOT = {
     "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANT"}
 }
 
-# Solo riferimenti UFFICIALI DEL CLUB (nessun nome di calciatore per evitare ex giocatori trasferiti!)
-CLUB_SERIE_A_EUROPA = {
-    "Inter": {"tsdb": "Internazionale", "wiki": "Inter Milan"},
-    "Milan": {"tsdb": "AC Milan", "wiki": "AC Milan"},
-    "Juventus": {"tsdb": "Juventus", "wiki": "Juventus FC"},
-    "Napoli": {"tsdb": "Napoli", "wiki": "SSC Napoli"},
-    "Roma": {"tsdb": "AS Roma", "wiki": "AS Roma"},
-    "Lazio": {"tsdb": "Lazio", "wiki": "SS Lazio"},
-    "Atalanta": {"tsdb": "Atalanta", "wiki": "Atalanta BC"},
-    "Fiorentina": {"tsdb": "Fiorentina", "wiki": "ACF Fiorentina"},
-    "Bologna": {"tsdb": "Bologna", "wiki": "Bologna FC 1909"},
-    "Torino": {"tsdb": "Torino", "wiki": "Torino FC"},
-    "Udinese": {"tsdb": "Udinese", "wiki": "Udinese Calcio"},
-    "Genoa": {"tsdb": "Genoa", "wiki": "Genoa CFC"},
-    "Como": {"tsdb": "Como", "wiki": "Como 1907"},
-    "Parma": {"tsdb": "Parma", "wiki": "Parma Calcio 1913"},
-    "Verona": {"tsdb": "Hellas Verona", "wiki": "Hellas Verona FC"},
-    "Empoli": {"tsdb": "Empoli", "wiki": "Empoli FC"},
-    "Lecce": {"tsdb": "Lecce", "wiki": "US Lecce"},
-    "Cagliari": {"tsdb": "Cagliari", "wiki": "Cagliari Calcio"},
-    "Venezia": {"tsdb": "Venezia", "wiki": "Venezia FC"},
-    "Monza": {"tsdb": "Monza", "wiki": "AC Monza"},
-    "Real Madrid": {"tsdb": "Real Madrid", "wiki": "Real Madrid CF"},
-    "Barcellona": {"tsdb": "Barcelona", "wiki": "FC Barcelona"},
-    "Arsenal": {"tsdb": "Arsenal", "wiki": "Arsenal F.C."},
-    "Manchester City": {"tsdb": "Manchester City", "wiki": "Manchester City F.C."},
-    "Manchester United": {"tsdb": "Manchester United", "wiki": "Manchester United F.C."},
-    "Liverpool": {"tsdb": "Liverpool", "wiki": "Liverpool F.C."},
-    "Chelsea": {"tsdb": "Chelsea", "wiki": "Chelsea F.C."},
-    "Tottenham": {"tsdb": "Tottenham", "wiki": "Tottenham Hotspur F.C."},
-    "Newcastle": {"tsdb": "Newcastle", "wiki": "Newcastle United F.C."},
-    "Bayern Monaco": {"tsdb": "Bayern Munich", "wiki": "FC Bayern Munich"},
-    "Dortmund": {"tsdb": "Borussia Dortmund", "wiki": "Borussia Dortmund"},
-    "PSG": {"tsdb": "Paris SG", "wiki": "Paris Saint-Germain F.C."}
+# Categorie Wikimedia Commons Ufficiali + Pagine Wikipedia Stadio/Tifosi per avere SEMPRE foto vere della squadra
+CLUB_MEDIA_MAP = {
+    "Inter": {
+        "tsdb": ["Inter", "Internazionale"],
+        "commons_cats": ["Category:FC Internazionale Milano", "Category:San Siro"],
+        "wiki_pages": ["San Siro", "Derby della Madonnina", "FC Internazionale Milano"]
+    },
+    "Milan": {
+        "tsdb": ["AC Milan", "Milan"],
+        "commons_cats": ["Category:AC Milan", "Category:San Siro"],
+        "wiki_pages": ["San Siro", "AC Milan", "Derby della Madonnina"]
+    },
+    "Juventus": {
+        "tsdb": ["Juventus"],
+        "commons_cats": ["Category:Juventus FC", "Category:Juventus Stadium"],
+        "wiki_pages": ["Juventus Stadium", "Juventus FC"]
+    },
+    "Napoli": {
+        "tsdb": ["Napoli", "SSC Napoli"],
+        "commons_cats": ["Category:SSC Napoli", "Category:Stadio Diego Armando Maradona (Naples)"],
+        "wiki_pages": ["Stadio Diego Armando Maradona", "SSC Napoli"]
+    },
+    "Roma": {
+        "tsdb": ["AS Roma", "Roma"],
+        "commons_cats": ["Category:AS Roma", "Category:Stadio Olimpico (Rome)"],
+        "wiki_pages": ["Stadio Olimpico", "AS Roma", "Derby della Capitale"]
+    },
+    "Lazio": {
+        "tsdb": ["Lazio", "SS Lazio"],
+        "commons_cats": ["Category:SS Lazio", "Category:Stadio Olimpico (Rome)"],
+        "wiki_pages": ["Stadio Olimpico", "SS Lazio"]
+    },
+    "Atalanta": {
+        "tsdb": ["Atalanta"],
+        "commons_cats": ["Category:Atalanta BC", "Category:Stadio Atleti Azzurri d'Italia"],
+        "wiki_pages": ["Gewiss Stadium", "Atalanta BC"]
+    },
+    "Fiorentina": {
+        "tsdb": ["Fiorentina"],
+        "commons_cats": ["Category:ACF Fiorentina", "Category:Stadio Artemio Franchi (Florence)"],
+        "wiki_pages": ["Stadio Artemio Franchi", "ACF Fiorentina"]
+    },
+    "Bologna": {
+        "tsdb": ["Bologna"],
+        "commons_cats": ["Category:Bologna FC 1909", "Category:Stadio Renato Dall'Ara"],
+        "wiki_pages": ["Stadio Renato Dall'Ara", "Bologna FC 1909"]
+    },
+    "Torino": {
+        "tsdb": ["Torino"],
+        "commons_cats": ["Category:Torino FC", "Category:Stadio Olimpico Grande Torino"],
+        "wiki_pages": ["Stadio Olimpico Grande Torino", "Torino FC"]
+    },
+    "Udinese": {
+        "tsdb": ["Udinese"],
+        "commons_cats": ["Category:Udinese Calcio", "Category:Stadio Friuli"],
+        "wiki_pages": ["Stadio Friuli", "Udinese Calcio"]
+    },
+    "Genoa": {
+        "tsdb": ["Genoa"],
+        "commons_cats": ["Category:Genoa CFC", "Category:Stadio Luigi Ferraris"],
+        "wiki_pages": ["Stadio Luigi Ferraris", "Genoa CFC"]
+    },
+    "Como": {
+        "tsdb": ["Como"],
+        "commons_cats": ["Category:Como 1907", "Category:Stadio Giuseppe Sinigaglia"],
+        "wiki_pages": ["Stadio Giuseppe Sinigaglia", "Como 1907"]
+    },
+    "Parma": {
+        "tsdb": ["Parma"],
+        "commons_cats": ["Category:Parma Calcio 1913", "Category:Stadio Ennio Tardini"],
+        "wiki_pages": ["Stadio Ennio Tardini", "Parma Calcio 1913"]
+    },
+    "Verona": {
+        "tsdb": ["Hellas Verona", "Verona"],
+        "commons_cats": ["Category:Hellas Verona FC", "Category:Stadio Marcantonio Bentegodi"],
+        "wiki_pages": ["Stadio Marcantonio Bentegodi", "Hellas Verona FC"]
+    },
+    "Empoli": {
+        "tsdb": ["Empoli"],
+        "commons_cats": ["Category:Empoli FC", "Category:Stadio Carlo Castellani"],
+        "wiki_pages": ["Stadio Carlo Castellani", "Empoli FC"]
+    },
+    "Lecce": {
+        "tsdb": ["Lecce"],
+        "commons_cats": ["Category:US Lecce", "Category:Stadio Via del Mare"],
+        "wiki_pages": ["Stadio Via del Mare", "US Lecce"]
+    },
+    "Cagliari": {
+        "tsdb": ["Cagliari"],
+        "commons_cats": ["Category:Cagliari Calcio", "Category:Unipol Domus"],
+        "wiki_pages": ["Unipol Domus", "Cagliari Calcio"]
+    },
+    "Venezia": {
+        "tsdb": ["Venezia"],
+        "commons_cats": ["Category:Venezia FC", "Category:Stadio Pier Luigi Penzo"],
+        "wiki_pages": ["Stadio Pier Luigi Penzo", "Venezia FC"]
+    },
+    "Monza": {
+        "tsdb": ["Monza"],
+        "commons_cats": ["Category:AC Monza", "Category:Stadio Brianteo"],
+        "wiki_pages": ["Stadio Brianteo", "AC Monza"]
+    },
+    "Real Madrid": {
+        "tsdb": ["Real Madrid"],
+        "commons_cats": ["Category:Real Madrid CF", "Category:Santiago Bernabéu Stadium"],
+        "wiki_pages": ["Santiago Bernabéu", "Real Madrid CF"]
+    },
+    "Barcellona": {
+        "tsdb": ["Barcelona"],
+        "commons_cats": ["Category:FC Barcelona", "Category:Camp Nou"],
+        "wiki_pages": ["Camp Nou", "FC Barcelona"]
+    },
+    "Arsenal": {
+        "tsdb": ["Arsenal"],
+        "commons_cats": ["Category:Arsenal F.C.", "Category:Emirates Stadium"],
+        "wiki_pages": ["Emirates Stadium", "Arsenal F.C."]
+    },
+    "Manchester City": {
+        "tsdb": ["Manchester City"],
+        "commons_cats": ["Category:Manchester City F.C.", "Category:City of Manchester Stadium"],
+        "wiki_pages": ["City of Manchester Stadium", "Manchester City F.C."]
+    },
+    "Manchester United": {
+        "tsdb": ["Manchester United"],
+        "commons_cats": ["Category:Manchester United F.C.", "Category:Old Trafford"],
+        "wiki_pages": ["Old Trafford", "Manchester United F.C."]
+    },
+    "Liverpool": {
+        "tsdb": ["Liverpool"],
+        "commons_cats": ["Category:Liverpool F.C.", "Category:Anfield"],
+        "wiki_pages": ["Anfield", "Liverpool F.C."]
+    },
+    "Chelsea": {
+        "tsdb": ["Chelsea"],
+        "commons_cats": ["Category:Chelsea F.C.", "Category:Stamford Bridge"],
+        "wiki_pages": ["Stamford Bridge", "Chelsea F.C."]
+    },
+    "Bayern Monaco": {
+        "tsdb": ["Bayern Munich"],
+        "commons_cats": ["Category:FC Bayern München", "Category:Allianz Arena"],
+        "wiki_pages": ["Allianz Arena", "FC Bayern Munich"]
+    },
+    "Dortmund": {
+        "tsdb": ["Borussia Dortmund"],
+        "commons_cats": ["Category:Borussia Dortmund", "Category:Signal Iduna Park"],
+        "wiki_pages": ["Westfalenstadion", "Borussia Dortmund"]
+    },
+    "PSG": {
+        "tsdb": ["Paris SG"],
+        "commons_cats": ["Category:Paris Saint-Germain F.C.", "Category:Parc des Princes"],
+        "wiki_pages": ["Parc des Princes", "Paris Saint-Germain F.C."]
+    }
 }
 
-# Scatti close-up di solo busto/gambe/pallone/maglia senza volti riconoscibili
-FOTO_DETTAGLIO_MAGLIA_CAMPO = [
-    "https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551958219-acbc608c6377?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=85&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?q=85&w=1200&auto=format&fit=crop"
-]
+
+def immagine_valida_non_ritratto(url, width, height):
+    if not url:
+        return False
+    low = url.lower()
+    if any(b in low for b in (".svg", ".gif", "logo", "crest", "badge", "coat_of_arms", "map", "diagram", "signature", "icon")):
+        return False
+    # Richiede formato orizzontale (così sono sempre foto di campo/partita/maglie/stadio e mai fototessere di vecchi giocatori)
+    if width and height and width < height:
+        return False
+    if width and width < 700:
+        return False
+    return any(low.endswith(ext) for ext in (".jpg", ".jpeg", ".png"))
 
 
 def cerca_logo_espn(nome_squadra):
     headers = {"User-Agent": "Mozilla/5.0"}
-    for lega in ("ita.1", "eng.1", "esp.1", "ger.1", "fra.1", "uefa.champions"):
+    for lega in ("ita.1", "eng.1", "esp.1", "ger.1", "fra.1", "ned.1", "por.1", "uefa.champions"):
         try:
             r = requests.get(f"https://site.api.espn.com/apis/site/v2/sports/soccer/{lega}/teams", headers=headers, timeout=5)
             if r.status_code == 200:
@@ -93,67 +215,113 @@ def cerca_logo_espn(nome_squadra):
     return None
 
 
-def cerca_media_solo_club_e_maglia(nome_squadra, foto_gia_usate=None):
+def cerca_foto_reali_club(nome_squadra, foto_gia_usate=None):
     """
-    NON cerca mai singoli giocatori (così non escono mai ex giocatori trasferiti come Lukaku alla Roma).
-    Cerca SOLO fanart generali del club/maglia/stadio e applica il crop sul busto/campo.
+    Cerca ESCLUSIVAMENTE foto reali appartenenti alla squadra del post:
+    1. TheSportsDB con tutte le varianti del nome club
+    2. Categorie Ufficiali Wikimedia Commons della squadra (es. Category:AC Milan, Category:FC Internazionale Milano)
+    3. Voci Wikipedia dello Stadio e del Club (it.wikipedia e en.wikipedia)
+    4. Ricerca libera Wikimedia per nome squadra
     """
     if foto_gia_usate is None:
         foto_gia_usate = []
 
-    headers = {"User-Agent": "SBRLabEditorialBot/4.0"}
-    info_club = CLUB_SERIE_A_EUROPA.get(nome_squadra, {"tsdb": nome_squadra, "wiki": nome_squadra})
+    headers = {"User-Agent": "SBRLabEditorialBot/5.0"}
+    cfg = CLUB_MEDIA_MAP.get(nome_squadra, {
+        "tsdb": [nome_squadra],
+        "commons_cats": [f"Category:{nome_squadra}"],
+        "wiki_pages": [nome_squadra]
+    })
+
     pool_foto = []
-    logo_url = None
+    logo_url = cerca_logo_espn(nome_squadra)
 
-    # 1. Fanart generali del Club e dello Stadio da TheSportsDB (NO ricerca singoli calciatori)
-    try:
-        r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(info_club['tsdb'])}", headers=headers, timeout=7)
-        if r.status_code == 200 and r.json().get("teams"):
-            for tm in r.json()["teams"]:
-                if "soccer" in str(tm.get("strSport", "")).lower():
-                    logo_url = tm.get("strBadge") or tm.get("strLogo")
-                    # Usa prima lo stadio/tifosi e le fanart corali del club
-                    for campo in ("strStadiumThumb", "strFanart1", "strFanart2", "strFanart3", "strFanart4"):
-                        if tm.get(campo):
-                            pool_foto.append(tm[campo])
-                    break
-    except Exception:
-        pass
+    # 1. TheSportsDB (tutte le varianti del nome)
+    for q_tsdb in cfg["tsdb"]:
+        try:
+            r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(q_tsdb)}", headers=headers, timeout=6)
+            if r.status_code == 200 and r.json().get("teams"):
+                for tm in r.json()["teams"]:
+                    if "soccer" in str(tm.get("strSport", "")).lower():
+                        if not logo_url:
+                            logo_url = tm.get("strBadge") or tm.get("strLogo")
+                        for campo in ("strFanart1", "strFanart2", "strFanart3", "strFanart4", "strStadiumThumb"):
+                            if tm.get(campo):
+                                pool_foto.append(tm[campo])
+                        break
+        except Exception:
+            continue
 
-    if not logo_url:
-        logo_url = cerca_logo_espn(nome_squadra)
+    # 2. Categorie Ufficiali Wikimedia Commons del Club (es. Category:AC Milan)
+    for cat in cfg["commons_cats"]:
+        try:
+            url_cat = (
+                "https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers"
+                f"&gcmtitle={requests.utils.quote(cat)}&gcmtype=file&gcmlimit=15"
+                "&prop=imageinfo&iiprop=url|dimensions&iiurlwidth=1280&format=json"
+            )
+            rc = requests.get(url_cat, headers=headers, timeout=6)
+            if rc.status_code == 200:
+                pages = rc.json().get("query", {}).get("pages", {})
+                for pg in pages.values():
+                    ii = (pg.get("imageinfo") or [{}])[0]
+                    u = ii.get("thumburl") or ii.get("url", "")
+                    w = ii.get("width", 0)
+                    h = ii.get("height", 0)
+                    if immagine_valida_non_ritratto(u, w, h):
+                        pool_foto.append(u)
+        except Exception:
+            continue
 
-    # 2. Cerca scatti panoramici di maglia/tifosi/match del club su Wikimedia (solo formato orizzontale, mai ritratti verticali di facce)
-    try:
-        q_wiki = f'"{info_club["wiki"]}" match shirt OR stadium'
-        w_url = (
-            "https://commons.wikimedia.org/w/api.php?action=query&generator=search"
-            f"&gsrsearch={requests.utils.quote(q_wiki)}&gsrnamespace=6&gsrlimit=8"
-            "&prop=imageinfo&iiprop=url|dimensions&format=json"
-        )
-        rw = requests.get(w_url, headers=headers, timeout=6)
-        if rw.status_code == 200:
-            pages = rw.json().get("query", {}).get("pages", {})
-            for pg in pages.values():
-                ii = (pg.get("imageinfo") or [{}])[0]
-                u = ii.get("url", "")
-                w = ii.get("width", 0)
-                h = ii.get("height", 0)
-                # Solo foto orizzontali larghe (w > h * 1.25) così non sono mai primi piani del volto di un singolo giocatore
-                if w >= 1000 and w > (h * 1.25) and any(u.lower().endswith(ext) for ext in (".jpg", ".jpeg")) and "logo" not in u.lower():
-                    pool_foto.append(u)
-    except Exception:
-        pass
+    # 3. Voci Wikipedia Ufficiali del Club e dello Stadio (es. San Siro, Stadio Olimpico, Derby)
+    for pagina in cfg["wiki_pages"]:
+        for lang in ("it", "en"):
+            try:
+                url_wp = (
+                    f"https://{lang}.wikipedia.org/w/api.php?action=query"
+                    f"&titles={requests.utils.quote(pagina)}"
+                    "&prop=pageimages&pithumbsize=1280&format=json&redirects=1"
+                )
+                rw = requests.get(url_wp, headers=headers, timeout=5)
+                if rw.status_code == 200:
+                    pages = rw.json().get("query", {}).get("pages", {})
+                    for pg in pages.values():
+                        src = pg.get("thumbnail", {}).get("source", "")
+                        w = pg.get("thumbnail", {}).get("width", 1200)
+                        h = pg.get("thumbnail", {}).get("height", 800)
+                        if immagine_valida_non_ritratto(src, w, h):
+                            pool_foto.append(src)
+            except Exception:
+                continue
+
+    # 4. Ricerca diretta su Wikimedia Commons col nome della squadra
+    if not pool_foto:
+        try:
+            url_s = (
+                "https://commons.wikimedia.org/w/api.php?action=query&generator=search"
+                f"&gsrsearch={requests.utils.quote(nome_squadra + ' football')}&gsrnamespace=6&gsrlimit=12"
+                "&prop=imageinfo&iiprop=url|dimensions&iiurlwidth=1280&format=json"
+            )
+            rs = requests.get(url_s, headers=headers, timeout=6)
+            if rs.status_code == 200:
+                pages = rs.json().get("query", {}).get("pages", {})
+                for pg in pages.values():
+                    ii = (pg.get("imageinfo") or [{}])[0]
+                    u = ii.get("thumburl") or ii.get("url", "")
+                    w = ii.get("width", 0)
+                    h = ii.get("height", 0)
+                    if immagine_valida_non_ritratto(u, w, h):
+                        pool_foto.append(u)
+        except Exception:
+            pass
 
     fresche = [f for f in pool_foto if f not in foto_gia_usate]
     if fresche:
-        return fresche[0], logo_url, True
+        return fresche[0], logo_url
     if pool_foto:
-        return random.choice(pool_foto), logo_url, True
+        return random.choice(pool_foto), logo_url
 
-    fresche_fb = [f for f in FOTO_DETTAGLIO_MAGLIA_CAMPO if f not in foto_gia_usate]
-    return random.choice(fresche_fb if fresche_fb else FOTO_DETTAGLIO_MAGLIA_CAMPO), logo_url, False
+    return None, logo_url
 
 
 def decripta_payload_se_presente(schedina):
@@ -244,7 +412,12 @@ def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
     elif tipo_post == "RISULTATI":
         winrate = dati_contesto.get("winrate", "--%")
         chiuse = dati_contesto.get("chiuse", 0)
-        titoli_res = ["Il verdetto del campo.", "I numeri restano sempre.", "Trasparenza totale.", "Parla solo lo storico."]
+        titoli_res = [
+            "IL CAMPO PARLA<span>.</span>",
+            "NUMERI REALI<span>.</span>",
+            "ZERO SCUSE<span>.</span>",
+            "STORICO PURO<span>.</span>"
+        ]
         titolo_scelto = scegli_senza_ripetere(titoli_res, usati_recenti)
         caption = (
             f"📊 Niente promesse da bar: in SBR Lab ogni singola operazione viene registrata e certificata a database.\n\n"
@@ -255,15 +428,15 @@ def genera_copy_catchy(tipo_post, dati_contesto, usati_recenti):
 
     else:
         titoli_omega = [
-            "Giocare il match 10.000 volte.",
-            "Cosa vede davvero Omega?",
-            "La calma fredda di Monte Carlo.",
-            "Perché Omega è ancora chiuso."
+            "10.000 PARTITE IN UNA.",
+            "DENTRO IL MOTORE OMEGA.",
+            "LA LEGGE DI MONTE CARLO.",
+            "DOVE NASCE IL VALORE."
         ]
         testi_omega = [
-            "Prima del fischio d'inizio, il motore Omega simula l'incontro diecimila volte pesando attacco, difesa e fatica per isolare la probabilità pura.",
-            "Omega nasce con un freno automatico: se il vantaggio matematico reale scende sotto soglia, il sistema blocca tutto. Fase privata in corso.",
-            "Mentre Alpha, Beta e Sigma lavorano gratis ogni giorno, in background Omega macina dati europei per costruire il nostro nucleo quantitativo di punta."
+            "Prima del fischio d'inizio, Omega simula l'incontro diecimila volte pesando attacco, difesa e fatica per isolare la probabilità reale.",
+            "Omega nasce con un freno automatico: se il vantaggio matematico scende sotto soglia, il sistema blocca l'operazione.",
+            "Mentre Alpha, Beta e Sigma lavorano gratis ogni giorno su Telegram, in laboratorio stiamo ultimando la calibrazione di Omega."
         ]
         titolo_scelto = scegli_senza_ripetere(titoli_omega, usati_recenti)
         caption = (
@@ -313,7 +486,7 @@ def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
                 if casa and trasf and "🔒" not in casa and "Operazione" not in casa and "Singola" not in casa:
                     chiave_m = f"{casa} - {trasf}"
                     item = (mod, casa, trasf, pron, chiave_m)
-                    if "serie_a" in lega or casa in CLUB_SERIE_A_EUROPA or trasf in CLUB_SERIE_A_EUROPA:
+                    if "serie_a" in lega or casa in CLUB_MEDIA_MAP or trasf in CLUB_MEDIA_MAP:
                         if not any(x[4] == chiave_m for x in pool_serie_a):
                             pool_serie_a.append(item)
                     else:
@@ -406,7 +579,7 @@ def fase_1_genera_proposta(forza_tipo=None):
             p0 = partite_vere[0]
             mod_label = s.get("modello", "SBR").upper()
             is_win = s["stato_schedina"] == "vinta"
-            badge = "<span class='esito-vinto'>✓ Presa</span>" if is_win else "<span class='esito-perso'>✕ Saltata</span>"
+            badge = "<span class='esito-vinto'>✓ PRESA</span>" if is_win else "<span class='esito-perso'>✕ STOP</span>"
             righe_html += (
                 f"<div class='row'>"
                 f"<div><span class='mod-pill'>{mod_label}</span>{p0['squadra_casa']} - {p0['squadra_trasferta']}</div>"
@@ -414,7 +587,8 @@ def fase_1_genera_proposta(forza_tipo=None):
             )
         copy_scelto = genera_copy_catchy("RISULTATI", {"winrate": winrate, "chiuse": len(concluse)}, usati_titoli)
         renderizza_html_in_png("templates_social/template_risultati.html", {
-            "PERIODO": f"AGGIORNATO AL {oggi_str}",
+            "PERIODO": f"REPORT AL {oggi_str}",
+            "TITOLO_RISULTATI": copy_scelto["titolo_grafica"],
             "TOTALE_CHIUSE": len(concluse),
             "WINRATE": winrate,
             "RIGHE_OPERAZIONI": righe_html or "<div class='row'><span>Storico in aggiornamento</span></div>"
@@ -431,15 +605,19 @@ def fase_1_genera_proposta(forza_tipo=None):
         mod_key, sq_casa, sq_trasf, mercato = scegli_match_calcio_serie_a_prioritario(schedine, usati_match)
         stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
 
-        foto_casa, logo_casa, vera_c = cerca_media_solo_club_e_maglia(sq_casa, foto_gia_usate=usate_foto)
-        foto_trasf, logo_trasf, vera_t = cerca_media_solo_club_e_maglia(sq_trasf, foto_gia_usate=usate_foto)
+        foto_casa, logo_casa = cerca_foto_reali_club(sq_casa, foto_gia_usate=usate_foto)
+        foto_trasf, logo_trasf = cerca_foto_reali_club(sq_trasf, foto_gia_usate=usate_foto)
 
-        if vera_c and vera_t:
-            foto_scelta = foto_casa if sq_casa in CLUB_SERIE_A_EUROPA else foto_trasf
-        elif vera_t and not vera_c:
-            foto_scelta = foto_trasf
+        foto_scelta = foto_casa or foto_trasf
+
+        # Se trova la foto reale della squadra la usa; se è una squadra minore senza foto, mostra gli stemmi giganti delle 2 squadre!
+        if foto_scelta:
+            hero_html = f"<img class='bg' src='{foto_scelta}' alt='Match Action'>"
+            usate_foto.append(foto_scelta)
         else:
-            foto_scelta = foto_casa
+            l1 = f"<img src='{logo_casa}' alt=''>" if logo_casa else ""
+            l2 = f"<img src='{logo_trasf}' alt=''>" if logo_trasf else ""
+            hero_html = f"<div class='club-split-hero'>{l1}{l2}</div>"
 
         logo_c_html = f"<img class='team-logo' src='{logo_casa}' alt=''>" if logo_casa else ""
         logo_t_html = f"<img class='team-logo' src='{logo_trasf}' alt=''>" if logo_trasf else ""
@@ -447,7 +625,7 @@ def fase_1_genera_proposta(forza_tipo=None):
 
         copy_scelto = genera_copy_catchy("PRE_MATCH", {"modello": mod_key.upper(), "match": match_nome, "focus": mercato}, usati_titoli)
         renderizza_html_in_png("templates_social/template_analisi.html", {
-            "FOTO_HD_URL": foto_scelta,
+            "HERO_VISUAL_HTML": hero_html,
             "COLORE_BOT": stile["colore"],
             "ETICHETTA_BOT": stile["etichetta"],
             "DATA_OGGI": oggi_str,
@@ -460,7 +638,6 @@ def fase_1_genera_proposta(forza_tipo=None):
             "MERCATO_CHIAVE": mercato
         }, IMAGE_FILE)
         usati_match.append(match_nome)
-        usate_foto.append(foto_scelta)
 
     usati_titoli.append(copy_scelto["titolo_grafica"])
 
