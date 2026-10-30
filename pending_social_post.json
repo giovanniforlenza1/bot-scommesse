@@ -1,9 +1,8 @@
 {
   "status": "WAITING_APPROVAL",
-  "caption": "⚽ Il tifoso guarda il nome sulla maglia, i nostri modelli guardano cosa succede davvero nei 90 minuti.\n\nOggi il radar del Modello ALPHA punta dritto su Milan - Inter (segnale: Over 1.5 Gol).\n\n📲 L'analisi completa è nel canale Telegram GRATUITO (Link in Bio).\n\n#SBRLab #CalcioItaliano #ModelliMatematici #MatchAnalysis #DataScience",
+  "caption": "📊 Niente promesse da bar: in SBR Lab ogni singola operazione viene registrata e certificata a database.\n\nCon 66 analisi concluse e un Win Rate del 64%, continuiamo a lavorare alla luce del sole.\n\n🔓 Entra GRATIS nel club su Telegram dal Link in Bio prima del fischio d'inizio.\n\n#SBRLab #CalcioItaliano #ModelliMatematici #MatchAnalysis #DataScience",
   "created_at": "30/10/2026",
   "ultimi_titoli_usati": [
-    "SOLO DATI REALI.",
     "DOMINIO TERRITORIALE.",
     "Il verdetto del campo.",
     "FAVORITA BLINDATA.",
@@ -12,7 +11,8 @@
     "I numeri restano sempre.",
     "RITMO DA ASSEDIO.",
     "La calma fredda di Monte Carlo.",
-    "FATTORE CAMPO DECISIVO."
+    "FATTORE CAMPO DECISIVO.",
+    "ZERO SCUSE<span>.</span>"
   ],
   "ultimi_match_usati": [
     "Milan - Bologna",
@@ -32,5 +32,5 @@
     "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Lorenzo_Lucca_high_five_%28cropped%2C_head_shot%29.jpg/1280px-Lorenzo_Lucca_high_five_%28cropped%2C_head_shot%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
     "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?q=85&w=1200&auto=format&fit=crop"
   ],
-  "indice_rotazione": 9
+  "indice_rotazione": 10
 }
