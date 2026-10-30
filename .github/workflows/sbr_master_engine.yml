@@ -13,6 +13,8 @@ env:
   CHIAVE_A: ${{ secrets.CHIAVE_A }}
   CHIAVE_B: ${{ secrets.CHIAVE_B }}
   CHIAVE_C: ${{ secrets.CHIAVE_C }}
+  CHIAVE_D: ${{ secrets.CHIAVE_D }}
+  CHIAVE_E: ${{ secrets.CHIAVE_E }}
   ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
   API_KEY_ALPHA: ${{ secrets.API_KEY_ALPHA }}
   API_KEY_ARBITRO: ${{ secrets.API_KEY_ARBITRO }}
