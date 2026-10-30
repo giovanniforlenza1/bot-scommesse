@@ -3126,7 +3126,7 @@
             "importo": 15.0,
             "quota_totale": 1.65,
             "ritorno_potenziale": 24.75,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3138,8 +3138,8 @@
                     "quota": 1.65,
                     "bookmaker": "Marathon Bet",
                     "lega": "tennis_atp_swiss_indoors",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "Persa"
                 }
             ]
         }
