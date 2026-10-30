@@ -39,7 +39,7 @@ TRADUZIONI_SQUADRE = {
 
 def ottieni_pool_chiavi():
     nomi_secrets = [
-        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", "CHIAVE_D", "CHIAVE_E", 
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
         "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
     ]
