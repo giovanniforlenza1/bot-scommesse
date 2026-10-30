@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -10,100 +10,148 @@
             background-color: #FFFFFF;
             color: #102542;
             font-family: 'Inter', sans-serif;
-            padding: 85px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            border-top: 18px solid #102542;
+            display: flex; flex-direction: column;
         }
-        .top-bar {
+        /* HEADER PIATTO CORALLO/BLU */
+        .top-strip {
+            background-color: #102542;
+            color: #FFFFFF;
+            padding: 38px 65px;
             display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 35px; border-bottom: 2px solid #CDD7D6;
+            border-bottom: 12px solid #F87060;
         }
-        .status-tag {
-            background-color: #ECFDF5; color: #10B981; border: 2px solid #BBF7D0;
-            font-size: 22px; font-weight: 700; text-transform: uppercase;
-            padding: 10px 22px; border-radius: 6px; letter-spacing: 1px;
+        .strip-tag {
+            background-color: #10B981; color: #FFFFFF;
+            font-size: 22px; font-weight: 900; text-transform: uppercase;
+            padding: 10px 22px; border-radius: 6px; letter-spacing: 1.5px;
         }
-        .period { font-size: 26px; font-weight: 600; color: #576574; }
+        .strip-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px; font-weight: 700; color: #B3A394;
+        }
 
-        .title {
-            font-size: 64px; font-weight: 800; color: #102542;
-            letter-spacing: -1.5px; line-height: 1.1; margin: 40px 0 14px;
+        /* CORPO CENTRALE ASIMMETRICO */
+        .main-wrap {
+            flex: 1;
+            padding: 60px 65px 45px 65px;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-        .subtitle { font-size: 32px; color: #576574; margin-bottom: 45px; }
+        .big-header {
+            font-size: 80px; font-weight: 900; line-height: 0.98;
+            letter-spacing: -3px; text-transform: uppercase; color: #102542;
+            margin-bottom: 35px;
+        }
+        .big-header span { color: #F87060; }
 
-        .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 40px; }
-        .kpi-card {
-            background-color: #F4F6F6; border: 2px solid #CDD7D6;
-            border-radius: 10px; padding: 34px;
+        /* BLOCCO HERO KPI GIGANTE IN TINTA PIATTA */
+        .hero-kpi-banner {
+            display: grid; grid-template-columns: 1.25fr 0.75fr;
+            border: 4px solid #102542; border-radius: 16px;
+            overflow: hidden; margin-bottom: 40px;
         }
-        .kpi-label {
-            font-size: 22px; font-weight: 700; color: #576574;
-            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+        .kpi-left {
+            background-color: #102542; color: #FFFFFF;
+            padding: 42px 45px;
+            display: flex; flex-direction: column; justify-content: center;
         }
-        .kpi-val { font-size: 56px; font-weight: 800; color: #102542; }
+        .kpi-left-lbl {
+            font-size: 22px; font-weight: 800; color: #B3A394;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+        }
+        .kpi-left-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 118px; font-weight: 800; line-height: 1; color: #10B981;
+            letter-spacing: -4px;
+        }
+        .kpi-right {
+            background-color: #F4F6F6; color: #102542;
+            padding: 42px 40px;
+            border-left: 4px solid #102542;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .kpi-right-lbl {
+            font-size: 22px; font-weight: 800; color: #576574;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;
+        }
+        .kpi-right-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 86px; font-weight: 800; line-height: 1; color: #102542;
+        }
 
-        .history-card {
-            background-color: #FFFFFF; border: 2px solid #CDD7D6;
-            border-radius: 10px; padding: 15px 38px;
+        /* LISTA TICKET STILE SCONTRINO */
+        .section-lbl {
+            font-size: 22px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 2px; color: #576574; margin-bottom: 16px;
+        }
+        .tickets-stack {
+            display: flex; flex-direction: column; gap: 18px;
+            margin-bottom: auto;
         }
         .row {
+            background-color: #FFFFFF;
+            border: 3px solid #102542;
+            border-radius: 12px;
+            padding: 24px 30px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 26px 0; border-bottom: 2px solid #F4F6F6;
-            font-size: 30px; font-weight: 600; color: #102542;
+            font-size: 31px; font-weight: 800; color: #102542;
         }
-        .row:last-child { border-bottom: none; }
         .mod-pill {
-            font-size: 20px; font-weight: 700; text-transform: uppercase;
-            background-color: #F4F6F6; border: 1px solid #CDD7D6;
-            color: #576574; padding: 6px 14px; border-radius: 4px; margin-right: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px; font-weight: 800; text-transform: uppercase;
+            background-color: #102542; color: #FFFFFF;
+            padding: 8px 16px; border-radius: 6px; margin-right: 18px;
         }
         .esito-vinto {
-            background-color: #ECFDF5; color: #10B981; border: 2px solid #BBF7D0;
-            padding: 8px 20px; border-radius: 6px; font-size: 24px; font-weight: 700;
+            background-color: #ECFDF5; color: #10B981; border: 3px solid #10B981;
+            padding: 8px 22px; border-radius: 8px; font-size: 24px; font-weight: 900;
+            text-transform: uppercase;
         }
         .esito-perso {
-            background-color: #FEF2F2; color: #EF4444; border: 2px solid #FECACA;
-            padding: 8px 20px; border-radius: 6px; font-size: 24px; font-weight: 700;
+            background-color: #FEF2F2; color: #EF4444; border: 3px solid #EF4444;
+            padding: 8px 22px; border-radius: 8px; font-size: 24px; font-weight: 900;
+            text-transform: uppercase;
         }
 
         .footer {
             display: flex; justify-content: space-between; align-items: center;
-            padding-top: 35px; border-top: 2px solid #CDD7D6;
-            font-size: 26px; font-weight: 600; color: #576574;
+            padding-top: 28px; border-top: 3px solid #CDD7D6;
         }
-        .brand { font-size: 32px; font-weight: 800; color: #102542; }
+        .cta { font-size: 26px; font-weight: 800; color: #102542; }
+        .brand { font-size: 34px; font-weight: 900; color: #102542; letter-spacing: -1px; }
         .brand span { color: #F87060; }
     </style>
 </head>
 <body>
-    <div>
-        <div class="top-bar">
-            <span class="status-tag">✓ STORICO CERTIFICATO</span>
-            <span class="period">{{PERIODO}}</span>
-        </div>
-
-        <div class="title">Il verdetto del campo.</div>
-        <div class="subtitle">Rendicontazione trasparente estratta dal database storico SBR.</div>
-
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-label">Operazioni Chiuse</div>
-                <div class="kpi-val">{{TOTALE_CHIUSE}}</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-label">Win Rate Globale</div>
-                <div class="kpi-val">{{WINRATE}}</div>
-            </div>
-        </div>
-
-        <div class="history-card">
-            {{RIGHE_OPERAZIONI}}
-        </div>
+    <div class="top-strip">
+        <span class="strip-tag">✓ DATABASE CERTIFICATO</span>
+        <span class="strip-date">{{PERIODO}}</span>
     </div>
 
-    <div class="footer">
-        <span>Storico integrale consultabile nel Link in Bio</span>
-        <span class="brand">SBR <span>LAB</span></span>
+    <div class="main-wrap">
+        <div class="big-header">{{TITOLO_RISULTATI}}</div>
+
+        <div class="hero-kpi-banner">
+            <div class="kpi-left">
+                <div class="kpi-left-lbl">Precisione Globale</div>
+                <div class="kpi-left-val">{{WINRATE}}</div>
+            </div>
+            <div class="kpi-right">
+                <div class="kpi-right-lbl">Analisi Chiuse</div>
+                <div class="kpi-right-val">{{TOTALE_CHIUSE}}</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="section-lbl">Ultime Operazioni Registrate a Sistema</div>
+            <div class="tickets-stack">
+                {{RIGHE_OPERAZIONI}}
+            </div>
+        </div>
+
+        <div class="footer">
+            <span class="cta">📊 Storico pubblico integrale • Link in Bio</span>
+            <span class="brand">SBR <span>LAB</span></span>
+        </div>
     </div>
 </body>
 </html>
