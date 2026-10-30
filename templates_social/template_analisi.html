@@ -12,9 +12,8 @@
             font-family: 'Inter', sans-serif;
             display: flex; flex-direction: column;
         }
-        /* FOTO PROTAGONISTA CON CROP SUL BUSTO / MAGLIA (TAGLIA VIA I VOLTI) */
         .hero-photo {
-            width: 1080px; height: 820px;
+            width: 1080px; height: 800px;
             position: relative;
             background-color: #102542;
             overflow: hidden;
@@ -23,10 +22,20 @@
         .hero-photo img.bg {
             width: 100%; height: 100%;
             object-fit: cover;
-            /* Sposta il fuoco sul torso/maglia/campo ed esclude la testa nei ritratti */
-            object-position: center 65%;
-            transform: scale(1.35);
-            transform-origin: center 60%;
+            object-position: center 55%;
+            transform: scale(1.18);
+        }
+        /* Grafica Split Club Ufficiale (attivata automaticamente se manca la foto reale) */
+        .club-split-hero {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: space-around;
+            background-color: #102542;
+            padding: 80px 60px 40px 60px;
+        }
+        .club-split-hero img {
+            width: 310px; height: 310px; object-fit: contain;
+            background-color: #FFFFFF; padding: 35px; border-radius: 28px;
+            border: 8px solid {{COLORE_BOT}};
         }
         .top-pill-bar {
             position: absolute; top: 45px; left: 55px; right: 55px;
@@ -84,8 +93,8 @@
             text-transform: uppercase; margin-bottom: 18px;
         }
         .sub-hook {
-            font-size: 36px; line-height: 1.3; color: #576574;
-            font-weight: 700; margin-bottom: 28px;
+            font-size: 35px; line-height: 1.3; color: #576574;
+            font-weight: 700; margin-bottom: 26px;
         }
 
         .focus-box {
@@ -115,7 +124,7 @@
 </head>
 <body>
     <div class="hero-photo">
-        <img class="bg" src="{{FOTO_HD_URL}}" alt="Match Action">
+        {{HERO_VISUAL_HTML}}
         <div class="top-pill-bar">
             <span class="model-badge">{{ETICHETTA_BOT}}</span>
             <span class="date-badge">{{DATA_OGGI}}</span>
