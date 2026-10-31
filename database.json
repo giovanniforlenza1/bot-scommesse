@@ -3092,8 +3092,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-5"
                 },
                 {
                     "id_partita": "e82f25e981f2ebc731cfaf5716231af5",
@@ -3114,8 +3114,8 @@
                     "pronostico": "Doppia Chance 1X (Heerenveen)",
                     "quota": 1.35,
                     "lega": "soccer_netherlands_eredivisie",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 }
             ]
         },
