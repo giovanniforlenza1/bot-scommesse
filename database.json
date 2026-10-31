@@ -3252,7 +3252,7 @@
             "importo": 15.0,
             "quota_totale": 1.71,
             "ritorno_potenziale": 25.65,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3264,8 +3264,8 @@
                     "quota": 1.71,
                     "bookmaker": "Pinnacle",
                     "lega": "tennis_atp_paris_masters",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
