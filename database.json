@@ -3058,7 +3058,7 @@
             "importo": 15.0,
             "quota_totale": 1.76,
             "ritorno_potenziale": 26.4,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "04aa939b89001eedf55668e66c74836e",
@@ -3069,8 +3069,8 @@
                     "quota": 1.76,
                     "bookmaker": "1xBet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 }
             ]
         },
@@ -3196,8 +3196,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "b7b781db85506536dce5e7ce59a59863",
