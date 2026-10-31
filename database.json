@@ -3142,6 +3142,132 @@
                     "risultato_reale": "Persa"
                 }
             ]
+        },
+        {
+            "id": "dda8f1e0",
+            "modello": "omega",
+            "data_creazione": "31/10/2026",
+            "importo": 15.0,
+            "quota_totale": 2.0,
+            "ritorno_potenziale": 30.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "9507f4bcbcfd4e4953720628a2b86a17",
+                    "data": "01/11 12:30",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Venezia",
+                    "pronostico": "Vittoria Como",
+                    "quota": 1.34,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3f9f4bc9a19bf36dcb74be2f29610d55",
+                    "data": "01/11 15:00",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Cagliari",
+                    "pronostico": "Vittoria Lazio",
+                    "quota": 1.49,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "b248b0e7",
+            "modello": "alpha",
+            "data_creazione": "31/10/2026",
+            "importo": 12.0,
+            "quota_totale": 2.48,
+            "ritorno_potenziale": 29.76,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "04aa939b89001eedf55668e66c74836e",
+                    "data": "31/10 15:00",
+                    "squadra_casa": "Bologna",
+                    "squadra_trasferta": "Monza",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "b7b781db85506536dce5e7ce59a59863",
+                    "data": "01/11 15:00",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Torino",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "aeadf1388a1075328536501576b3d550",
+                    "data": "01/11 20:45",
+                    "squadra_casa": "Juventus",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.36,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "1a01eb78",
+            "modello": "beta",
+            "data_creazione": "31/10/2026",
+            "importo": 12.0,
+            "quota_totale": 1.75,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "df1e1589c51bbcac432125567d1f7c58",
+                    "data": "01/11 20:45",
+                    "squadra_casa": "Marseille",
+                    "squadra_trasferta": "Toulouse",
+                    "pronostico": "Under 9.5 Calci d'Angolo",
+                    "quota": 1.75,
+                    "lega": "soccer_france_ligue_one",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "75507197",
+            "modello": "sigma",
+            "data_creazione": "31/10/2026",
+            "importo": 15.0,
+            "quota_totale": 1.71,
+            "ritorno_potenziale": 25.65,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "2a5f1771a236171c3e21d21bdf56bff4",
+                    "data": "31/10 11:05",
+                    "squadra_casa": "Jaime Faria",
+                    "squadra_trasferta": "Rinky Hijikata",
+                    "pronostico": "Vittoria Rinky Hijikata",
+                    "quota": 1.71,
+                    "bookmaker": "Pinnacle",
+                    "lega": "tennis_atp_paris_masters",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
