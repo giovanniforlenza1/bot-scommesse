@@ -3081,7 +3081,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3103,8 +3103,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "c27c8af8c7ee29d153de0b9999ea0434",
