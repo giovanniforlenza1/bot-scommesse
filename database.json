@@ -3268,6 +3268,120 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "b79d23c2",
+            "modello": "omega",
+            "data_creazione": "01/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.06,
+            "ritorno_potenziale": 30.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "b7b781db85506536dce5e7ce59a59863",
+                    "data": "01/11 15:00",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Torino",
+                    "pronostico": "Vittoria Frosinone",
+                    "quota": 2.06,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "39215145",
+            "modello": "alpha",
+            "data_creazione": "01/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "9507f4bcbcfd4e4953720628a2b86a17",
+                    "data": "01/11 12:30",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Venezia",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3f9f4bc9a19bf36dcb74be2f29610d55",
+                    "data": "01/11 15:00",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Cagliari",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "66608b64d462d1d3deabe573c8456d86",
+                    "data": "02/11 18:30",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "6fd5975d",
+            "modello": "beta",
+            "data_creazione": "01/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "0f552d9c6990c69474f50ff2fb54e9a3",
+                    "data": "02/11 21:00",
+                    "squadra_casa": "Newcastle",
+                    "squadra_trasferta": "Everton",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_epl",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "aab6cb67",
+            "modello": "sigma",
+            "data_creazione": "01/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 23.55,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "d54412ae826f63d7234c2ea00d4809ac",
+                    "data": "02/11 11:00",
+                    "squadra_casa": "Daniel Merida Aguilar",
+                    "squadra_trasferta": "Alexander Blockx",
+                    "pronostico": "Vittoria Alexander Blockx",
+                    "quota": 1.57,
+                    "bookmaker": "888sport",
+                    "lega": "tennis_atp_paris_masters",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
