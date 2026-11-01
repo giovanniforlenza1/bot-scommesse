@@ -3344,7 +3344,7 @@
             "importo": 12.0,
             "quota_totale": 1.8,
             "ritorno_potenziale": 21.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "0f552d9c6990c69474f50ff2fb54e9a3",
@@ -3354,8 +3354,8 @@
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
                     "lega": "soccer_epl",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "14 Angoli"
                 }
             ]
         },
