@@ -3332,8 +3332,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-4"
                 }
             ]
         },
@@ -3470,7 +3470,7 @@
             "importo": 12.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 18.84,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "66608b64d462d1d3deabe573c8456d86",
@@ -3480,8 +3480,8 @@
                     "pronostico": "Under 10.5 Calci d'Angolo",
                     "quota": 1.57,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "8 Angoli"
                 }
             ]
         },
@@ -3492,7 +3492,7 @@
             "importo": 15.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 23.55,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3504,8 +3504,8 @@
                     "quota": 1.57,
                     "bookmaker": "Bet Victor",
                     "lega": "tennis_atp_paris_masters",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
