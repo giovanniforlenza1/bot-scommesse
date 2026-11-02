@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -12,113 +12,118 @@
             font-family: 'Inter', sans-serif;
             display: flex; flex-direction: column;
         }
+        /* HERO IMAGE GENERATA SU MISURA DALL'AI (760px) */
         .hero-photo {
-            width: 1080px; height: 800px;
+            width: 1080px; height: 760px;
             position: relative;
             background-color: #102542;
             overflow: hidden;
-            border-bottom: 18px solid {{COLORE_BOT}};
+            border-bottom: 16px solid {{COLORE_BOT}};
         }
         .hero-photo img.bg {
             width: 100%; height: 100%;
             object-fit: cover;
-            object-position: center 55%;
-            transform: scale(1.18);
-        }
-        /* Grafica Split Club Ufficiale (attivata automaticamente se manca la foto reale) */
-        .club-split-hero {
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: space-around;
-            background-color: #102542;
-            padding: 80px 60px 40px 60px;
-        }
-        .club-split-hero img {
-            width: 310px; height: 310px; object-fit: contain;
-            background-color: #FFFFFF; padding: 35px; border-radius: 28px;
-            border: 8px solid {{COLORE_BOT}};
+            object-position: center center;
         }
         .top-pill-bar {
-            position: absolute; top: 45px; left: 55px; right: 55px;
+            position: absolute; top: 42px; left: 55px; right: 55px;
             display: flex; justify-content: space-between; align-items: center;
             z-index: 5;
         }
         .model-badge {
             background-color: {{COLORE_BOT}};
             color: #FFFFFF;
-            font-size: 24px; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 1.5px; padding: 14px 28px; border-radius: 8px;
+            font-size: 22px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 1.5px; padding: 13px 26px; border-radius: 8px;
             border: 3px solid #FFFFFF;
         }
         .date-badge {
             background-color: #102542; color: #FFFFFF;
-            font-size: 24px; font-weight: 800; padding: 14px 24px; border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px; font-weight: 800; padding: 13px 22px; border-radius: 8px;
             border: 3px solid #FFFFFF;
         }
 
+        /* SEZIONE EDITORIALE BIANCA E TINTE PIATTE */
         .content-wrap {
             flex: 1;
-            padding: 0 60px 45px 60px;
+            padding: 0 60px 42px 60px;
             display: flex; flex-direction: column; justify-content: space-between;
             background-color: #FFFFFF;
         }
         .match-banner {
-            margin-top: -64px;
+            margin-top: -62px;
             position: relative; z-index: 10;
             background-color: #FFFFFF;
             border: 4px solid #102542;
             border-radius: 14px;
-            padding: 24px 36px;
+            padding: 22px 34px;
             display: flex; align-items: center; justify-content: space-between;
         }
         .team-side {
-            display: flex; align-items: center; gap: 18px;
-            font-size: 38px; font-weight: 900; color: #102542;
+            display: flex; align-items: center; gap: 16px;
+            font-size: 36px; font-weight: 900; color: #102542;
             letter-spacing: -1px; text-transform: uppercase;
         }
         .team-logo {
-            width: 68px; height: 68px; object-fit: contain;
+            width: 64px; height: 64px; object-fit: contain;
         }
         .vs-pill {
             background-color: {{COLORE_BOT}}; color: #FFFFFF;
-            font-size: 22px; font-weight: 900; padding: 10px 18px; border-radius: 8px;
+            font-size: 20px; font-weight: 900; padding: 9px 18px; border-radius: 8px;
+        }
+
+        /* 3 PILLOLE TATTICHE GENERATE DALL'AI */
+        .ai-metrics-row {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+            margin-top: 22px;
+        }
+        .ai-chip {
+            background-color: #F4F6F6;
+            border: 2px solid #CDD7D6;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px; font-weight: 800; color: #102542;
+            text-align: center; text-transform: uppercase;
         }
 
         .editorial {
             margin: auto 0;
-            padding: 15px 0;
+            padding: 12px 0;
         }
         .headline {
-            font-size: 74px; font-weight: 900; line-height: 1.02;
+            font-size: 70px; font-weight: 900; line-height: 1.02;
             letter-spacing: -2.5px; color: #102542;
-            text-transform: uppercase; margin-bottom: 18px;
+            text-transform: uppercase; margin-bottom: 14px;
         }
         .sub-hook {
-            font-size: 35px; line-height: 1.3; color: #576574;
-            font-weight: 700; margin-bottom: 26px;
+            font-size: 33px; line-height: 1.32; color: #576574;
+            font-weight: 700; margin-bottom: 22px;
         }
 
         .focus-box {
-            background-color: #F4F6F6;
-            border: 3px solid #102542;
+            background-color: #102542;
             border-left: 16px solid {{COLORE_BOT}};
             padding: 22px 32px; border-radius: 10px;
             display: flex; justify-content: space-between; align-items: center;
         }
         .focus-label {
-            font-size: 24px; font-weight: 800; color: #576574;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px; font-weight: 800; color: #B3A394;
             text-transform: uppercase; letter-spacing: 1px;
         }
         .focus-val {
-            font-size: 36px; font-weight: 900; color: #102542;
+            font-size: 34px; font-weight: 900; color: #FFFFFF;
             text-transform: uppercase; letter-spacing: -0.5px;
         }
 
         .footer {
             display: flex; justify-content: space-between; align-items: center;
-            padding-top: 22px; border-top: 3px solid #F4F6F6;
+            padding-top: 20px; border-top: 2px solid #CDD7D6;
         }
-        .cta { font-size: 26px; font-weight: 800; color: #102542; }
-        .brand { font-size: 34px; font-weight: 900; color: #102542; letter-spacing: -1px; }
+        .cta { font-size: 24px; font-weight: 800; color: #576574; }
+        .brand { font-size: 32px; font-weight: 900; color: #102542; letter-spacing: -1px; }
         .brand span { color: #F87060; }
     </style>
 </head>
@@ -144,17 +149,23 @@
             </div>
         </div>
 
+        <div class="ai-metrics-row">
+            <div class="ai-chip">{{CHIP_1}}</div>
+            <div class="ai-chip">{{CHIP_2}}</div>
+            <div class="ai-chip">{{CHIP_3}}</div>
+        </div>
+
         <div class="editorial">
             <div class="headline">{{TITOLO_CALDO}}</div>
             <div class="sub-hook">{{TESTO_STORYTELLING}}</div>
             <div class="focus-box">
-                <span class="focus-label">🎯 Segnale Algoritmo</span>
+                <span class="focus-label">🎯 FOCUS ALGORITMO</span>
                 <span class="focus-val">{{MERCATO_CHIAVE}}</span>
             </div>
         </div>
 
         <div class="footer">
-            <span class="cta">📲 Giocata gratis su Telegram • Link in Bio</span>
+            <span class="cta">Analisi completa sul canale Telegram • Link in Bio</span>
             <span class="brand">SBR <span>LAB</span></span>
         </div>
     </div>
