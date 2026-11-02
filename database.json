@@ -3382,6 +3382,132 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "93a1d81a",
+            "modello": "omega",
+            "data_creazione": "02/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.9,
+            "ritorno_potenziale": 28.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "bd680c6ad693dae859030f86e1be2769",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "Barcelona",
+                    "squadra_trasferta": "Aston Villa",
+                    "pronostico": "Vittoria Barcelona",
+                    "quota": 1.29,
+                    "bookmaker": "GTbets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "adf608a0e9be02eb1d8b0a6f464a12b1",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "LASK",
+                    "squadra_trasferta": "ŠK Slovan Bratislava",
+                    "pronostico": "Vittoria LASK",
+                    "quota": 1.47,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "732bbe85",
+            "modello": "alpha",
+            "data_creazione": "02/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "9b8076d3ffa027df6f6cb3189de46706",
+                    "data": "03/11 18:45",
+                    "squadra_casa": "Galatasaray",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "55e0f74a61f7d72defa7ea0c83532ea5",
+                    "data": "03/11 18:45",
+                    "squadra_casa": "Shakhtar Donetsk",
+                    "squadra_trasferta": "Sporting Lisbon",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "bc0b6614c9714816038d5a0ff8963144",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "Manchester United",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "c5d09aa1",
+            "modello": "beta",
+            "data_creazione": "02/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 18.84,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "66608b64d462d1d3deabe573c8456d86",
+                    "data": "02/11 18:30",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Under 10.5 Calci d'Angolo",
+                    "quota": 1.57,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "e268e974",
+            "modello": "sigma",
+            "data_creazione": "02/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 23.55,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "35c20c072dc49b1f1762bd71838ad56b",
+                    "data": "02/11 12:10",
+                    "squadra_casa": "Luca Van Assche",
+                    "squadra_trasferta": "Mariano Navone",
+                    "pronostico": "Vittoria Luca Van Assche",
+                    "quota": 1.57,
+                    "bookmaker": "Bet Victor",
+                    "lega": "tennis_atp_paris_masters",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
