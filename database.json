@@ -3185,7 +3185,7 @@
             "importo": 12.0,
             "quota_totale": 2.48,
             "ritorno_potenziale": 29.76,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3218,8 +3218,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.36,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -3230,7 +3230,7 @@
             "importo": 12.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 21.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "df1e1589c51bbcac432125567d1f7c58",
@@ -3240,8 +3240,8 @@
                     "pronostico": "Under 9.5 Calci d'Angolo",
                     "quota": 1.75,
                     "lega": "soccer_france_ligue_one",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "7 Angoli"
                 }
             ]
         },
