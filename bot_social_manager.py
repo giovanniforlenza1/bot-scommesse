@@ -5,6 +5,7 @@ import time
 import random
 import base64
 import hashlib
+import urllib.parse
 import requests
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -12,7 +13,7 @@ from playwright.sync_api import sync_playwright
 
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 ADMIN_CHAT_ID = os.environ.get("ADMIN_CHAT_ID")
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")  # Chiave 100% gratuita console.groq.com (gsk_...)
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 IG_USER_ID = os.environ.get("IG_USER_ID")
 IG_ACCESS_TOKEN = os.environ.get("IG_ACCESS_TOKEN")
 GITHUB_RAW_BASE = os.environ.get("GITHUB_RAW_BASE")
@@ -27,156 +28,36 @@ STILE_BOT = {
     "omega": {"colore": "#102542", "etichetta": "MODELLO OMEGA • QUANT"}
 }
 
-CLUB_MEDIA_MAP = {
-    "Inter": {
-        "tsdb": ["Inter", "Internazionale"],
-        "commons_cats": ["Category:FC Internazionale Milano", "Category:San Siro"],
-        "wiki_pages": ["San Siro", "Derby della Madonnina", "FC Internazionale Milano"]
-    },
-    "Milan": {
-        "tsdb": ["AC Milan", "Milan"],
-        "commons_cats": ["Category:AC Milan", "Category:San Siro"],
-        "wiki_pages": ["San Siro", "AC Milan", "Derby della Madonnina"]
-    },
-    "Juventus": {
-        "tsdb": ["Juventus"],
-        "commons_cats": ["Category:Juventus FC", "Category:Juventus Stadium"],
-        "wiki_pages": ["Juventus Stadium", "Juventus FC"]
-    },
-    "Napoli": {
-        "tsdb": ["Napoli", "SSC Napoli"],
-        "commons_cats": ["Category:SSC Napoli", "Category:Stadio Diego Armando Maradona (Naples)"],
-        "wiki_pages": ["Stadio Diego Armando Maradona", "SSC Napoli"]
-    },
-    "Roma": {
-        "tsdb": ["AS Roma", "Roma"],
-        "commons_cats": ["Category:AS Roma", "Category:Stadio Olimpico (Rome)"],
-        "wiki_pages": ["Stadio Olimpico", "AS Roma", "Derby della Capitale"]
-    },
-    "Lazio": {
-        "tsdb": ["Lazio", "SS Lazio"],
-        "commons_cats": ["Category:SS Lazio", "Category:Stadio Olimpico (Rome)"],
-        "wiki_pages": ["Stadio Olimpico", "SS Lazio"]
-    },
-    "Atalanta": {
-        "tsdb": ["Atalanta"],
-        "commons_cats": ["Category:Atalanta BC", "Category:Stadio Atleti Azzurri d'Italia"],
-        "wiki_pages": ["Gewiss Stadium", "Atalanta BC"]
-    },
-    "Fiorentina": {
-        "tsdb": ["Fiorentina"],
-        "commons_cats": ["Category:ACF Fiorentina", "Category:Stadio Artemio Franchi (Florence)"],
-        "wiki_pages": ["Stadio Artemio Franchi", "ACF Fiorentina"]
-    },
-    "Bologna": {
-        "tsdb": ["Bologna"],
-        "commons_cats": ["Category:Bologna FC 1909", "Category:Stadio Renato Dall'Ara"],
-        "wiki_pages": ["Stadio Renato Dall'Ara", "Bologna FC 1909"]
-    },
-    "Torino": {
-        "tsdb": ["Torino"],
-        "commons_cats": ["Category:Torino FC", "Category:Stadio Olimpico Grande Torino"],
-        "wiki_pages": ["Stadio Olimpico Grande Torino", "Torino FC"]
-    },
-    "Udinese": {
-        "tsdb": ["Udinese"],
-        "commons_cats": ["Category:Udinese Calcio", "Category:Stadio Friuli"],
-        "wiki_pages": ["Stadio Friuli", "Udinese Calcio"]
-    },
-    "Genoa": {
-        "tsdb": ["Genoa"],
-        "commons_cats": ["Category:Genoa CFC", "Category:Stadio Luigi Ferraris"],
-        "wiki_pages": ["Stadio Luigi Ferraris", "Genoa CFC"]
-    },
-    "Como": {
-        "tsdb": ["Como"],
-        "commons_cats": ["Category:Como 1907", "Category:Stadio Giuseppe Sinigaglia"],
-        "wiki_pages": ["Stadio Giuseppe Sinigaglia", "Como 1907"]
-    },
-    "Parma": {
-        "tsdb": ["Parma"],
-        "commons_cats": ["Category:Parma Calcio 1913", "Category:Stadio Ennio Tardini"],
-        "wiki_pages": ["Stadio Ennio Tardini", "Parma Calcio 1913"]
-    },
-    "Verona": {
-        "tsdb": ["Hellas Verona", "Verona"],
-        "commons_cats": ["Category:Hellas Verona FC", "Category:Stadio Marcantonio Bentegodi"],
-        "wiki_pages": ["Stadio Marcantonio Bentegodi", "Hellas Verona FC"]
-    },
-    "Empoli": {
-        "tsdb": ["Empoli"],
-        "commons_cats": ["Category:Empoli FC", "Category:Stadio Carlo Castellani"],
-        "wiki_pages": ["Stadio Carlo Castellani", "Empoli FC"]
-    },
-    "Lecce": {
-        "tsdb": ["Lecce"],
-        "commons_cats": ["Category:US Lecce", "Category:Stadio Via del Mare"],
-        "wiki_pages": ["Stadio Via del Mare", "US Lecce"]
-    },
-    "Cagliari": {
-        "tsdb": ["Cagliari"],
-        "commons_cats": ["Category:Cagliari Calcio", "Category:Unipol Domus"],
-        "wiki_pages": ["Unipol Domus", "Cagliari Calcio"]
-    },
-    "Venezia": {
-        "tsdb": ["Venezia"],
-        "commons_cats": ["Category:Venezia FC", "Category:Stadio Pier Luigi Penzo"],
-        "wiki_pages": ["Stadio Pier Luigi Penzo", "Venezia FC"]
-    },
-    "Monza": {
-        "tsdb": ["Monza"],
-        "commons_cats": ["Category:AC Monza", "Category:Stadio Brianteo"],
-        "wiki_pages": ["Stadio Brianteo", "AC Monza"]
-    },
-    "Real Madrid": {
-        "tsdb": ["Real Madrid"],
-        "commons_cats": ["Category:Real Madrid CF", "Category:Santiago Bernabéu Stadium"],
-        "wiki_pages": ["Santiago Bernabéu", "Real Madrid CF"]
-    },
-    "Barcellona": {
-        "tsdb": ["Barcelona"],
-        "commons_cats": ["Category:FC Barcelona", "Category:Camp Nou"],
-        "wiki_pages": ["Camp Nou", "FC Barcelona"]
-    },
-    "Arsenal": {
-        "tsdb": ["Arsenal"],
-        "commons_cats": ["Category:Arsenal F.C.", "Category:Emirates Stadium"],
-        "wiki_pages": ["Emirates Stadium", "Arsenal F.C."]
-    },
-    "Manchester City": {
-        "tsdb": ["Manchester City"],
-        "commons_cats": ["Category:Manchester City F.C.", "Category:City of Manchester Stadium"],
-        "wiki_pages": ["City of Manchester Stadium", "Manchester City F.C."]
-    },
-    "Liverpool": {
-        "tsdb": ["Liverpool"],
-        "commons_cats": ["Category:Liverpool F.C.", "Category:Anfield"],
-        "wiki_pages": ["Anfield", "Liverpool F.C."]
-    },
-    "Bayern Monaco": {
-        "tsdb": ["Bayern Munich"],
-        "commons_cats": ["Category:FC Bayern München", "Category:Allianz Arena"],
-        "wiki_pages": ["Allianz Arena", "FC Bayern Munich"]
-    },
-    "PSG": {
-        "tsdb": ["Paris SG"],
-        "commons_cats": ["Category:Paris Saint-Germain F.C.", "Category:Parc des Princes"],
-        "wiki_pages": ["Parc des Princes", "Paris Saint-Germain F.C."]
-    }
+# Descrizione precisa delle maglie ufficiali per far generare all'AI scatti perfetti (solo busto/maglia, senza volti)
+KIT_COLORI_SQUADRE = {
+    "Inter": "iconic black and royal blue vertical striped soccer jersey",
+    "Milan": "iconic red and black vertical striped soccer jersey",
+    "Juventus": "iconic black and white vertical striped soccer jersey",
+    "Napoli": "sky blue light-blue soccer jersey",
+    "Roma": "deep crimson dark-red and golden yellow soccer jersey",
+    "Lazio": "sky blue and white soccer jersey",
+    "Atalanta": "black and blue vertical striped soccer jersey",
+    "Fiorentina": "deep purple violet soccer jersey",
+    "Bologna": "red and dark blue vertical striped soccer jersey",
+    "Torino": "dark maroon burgundy granata soccer jersey",
+    "Udinese": "black and white striped soccer jersey",
+    "Genoa": "half red and half dark-blue soccer jersey",
+    "Como": "royal blue lake-blue soccer jersey",
+    "Parma": "white with black cross or yellow and blue striped soccer jersey",
+    "Verona": "dark blue and bright yellow soccer jersey",
+    "Empoli": "azure blue soccer jersey",
+    "Lecce": "yellow and red vertical striped soccer jersey",
+    "Cagliari": "half red and half navy-blue soccer jersey",
+    "Venezia": "black soccer jersey with orange and green trim",
+    "Monza": "bright red soccer jersey with white vertical band",
+    "Real Madrid": "pure white royal soccer jersey",
+    "Barcellona": "blue and garnet red striped soccer jersey",
+    "Arsenal": "red body with white sleeves soccer jersey",
+    "Manchester City": "sky blue soccer jersey",
+    "Liverpool": "all red crimson soccer jersey",
+    "Bayern Monaco": "bright red and white soccer jersey",
+    "PSG": "navy blue soccer jersey with central red stripe"
 }
-
-
-def immagine_valida_non_ritratto(url, width, height):
-    if not url:
-        return False
-    low = url.lower()
-    if any(b in low for b in (".svg", ".gif", "logo", "crest", "badge", "coat_of_arms", "map", "diagram", "signature", "icon")):
-        return False
-    if width and height and width < height:
-        return False
-    if width and width < 700:
-        return False
-    return any(low.endswith(ext) for ext in (".jpg", ".jpeg", ".png"))
 
 
 def cerca_logo_espn(nome_squadra):
@@ -199,82 +80,40 @@ def cerca_logo_espn(nome_squadra):
     return None
 
 
-def cerca_foto_reali_club(nome_squadra, foto_gia_usate=None):
-    if foto_gia_usate is None:
-        foto_gia_usate = []
+def genera_url_immagine_ai_maglia(sq_casa, sq_trasf, prompt_extra_ai=""):
+    """
+    Genera gratuitamente con Flux AI (Pollinations) uno scatto fotografico editoriale HD
+    INQUADRATO DAL COLLO IN GIÙ (solo maglia/busto/pallone in azione, ZERO volti, ZERO testi finti)
+    con i veri colori sociali delle due squadre del match!
+    """
+    kit_casa = KIT_COLORI_SQUADRE.get(sq_casa, f"{sq_casa} official football jersey colors")
+    kit_trasf = KIT_COLORI_SQUADRE.get(sq_trasf, f"{sq_trasf} official football jersey colors")
 
-    headers = {"User-Agent": "SBRLabEditorialBot/7.0"}
-    cfg = CLUB_MEDIA_MAP.get(nome_squadra, {
-        "tsdb": [nome_squadra],
-        "commons_cats": [f"Category:{nome_squadra}"],
-        "wiki_pages": [nome_squadra]
-    })
+    base_prompt = (
+        f"Editorial sports photography, tight cropped shot from neck down to waist only, NO FACES visible, NO HEADS, "
+        f"two soccer players clashing for the ball under dramatic night stadium floodlights, rain droplets, "
+        f"one player wearing {kit_casa} and opponent wearing {kit_trasf}, "
+        f"ultra realistic fabric texture, shallow depth of field, Nike football commercial aesthetic, 8k, no text, no numbers, no logos"
+    )
+    if prompt_extra_ai:
+        base_prompt = f"{base_prompt}, {prompt_extra_ai}"
 
-    pool_foto = []
-    logo_url = cerca_logo_espn(nome_squadra)
+    seed = random.randint(1000, 999999)
+    encoded = urllib.parse.quote(base_prompt)
+    url_ai = f"https://image.pollinations.ai/prompt/{encoded}?width=1080&height=760&seed={seed}&nologo=true&model=flux"
 
-    for q_tsdb in cfg["tsdb"]:
-        try:
-            r = requests.get(f"https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t={requests.utils.quote(q_tsdb)}", headers=headers, timeout=6)
-            if r.status_code == 200 and r.json().get("teams"):
-                for tm in r.json()["teams"]:
-                    if "soccer" in str(tm.get("strSport", "")).lower():
-                        if not logo_url:
-                            logo_url = tm.get("strBadge") or tm.get("strLogo")
-                        for campo in ("strFanart1", "strFanart2", "strFanart3", "strFanart4", "strStadiumThumb"):
-                            if tm.get(campo):
-                                pool_foto.append(tm[campo])
-                        break
-        except Exception:
-            continue
+    # Verifica rapida che l'immagine AI risponda correttamente
+    try:
+        r = requests.get(url_ai, timeout=22)
+        if r.status_code == 200 and len(r.content) > 15000:
+            local_ai_img = "temp_ai_hero.jpg"
+            with open(local_ai_img, "wb") as f:
+                f.write(r.content)
+            return f"file://{os.path.abspath(local_ai_img)}"
+    except Exception as e:
+        print(f"[AI IMAGE WARN] {e}")
 
-    for cat in cfg["commons_cats"]:
-        try:
-            url_cat = (
-                "https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers"
-                f"&gcmtitle={requests.utils.quote(cat)}&gcmtype=file&gcmlimit=15"
-                "&prop=imageinfo&iiprop=url|dimensions&iiurlwidth=1280&format=json"
-            )
-            rc = requests.get(url_cat, headers=headers, timeout=6)
-            if rc.status_code == 200:
-                pages = rc.json().get("query", {}).get("pages", {})
-                for pg in pages.values():
-                    ii = (pg.get("imageinfo") or [{}])[0]
-                    u = ii.get("thumburl") or ii.get("url", "")
-                    w = ii.get("width", 0)
-                    h = ii.get("height", 0)
-                    if immagine_valida_non_ritratto(u, w, h):
-                        pool_foto.append(u)
-        except Exception:
-            continue
-
-    for pagina in cfg["wiki_pages"]:
-        for lang in ("it", "en"):
-            try:
-                url_wp = (
-                    f"https://{lang}.wikipedia.org/w/api.php?action=query"
-                    f"&titles={requests.utils.quote(pagina)}"
-                    "&prop=pageimages&pithumbsize=1280&format=json&redirects=1"
-                )
-                rw = requests.get(url_wp, headers=headers, timeout=5)
-                if rw.status_code == 200:
-                    pages = rw.json().get("query", {}).get("pages", {})
-                    for pg in pages.values():
-                        src = pg.get("thumbnail", {}).get("source", "")
-                        w = pg.get("thumbnail", {}).get("width", 1200)
-                        h = pg.get("thumbnail", {}).get("height", 800)
-                        if immagine_valida_non_ritratto(src, w, h):
-                            pool_foto.append(src)
-            except Exception:
-                continue
-
-    fresche = [f for f in pool_foto if f not in foto_gia_usate]
-    if fresche:
-        return fresche[0], logo_url
-    if pool_foto:
-        return random.choice(pool_foto), logo_url
-
-    return None, logo_url
+    return None
 
 
 def decripta_payload_se_presente(schedina):
@@ -299,30 +138,31 @@ def decripta_payload_se_presente(schedina):
     return []
 
 
-def scegli_senza_ripetere(lista_opzioni, usati_recenti):
-    disponibili = [x for x in lista_opzioni if x not in usati_recenti]
-    return random.choice(disponibili if disponibili else lista_opzioni)
-
-
-def genera_copy_con_groq_gratis(tipo_post, dati_contesto, usati_recenti):
+def genera_contenuto_creativo_con_groq(tipo_post, dati_contesto, usati_recenti):
     """
-    Usa l'API 100% GRATUITA di Groq Cloud (Llama 3.3 70B) per creare titoli poster e copy naturali.
-    Se la chiave non è ancora nei Secrets, usa il fallback interno senza mai andare in errore.
+    Usa Groq AI (Llama 3.3 70B gratis) per creare testi specifici, intelligenti e mai banali
+    cuciti sulle due squadre reali, più le 3 metriche tecniche e la regia fotografica.
     """
     if GROQ_API_KEY:
         prompt_sistema = (
-            "Sei un ragazzo italiano di 25 anni, fondatore di SBR Lab (@sbr.lab), pagina di analisi calcistica e modelli matematici. "
-            "Scrivi in modo naturale, sveglio, appassionato di calcio e tattica (stile Cronache di Spogliatoio, zero tono da robot e zero frasi da scommettitore). "
-            "VIETATO usare parole come: scommessa, puntata, bookmaker, cassa sicura, vincita facile. "
-            "Rispondi ESCLUSIVAMENTE con un JSON valido avente queste 3 chiavi: "
-            "'titolo_grafica': MASSIMO 3 PAROLE in MAIUSCOLO con punto finale, super d'impatto per un poster (es. 'FASCE IN FIAMME.' o 'NUMERI REALI.'); "
-            "'testo_grafica': massimo 18 parole dritte al punto che spiegano cosa ha visto l'algoritmo sulla partita o sul laboratorio (niente HTML); "
-            "'caption_instagram': massimo 90 parole scorrevoli e curiose che raccontano la lettura dei dati, chiudendo con l'invito a entrare nel canale Telegram gratuito dal link in bio + 5 hashtag calcistici."
+            "Sei il Direttore Creativo 25enne di SBR Lab (@sbr.lab), il progetto italiano più seguito di Data Science e Analisi Tattica sul Calcio. "
+            "Il tuo stile è magnetico, sveglio, tagliente e competente (pensa a Cronache di Spogliatoio + The Athletic). "
+            "REGOLE TASSATIVE:\n"
+            "1. Niente frasi fatte da robot: parla delle VERE caratteristiche tattiche delle squadre citate nei dati (ritmo, fasce, difesa alta, contropiede, pressione).\n"
+            "2. VIETATO usare parole da scommettitori a rischio ban: scommessa, puntata, bookmaker, cassa, soldi, vincita.\n"
+            "3. Rispondi ESCLUSIVAMENTE con un JSON valido contenente queste chiavi:\n"
+            "- 'titolo_grafica': MASSIMO 3 PAROLE in MAIUSCOLO col punto finale, potentissime e specifiche sul match o sul tema (es. 'SAN SIRO ELETTRICO.', 'FASCE SOTTO ASSEDIO.', 'NUMERI CONTRO TIFO.');\n"
+            "- 'testo_grafica': 15-20 parole incisive che spiegano l'anomalia tattica o statistica trovata dal nostro algoritmo sulla partita (niente HTML);\n"
+            "- 'chip_1': metrica breve max 18 caratteri (es. 'RITMO: ALTISSIMO' o 'POISSON: +9.2%');\n"
+            "- 'chip_2': seconda metrica breve max 18 caratteri (es. 'FASCE: DOMINANTI' o 'CONFIDENZA: ALTA');\n"
+            "- 'chip_3': terza metrica breve max 18 caratteri (es. 'FILTRO: SUPERATO' o 'DATI: 30 GIORNI');\n"
+            "- 'image_prompt': breve descrizione in inglese (max 15 parole) dell'atmosfera sul campo (es. 'intense derby atmosphere, wet grass, dramatic stadium lights');\n"
+            "- 'caption_instagram': post scorrevole (70-95 parole) scritto come un ragazzo di 25 anni che capisce di calcio e smonta i luoghi comuni da bar usando i numeri del nostro algoritmo. Chiudi invitando con naturalezza a vedere le analisi gratuite sul canale Telegram dal link in bio + 5 hashtag."
         )
         prompt_utente = (
-            f"Rubrica del post: {tipo_post}\n"
-            f"Dati reali dal nostro database: {json.dumps(dati_contesto, ensure_ascii=False)}\n"
-            f"Titoli già usati da evitare assolutamente: {usati_recenti}"
+            f"Rubrica: {tipo_post}\n"
+            f"Dati del match/report: {json.dumps(dati_contesto, ensure_ascii=False)}\n"
+            f"Titoli già usati di recente (NON usarli): {usati_recenti}"
         )
 
         for modello_free in ("llama-3.3-70b-versatile", "llama-3.1-8b-instant"):
@@ -340,54 +180,36 @@ def genera_copy_con_groq_gratis(tipo_post, dati_contesto, usati_recenti):
                             {"role": "user", "content": prompt_utente}
                         ],
                         "response_format": {"type": "json_object"},
-                        "temperature": 0.85
+                        "temperature": 0.88
                     },
                     timeout=20
                 )
                 if r.status_code == 200:
                     contenuto = r.json()["choices"][0]["message"]["content"]
                     parsed = json.loads(contenuto)
-                    if all(k in parsed for k in ("titolo_grafica", "testo_grafica", "caption_instagram")):
-                        print(f"[GROQ FREE AI] Copy generato gratis con {modello_free}!")
+                    if "titolo_grafica" in parsed and "caption_instagram" in parsed:
+                        print(f"[GROQ AI] Contenuto creativo generato con {modello_free}!")
                         return parsed
             except Exception as e:
                 print(f"[GROQ WARN] {modello_free}: {e}")
 
-    return genera_copy_fallback_interno(tipo_post, dati_contesto, usati_recenti)
-
-
-def genera_copy_fallback_interno(tipo_post, dati_contesto, usati_recenti):
-    modello = dati_contesto.get("modello", "BETA").upper()
-    match = dati_contesto.get("match", "il big match")
+    # Fallback se la chiave GROQ_API_KEY non è ancora stata inserita nei Secrets
+    match = dati_contesto.get("match", "Big Match Serie A")
     focus = dati_contesto.get("focus", "Analisi Tattica")
-    hashtag = "#SBRLab #SerieA #Calcio #AnalisiTattica #StatisticheCalcio"
-    cta = "📲 Trovi l'analisi completa nel canale Telegram gratuito (Link in Bio)."
-
-    if tipo_post == "PRE_MATCH":
-        titoli = [
-            "FASCE IN FIAMME.", "RITMO DA ASSEDIO.", "NUMERI A SENSO UNICO.",
-            "PARTITA AD ALTA TENSIONE.", "ZERO SPAZIO AL CASO.", "DOMINIO TERRITORIALE."
-        ]
-        t_scelto = scegli_senza_ripetere(titoli, usati_recenti)
-        sotto = f"Lo storico degli ultimi 30 giorni accende {match}: i parametri del Modello {modello} puntano su {focus}."
-        cap = (
-            f"⚽ Chi guarda le partite con la pancia vede solo il risultato finale, chi legge i dati vede il copione molto prima.\n\n"
-            f"Su {match} il nostro Modello {modello} ha isolato un'anomalia netta sul parametro {focus}.\n\n{cta}\n\n{hashtag}"
+    return {
+        "titolo_grafica": "RITMO FUORI SCALA.",
+        "testo_grafica": f"Incrociando i flussi offensivi degli ultimi 30 giorni, {match} mostra uno squilibrio netto sul ritmo gara.",
+        "chip_1": "STORICO: 30GG",
+        "chip_2": "INDICE: ALTO VALORE",
+        "chip_3": "STATO: VERIFICATO",
+        "image_prompt": "dramatic stadium floodlights, wet pitch action",
+        "caption_instagram": (
+            f"⚽ Al bar si parla solo di chi segnerà, in laboratorio guardiamo cosa succede nei 90 minuti.\n\n"
+            f"Su {match} i nostri modelli hanno isolato un segnale chiarissimo su {focus}. Zero tifo, solo numeri reali.\n\n"
+            f"📲 Trovi tutte le letture gratuite di Alpha, Beta e Tennis nel canale Telegram (Link in Bio).\n\n"
+            f"#SBRLab #SerieA #Calcio #AnalisiTattica #StatisticheCalcio"
         )
-        return {"titolo_grafica": t_scelto, "testo_grafica": sotto, "caption_instagram": cap}
-
-    elif tipo_post == "RISULTATI":
-        winrate = dati_contesto.get("winrate", "--%")
-        chiuse = dati_contesto.get("chiuse", 0)
-        t_scelto = scegli_senza_ripetere(["IL CAMPO PARLA.", "NUMERI REALI.", "STORICO PURO."], usati_recenti)
-        cap = f"📊 Zero promesse: in SBR Lab registriamo ogni operazione a database ({chiuse} chiuse, {winrate} di precisione).\n\n{cta}\n\n{hashtag}"
-        return {"titolo_grafica": t_scelto, "testo_grafica": "", "caption_instagram": cap}
-
-    else:
-        t_scelto = scegli_senza_ripetere(["10.000 PARTITE IN UNA.", "DENTRO IL MOTORE OMEGA.", "LA LEGGE DI MONTE CARLO."], usati_recenti)
-        sotto = "Prima del fischio d'inizio, Omega simula l'incontro diecimila volte pesando attacco, difesa e fatica per isolare la probabilità reale."
-        cap = f"🧪 Cosa succede se fai giocare la stessa partita 10.000 volte prima del fischio d'inizio? È il lavoro quotidiano di OMEGA in laboratorio.\n\n{cta}\n\n{hashtag}"
-        return {"titolo_grafica": t_scelto, "testo_grafica": sotto, "caption_instagram": cap}
+    }
 
 
 def renderizza_html_in_png(template_path, sostituzioni, output_png):
@@ -409,8 +231,9 @@ def renderizza_html_in_png(template_path, sostituzioni, output_png):
         page.screenshot(path=output_png, full_page=False)
         browser.close()
 
-    if os.path.exists(temp_html):
-        os.remove(temp_html)
+    for tmp in (temp_html, "temp_ai_hero.jpg"):
+        if os.path.exists(tmp):
+            os.remove(tmp)
 
 
 def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
@@ -429,7 +252,7 @@ def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
                 if casa and trasf and "🔒" not in casa and "Operazione" not in casa and "Singola" not in casa:
                     chiave_m = f"{casa} - {trasf}"
                     item = (mod, casa, trasf, pron, chiave_m)
-                    if "serie_a" in lega or casa in CLUB_MEDIA_MAP or trasf in CLUB_MEDIA_MAP:
+                    if "serie_a" in lega or casa in KIT_COLORI_SQUADRE or trasf in KIT_COLORI_SQUADRE:
                         if not any(x[4] == chiave_m for x in pool_serie_a):
                             pool_serie_a.append(item)
                     else:
@@ -450,7 +273,7 @@ def scegli_match_calcio_serie_a_prioritario(schedine, match_gia_usati):
         scelto = random.choice(pool_serie_a)
         return scelto[0], scelto[1], scelto[2], scelto[3]
 
-    return "beta", "Inter", "Milan", "Over 8.5 Calci d'Angolo"
+    return "beta", "Milan", "Inter", "Over 8.5 Calci d'Angolo"
 
 
 def invia_anteprima_su_telegram(image_path, caption_ig, tipo_format):
@@ -465,7 +288,7 @@ def invia_anteprima_su_telegram(image_path, caption_ig, tipo_format):
             {"text": "❌ Scarta Bozza", "callback_data": "SCARTA_IG"}
         ]]
     }
-    testo_admin = f"🎨 *ANTEPRIMA POST ({tipo_format})*\n\n📝 *Caption scritta da Groq AI:*\n\n{caption_ig}"
+    testo_admin = f"🎨 *ANTEPRIMA POST AI ({tipo_format})*\n\n📝 *Copy scritto da AI:*\n\n{caption_ig}"
     with open(image_path, "rb") as img:
         r = requests.post(
             url,
@@ -487,7 +310,7 @@ def carica_stato_precedente():
                 return json.load(f)
         except Exception:
             pass
-    return {"ultimi_titoli_usati": [], "ultimi_match_usati": [], "ultime_foto_usate": [], "indice_rotazione": 0}
+    return {"ultimi_titoli_usati": [], "ultimi_match_usati": [], "indice_rotazione": 0}
 
 
 def fase_1_genera_proposta(forza_tipo=None):
@@ -499,7 +322,6 @@ def fase_1_genera_proposta(forza_tipo=None):
     stato_prec = carica_stato_precedente()
     usati_titoli = stato_prec.get("ultimi_titoli_usati", [])[-10:]
     usati_match = stato_prec.get("ultimi_match_usati", [])[-8:]
-    usate_foto = stato_prec.get("ultime_foto_usate", [])[-10:]
     idx_rot = int(stato_prec.get("indice_rotazione", 0))
 
     sequenza_formati = ["PRE_MATCH", "RISULTATI", "PRE_MATCH", "OMEGA"]
@@ -528,34 +350,43 @@ def fase_1_genera_proposta(forza_tipo=None):
                 f"<div><span class='mod-pill'>{mod_label}</span>{p0['squadra_casa']} - {p0['squadra_trasferta']}</div>"
                 f"{badge}</div>"
             )
-        copy_scelto = genera_copy_con_groq_gratis("RISULTATI", {"winrate": winrate, "chiuse": len(concluse)}, usati_titoli)
+        copy_ai = genera_contenuto_creativo_con_groq("RISULTATI", {"winrate": winrate, "operazioni_chiuse": len(concluse)}, usati_titoli)
         renderizza_html_in_png("templates_social/template_risultati.html", {
             "PERIODO": f"REPORT AL {oggi_str}",
-            "TITOLO_RISULTATI": copy_scelto["titolo_grafica"],
+            "TITOLO_RISULTATI": copy_ai["titolo_grafica"],
             "TOTALE_CHIUSE": len(concluse),
             "WINRATE": winrate,
             "RIGHE_OPERAZIONI": righe_html or "<div class='row'><span>Storico in aggiornamento</span></div>"
         }, IMAGE_FILE)
 
     elif tipo_post == "OMEGA":
-        copy_scelto = genera_copy_con_groq_gratis("OMEGA", {"simulazioni": "10.000 Monte Carlo", "stato": "Calibrazione privata"}, usati_titoli)
+        copy_ai = genera_contenuto_creativo_con_groq("OMEGA", {"motore": "10.000 simulazioni Monte Carlo", "funzione": "Rimozione aggio e calcolo probabilità reale", "stato": "Calibrazione privata"}, usati_titoli)
         renderizza_html_in_png("templates_social/template_omega.html", {
-            "TITOLO_OMEGA": copy_scelto["titolo_grafica"],
-            "TESTO_OMEGA": copy_scelto["testo_grafica"]
+            "TITOLO_OMEGA": copy_ai["titolo_grafica"],
+            "TESTO_OMEGA": copy_ai["testo_grafica"]
         }, IMAGE_FILE)
 
     else:
         mod_key, sq_casa, sq_trasf, mercato = scegli_match_calcio_serie_a_prioritario(schedine, usati_match)
         stile = STILE_BOT.get(mod_key, STILE_BOT["beta"])
+        match_nome = f"{sq_casa} - {sq_trasf}"
 
-        foto_casa, logo_casa = cerca_foto_reali_club(sq_casa, foto_gia_usate=usate_foto)
-        foto_trasf, logo_trasf = cerca_foto_reali_club(sq_trasf, foto_gia_usate=usate_foto)
+        # 1. L'AI scrive titolo catchy, analisi tattica, 3 metriche e regia fotografica
+        copy_ai = genera_contenuto_creativo_con_groq("PRE_MATCH", {
+            "modello": mod_key.upper(),
+            "match": match_nome,
+            "squadra_casa": sq_casa,
+            "squadra_trasferta": sq_trasf,
+            "focus_algoritmo": mercato
+        }, usati_titoli)
 
-        foto_scelta = foto_casa or foto_trasf
+        # 2. L'AI genera l'immagine HD su misura con le maglie ufficiali delle due squadre (dal collo in giù, zero volti!)
+        logo_casa = cerca_logo_espn(sq_casa)
+        logo_trasf = cerca_logo_espn(sq_trasf)
+        img_ai_path = genera_url_immagine_ai_maglia(sq_casa, sq_trasf, copy_ai.get("image_prompt", ""))
 
-        if foto_scelta:
-            hero_html = f"<img class='bg' src='{foto_scelta}' alt='Match Action'>"
-            usate_foto.append(foto_scelta)
+        if img_ai_path:
+            hero_html = f"<img class='bg' src='{img_ai_path}' alt='Match Action'>"
         else:
             l1 = f"<img src='{logo_casa}' alt=''>" if logo_casa else ""
             l2 = f"<img src='{logo_trasf}' alt=''>" if logo_trasf else ""
@@ -563,9 +394,7 @@ def fase_1_genera_proposta(forza_tipo=None):
 
         logo_c_html = f"<img class='team-logo' src='{logo_casa}' alt=''>" if logo_casa else ""
         logo_t_html = f"<img class='team-logo' src='{logo_trasf}' alt=''>" if logo_trasf else ""
-        match_nome = f"{sq_casa} - {sq_trasf}"
 
-        copy_scelto = genera_copy_con_groq_gratis("PRE_MATCH", {"modello": mod_key.upper(), "match": match_nome, "focus": mercato}, usati_titoli)
         renderizza_html_in_png("templates_social/template_analisi.html", {
             "HERO_VISUAL_HTML": hero_html,
             "COLORE_BOT": stile["colore"],
@@ -575,27 +404,29 @@ def fase_1_genera_proposta(forza_tipo=None):
             "LOGO_TRASFERTA_HTML": logo_t_html,
             "SQUADRA_CASA": sq_casa,
             "SQUADRA_TRASFERTA": sq_trasf,
-            "TITOLO_CALDO": copy_scelto["titolo_grafica"],
-            "TESTO_STORYTELLING": copy_scelto["testo_grafica"],
+            "CHIP_1": copy_ai.get("chip_1", "STORICO: 30GG"),
+            "CHIP_2": copy_ai.get("chip_2", f"BOT: {mod_key.upper()}"),
+            "CHIP_3": copy_ai.get("chip_3", "EDGE: POSITIVO"),
+            "TITOLO_CALDO": copy_ai["titolo_grafica"],
+            "TESTO_STORYTELLING": copy_ai["testo_grafica"],
             "MERCATO_CHIAVE": mercato
         }, IMAGE_FILE)
         usati_match.append(match_nome)
 
-    usati_titoli.append(copy_scelto["titolo_grafica"])
+    usati_titoli.append(copy_ai["titolo_grafica"])
 
     with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump({
             "status": "WAITING_APPROVAL",
-            "caption": copy_scelto["caption_instagram"],
+            "caption": copy_ai["caption_instagram"],
             "created_at": oggi_str,
             "ultimi_titoli_usati": usati_titoli[-10:],
             "ultimi_match_usati": usati_match[-8:],
-            "ultime_foto_usate": usate_foto[-10:],
             "indice_rotazione": idx_rot + 1
         }, f, ensure_ascii=False, indent=2)
 
-    invia_anteprima_su_telegram(IMAGE_FILE, copy_scelto["caption_instagram"], tipo_post)
-    print(f"Post {tipo_post} generato con Groq Free AI e inviato su Telegram!")
+    invia_anteprima_su_telegram(IMAGE_FILE, copy_ai["caption_instagram"], tipo_post)
+    print(f"Post AI {tipo_post} generato e inviato su Telegram!")
 
 
 def pubblica_su_instagram(image_public_url, caption):
@@ -659,7 +490,7 @@ def fase_2_controlla_ok_e_pubblica():
         if ultimo_update_id:
             requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates?offset={ultimo_update_id + 1}", timeout=10)
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
-                      json={"chat_id": ADMIN_CHAT_ID, "text": "🗑️ Bozza scartata. Rilancia il workflow per passare al formato/match successivo!"})
+                      json={"chat_id": ADMIN_CHAT_ID, "text": "🗑️ Bozza scartata. Rilancia il workflow per generare un nuovo scatto AI!"})
 
 
 if __name__ == "__main__":
