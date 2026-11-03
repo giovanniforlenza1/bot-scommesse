@@ -3508,6 +3508,132 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "b772d957",
+            "modello": "omega",
+            "data_creazione": "03/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.7,
+            "ritorno_potenziale": 25.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "f43ef699c987e112e115f7035114854e",
+                    "data": "04/11 18:45",
+                    "squadra_casa": "AEK Athens",
+                    "squadra_trasferta": "Real Madrid",
+                    "pronostico": "Vittoria Real Madrid",
+                    "quota": 1.29,
+                    "bookmaker": "GTbets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a5910ae3b314876faea7f5c03b8aeaad",
+                    "data": "04/11 21:00",
+                    "squadra_casa": "Slavia Praha",
+                    "squadra_trasferta": "Arsenal",
+                    "pronostico": "Vittoria Arsenal",
+                    "quota": 1.32,
+                    "bookmaker": "GTbets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "2383309c",
+            "modello": "alpha",
+            "data_creazione": "03/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.46,
+            "ritorno_potenziale": 29.52,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "bd680c6ad693dae859030f86e1be2769",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "Barcelona",
+                    "squadra_trasferta": "Aston Villa",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "61b42fd619617a7a2a3770c2444e8a40",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "Atlético Madrid",
+                    "squadra_trasferta": "Bayern Monaco",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "1a5a84045050d0d7baf1301909d3b465",
+                    "data": "03/11 21:00",
+                    "squadra_casa": "Bodø/Glimt",
+                    "squadra_trasferta": "Lille",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.35,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "1e897ead",
+            "modello": "beta",
+            "data_creazione": "03/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "6277e639c064e641265fcb98a0e200b9",
+                    "data": "04/11 21:00",
+                    "squadra_casa": "Viking FK",
+                    "squadra_trasferta": "Sabah FK",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "6d29904b",
+            "modello": "sigma",
+            "data_creazione": "03/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.6,
+            "ritorno_potenziale": 24.0,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "18d9ea3abcfe85f9ae47dc0433ac57c7",
+                    "data": "03/11 12:10",
+                    "squadra_casa": "Brandon Nakashima",
+                    "squadra_trasferta": "Matteo Berrettini",
+                    "pronostico": "Vittoria Brandon Nakashima",
+                    "quota": 1.6,
+                    "bookmaker": "Bet Victor",
+                    "lega": "tennis_atp_paris_masters",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
