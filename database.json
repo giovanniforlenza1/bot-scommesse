@@ -3618,7 +3618,7 @@
             "importo": 15.0,
             "quota_totale": 1.6,
             "ritorno_potenziale": 24.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3630,8 +3630,8 @@
                     "quota": 1.6,
                     "bookmaker": "Bet Victor",
                     "lega": "tennis_atp_paris_masters",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "Persa"
                 }
             ]
         }
