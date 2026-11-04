@@ -1,9 +1,8 @@
 {
   "status": "WAITING_APPROVAL",
-  "caption": "⚽ Al bar si parla solo di chi segnerà, in laboratorio guardiamo cosa succede nei 90 minuti.\n\nSu Big Match Serie A i nostri modelli hanno isolato un segnale chiarissimo su Analisi Tattica. Zero tifo, solo numeri reali.\n\n📲 Trovi tutte le letture gratuite di Alpha, Beta e Tennis nel canale Telegram (Link in Bio).\n\n#SBRLab #SerieA #Calcio #AnalisiTattica #StatisticheCalcio",
-  "created_at": "02/11/2026",
+  "caption": "⚽ Al bar si parla solo di chi segnerà, in laboratorio guardiamo cosa succede nei 90 minuti.\n\nSu Atlético Madrid - Bayern Monaco i nostri modelli hanno isolato un segnale chiarissimo su Analisi Tattica. Zero tifo, solo numeri reali.\n\n📲 Trovi tutte le letture gratuite di Alpha, Beta e Tennis nel canale Telegram (Link in Bio).\n\n#SBRLab #SerieA #Calcio #AnalisiTattica #StatisticheCalcio",
+  "created_at": "04/11/2026",
   "ultimi_titoli_usati": [
-    "FATTORE CAMPO DECISIVO.",
     "ZERO SCUSE<span>.</span>",
     "NUMERI A SENSO UNICO.",
     "10.000 PARTITE IN UNA.",
@@ -12,17 +11,18 @@
     "DOMINIO TERRITORIALE.",
     "RITMO FUORI SCALA.",
     "RITMO FUORI SCALA.",
+    "RITMO FUORI SCALA.",
     "RITMO FUORI SCALA."
   ],
   "ultimi_match_usati": [
-    "Roma - Cagliari",
     "Torino - Como",
     "Udinese - Roma",
     "Milan - Inter",
     "Genoa - Juventus",
     "PSG - Lyon",
     "Sassuolo - Fiorentina",
-    "Manchester United - Roma"
+    "Manchester United - Roma",
+    "Atlético Madrid - Bayern Monaco"
   ],
-  "indice_rotazione": 18
+  "indice_rotazione": 19
 }
