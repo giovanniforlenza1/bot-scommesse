@@ -3768,7 +3768,7 @@
             "importo": 15.0,
             "quota_totale": 1.88,
             "ritorno_potenziale": 28.2,
-            "stato_schedina": "persa",
+            "stato_schedina": "in attesa",
             "partite": [
                 {
                     "data": "05/11 21:00",
@@ -3777,8 +3777,8 @@
                     "pronostico": "vittoria fc twente enschede",
                     "quota": 1.34,
                     "bookmaker": "Bet365 / Snai",
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 },
                 {
                     "data": "05/11 18:45",
@@ -3787,8 +3787,8 @@
                     "pronostico": "vittoria milan",
                     "quota": 1.4,
                     "bookmaker": "Smarkets",
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 }
             ]
         },
@@ -3799,7 +3799,7 @@
             "importo": 12.0,
             "quota_totale": 2.46,
             "ritorno_potenziale": 29.52,
-            "stato_schedina": "persa",
+            "stato_schedina": "in attesa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3808,8 +3808,8 @@
                     "squadra_trasferta": "SC Braga",
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 },
                 {
                     "data": "05/11 18:45",
@@ -3817,8 +3817,8 @@
                     "squadra_trasferta": "FC Kairat",
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 },
                 {
                     "data": "05/11 18:45",
@@ -3826,8 +3826,8 @@
                     "squadra_trasferta": "Hearts",
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.35,
-                    "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 }
             ]
         },
@@ -3838,7 +3838,7 @@
             "importo": 12.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 21.0,
-            "stato_schedina": "persa",
+            "stato_schedina": "in attesa",
             "partite": [
                 {
                     "data": "05/11 21:00",
@@ -3846,8 +3846,8 @@
                     "squadra_trasferta": "NK Celje",
                     "pronostico": "Under 9.5 Calci d'Angolo",
                     "quota": 1.75,
-                    "stato": "persa",
-                    "risultato_reale": "10+ Angoli"
+                    "stato": "in attesa",
+                    "risultato_reale": ""
                 }
             ]
         },
@@ -3870,7 +3870,7 @@
                     "bookmaker": "Matchbook",
                     "lega": "tennis_atp",
                     "stato": "persa",
-                    "risultato_reale": "Persa"
+                    "risultato_reale": "2-0"
                 }
             ]
         }
