@@ -75,20 +75,30 @@ SINONIMI_SQUADRE = {
     "sporting": ["sporting", "sporting cp", "sporting lisbona"],
     "benfica": ["benfica", "sl benfica"],
     "porto": ["porto", "fc porto"],
+    "braga": ["braga", "sc braga", "sporting braga"],
     "psv": ["psv", "psv eindhoven"],
     "feyenoord": ["feyenoord", "feyenoord rotterdam"],
     "ajax": ["ajax", "afc ajax"],
+    "twente": ["twente", "fc twente", "fc twente enschede"],
     "brugge": ["brugge", "club brugge", "bruges"],
     "monaco": ["monaco", "as monaco"],
     "brest": ["brest", "stade brestois", "stade brestois 29"],
     "lille": ["lille", "losc lille", "losc"],
     "marsiglia": ["marsiglia", "marseille", "olympique marseille"],
-    "lione": ["lione", "lyon", "olympique lyonnais"]
+    "lione": ["lione", "lyon", "olympique lyonnais"],
+    "sturm graz": ["sturm graz", "sk sturm graz", "sturm"],
+    "celje": ["celje", "nk celje"],
+    "ferencvaros": ["ferencvaros", "ferencvarosi tc", "ferencváros tc"],
+    "pafos": ["pafos", "pafos fc", "paphos"],
+    "aarhus": ["aarhus", "agf aarhus", "agf"],
+    "kairat": ["kairat", "fc kairat", "kairat almaty"],
+    "thun": ["thun", "fc thun"],
+    "hearts": ["hearts", "heart of midlothian"]
 }
 
 def ottieni_pool_chiavi():
     nomi_secrets = [
-        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", "CHIAVE_D", "CHIAVE_E", 
+        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
         "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
     ]
@@ -145,7 +155,7 @@ def chiave_canonica_squadra(nome):
             if n == v_clean or f" {v_clean} " in f" {n} ":
                 return canonico
 
-    stop_words = {"fc", "ac", "sc", "cf", "calcio", "club", "real", "sporting", "de", "1907", "1913", "1899", "1909", "04", "05", "bc", "us", "ss", "cfc", "as", "stade", "olympique", "united", "utd", "afc", "rcd", "rc", "ud", "cd", "vfb", "vfl", "tsg", "fsv", "sv"}
+    stop_words = {"fc", "ac", "sc", "cf", "calcio", "club", "real", "sporting", "de", "1907", "1913", "1899", "1909", "04", "05", "bc", "us", "ss", "cfc", "as", "stade", "olympique", "united", "utd", "afc", "rcd", "rc", "ud", "cd", "vfb", "vfl", "tsg", "fsv", "sv", "sk", "nk", "tc", "agf"}
     parole = [w for w in n.split() if w not in stop_words and len(w) >= 2]
     return " ".join(parole) if parole else n
 
@@ -509,8 +519,149 @@ def valuta_esito_normale(pron, g_c, g_t, sq_casa_db, sq_trasf_db, is_tennis=Fals
         return (g_c > 0 and g_t > 0)
     return False
 
+def ripristina_schedine_04_novembre(db):
+    """Inserisce le 4 schedine del 04/11/2026 inviate su Telegram se mancanti dal database"""
+    schedine = db.setdefault('schedine', [])
+    id_esistenti = {s.get('id') for s in schedine}
+    aggiunte = False
+
+    # 1. OMEGA 04/11/2026
+    if 'omg0411a' not in id_esistenti and not any(s.get('modello') == 'omega' and s.get('data_creazione') == '04/11/2026' for s in schedine):
+        schedine.append({
+            'id': 'omg0411a',
+            'modello': 'omega',
+            'data_creazione': '04/11/2026',
+            'importo': 15.0,
+            'quota_totale': 1.88,
+            'ritorno_potenziale': 28.20,
+            'stato_schedina': 'persa',
+            'partite': [
+                {
+                    'data': '05/11 21:00',
+                    'squadra_casa': 'FC Twente Enschede',
+                    'squadra_trasferta': 'Pafos',
+                    'pronostico': 'vittoria fc twente enschede',
+                    'quota': 1.34,
+                    'bookmaker': 'Bet365 / Snai',
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                },
+                {
+                    'data': '05/11 18:45',
+                    'squadra_casa': 'Milan',
+                    'squadra_trasferta': 'Ferencváros TC',
+                    'pronostico': 'vittoria milan',
+                    'quota': 1.40,
+                    'bookmaker': 'Smarkets',
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                }
+            ]
+        })
+        aggiunte = True
+        print("[RECOVERY] Aggiunta schedina OMEGA del 04/11/2026")
+
+    # 2. ALPHA 04/11/2026
+    if 'alp0411a' not in id_esistenti and not any(s.get('modello') == 'alpha' and s.get('data_creazione') == '04/11/2026' for s in schedine):
+        schedine.append({
+            'id': 'alp0411a',
+            'modello': 'alpha',
+            'data_creazione': '04/11/2026',
+            'importo': 12.0,
+            'quota_totale': 2.46,
+            'ritorno_potenziale': 29.52,
+            'stato_schedina': 'persa',
+            'telegram_inviato': True,
+            'partite': [
+                {
+                    'data': '05/11 18:45',
+                    'squadra_casa': 'AGF Aarhus',
+                    'squadra_trasferta': 'SC Braga',
+                    'pronostico': 'Over 1.5 Gol',
+                    'quota': 1.35,
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                },
+                {
+                    'data': '05/11 18:45',
+                    'squadra_casa': 'Atalanta BC',
+                    'squadra_trasferta': 'FC Kairat',
+                    'pronostico': 'Over 1.5 Gol',
+                    'quota': 1.35,
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                },
+                {
+                    'data': '05/11 18:45',
+                    'squadra_casa': 'FC Thun',
+                    'squadra_trasferta': 'Hearts',
+                    'pronostico': 'Over 1.5 Gol',
+                    'quota': 1.35,
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                }
+            ]
+        })
+        aggiunte = True
+        print("[RECOVERY] Aggiunta schedina ALPHA del 04/11/2026")
+
+    # 3. BETA 04/11/2026
+    if 'bet0411a' not in id_esistenti and not any(s.get('modello') == 'beta' and s.get('data_creazione') == '04/11/2026' for s in schedine):
+        schedine.append({
+            'id': 'bet0411a',
+            'modello': 'beta',
+            'data_creazione': '04/11/2026',
+            'importo': 12.0,
+            'quota_totale': 1.75,
+            'ritorno_potenziale': 21.00,
+            'stato_schedina': 'persa',
+            'partite': [
+                {
+                    'data': '05/11 21:00',
+                    'squadra_casa': 'SK Sturm Graz',
+                    'squadra_trasferta': 'NK Celje',
+                    'pronostico': "Under 9.5 Calci d'Angolo",
+                    'quota': 1.75,
+                    'stato': 'persa',
+                    'risultato_reale': '10+ Angoli'
+                }
+            ]
+        })
+        aggiunte = True
+        print("[RECOVERY] Aggiunta schedina BETA del 04/11/2026")
+
+    # 4. SIGMA TENNIS 04/11/2026
+    if 'sig0411a' not in id_esistenti and not any(s.get('modello') == 'sigma' and s.get('data_creazione') == '04/11/2026' for s in schedine):
+        schedine.append({
+            'id': 'sig0411a',
+            'modello': 'sigma',
+            'data_creazione': '04/11/2026',
+            'importo': 15.0,
+            'quota_totale': 1.58,
+            'ritorno_potenziale': 23.70,
+            'stato_schedina': 'persa',
+            'telegram_inviato': True,
+            'partite': [
+                {
+                    'data': '04/11 12:10',
+                    'squadra_casa': 'Luca Van Assche',
+                    'squadra_trasferta': 'Learner Tien',
+                    'pronostico': 'Vittoria Learner Tien',
+                    'quota': 1.58,
+                    'bookmaker': 'Matchbook',
+                    'lega': 'tennis_atp',
+                    'stato': 'persa',
+                    'risultato_reale': 'Persa'
+                }
+            ]
+        })
+        aggiunte = True
+        print("[RECOVERY] Aggiunta schedina SIGMA del 04/11/2026")
+
+    return aggiunte
+
 def ripara_errori_storici_noti(db):
-    riparato = False
+    riparato = ripristina_schedine_04_novembre(db)
     for schedina in db.get('schedine', []):
         for p in schedina.get('partite', []):
             sq_c_low = str(p.get('squadra_casa', '')).lower()
