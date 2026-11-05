@@ -3634,6 +3634,132 @@
                     "risultato_reale": "Persa"
                 }
             ]
+        },
+        {
+            "id": "779f0e2d",
+            "modello": "omega",
+            "data_creazione": "05/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.76,
+            "ritorno_potenziale": 26.4,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "91f5f46805156c8d245a9bb89f59969a",
+                    "data": "05/11 21:00",
+                    "squadra_casa": "FC Twente Enschede",
+                    "squadra_trasferta": "Pafos",
+                    "pronostico": "Vittoria FC Twente Enschede",
+                    "quota": 1.31,
+                    "bookmaker": "Bet365 / Snai",
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e1c3625feeebcd65317e17a4e9a38c4f",
+                    "data": "05/11 21:00",
+                    "squadra_casa": "Bayer Leverkusen",
+                    "squadra_trasferta": "Marseille",
+                    "pronostico": "Vittoria Bayer Leverkusen",
+                    "quota": 1.34,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "d837f726",
+            "modello": "alpha",
+            "data_creazione": "05/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.38,
+            "ritorno_potenziale": 28.56,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "cb7170b1b0e68a09be62b7a0fcb8d268",
+                    "data": "05/11 18:45",
+                    "squadra_casa": "Milan",
+                    "squadra_trasferta": "Ferencváros TC",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e2bb1ddf148879e8fc2aabaed0357eb9",
+                    "data": "05/11 18:45",
+                    "squadra_casa": "AGF Aarhus",
+                    "squadra_trasferta": "SC Braga",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "fdfe43b1709a68218ab42934f7355032",
+                    "data": "05/11 21:00",
+                    "squadra_casa": "Universitatea Craiova",
+                    "squadra_trasferta": "KF Egnatia",
+                    "pronostico": "Vittoria Universitatea Craiova",
+                    "quota": 1.45,
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "253607e2",
+            "modello": "beta",
+            "data_creazione": "05/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.75,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "84b68e09ecbe93fdbce759cd822322a2",
+                    "data": "05/11 21:00",
+                    "squadra_casa": "SK Sturm Graz",
+                    "squadra_trasferta": "NK Celje",
+                    "pronostico": "Under 9.5 Calci d'Angolo",
+                    "quota": 1.75,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ccd86b67",
+            "modello": "sigma",
+            "data_creazione": "05/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.08,
+            "ritorno_potenziale": 31.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "ce54c1892701e4d3d4713f621a47cc00",
+                    "data": "05/11 14:00",
+                    "squadra_casa": "Rinky Hijikata",
+                    "squadra_trasferta": "Tomas Martin Etcheverry",
+                    "pronostico": "Vittoria Rinky Hijikata",
+                    "quota": 2.08,
+                    "bookmaker": "Nordic Bet",
+                    "lega": "tennis_atp_paris_masters",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
