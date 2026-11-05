@@ -16,7 +16,7 @@
             --vibrant-coral: #F87060;
             --alabaster-grey: #CDD7D6;
             --khaki-beige: #B3A394;
-            --court-green: #2D6A4F; /* Colore in palette dedicato al Tennis (Modello Sigma) */
+            --court-green: #2D6A4F;
             --court-green-bg: #E8F5E9;
             --white: #FFFFFF;
 
@@ -66,7 +66,6 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
         .hidden { display: none !important; }
 
-        /* BANNER OPERAZIONI IN CORSO CALCIO */
         .live-banner {
             background-color: var(--success-bg);
             border: 1px solid #a7f3d0;
@@ -89,7 +88,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
-        /* DISCLAIMER SVILUPPO TENNIS */
         .tennis-disclaimer {
             background-color: var(--court-green-bg);
             border: 1px solid #b7e4c7;
@@ -210,7 +208,6 @@
          PAGINA 1: DASHBOARD PRINCIPALE CALCIO
          ========================================== -->
     <div id="paginaCalcio" class="container">
-        <!-- BANNER OPERAZIONI IN CORSO (SOLO CALCIO) -->
         <div id="liveBanner" class="live-banner hidden">
             <div class="live-indicator">
                 <div class="status-dot"></div>
@@ -222,10 +219,10 @@
         <div class="models-info-grid">
             <div class="model-card alpha">
                 <h3>Modello Alpha <span class="badge" style="background-color: #102542;">ALTO RENDIMENTO</span></h3>
-                <p><strong>Il moltiplicatore protetto ad alta confidenza. Crea multiple mirate incrociando mercati scudo (Doppia Chance / Over) e studio forma.</strong></p>
+                <p><strong>Il moltiplicatore protetto ad alta confidenza. Crea multiple mirate incrociando mercati scudo (Doppia Chance / Under / Over) e studio forma.</strong></p>
                 <ul>
-                    <li><strong>Ricerca del valore</strong>: seleziona eventi con confidenza matematica strutturale e verifica tiri in porta.</li>
-                    <li><strong>Moltiplicatore protetto</strong>: concatena i match più solidi evitando l'esposizione su squadre stanche dalle coppe.</li>
+                    <li><strong>Ricerca del valore</strong>: seleziona eventi con confidenza matematica strutturale e verifica quote sovraprezzate.</li>
+                    <li><strong>Moltiplicatore protetto</strong>: concatena i match più solidi adattandosi al profilo tattico del campionato.</li>
                     <li><strong>Zero Rischio Correlato</strong>: esclude automaticamente i match già presidiati dal Modello Omega.</li>
                 </ul>
             </div>
@@ -234,8 +231,8 @@
                 <p><strong>L'inferenza statistica su linee protette. Sfrutta la distribuzione di Poisson e i dati ESPN per prevedere cartellini e calci d'angolo.</strong></p>
                 <ul>
                     <li><strong>Analisi della tensione</strong>: incrocia lo storico ammonizioni ESPN con l'indice di severità arbitrale.</li>
-                    <li><strong>Pressione offensiva</strong>: valuta lo squilibrio in campo calcolando il volume dei corner per singola partita.</li>
-                    <li><strong>Staking dinamico</strong>: applica il criterio di Kelly con interesse composto sulla cassa reale.</li>
+                    <li><strong>Pressione offensiva</strong>: valuta lo squilibrio in campo calcolando il volume dei corner (Over/Under) per singola partita.</li>
+                    <li><strong>Staking dinamico</strong>: applica il criterio di Kelly protetto sulla cassa reale.</li>
                 </ul>
             </div>
             <div class="model-card omega">
@@ -262,10 +259,11 @@
                     <button class="status-btn" onclick="selezionaFiltro('persa', this)">Perse (<span id="count-perse">0</span>)</button>
                     <span id="hotStreakBadge" class="streak-badge" style="display:none;">🔥 Hot Streak</span>
                 </div>
+                <!-- DI BASE ATTIVO SUGLI ULTIMI 30 GIORNI CON PULSANTE PER LO STORICO TOTALE -->
                 <div class="status-selector">
-                    <button class="status-btn active" onclick="selezionaPeriodo(9999, this)">Tutto</button>
-                    <button class="status-btn" onclick="selezionaPeriodo(30, this)">30GG</button>
+                    <button class="status-btn active" onclick="selezionaPeriodo(30, this)">Ultimi 30GG</button>
                     <button class="status-btn" onclick="selezionaPeriodo(7, this)">7GG</button>
+                    <button class="status-btn" onclick="selezionaPeriodo(9999, this)">Storico Totale</button>
                     <button class="status-btn" onclick="esportaCSV()" title="Scarica Storico Certificato CSV"><i class="fa-solid fa-download"></i> CSV</button>
                 </div>
             </div>
@@ -273,19 +271,19 @@
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-label">Cassa Modello</div>
+                <div class="stat-label" id="label-cassa">Cassa (30GG)</div>
                 <div class="stat-value" id="capitale">-- €</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Profitto Netto</div>
+                <div class="stat-label" id="label-profitto">Profitto Netto (30GG)</div>
                 <div class="stat-value" id="profitto">-- €</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Yield (ROI)</div>
+                <div class="stat-label" id="label-yield">Yield / ROI (30GG)</div>
                 <div class="stat-value" id="yield">--%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Win Rate</div>
+                <div class="stat-label" id="label-winrate">Win Rate (30GG)</div>
                 <div class="stat-value" id="winrate">--%</div>
             </div>
         </div>
@@ -297,7 +295,7 @@
         </div>
 
         <div class="calc-box">
-            <label for="simRange"><i class="fa-solid fa-calculator"></i> Simulatore Capitale (Basato sul rendimento reale del modello selezionato):</label>
+            <label for="simRange"><i class="fa-solid fa-calculator"></i> Simulatore Capitale (Basato sul rendimento del periodo selezionato):</label>
             <div class="calc-controls">
                 <input type="range" id="simRange" min="100" max="2000" step="50" value="200" oninput="aggiornaSimulatore()">
                 <span style="font-size:13px; font-weight:700;">Cassa Iniziale: <strong id="simInputVal">200 €</strong></span>
@@ -316,7 +314,7 @@
         
         <div class="tennis-disclaimer">
             <h4><i class="fa-solid fa-flask"></i> Laboratorio Quantitativo Tennis — Sviluppo e Calibrazione in Corso</h4>
-            <p>Il <strong>Modello Sigma (ATP / WTA)</strong> applica l'architettura Monte Carlo di Omega ai mercati tennistici a 2 esiti (zero pareggi). In questa fase di calibrazione pubblica, le operazioni non vengono inviate su Telegram ma sono pubblicate in chiaro (incluse le giocate <strong>In Attesa</strong>) direttamente in questa pagina dedicata.</p>
+            <p>Il <strong>Modello Sigma (ATP / WTA)</strong> applica l'architettura Monte Carlo di Omega ai mercati tennistici a 2 esiti (zero pareggi). Le statistiche sono calibrate di default sugli <strong>Ultimi 30 Giorni</strong> con possibilità di consultare lo Storico Totale.</p>
         </div>
 
         <div class="model-card sigma">
@@ -325,7 +323,7 @@
             <ul>
                 <li><strong>Power De-vigging 2-Way</strong>: purifica le quote di Pinnacle sui circuiti ATP e WTA mondiali rilevando automaticamente i tornei attivi.</li>
                 <li><strong>Simulazione Monte Carlo Set-by-Set</strong>: simula 10.000 volte l'incontro al meglio dei 3 set per calcolare la probabilità reale di vittoria.</li>
-                <li><strong>Trasparenza Live Lab</strong>: tutte le giocate (sia in attesa che concluse) sono visibili in tempo reale qui sotto durante la fase di test.</li>
+                <li><strong>Trasparenza Live Lab</strong>: tutte le giocate (sia in attesa che concluse) sono visibili in tempo reale qui sotto.</li>
             </ul>
         </div>
 
@@ -337,25 +335,29 @@
                     <button class="status-btn" onclick="selezionaFiltroTennis('vinta', this)">Vinte (<span id="t-count-vinte">0</span>)</button>
                     <button class="status-btn" onclick="selezionaFiltroTennis('persa', this)">Perse (<span id="t-count-perse">0</span>)</button>
                 </div>
-                <span style="font-size: 12px; font-weight: 700; color: var(--court-green);">🎾 MONITORAGGIO LIVE ATTIVO</span>
+                <div class="status-selector">
+                    <button class="status-btn active-sigma" onclick="selezionaPeriodoTennis(30, this)">Ultimi 30GG</button>
+                    <button class="status-btn" onclick="selezionaPeriodoTennis(7, this)">7GG</button>
+                    <button class="status-btn" onclick="selezionaPeriodoTennis(9999, this)">Storico Totale</button>
+                </div>
             </div>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card" style="border-top: 3px solid var(--court-green);">
-                <div class="stat-label">Cassa Sigma Tennis</div>
+                <div class="stat-label" id="t-label-cassa">Cassa Sigma (30GG)</div>
                 <div class="stat-value" id="t-capitale">200.00 €</div>
             </div>
             <div class="stat-card" style="border-top: 3px solid var(--court-green);">
-                <div class="stat-label">Profitto Netto</div>
+                <div class="stat-label" id="t-label-profitto">Profitto Netto (30GG)</div>
                 <div class="stat-value" id="t-profitto">0.00 €</div>
             </div>
             <div class="stat-card" style="border-top: 3px solid var(--court-green);">
-                <div class="stat-label">Yield (ROI)</div>
+                <div class="stat-label" id="t-label-yield">Yield / ROI (30GG)</div>
                 <div class="stat-value" id="t-yield">--%</div>
             </div>
             <div class="stat-card" style="border-top: 3px solid var(--court-green);">
-                <div class="stat-label">Win Rate</div>
+                <div class="stat-label" id="t-label-winrate">Win Rate (30GG)</div>
                 <div class="stat-value" id="t-winrate">--%</div>
             </div>
         </div>
@@ -374,7 +376,9 @@
         let modelloAttuale = 'alpha';
         let filtroAttuale = 'tutte';
         let filtroTennisAttuale = 'tutte';
-        let giorniPeriodo = 9999;
+        // IMPOSTATO DI DEFAULT SUGLI ULTIMI 30 GIORNI!
+        let giorniPeriodo = 30;
+        let giorniPeriodoTennis = 30;
         let crescitaPercentualeModello = 0.0;
         let chartIstanza = null;
         let chartTennisIstanza = null;
@@ -415,7 +419,7 @@
 
         function parseDataItaliana(dataStr) {
             if (!dataStr) return new Date();
-            const parti = dataStr.split('/');
+            const parti = String(dataStr).trim().split('/');
             if (parti.length !== 3) return new Date();
             return new Date(parseInt(parti[2]), parseInt(parti[1]) - 1, parseInt(parti[0]));
         }
@@ -452,7 +456,29 @@
             const parent = elemento.parentElement;
             parent.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
             if(elemento) elemento.classList.add('active');
+
+            const suffisso = giorni >= 9000 ? '(Totale)' : `(${giorni}GG)`;
+            document.getElementById('label-cassa').innerText = `Cassa ${suffisso}`;
+            document.getElementById('label-profitto').innerText = `Profitto Netto ${suffisso}`;
+            document.getElementById('label-yield').innerText = `Yield / ROI ${suffisso}`;
+            document.getElementById('label-winrate').innerText = `Win Rate ${suffisso}`;
+
             aggiornaDashboard();
+        }
+
+        function selezionaPeriodoTennis(giorni, elemento) {
+            giorniPeriodoTennis = giorni;
+            const parent = elemento.parentElement;
+            parent.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active-sigma'));
+            if(elemento) elemento.classList.add('active-sigma');
+
+            const suffisso = giorni >= 9000 ? '(Totale)' : `(${giorni}GG)`;
+            document.getElementById('t-label-cassa').innerText = `Cassa Sigma ${suffisso}`;
+            document.getElementById('t-label-profitto').innerText = `Profitto Netto ${suffisso}`;
+            document.getElementById('t-label-yield').innerText = `Yield / ROI ${suffisso}`;
+            document.getElementById('t-label-winrate').innerText = `Win Rate ${suffisso}`;
+
+            aggiornaDashboardTennis();
         }
 
         function aggiornaSimulatore() {
@@ -496,10 +522,13 @@
             if (!databaseGlobale) return;
 
             const oggi = new Date();
+            oggi.setHours(23, 59, 59, 999);
+
             const schedineModello = databaseGlobale.schedine.filter(sc => {
-                let mod = sc.modello ? sc.modello.toLowerCase() : '';
-if (!mod || mod !== modelloAttuale) return false;
-                if (mod !== modelloAttuale || sc.stato_schedina === 'in attesa') return false;
+                let mod = sc.modello ? String(sc.modello).trim().toLowerCase() : '';
+                if (!mod || mod !== modelloAttuale) return false;
+                // Le schedine in attesa NON si vedono nella dashboard Calcio
+                if (sc.stato_schedina === 'in attesa') return false;
                 if (giorniPeriodo < 9000) {
                     const dt = parseDataItaliana(sc.data_creazione);
                     const diffDays = (oggi - dt) / (1000 * 60 * 60 * 24);
@@ -574,7 +603,7 @@ if (!mod || mod !== modelloAttuale) return false;
             const schedineFiltrate = schedineModello.slice().reverse().filter(sc => filtroAttuale === 'tutte' || sc.stato_schedina === filtroAttuale);
 
             if (schedineFiltrate.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna giocata conclusa trovata per il Modello ${escapeHTML(modelloAttuale.toUpperCase())} con i filtri attuali.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna giocata conclusa trovata per il Modello ${escapeHTML(modelloAttuale.toUpperCase())} nel periodo selezionato.</div>`;
                 return;
             }
 
@@ -625,11 +654,21 @@ if (!mod || mod !== modelloAttuale) return false;
             });
         }
 
-        // FUNZIONE DEDICATA ALLA PAGINA TENNIS (MODELLO SIGMA - MOSTRA ANCHE LE SCHEDINE IN ATTESA)
         function aggiornaDashboardTennis() {
             if (!databaseGlobale) return;
 
-            const schedineSigma = databaseGlobale.schedine.filter(sc => sc.modello && sc.modello.toLowerCase() === 'sigma');
+            const oggi = new Date();
+            oggi.setHours(23, 59, 59, 999);
+
+            const schedineSigma = databaseGlobale.schedine.filter(sc => {
+                if (!sc.modello || String(sc.modello).trim().toLowerCase() !== 'sigma') return false;
+                if (giorniPeriodoTennis < 9000 && sc.stato_schedina !== 'in attesa') {
+                    const dt = parseDataItaliana(sc.data_creazione);
+                    const diffDays = (oggi - dt) / (1000 * 60 * 60 * 24);
+                    if (diffDays > giorniPeriodoTennis) return false;
+                }
+                return true;
+            });
 
             let capitale = 200.0;
             let vinte = 0, perse = 0, inAttesa = 0, totalePuntatoConcluse = 0;
@@ -715,7 +754,7 @@ if (!mod || mod !== modelloAttuale) return false;
             const filtrate = schedineSigma.slice().reverse().filter(sc => filtroTennisAttuale === 'tutte' || sc.stato_schedina === filtroTennisAttuale);
 
             if (filtrate.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna operazione Tennis presente con questo filtro. Al prossimo avvio il bot Sigma pubblicherà qui le giocate ATP/WTA in corso.</div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nessuna operazione Tennis presente con questo filtro.</div>`;
                 return;
             }
 
