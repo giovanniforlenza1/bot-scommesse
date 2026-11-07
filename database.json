@@ -3938,8 +3938,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_portugal_primeira_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "9dd0014685fd62d9b2890d7c33a8c9ab",
@@ -3949,8 +3949,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_spain_la_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
@@ -3961,7 +3961,7 @@
             "importo": 12.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 21.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "5e7d141f719835de18877ed95bedcb32",
@@ -3971,8 +3971,8 @@
                     "pronostico": "Under 9.5 Calci d'Angolo",
                     "quota": 1.75,
                     "lega": "soccer_france_ligue_one",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "8 Angoli"
                 }
             ]
         },
