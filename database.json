@@ -3999,6 +3999,96 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "54a92352",
+            "modello": "omega",
+            "data_creazione": "07/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.88,
+            "ritorno_potenziale": 28.2,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "0d53a5dbd9d4f4716e923b97e92dfb0d",
+                    "data": "07/11 15:00",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Lecce",
+                    "pronostico": "Vittoria Torino",
+                    "quota": 1.88,
+                    "bookmaker": "GoldBet / PlanetWin365",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "2329df36",
+            "modello": "alpha",
+            "data_creazione": "07/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "f110107bca066ac1a598c89661c88fa3",
+                    "data": "07/11 20:45",
+                    "squadra_casa": "Roma",
+                    "squadra_trasferta": "Sassuolo",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "7a68b099b47ed7724062b661cd9af464",
+                    "data": "08/11 15:00",
+                    "squadra_casa": "Genoa",
+                    "squadra_trasferta": "Milan",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "813cc4970b2dcab8457490a332fb5a6c",
+                    "data": "07/11 18:00",
+                    "squadra_casa": "Parma",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "2d1d0729",
+            "modello": "beta",
+            "data_creazione": "07/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "547e4e8cf5577a50926272e0e1a7e677",
+                    "data": "08/11 16:45",
+                    "squadra_casa": "SC Cambuur",
+                    "squadra_trasferta": "PSV",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_netherlands_eredivisie",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
