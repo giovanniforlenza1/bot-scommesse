@@ -3916,7 +3916,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -3927,8 +3927,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "d98d64a216d4db8db11c9b5017f76ca6",
@@ -4007,7 +4007,7 @@
             "importo": 15.0,
             "quota_totale": 1.88,
             "ritorno_potenziale": 28.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "0d53a5dbd9d4f4716e923b97e92dfb0d",
@@ -4018,8 +4018,8 @@
                     "quota": 1.88,
                     "bookmaker": "GoldBet / PlanetWin365",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 }
             ]
         },
