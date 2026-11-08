@@ -4089,6 +4089,96 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "63efc6a9",
+            "modello": "omega",
+            "data_creazione": "08/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.06,
+            "ritorno_potenziale": 30.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "7a68b099b47ed7724062b661cd9af464",
+                    "data": "08/11 15:00",
+                    "squadra_casa": "Genoa",
+                    "squadra_trasferta": "Milan",
+                    "pronostico": "Vittoria Milan",
+                    "quota": 2.06,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "df95638a",
+            "modello": "alpha",
+            "data_creazione": "08/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "5ea6b7050b00fcc1832f7938794dd755",
+                    "data": "08/11 15:00",
+                    "squadra_casa": "Monza",
+                    "squadra_trasferta": "Atalanta",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3145127655251c9de0251675640e2101",
+                    "data": "08/11 16:30",
+                    "squadra_casa": "Santa Clara",
+                    "squadra_trasferta": "Gil Vicente",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_portugal_primeira_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "9d545e362d9e690aa8e41b4ccf4d4c78",
+                    "data": "08/11 16:30",
+                    "squadra_casa": "Nacional",
+                    "squadra_trasferta": "Académico de Viseu",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_portugal_primeira_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "2bb3b5d8",
+            "modello": "beta",
+            "data_creazione": "08/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.75,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3145127655251c9de0251675640e2101",
+                    "data": "08/11 16:30",
+                    "squadra_casa": "Santa Clara",
+                    "squadra_trasferta": "Gil Vicente",
+                    "pronostico": "Under 9.5 Calci d'Angolo",
+                    "quota": 1.75,
+                    "lega": "soccer_portugal_primeira_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
