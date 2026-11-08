@@ -4030,7 +4030,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4052,8 +4052,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "813cc4970b2dcab8457490a332fb5a6c",
@@ -4075,7 +4075,7 @@
             "importo": 12.0,
             "quota_totale": 1.8,
             "ritorno_potenziale": 21.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "547e4e8cf5577a50926272e0e1a7e677",
@@ -4085,8 +4085,8 @@
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
                     "lega": "soccer_netherlands_eredivisie",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2 Angoli"
                 }
             ]
         },
@@ -4097,7 +4097,7 @@
             "importo": 15.0,
             "quota_totale": 2.06,
             "ritorno_potenziale": 30.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "7a68b099b47ed7724062b661cd9af464",
@@ -4108,8 +4108,8 @@
                     "quota": 2.06,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 }
             ]
         },
@@ -4120,7 +4120,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4131,8 +4131,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-1"
                 },
                 {
                     "id_partita": "3145127655251c9de0251675640e2101",
@@ -4142,8 +4142,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_portugal_primeira_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-2"
                 },
                 {
                     "id_partita": "9d545e362d9e690aa8e41b4ccf4d4c78",
@@ -4153,8 +4153,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_portugal_primeira_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 }
             ]
         },
@@ -4165,7 +4165,7 @@
             "importo": 12.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 21.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "3145127655251c9de0251675640e2101",
@@ -4175,8 +4175,8 @@
                     "pronostico": "Under 9.5 Calci d'Angolo",
                     "quota": 1.75,
                     "lega": "soccer_portugal_primeira_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "10 Angoli"
                 }
             ]
         }
