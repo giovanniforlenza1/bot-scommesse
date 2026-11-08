@@ -3881,7 +3881,7 @@
             "importo": 15.0,
             "quota_totale": 2.57,
             "ritorno_potenziale": 38.55,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "f110107bca066ac1a598c89661c88fa3",
@@ -3892,8 +3892,8 @@
                     "quota": 1.34,
                     "bookmaker": "Unibet / Eurobet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "813cc4970b2dcab8457490a332fb5a6c",
@@ -4041,8 +4041,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "7a68b099b47ed7724062b661cd9af464",
