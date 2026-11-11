@@ -4179,6 +4179,30 @@
                     "risultato_reale": "10 Angoli"
                 }
             ]
+        },
+        {
+            "id": "2b8d2ae1",
+            "modello": "sigma",
+            "data_creazione": "11/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.76,
+            "ritorno_potenziale": 26.4,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "d87ade1e56f0c96e3b28b59dea344837",
+                    "data": "11/11 21:00",
+                    "squadra_casa": "Elina Svitolina",
+                    "squadra_trasferta": "Karolina Muchova",
+                    "pronostico": "Vittoria Karolina Muchova",
+                    "quota": 1.76,
+                    "bookmaker": "Betfair",
+                    "lega": "tennis_wta_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
