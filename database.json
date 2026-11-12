@@ -4187,7 +4187,7 @@
             "importo": 15.0,
             "quota_totale": 1.76,
             "ritorno_potenziale": 26.4,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4199,8 +4199,8 @@
                     "quota": 1.76,
                     "bookmaker": "Betfair",
                     "lega": "tennis_wta_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "Persa"
                 }
             ]
         }
