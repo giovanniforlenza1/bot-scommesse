@@ -10,6 +10,7 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 OMEGA_CHAT_ID = os.environ.get("OMEGA_CHAT_ID") or os.environ.get("CHAT_ID")
 
 campionati = [
+    'soccer_uefa_nations_league',
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
     'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
     'soccer_germany_bundesliga', 'soccer_france_ligue_one',
@@ -33,12 +34,21 @@ TRADUZIONI_SQUADRE = {
     "Manchester Utd": "Manchester United", "Nott'm Forest": "Nottingham Forest", "Spurs": "Tottenham",
     "Newcastle Utd": "Newcastle", "Paris Saint Germain": "PSG", "Bayern Munich": "Bayern Monaco",
     "Bayer Leverkusen": "Bayer Leverkusen", "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
-    "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton"
+    "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton",
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
+    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
+    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
+    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
+    "Serbia": "Serbia", "Greece": "Grecia", "Czech Republic": "Repubblica Ceca", "Ukraine": "Ucraina",
+    "Republic of Ireland": "Irlanda", "Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
+    "Finland": "Finlandia", "Iceland": "Islanda", "Bosnia and Herzegovina": "Bosnia",
+    "Bosnia & Herzegovina": "Bosnia", "Romania": "Romania", "Slovakia": "Slovacchia", "Slovenia": "Slovenia"
 }
 
 def ottieni_pool_chiavi():
     nomi_secrets = [
-        "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", "CHIAVE_D", "CHIAVE_E", 
+        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
         "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
     ]
@@ -87,7 +97,6 @@ def salva_database_principale(db):
         json.dump(db, f, indent=4, ensure_ascii=False)
 
 def ottieni_partite_gia_giocate(db, modello_target):
-    """Restituisce gli ID e i nomi delle partite già giocate da questo modello nei giorni scorsi"""
     id_giocati = set()
     match_giocati = set()
     for s in db.get('schedine', []):
@@ -138,7 +147,6 @@ def esegui_cecchino():
             nome_trasf_ita = traduci_squadra(p_live['away_team'])
             match_intero = f"{nome_casa_ita} - {nome_trasf_ita}"
 
-            # BLOCCO ANTI-RIPETIZIONE: Salta la partita se è già stata giocata da Omega ieri o nei giorni scorsi!
             if str(p_live['id']) in id_gia_giocati or match_intero.lower() in match_gia_giocati:
                 print(f"[OMEGA SKIP] Partita già giocata in precedenza: {match_intero}")
                 continue
