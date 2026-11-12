@@ -4227,6 +4227,108 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "00214c13",
+            "modello": "omega",
+            "data_creazione": "12/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.61,
+            "ritorno_potenziale": 24.15,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "87441c4ff41ea3d37812826345450408",
+                    "data": "12/11 20:45",
+                    "squadra_casa": "Repubblica Ceca",
+                    "squadra_trasferta": "Spagna",
+                    "pronostico": "Vittoria Spagna",
+                    "quota": 1.25,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "8a1174de9079b530bd6612e3fde6e2fa",
+                    "data": "12/11 20:45",
+                    "squadra_casa": "Inghilterra",
+                    "squadra_trasferta": "Croazia",
+                    "pronostico": "Vittoria Inghilterra",
+                    "quota": 1.29,
+                    "bookmaker": "Betfred (UK)",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "7d9026d2",
+            "modello": "alpha",
+            "data_creazione": "12/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "21f1d732a768ec97ab405050ec9be408",
+                    "data": "12/11 20:45",
+                    "squadra_casa": "Albania",
+                    "squadra_trasferta": "Finlandia",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "cc1ca0aea8a9aa6ad2e1537834fe0d04",
+                    "data": "13/11 18:00",
+                    "squadra_casa": "Moldova",
+                    "squadra_trasferta": "Kazakhstan",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "6eecb0b534f8cda6254b8a0884289e16",
+                    "data": "13/11 20:45",
+                    "squadra_casa": "Andorra",
+                    "squadra_trasferta": "Gibraltar",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ffccaf3b",
+            "modello": "beta",
+            "data_creazione": "12/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 18.84,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "cc1ca0aea8a9aa6ad2e1537834fe0d04",
+                    "data": "13/11 18:00",
+                    "squadra_casa": "Moldova",
+                    "squadra_trasferta": "Kazakhstan",
+                    "pronostico": "Under 10.5 Calci d'Angolo",
+                    "quota": 1.57,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
