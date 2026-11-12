@@ -4258,8 +4258,8 @@
                     "quota": 1.29,
                     "bookmaker": "Betfred (UK)",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 }
             ]
         },
@@ -4281,8 +4281,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 },
                 {
                     "id_partita": "cc1ca0aea8a9aa6ad2e1537834fe0d04",
