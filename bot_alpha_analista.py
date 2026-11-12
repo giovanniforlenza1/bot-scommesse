@@ -10,6 +10,7 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati = [
+    'soccer_uefa_nations_league',
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
     'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
     'soccer_germany_bundesliga', 'soccer_france_ligue_one',
@@ -17,6 +18,7 @@ campionati = [
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
+    'soccer_uefa_nations_league': 'uefa.nations',
     'soccer_uefa_champs_league': 'uefa.champions',
     'soccer_uefa_europa_league': 'uefa.europa',
     'soccer_uefa_europa_conference_league': 'uefa.europa.conf',
@@ -29,7 +31,6 @@ MAPPA_CAMPIONATI_ESPN = {
     'soccer_portugal_primeira_liga': 'por.1'
 }
 
-# DNA statistico dei campionati: propensione ai gol (>1.0 = offensivo, <1.0 = tattico/bloccato)
 PROFILO_GOL_LEGA = {
     'soccer_germany_bundesliga': 1.12,
     'soccer_netherlands_eredivisie': 1.14,
@@ -37,10 +38,11 @@ PROFILO_GOL_LEGA = {
     'soccer_italy_serie_a': 1.02,
     'soccer_uefa_europa_league': 1.03,
     'soccer_uefa_europa_conference_league': 1.02,
+    'soccer_uefa_nations_league': 0.96,
     'soccer_portugal_primeira_liga': 0.96,
     'soccer_france_ligue_one': 0.95,
     'soccer_spain_la_liga': 0.92,
-    'soccer_uefa_champs_league': 0.88  # In Champions match molto più tattici e bloccati!
+    'soccer_uefa_champs_league': 0.88
 }
 
 TRADUZIONI_SQUADRE = {
@@ -56,7 +58,16 @@ TRADUZIONI_SQUADRE = {
     "Bayer Leverkusen": "Bayer Leverkusen", "Borussia Dortmund": "Dortmund", "RB Leipzig": "Lipsia",
     "Eintracht Frankfurt": "Francoforte", "Real Betis": "Betis Siviglia", "Real Sociedad": "Real Sociedad",
     "Athletic Club": "Athletic Bilbao", "Wolverhampton Wanderers": "Wolverhampton",
-    "Sporting CP": "Sporting Lisbona", "PSV Eindhoven": "PSV", "Feyenoord Rotterdam": "Feyenoord"
+    "Sporting CP": "Sporting Lisbona", "PSV Eindhoven": "PSV", "Feyenoord Rotterdam": "Feyenoord",
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
+    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
+    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
+    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
+    "Serbia": "Serbia", "Greece": "Grecia", "Czech Republic": "Repubblica Ceca", "Ukraine": "Ucraina",
+    "Republic of Ireland": "Irlanda", "Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
+    "Finland": "Finlandia", "Iceland": "Islanda", "Bosnia and Herzegovina": "Bosnia",
+    "Bosnia & Herzegovina": "Bosnia", "Romania": "Romania", "Slovakia": "Slovacchia", "Slovenia": "Slovenia"
 }
 
 def ottieni_pool_chiavi():
@@ -98,7 +109,6 @@ def normalizza_nome(nome):
     return n.strip()
 
 def costruisci_storico_gol_espn():
-    """Legge le ultime partite reali su ESPN per sapere se due squadre segnano tanto o fanno partite chiuse"""
     storico_gol = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -199,7 +209,6 @@ def esegui_alpha():
     candidati_alpha = []
 
     for camp in campionati:
-        # Scarica sia 1X2 (h2h) sia Over/Under reali dei bookmaker (totals)
         url_template = f"https://api.the-odds-api.com/v4/sports/{camp}/odds/?apiKey=API_KEY_SEGRETA&regions=eu,uk&markets=h2h,totals"
         partite = esegui_richiesta_api(url_template)
         if not partite:
@@ -246,7 +255,6 @@ def esegui_alpha():
             if not q1_list or not qx_list or not q2_list:
                 continue
 
-            # Probabilità Reali De-Vigged dal consenso di tutti i bookmaker
             m1 = sum(q1_list) / len(q1_list)
             mx = sum(qx_list) / len(qx_list)
             m2 = sum(q2_list) / len(q2_list)
@@ -258,14 +266,12 @@ def esegui_alpha():
             max_q1 = min(2.05, max(q1_list))
             max_q2 = min(2.05, max(q2_list))
 
-            # Media gol storica delle due squadre su ESPN corretta per il profilo del campionato
             gol_esp_casa = media_gol_squadra(storico_gol, casa_ita, 2.65)
             gol_esp_trasf = media_gol_squadra(storico_gol, trasf_ita, 2.65)
             gol_attesi_match = ((gol_esp_casa + gol_esp_trasf) / 2.0) * coeff_lega
 
             opzioni_valore = []
 
-            # 1. VITTORIA SECCA (1 o 2) -> Quando la favorita ha una quota sovraprezzata rispetto alla probabilità reale
             if 1.35 <= max_q1 <= 1.88 and p1_reale >= 0.54:
                 valore_1 = (p1_reale * max_q1) - 1.0
                 score_1 = (p1_reale * 0.75) + (valore_1 * 1.40) + (0.04 if p1_reale >= 0.62 else 0.0)
@@ -276,7 +282,6 @@ def esegui_alpha():
                 score_2 = (p2_reale * 0.75) + (valore_2 * 1.40) + (0.04 if p2_reale >= 0.62 else 0.0)
                 opzioni_valore.append((f"Vittoria {trasf_ita}", round(max_q2, 2), score_2, "1X2"))
 
-            # 2. DOPPIA CHANCE (1X o X2) -> Ottima quando una squadra solida gioca un match combattuto (quota tra 1.30 e 1.62)
             p_1x = p1_reale + px_reale
             q_1x_max = round((1.0 / ((1.0 / max_q1) + (1.0 / max(qx_list)))) * 0.96, 2)
             if 1.30 <= q_1x_max <= 1.65 and p_1x >= 0.72:
@@ -291,7 +296,6 @@ def esegui_alpha():
                 score_x2 = (p_x2 * 0.68) + (valore_x2 * 1.35)
                 opzioni_valore.append((f"Doppia Chance X2 ({trasf_ita})", q_x2_max, score_x2, "DC"))
 
-            # 3. MERCATI GOL REALI (UNDER 3.5 / UNDER 2.5 / OVER 1.5 / OVER 2.5)
             if over25_list and under25_list:
                 mo25 = sum(over25_list) / len(over25_list)
                 mu25 = sum(under25_list) / len(under25_list)
@@ -299,22 +303,18 @@ def esegui_alpha():
                 p_over25_mkt = (1.0 / mo25) / inv_ou
                 p_under25_mkt = (1.0 / mu25) / inv_ou
             else:
-                # Stima prudente se il bookmaker non espone la linea 2.5
                 p_over25_mkt = 0.54 if (mx >= 3.60 and gol_attesi_match >= 2.85) else 0.46
                 p_under25_mkt = 1.0 - p_over25_mkt
 
-            # A) UNDER 3.5 GOL / UNDER 2.5 GOL -> Ideale in Champions League, Liga, Ligue 1 o match tattici!
-            if gol_attesi_match <= 2.65 or p_under25_mkt >= 0.53 or camp == 'soccer_uefa_champs_league':
-                # Derivazione matematica Under 3.5 da Under 2.5 + storico ESPN
+            if gol_attesi_match <= 2.65 or p_under25_mkt >= 0.53 or camp in ['soccer_uefa_champs_league', 'soccer_uefa_nations_league']:
                 p_under35 = min(0.84, p_under25_mkt + 0.24 + (0.03 if gol_attesi_match <= 2.40 else 0.0))
                 q_under35 = round(max(1.28, min(1.52, (1.0 / p_under35) * 0.98)), 2)
                 if 1.28 <= q_under35 <= 1.52 and p_under35 >= 0.73:
                     valore_u35 = (p_under35 * q_under35) - 1.0
-                    bonus_champions = 0.05 if camp == 'soccer_uefa_champs_league' else 0.02
-                    score_u35 = (p_under35 * 0.67) + (valore_u35 * 1.25) + bonus_champions
+                    bonus_coppa = 0.05 if camp in ['soccer_uefa_champs_league', 'soccer_uefa_nations_league'] else 0.02
+                    score_u35 = (p_under35 * 0.67) + (valore_u35 * 1.25) + bonus_coppa
                     opzioni_valore.append(("Under 3.5 Gol", q_under35, score_u35, "UNDER"))
 
-                # Se la partita è blindatissima e la quota Under 2.5 reale è sovraprezzata
                 if under25_list and gol_attesi_match <= 2.30 and p_under25_mkt >= 0.58:
                     max_u25 = min(1.85, round(max(under25_list), 2))
                     if 1.50 <= max_u25 <= 1.85:
@@ -322,7 +322,6 @@ def esegui_alpha():
                         score_u25 = (p_under25_mkt * 0.72) + (valore_u25 * 1.40)
                         opzioni_valore.append(("Under 2.5 Gol", max_u25, score_u25, "UNDER"))
 
-            # B) OVER 1.5 GOL / OVER 2.5 GOL -> SOLO se il campionato e le squadre fanno davvero tanti gol!
             if gol_attesi_match >= 2.85 and p_over25_mkt >= 0.55 and camp != 'soccer_uefa_champs_league':
                 p_over15 = min(0.83, p_over25_mkt + 0.22)
                 q_over15 = round(max(1.28, min(1.48, (1.0 / p_over15) * 0.97)), 2)
@@ -341,7 +340,6 @@ def esegui_alpha():
             if not opzioni_valore:
                 continue
 
-            # Sceglie la giocata che si adatta meglio alle caratteristiche reali di QUESTA partita
             opzioni_valore.sort(key=lambda x: -x[2])
             miglior_pick, quota_scelta, miglior_score, famiglia_mercato = opzioni_valore[0]
 
@@ -367,9 +365,6 @@ def esegui_alpha():
 
     ordinati = sorted(candidati_alpha, key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['score']))
 
-    # COSTRUZIONE INTELLIGENTE DELLA SCHEDINA:
-    # - Massimo 1 solo "Over 1.5 Gol" ammesso in schedina (Basta schedine tutte Over 1.5!)
-    # - Punta a una quota totale > 1.70 (preferibilmente tra 2.00 e 2.50) con 2 o 3 partite
     selezionati = []
     quota_totale = 1.0
     conteggio_over15 = 0
@@ -377,15 +372,12 @@ def esegui_alpha():
     for c in ordinati:
         if len(selezionati) >= 3:
             break
-        # Impedisce di inserire più di un Over 1.5 Gol nella stessa multipla!
         if c['famiglia'] == "OVER15" and conteggio_over15 >= 1:
             continue
 
         nuova_quota = quota_totale * c['quota']
-        # Se abbiamo già 2 partite e superiamo quota 2.05, ci fermiamo (2 partite sono più sicure di 3!)
         if len(selezionati) >= 2 and quota_totale >= 2.05:
             break
-        # Evita che la quota totale esploda oltre 2.65 aumentando il rischio
         if len(selezionati) >= 2 and nuova_quota > 2.65:
             continue
 
@@ -394,7 +386,6 @@ def esegui_alpha():
         if c['famiglia'] == "OVER15":
             conteggio_over15 += 1
 
-    # Se con 2 partite la quota è ancora sotto 1.75, cerca una terza partita compatibile per superare 1.85-2.00
     if quota_totale < 1.75 and len(selezionati) < 3:
         for c in ordinati:
             if c not in selezionati:
