@@ -11,6 +11,7 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID") or os.environ.get("OMEGA_CHAT_ID")
 
 campionati = [
+    'soccer_uefa_nations_league',
     'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
     'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga',
     'soccer_germany_bundesliga', 'soccer_france_ligue_one',
@@ -18,6 +19,7 @@ campionati = [
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
+    'soccer_uefa_nations_league': 'uefa.nations',
     'soccer_uefa_champs_league': 'uefa.champions',
     'soccer_uefa_europa_league': 'uefa.europa',
     'soccer_uefa_europa_conference_league': 'uefa.europa.conf',
@@ -30,8 +32,8 @@ MAPPA_CAMPIONATI_ESPN = {
     'soccer_portugal_primeira_liga': 'por.1'
 }
 
-# Baseline reali per campionato: (Media Angoli Totali Lega, Media Cartellini Totali Lega)
 BASELINE_LEGA = {
+    'soccer_uefa_nations_league': (9.3, 4.2),
     'soccer_italy_serie_a': (9.6, 4.6),
     'soccer_spain_la_liga': (9.4, 5.1),
     'soccer_portugal_primeira_liga': (9.9, 5.0),
@@ -60,7 +62,16 @@ TRADUZIONI_SQUADRE = {
     "Athletic Club": "Athletic Bilbao", "Sporting CP": "Sporting Lisbona",
     "PSV Eindhoven": "PSV", "Feyenoord Rotterdam": "Feyenoord",
     "Wolverhampton Wanderers": "Wolverhampton", "Wolves": "Wolverhampton",
-    "Brighton and Hove Albion": "Brighton", "West Ham United": "West Ham"
+    "Brighton and Hove Albion": "Brighton", "West Ham United": "West Ham",
+    "Italy": "Italia", "France": "Francia", "Germany": "Germania", "Spain": "Spagna",
+    "England": "Inghilterra", "Netherlands": "Olanda", "Belgium": "Belgio", "Portugal": "Portogallo",
+    "Croatia": "Croazia", "Switzerland": "Svizzera", "Poland": "Polonia", "Denmark": "Danimarca",
+    "Sweden": "Svezia", "Norway": "Norvegia", "Austria": "Austria", "Scotland": "Scozia",
+    "Wales": "Galles", "Hungary": "Ungheria", "Turkey": "Turchia", "Albania": "Albania",
+    "Serbia": "Serbia", "Greece": "Grecia", "Czech Republic": "Repubblica Ceca", "Ukraine": "Ucraina",
+    "Republic of Ireland": "Irlanda", "Ireland": "Irlanda", "Northern Ireland": "Irlanda del Nord",
+    "Finland": "Finlandia", "Iceland": "Islanda", "Bosnia and Herzegovina": "Bosnia",
+    "Bosnia & Herzegovina": "Bosnia", "Romania": "Romania", "Slovakia": "Slovacchia", "Slovenia": "Slovenia"
 }
 
 def ottieni_pool_chiavi():
@@ -102,7 +113,6 @@ def normalizza_nome(nome):
     return n.strip()
 
 def costruisci_storico_14_giorni_espn():
-    """Scansiona giorno per giorno gli ultimi 14 giorni registrando angoli fatti+subiti e cartellini totali"""
     storico = {}
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
@@ -262,7 +272,6 @@ def esegui_beta():
             st_casa = cerca_stat_squadra(storico_espn, casa_ita)
             st_trasf = cerca_stat_squadra(storico_espn, trasf_ita)
 
-            # --- 1. MODELLO ANGOLI BIDIREZIONALE (OVER & UNDER) ---
             ha_c_casa = bool(st_casa and st_casa['tot_corners'])
             ha_c_trasf = bool(st_trasf and st_trasf['tot_corners'])
             c_casa = (sum(st_casa['tot_corners']) / len(st_casa['tot_corners'])) if ha_c_casa else base_c_lega
@@ -271,36 +280,30 @@ def esegui_beta():
             peso_storico_c = 0.75 if (ha_c_casa and ha_c_trasf) else (0.45 if (ha_c_casa or ha_c_trasf) else 0.15)
             lambda_c = (peso_storico_c * ((c_casa + c_trasf) / 2.0)) + ((1.0 - peso_storico_c) * base_c_lega)
 
-            # Dinamica tattica dal mercato quote
             if fav_q <= 1.45 and diff_quote >= 2.6:
-                lambda_c += 0.85  # Assedio costante della super-favorita
+                lambda_c += 0.85
             elif diff_quote <= 0.65 and 'uefa' in camp:
-                lambda_c -= 0.70  # Gara bloccata a centrocampo
+                lambda_c -= 0.70
 
             bonus_affidabilita_c = 0.03 if (ha_c_casa and ha_c_trasf) else 0.0
 
             opzioni_match = []
 
-            # Opzione A: Over 8.5 Calci d'Angolo (@1.58)
             p_o85 = prob_poisson_over(lambda_c, 8.5)
             opzioni_match.append(("Over 8.5 Calci d'Angolo", 1.58, p_o85, (p_o85 * 1.58) - 1.0 + bonus_affidabilita_c))
 
-            # Opzione B: Over 9.5 Calci d'Angolo (@1.80) se volume altissimo
             if lambda_c >= 10.6:
                 p_o95 = prob_poisson_over(lambda_c, 9.5)
                 opzioni_match.append(("Over 9.5 Calci d'Angolo", 1.80, p_o95, (p_o95 * 1.80) - 1.0 + bonus_affidabilita_c))
 
-            # Opzione C: Under 10.5 Calci d'Angolo (@1.57) per gare a basso volume di corner
             if lambda_c <= 9.3:
                 p_u105 = prob_poisson_under(lambda_c, 10.5)
                 opzioni_match.append(("Under 10.5 Calci d'Angolo", 1.57, p_u105, (p_u105 * 1.57) - 1.0 + bonus_affidabilita_c))
 
-            # Opzione D: Under 9.5 Calci d'Angolo (@1.75) per gare ultra-bloccate
             if lambda_c <= 8.5:
                 p_u95 = prob_poisson_under(lambda_c, 9.5)
                 opzioni_match.append(("Under 9.5 Calci d'Angolo", 1.75, p_u95, (p_u95 * 1.75) - 1.0 + bonus_affidabilita_c))
 
-            # --- 2. MODELLO CARTELLINI BIDIREZIONALE (OVER & UNDER) ---
             ha_k_casa = bool(st_casa and st_casa['tot_cards'])
             ha_k_trasf = bool(st_trasf and st_trasf['tot_cards'])
             k_casa = (sum(st_casa['tot_cards']) / len(st_casa['tot_cards'])) if ha_k_casa else base_k_lega
@@ -310,23 +313,20 @@ def esegui_beta():
             lambda_k = (peso_storico_k * ((k_casa + k_trasf) / 2.0)) + ((1.0 - peso_storico_k) * base_k_lega)
 
             if diff_quote <= 0.80:
-                lambda_k += 0.55  # Scontro diretto in bilico = alta tensione agonistica
+                lambda_k += 0.55
             elif fav_q <= 1.32:
-                lambda_k -= 0.65  # Partita a senso unico = pochissimi falli
+                lambda_k -= 0.65
 
             bonus_affidabilita_k = 0.03 if (ha_k_casa and ha_k_trasf) else 0.0
 
-            # Opzione E: Over 3.5 Cartellini Totali (@1.60) solo in campionati severi o match infuocati
             if lambda_k >= 4.3:
                 p_o35k = prob_poisson_over(lambda_k, 3.5)
                 opzioni_match.append(("Over 3.5 Cartellini Totali", 1.60, p_o35k, (p_o35k * 1.60) - 1.0 + bonus_affidabilita_k))
 
-            # Opzione F: Under 4.5 Cartellini Totali (@1.57) ottimo in Premier, Bundesliga, Olanda o match sbilanciati
             if lambda_k <= 3.9:
                 p_u45k = prob_poisson_under(lambda_k, 4.5)
                 opzioni_match.append(("Under 4.5 Cartellini Totali", 1.57, p_u45k, (p_u45k * 1.57) - 1.0 + bonus_affidabilita_k))
 
-            # Prende solo la migliore giocata per questa singola partita (evita bias fisso!)
             opzioni_match.sort(key=lambda x: -x[3])
             best_pick, best_q, best_prob, best_edge = opzioni_match[0]
 
@@ -348,13 +348,11 @@ def esegui_beta():
         print("[BETA 2.0] Nessuna partita disponibile nei prossimi 3 giorni.")
         return
 
-    # Privilegia le partite più vicine nel tempo (oggi/domani) con il massimo vantaggio statistico (Edge)
     candidati_beta.sort(key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, -x['edge']))
     miglior_operazione = candidati_beta[0]
     p_win = min(0.82, max(0.62, miglior_operazione['prob']))
     q_scelta = miglior_operazione['quota']
 
-    # Stake Kelly protetto e calibrato (tra 8.5€ e 12.0€, mai più 15€ fissi che bruciano cassa)
     b = q_scelta - 1.0
     kelly_puro = max(0.05, ((b * p_win) - (1.0 - p_win)) / b)
     stake_kelly = round(max(8.5, min(12.0, 200.0 * kelly_puro * 0.40)), 1)
