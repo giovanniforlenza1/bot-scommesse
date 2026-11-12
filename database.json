@@ -4203,6 +4203,30 @@
                     "risultato_reale": "Persa"
                 }
             ]
+        },
+        {
+            "id": "a9cadd14",
+            "modello": "sigma",
+            "data_creazione": "12/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.93,
+            "ritorno_potenziale": 28.95,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "7d0fa680caf6f5718ca51b421754252d",
+                    "data": "12/11 22:10",
+                    "squadra_casa": "Jessica Pegula",
+                    "squadra_trasferta": "Linda Noskova",
+                    "pronostico": "Vittoria Jessica Pegula",
+                    "quota": 1.93,
+                    "bookmaker": "GTbets",
+                    "lega": "tennis_wta_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
