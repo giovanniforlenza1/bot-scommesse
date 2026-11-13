@@ -1,24 +1,24 @@
 {
-    "ultimo_aggiornamento": "13/11/2026 10:17",
+    "ultimo_aggiornamento": "13/11/2026 10:52",
     "squadre": {
         "Andorra": {
             "prob_stimata": 55.6,
             "ultimo_match": "13/11 20:45"
         },
         "Gibraltar": {
-            "prob_stimata": 15.0,
+            "prob_stimata": 14.9,
             "ultimo_match": "13/11 20:45"
         },
         "Liechtenstein": {
-            "prob_stimata": 6.2,
+            "prob_stimata": 5.6,
             "ultimo_match": "13/11 20:45"
         },
         "Azerbaijan": {
-            "prob_stimata": 75.9,
+            "prob_stimata": 77.3,
             "ultimo_match": "13/11 20:45"
         },
         "Bulgaria": {
-            "prob_stimata": 21.2,
+            "prob_stimata": 21.0,
             "ultimo_match": "13/11 20:45"
         },
         "Islanda": {
@@ -34,11 +34,11 @@
             "ultimo_match": "13/11 20:45"
         },
         "Serbia": {
-            "prob_stimata": 10.6,
+            "prob_stimata": 9.9,
             "ultimo_match": "13/11 20:45"
         },
         "Germania": {
-            "prob_stimata": 73.4,
+            "prob_stimata": 74.8,
             "ultimo_match": "13/11 20:45"
         },
         "Olanda": {
@@ -50,7 +50,7 @@
             "ultimo_match": "13/11 20:45"
         },
         "Scozia": {
-            "prob_stimata": 80.0,
+            "prob_stimata": 80.1,
             "ultimo_match": "13/11 20:45"
         },
         "North Macedonia": {
@@ -58,11 +58,11 @@
             "ultimo_match": "13/11 20:45"
         },
         "Slovenia": {
-            "prob_stimata": 16.6,
+            "prob_stimata": 16.5,
             "ultimo_match": "13/11 20:45"
         },
         "Svizzera": {
-            "prob_stimata": 55.5,
+            "prob_stimata": 55.6,
             "ultimo_match": "13/11 20:45"
         },
         "Kosovo": {
@@ -74,7 +74,7 @@
             "ultimo_match": "14/11 15:00"
         },
         "Norvegia": {
-            "prob_stimata": 77.1,
+            "prob_stimata": 77.2,
             "ultimo_match": "14/11 18:00"
         },
         "Galles": {
@@ -94,7 +94,7 @@
             "ultimo_match": "14/11 20:45"
         },
         "Bosnia": {
-            "prob_stimata": 16.2,
+            "prob_stimata": 16.1,
             "ultimo_match": "14/11 20:45"
         },
         "Portogallo": {
