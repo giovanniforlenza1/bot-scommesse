@@ -4211,7 +4211,7 @@
             "importo": 15.0,
             "quota_totale": 1.93,
             "ritorno_potenziale": 28.95,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4223,8 +4223,8 @@
                     "quota": 1.93,
                     "bookmaker": "GTbets",
                     "lega": "tennis_wta_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         },
@@ -4235,7 +4235,7 @@
             "importo": 15.0,
             "quota_totale": 1.61,
             "ritorno_potenziale": 24.15,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "87441c4ff41ea3d37812826345450408",
@@ -4246,8 +4246,8 @@
                     "quota": 1.25,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "id_partita": "8a1174de9079b530bd6612e3fde6e2fa",
