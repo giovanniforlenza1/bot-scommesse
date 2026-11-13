@@ -4292,8 +4292,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "6eecb0b534f8cda6254b8a0884289e16",
@@ -4315,7 +4315,7 @@
             "importo": 12.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 18.84,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "cc1ca0aea8a9aa6ad2e1537834fe0d04",
@@ -4325,8 +4325,8 @@
                     "pronostico": "Under 10.5 Calci d'Angolo",
                     "quota": 1.57,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5 Angoli"
                 }
             ]
         },
