@@ -4329,6 +4329,132 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "b1e82b81",
+            "modello": "omega",
+            "data_creazione": "13/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.59,
+            "ritorno_potenziale": 23.85,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "8d67c473dbea0c85b30eefee4bca53d9",
+                    "data": "14/11 18:00",
+                    "squadra_casa": "Norvegia",
+                    "squadra_trasferta": "Galles",
+                    "pronostico": "Vittoria Norvegia",
+                    "quota": 1.25,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "9529ee7ca79126460eb063f53187f321",
+                    "data": "13/11 20:45",
+                    "squadra_casa": "Liechtenstein",
+                    "squadra_trasferta": "Azerbaijan",
+                    "pronostico": "Vittoria Azerbaijan",
+                    "quota": 1.27,
+                    "bookmaker": "Unibet / Eurobet",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "22a8c1ad",
+            "modello": "alpha",
+            "data_creazione": "13/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "eef1c96c424e42b66f49b7ec3bef1a5c",
+                    "data": "13/11 20:45",
+                    "squadra_casa": "Luxembourg",
+                    "squadra_trasferta": "Estonia",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "af4d45ae5e37dc2a0e146d2a9e9a926d",
+                    "data": "13/11 20:45",
+                    "squadra_casa": "Slovenia",
+                    "squadra_trasferta": "Svizzera",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "d548fa34308b91eb158670eb18e1deae",
+                    "data": "14/11 18:00",
+                    "squadra_casa": "Georgia",
+                    "squadra_trasferta": "Ungheria",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "e53a33c9",
+            "modello": "beta",
+            "data_creazione": "13/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 18.84,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "d548fa34308b91eb158670eb18e1deae",
+                    "data": "14/11 18:00",
+                    "squadra_casa": "Georgia",
+                    "squadra_trasferta": "Ungheria",
+                    "pronostico": "Under 10.5 Calci d'Angolo",
+                    "quota": 1.57,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "76c35eaf",
+            "modello": "sigma",
+            "data_creazione": "13/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.4,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "6b92a67eab021047017da9d42e1e1fae",
+                    "data": "13/11 21:00",
+                    "squadra_casa": "Mirra Andreeva",
+                    "squadra_trasferta": "Karolina Muchova",
+                    "pronostico": "Vittoria Mirra Andreeva",
+                    "quota": 1.4,
+                    "bookmaker": "BoyleSports",
+                    "lega": "tennis_wta_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }

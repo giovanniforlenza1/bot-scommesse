@@ -1,49 +1,13 @@
 {
-    "ultimo_aggiornamento": "12/11/2026 11:56",
+    "ultimo_aggiornamento": "13/11/2026 10:17",
     "analisi": [
-        {
-            "id_partita": "3caa30ea2ac5a1be30724132ba10d82b",
-            "data": "12/11 20:45",
-            "match": "San Marino - Belarus",
-            "consiglio_algoritmo": "Vittoria Belarus",
-            "probabilita_reale": 83.8,
-            "quota_equa": 1.19,
-            "lega": "soccer_uefa_nations_league"
-        },
-        {
-            "id_partita": "8a1174de9079b530bd6612e3fde6e2fa",
-            "data": "12/11 20:45",
-            "match": "Inghilterra - Croazia",
-            "consiglio_algoritmo": "Vittoria Inghilterra",
-            "probabilita_reale": 74.9,
-            "quota_equa": 1.33,
-            "lega": "soccer_uefa_nations_league"
-        },
-        {
-            "id_partita": "87441c4ff41ea3d37812826345450408",
-            "data": "12/11 20:45",
-            "match": "Repubblica Ceca - Spagna",
-            "consiglio_algoritmo": "Vittoria Spagna",
-            "probabilita_reale": 77.6,
-            "quota_equa": 1.29,
-            "lega": "soccer_uefa_nations_league"
-        },
-        {
-            "id_partita": "030f628eb3a7ad16c3bca6884c18c56e",
-            "data": "12/11 20:45",
-            "match": "Montenegro - Latvia",
-            "consiglio_algoritmo": "Vittoria Montenegro",
-            "probabilita_reale": 74.4,
-            "quota_equa": 1.34,
-            "lega": "soccer_uefa_nations_league"
-        },
         {
             "id_partita": "6eecb0b534f8cda6254b8a0884289e16",
             "data": "13/11 20:45",
             "match": "Andorra - Gibraltar",
             "consiglio_algoritmo": "Vittoria Andorra",
-            "probabilita_reale": 52.4,
-            "quota_equa": 1.91,
+            "probabilita_reale": 55.6,
+            "quota_equa": 1.8,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -51,8 +15,8 @@
             "data": "13/11 20:45",
             "match": "Liechtenstein - Azerbaijan",
             "consiglio_algoritmo": "Vittoria Azerbaijan",
-            "probabilita_reale": 74.2,
-            "quota_equa": 1.35,
+            "probabilita_reale": 75.9,
+            "quota_equa": 1.32,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -60,8 +24,8 @@
             "data": "13/11 20:45",
             "match": "Bulgaria - Islanda",
             "consiglio_algoritmo": "Vittoria Islanda",
-            "probabilita_reale": 51.0,
-            "quota_equa": 1.96,
+            "probabilita_reale": 51.9,
+            "quota_equa": 1.93,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -69,7 +33,7 @@
             "data": "13/11 20:45",
             "match": "Slovacchia - Faroe Islands",
             "consiglio_algoritmo": "Vittoria Slovacchia",
-            "probabilita_reale": 69.8,
+            "probabilita_reale": 69.9,
             "quota_equa": 1.43,
             "lega": "soccer_uefa_nations_league"
         },
@@ -78,8 +42,8 @@
             "data": "13/11 20:45",
             "match": "Serbia - Germania",
             "consiglio_algoritmo": "Vittoria Germania",
-            "probabilita_reale": 74.4,
-            "quota_equa": 1.34,
+            "probabilita_reale": 73.4,
+            "quota_equa": 1.36,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -87,8 +51,8 @@
             "data": "13/11 20:45",
             "match": "Olanda - Grecia",
             "consiglio_algoritmo": "Vittoria Olanda",
-            "probabilita_reale": 62.5,
-            "quota_equa": 1.6,
+            "probabilita_reale": 60.1,
+            "quota_equa": 1.66,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -96,8 +60,8 @@
             "data": "13/11 20:45",
             "match": "Scozia - North Macedonia",
             "consiglio_algoritmo": "Vittoria Scozia",
-            "probabilita_reale": 79.1,
-            "quota_equa": 1.26,
+            "probabilita_reale": 80.0,
+            "quota_equa": 1.25,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -105,8 +69,8 @@
             "data": "13/11 20:45",
             "match": "Slovenia - Svizzera",
             "consiglio_algoritmo": "Vittoria Svizzera",
-            "probabilita_reale": 55.9,
-            "quota_equa": 1.79,
+            "probabilita_reale": 55.5,
+            "quota_equa": 1.8,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -123,8 +87,8 @@
             "data": "14/11 18:00",
             "match": "Norvegia - Galles",
             "consiglio_algoritmo": "Vittoria Norvegia",
-            "probabilita_reale": 77.5,
-            "quota_equa": 1.29,
+            "probabilita_reale": 77.1,
+            "quota_equa": 1.3,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -132,8 +96,8 @@
             "data": "14/11 20:45",
             "match": "Austria - Islanda",
             "consiglio_algoritmo": "Vittoria Austria",
-            "probabilita_reale": 59.7,
-            "quota_equa": 1.68,
+            "probabilita_reale": 59.9,
+            "quota_equa": 1.67,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -141,7 +105,7 @@
             "data": "14/11 20:45",
             "match": "Austria - Irlanda",
             "consiglio_algoritmo": "Vittoria Austria",
-            "probabilita_reale": 59.7,
+            "probabilita_reale": 59.8,
             "quota_equa": 1.67,
             "lega": "soccer_uefa_nations_league"
         },
@@ -150,8 +114,8 @@
             "data": "14/11 20:45",
             "match": "Svezia - Bosnia",
             "consiglio_algoritmo": "Vittoria Svezia",
-            "probabilita_reale": 62.2,
-            "quota_equa": 1.61,
+            "probabilita_reale": 61.9,
+            "quota_equa": 1.62,
             "lega": "soccer_uefa_nations_league"
         },
         {
@@ -168,8 +132,35 @@
             "data": "14/11 20:45",
             "match": "Romania - Polonia",
             "consiglio_algoritmo": "Vittoria Polonia",
-            "probabilita_reale": 51.5,
-            "quota_equa": 1.94,
+            "probabilita_reale": 51.2,
+            "quota_equa": 1.95,
+            "lega": "soccer_uefa_nations_league"
+        },
+        {
+            "id_partita": "cc7a8f5fed10407a56df29e87f73d7e3",
+            "data": "15/11 20:45",
+            "match": "Croazia - Repubblica Ceca",
+            "consiglio_algoritmo": "Vittoria Croazia",
+            "probabilita_reale": 62.7,
+            "quota_equa": 1.59,
+            "lega": "soccer_uefa_nations_league"
+        },
+        {
+            "id_partita": "bef3dd0d3dad6760e4e531bc9565fb8c",
+            "data": "15/11 20:45",
+            "match": "Spagna - Inghilterra",
+            "consiglio_algoritmo": "Vittoria Spagna",
+            "probabilita_reale": 55.9,
+            "quota_equa": 1.79,
+            "lega": "soccer_uefa_nations_league"
+        },
+        {
+            "id_partita": "c31db8a4f0558632e2b6422676a32efc",
+            "data": "15/11 20:45",
+            "match": "Francia - Turchia",
+            "consiglio_algoritmo": "Vittoria Francia",
+            "probabilita_reale": 77.2,
+            "quota_equa": 1.29,
             "lega": "soccer_uefa_nations_league"
         }
     ]
