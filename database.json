@@ -4455,6 +4455,132 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "8246dad2",
+            "modello": "omega",
+            "data_creazione": "14/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.9,
+            "ritorno_potenziale": 28.5,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "c31db8a4f0558632e2b6422676a32efc",
+                    "data": "15/11 20:45",
+                    "squadra_casa": "Francia",
+                    "squadra_trasferta": "Turchia",
+                    "pronostico": "Vittoria Francia",
+                    "quota": 1.26,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "2b646127cc6cb400abc663c5a458f1db",
+                    "data": "14/11 20:45",
+                    "squadra_casa": "Svezia",
+                    "squadra_trasferta": "Bosnia",
+                    "pronostico": "Vittoria Svezia",
+                    "quota": 1.51,
+                    "bookmaker": "Bet365",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "60f8ed5d",
+            "modello": "alpha",
+            "data_creazione": "14/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "432a7eb09df939bf1e15a3e183f8494f",
+                    "data": "14/11 20:45",
+                    "squadra_casa": "Irlanda del Nord",
+                    "squadra_trasferta": "Ucraina",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "083c61d3c0c86e7d75ee8ac8f6f66461",
+                    "data": "15/11 18:00",
+                    "squadra_casa": "Belarus",
+                    "squadra_trasferta": "Albania",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "1f7ad9776d6a7ff7e4715bfcc3602e9f",
+                    "data": "15/11 15:00",
+                    "squadra_casa": "Cyprus",
+                    "squadra_trasferta": "Montenegro",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ce30df13",
+            "modello": "beta",
+            "data_creazione": "14/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "1f7ad9776d6a7ff7e4715bfcc3602e9f",
+                    "data": "15/11 15:00",
+                    "squadra_casa": "Cyprus",
+                    "squadra_trasferta": "Montenegro",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "7b6c7205",
+            "modello": "sigma",
+            "data_creazione": "14/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.43,
+            "ritorno_potenziale": 21.45,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "a09dfd51fadc5c32dd0adb4f799b8628",
+                    "data": "15/11 14:00",
+                    "squadra_casa": "Alexander Zverev",
+                    "squadra_trasferta": "Rafael Jodar",
+                    "pronostico": "Vittoria Alexander Zverev",
+                    "quota": 1.43,
+                    "bookmaker": "Smarkets",
+                    "lega": "tennis_atp_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
