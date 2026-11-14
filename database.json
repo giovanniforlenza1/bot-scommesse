@@ -4337,7 +4337,7 @@
             "importo": 15.0,
             "quota_totale": 1.59,
             "ritorno_potenziale": 23.85,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "8d67c473dbea0c85b30eefee4bca53d9",
@@ -4348,8 +4348,8 @@
                     "quota": 1.25,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "9529ee7ca79126460eb063f53187f321",
@@ -4372,7 +4372,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4405,8 +4405,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 }
             ]
         },
