@@ -4498,7 +4498,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4531,8 +4531,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-4"
                 }
             ]
         },
@@ -4543,7 +4543,7 @@
             "importo": 12.0,
             "quota_totale": 1.8,
             "ritorno_potenziale": 21.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "1f7ad9776d6a7ff7e4715bfcc3602e9f",
@@ -4553,8 +4553,8 @@
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "9 Angoli"
                 }
             ]
         },
@@ -4635,8 +4635,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-0"
                 },
                 {
                     "id_partita": "916289ed44f8362ac93035147b7c7fce",
