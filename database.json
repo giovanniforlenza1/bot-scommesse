@@ -4486,8 +4486,8 @@
                     "quota": 1.51,
                     "bookmaker": "Bet365",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-2"
                 }
             ]
         },
@@ -4509,8 +4509,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "083c61d3c0c86e7d75ee8ac8f6f66461",
@@ -4565,20 +4565,20 @@
             "importo": 15.0,
             "quota_totale": 1.43,
             "ritorno_potenziale": 21.45,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
                     "id_partita": "a09dfd51fadc5c32dd0adb4f799b8628",
                     "data": "15/11 14:00",
-                    "squadra_casa": "Alexander Zverev",
-                    "squadra_trasferta": "Rafael Jodar",
+                    "squadra_casa": "Lorenzo Musetti",
+                    "squadra_trasferta": "Alexander Zverev",
                     "pronostico": "Vittoria Alexander Zverev",
                     "quota": 1.43,
                     "bookmaker": "Smarkets",
                     "lega": "tennis_atp_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "Persa"
                 }
             ]
         }
