@@ -1,108 +1,76 @@
 {
-    "ultimo_aggiornamento": "15/11/2026 10:46",
+    "ultimo_aggiornamento": "16/11/2026 11:03",
     "squadre": {
-        "Finlandia": {
-            "prob_stimata": 93.1,
-            "ultimo_match": "15/11 18:00"
-        },
-        "San Marino": {
-            "prob_stimata": 1.7,
-            "ultimo_match": "15/11 18:00"
-        },
-        "Croazia": {
-            "prob_stimata": 60.4,
-            "ultimo_match": "15/11 20:45"
-        },
-        "Repubblica Ceca": {
-            "prob_stimata": 17.5,
-            "ultimo_match": "15/11 20:45"
-        },
-        "Francia": {
-            "prob_stimata": 80.8,
-            "ultimo_match": "15/11 20:45"
-        },
-        "Turchia": {
-            "prob_stimata": 7.1,
-            "ultimo_match": "15/11 20:45"
-        },
         "Faroe Islands": {
-            "prob_stimata": 53.2,
+            "prob_stimata": 53.4,
             "ultimo_match": "16/11 16:00"
         },
         "Moldova": {
-            "prob_stimata": 19.6,
-            "ultimo_match": "16/11 16:00"
-        },
-        "Kazakhstan": {
-            "prob_stimata": 21.7,
-            "ultimo_match": "16/11 16:00"
-        },
-        "Slovacchia": {
-            "prob_stimata": 52.5,
+            "prob_stimata": 19.4,
             "ultimo_match": "16/11 16:00"
         },
         "Islanda": {
-            "prob_stimata": 72.1,
+            "prob_stimata": 77.7,
             "ultimo_match": "16/11 18:00"
         },
         "Luxembourg": {
-            "prob_stimata": 9.8,
+            "prob_stimata": 6.9,
             "ultimo_match": "16/11 18:00"
         },
         "Lithuania": {
-            "prob_stimata": 84.9,
+            "prob_stimata": 85.7,
             "ultimo_match": "16/11 18:00"
         },
         "Liechtenstein": {
-            "prob_stimata": 3.8,
+            "prob_stimata": 3.2,
             "ultimo_match": "16/11 18:00"
         },
         "Gibraltar": {
-            "prob_stimata": 12.4,
+            "prob_stimata": 12.8,
             "ultimo_match": "16/11 20:45"
         },
         "Malta": {
-            "prob_stimata": 63.9,
+            "prob_stimata": 62.1,
             "ultimo_match": "16/11 20:45"
         },
         "Grecia": {
-            "prob_stimata": 65.7,
+            "prob_stimata": 65.9,
             "ultimo_match": "16/11 20:45"
         },
         "Serbia": {
-            "prob_stimata": 14.1,
+            "prob_stimata": 14.2,
             "ultimo_match": "16/11 20:45"
         },
         "North Macedonia": {
-            "prob_stimata": 15.4,
+            "prob_stimata": 13.8,
             "ultimo_match": "16/11 20:45"
         },
         "Slovenia": {
-            "prob_stimata": 59.9,
+            "prob_stimata": 62.3,
             "ultimo_match": "16/11 20:45"
         },
         "Svizzera": {
-            "prob_stimata": 55.9,
+            "prob_stimata": 54.5,
             "ultimo_match": "16/11 20:45"
         },
         "Scozia": {
-            "prob_stimata": 18.4,
+            "prob_stimata": 20.0,
             "ultimo_match": "16/11 20:45"
         },
         "Israel": {
-            "prob_stimata": 17.7,
+            "prob_stimata": 22.0,
             "ultimo_match": "17/11 20:45"
         },
         "Austria": {
-            "prob_stimata": 60.4,
+            "prob_stimata": 53.6,
             "ultimo_match": "17/11 20:45"
         },
         "Galles": {
-            "prob_stimata": 13.7,
+            "prob_stimata": 14.1,
             "ultimo_match": "17/11 20:45"
         },
         "Portogallo": {
-            "prob_stimata": 66.6,
+            "prob_stimata": 66.5,
             "ultimo_match": "17/11 20:45"
         }
     }

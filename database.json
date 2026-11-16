@@ -4707,6 +4707,132 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "68a37788",
+            "modello": "omega",
+            "data_creazione": "16/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.26,
+            "ritorno_potenziale": 33.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "955a201ba2266b8b6b0519e0265eb354",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Galles",
+                    "squadra_trasferta": "Portogallo",
+                    "pronostico": "Vittoria Portogallo",
+                    "quota": 1.47,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "629f5b2cbc2b6986661cb280d37b0ecb",
+                    "data": "16/11 20:45",
+                    "squadra_casa": "North Macedonia",
+                    "squadra_trasferta": "Slovenia",
+                    "pronostico": "Vittoria Slovenia",
+                    "quota": 1.54,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "183389fb",
+            "modello": "alpha",
+            "data_creazione": "16/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "1a07e9080f042594bdb529ab932d680c",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Ungheria",
+                    "squadra_trasferta": "Irlanda del Nord",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a6c9b424fddccea76aab09880b69dd31",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Irlanda",
+                    "squadra_trasferta": "Kosovo",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "91b890f5fd20440cb272721b8a89a33d",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Ucraina",
+                    "squadra_trasferta": "Georgia",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "44130b91",
+            "modello": "beta",
+            "data_creazione": "16/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "629f5b2cbc2b6986661cb280d37b0ecb",
+                    "data": "16/11 20:45",
+                    "squadra_casa": "North Macedonia",
+                    "squadra_trasferta": "Slovenia",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "9a311a67",
+            "modello": "sigma",
+            "data_creazione": "16/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 31.5,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "b347b8bd2e85f10eca7dc7160026443b",
+                    "data": "17/11 14:00",
+                    "squadra_casa": "Arthur Fils",
+                    "squadra_trasferta": "Rafael Jodar",
+                    "pronostico": "Vittoria Arthur Fils",
+                    "quota": 2.1,
+                    "bookmaker": "Betfair Sportsbook",
+                    "lega": "tennis_atp_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
