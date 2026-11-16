@@ -4463,7 +4463,7 @@
             "importo": 15.0,
             "quota_totale": 1.9,
             "ritorno_potenziale": 28.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "c31db8a4f0558632e2b6422676a32efc",
@@ -4474,8 +4474,8 @@
                     "quota": 1.26,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-1"
                 },
                 {
                     "id_partita": "2b646127cc6cb400abc663c5a458f1db",
@@ -4520,8 +4520,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "id_partita": "1f7ad9776d6a7ff7e4715bfcc3602e9f",
@@ -4691,7 +4691,7 @@
             "importo": 15.0,
             "quota_totale": 1.59,
             "ritorno_potenziale": 23.85,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4703,8 +4703,8 @@
                     "quota": 1.59,
                     "bookmaker": "Smarkets",
                     "lega": "tennis_atp_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
