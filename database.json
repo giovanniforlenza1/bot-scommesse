@@ -4833,6 +4833,98 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "41d4358c",
+            "modello": "omega",
+            "data_creazione": "17/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.86,
+            "ritorno_potenziale": 27.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "e71a4a4fea03d00873c285c5b55a9864",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Israel",
+                    "squadra_trasferta": "Austria",
+                    "pronostico": "Vittoria Austria",
+                    "quota": 1.86,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "1f3ecaa0",
+            "modello": "alpha",
+            "data_creazione": "17/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.28,
+            "ritorno_potenziale": 15.36,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "770e80269ec2ffddc826bc50330c475b",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Danimarca",
+                    "squadra_trasferta": "Norvegia",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "98fdff01",
+            "modello": "beta",
+            "data_creazione": "17/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "e71a4a4fea03d00873c285c5b55a9864",
+                    "data": "17/11 20:45",
+                    "squadra_casa": "Israel",
+                    "squadra_trasferta": "Austria",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_uefa_nations_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "d93f042f",
+            "modello": "sigma",
+            "data_creazione": "17/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.42,
+            "ritorno_potenziale": 21.3,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "f0a6612a0e894025a58459b04ecd02c9",
+                    "data": "17/11 20:30",
+                    "squadra_casa": "Alexander Zverev",
+                    "squadra_trasferta": "Ben Shelton",
+                    "pronostico": "Vittoria Alexander Zverev",
+                    "quota": 1.42,
+                    "bookmaker": "Betclic (FR)",
+                    "lega": "tennis_atp_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
