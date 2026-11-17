@@ -4817,7 +4817,7 @@
             "importo": 15.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 31.5,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4829,8 +4829,8 @@
                     "quota": 2.1,
                     "bookmaker": "Betfair Sportsbook",
                     "lega": "tennis_atp_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         },
