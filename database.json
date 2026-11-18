@@ -4715,7 +4715,7 @@
             "importo": 15.0,
             "quota_totale": 2.26,
             "ritorno_potenziale": 33.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "955a201ba2266b8b6b0519e0265eb354",
@@ -4726,8 +4726,8 @@
                     "quota": 1.47,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-3"
                 },
                 {
                     "id_partita": "629f5b2cbc2b6986661cb280d37b0ecb",
@@ -4750,7 +4750,7 @@
             "importo": 12.0,
             "quota_totale": 2.1,
             "ritorno_potenziale": 25.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4761,8 +4761,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "a6c9b424fddccea76aab09880b69dd31",
@@ -4772,8 +4772,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "91b890f5fd20440cb272721b8a89a33d",
@@ -4783,8 +4783,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 }
             ]
         },
@@ -4841,7 +4841,7 @@
             "importo": 15.0,
             "quota_totale": 1.86,
             "ritorno_potenziale": 27.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "e71a4a4fea03d00873c285c5b55a9864",
@@ -4852,8 +4852,8 @@
                     "quota": 1.86,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 }
             ]
         },
@@ -4864,7 +4864,7 @@
             "importo": 12.0,
             "quota_totale": 1.28,
             "ritorno_potenziale": 15.36,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4875,8 +4875,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-3"
                 }
             ]
         },
@@ -4887,7 +4887,7 @@
             "importo": 12.0,
             "quota_totale": 1.8,
             "ritorno_potenziale": 21.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "e71a4a4fea03d00873c285c5b55a9864",
@@ -4897,8 +4897,8 @@
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
                     "lega": "soccer_uefa_nations_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "13 Angoli"
                 }
             ]
         },
@@ -4909,7 +4909,7 @@
             "importo": 15.0,
             "quota_totale": 1.42,
             "ritorno_potenziale": 21.3,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -4921,8 +4921,8 @@
                     "quota": 1.42,
                     "bookmaker": "Betclic (FR)",
                     "lega": "tennis_atp_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
