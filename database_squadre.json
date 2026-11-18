@@ -1,21 +1,21 @@
 {
-    "ultimo_aggiornamento": "17/11/2026 11:59",
+    "ultimo_aggiornamento": "18/11/2026 11:31",
     "squadre": {
-        "Israel": {
-            "prob_stimata": 23.9,
-            "ultimo_match": "17/11 20:45"
+        "Athletic Bilbao": {
+            "prob_stimata": 64.7,
+            "ultimo_match": "20/11 21:00"
         },
-        "Austria": {
-            "prob_stimata": 51.6,
-            "ultimo_match": "17/11 20:45"
+        "Espanyol": {
+            "prob_stimata": 14.0,
+            "ultimo_match": "20/11 21:00"
         },
-        "Galles": {
-            "prob_stimata": 13.9,
-            "ultimo_match": "17/11 20:45"
+        "Bayern Monaco": {
+            "prob_stimata": 87.7,
+            "ultimo_match": "20/11 20:30"
         },
-        "Portogallo": {
-            "prob_stimata": 67.3,
-            "ultimo_match": "17/11 20:45"
+        "1. Köln": {
+            "prob_stimata": 4.5,
+            "ultimo_match": "20/11 20:30"
         }
     }
 }

@@ -1,23 +1,23 @@
 {
-    "ultimo_aggiornamento": "17/11/2026 11:59",
+    "ultimo_aggiornamento": "18/11/2026 11:31",
     "analisi": [
         {
-            "id_partita": "e71a4a4fea03d00873c285c5b55a9864",
-            "data": "17/11 20:45",
-            "match": "Israel - Austria",
-            "consiglio_algoritmo": "Vittoria Austria",
-            "probabilita_reale": 51.6,
-            "quota_equa": 1.94,
-            "lega": "soccer_uefa_nations_league"
+            "id_partita": "dcee36f9b8a9989972b6d4ddde76c4c7",
+            "data": "20/11 21:00",
+            "match": "Athletic Bilbao - Espanyol",
+            "consiglio_algoritmo": "Vittoria Athletic Bilbao",
+            "probabilita_reale": 64.7,
+            "quota_equa": 1.55,
+            "lega": "soccer_spain_la_liga"
         },
         {
-            "id_partita": "955a201ba2266b8b6b0519e0265eb354",
-            "data": "17/11 20:45",
-            "match": "Galles - Portogallo",
-            "consiglio_algoritmo": "Vittoria Portogallo",
-            "probabilita_reale": 67.3,
-            "quota_equa": 1.49,
-            "lega": "soccer_uefa_nations_league"
+            "id_partita": "cae480fb1195f0032554a268cb80eb44",
+            "data": "20/11 20:30",
+            "match": "Bayern Monaco - 1. Köln",
+            "consiglio_algoritmo": "Vittoria Bayern Monaco",
+            "probabilita_reale": 87.7,
+            "quota_equa": 1.14,
+            "lega": "soccer_germany_bundesliga"
         }
     ]
 }
