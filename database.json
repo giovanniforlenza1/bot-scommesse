@@ -5028,6 +5028,121 @@
                     "risultato_reale": "Persa"
                 }
             ]
+        },
+        {
+            "id": "533ea36a",
+            "modello": "omega",
+            "data_creazione": "19/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.77,
+            "ritorno_potenziale": 26.55,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "cb513fd9869c9aa6ce506bb499bcd48b",
+                    "data": "21/11 18:00",
+                    "squadra_casa": "Parma",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Vittoria Roma",
+                    "quota": 1.32,
+                    "bookmaker": "Unibet / Eurobet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "9e8d72c6c27c1667be7b88416a36ca80",
+                    "data": "21/11 15:00",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Cagliari",
+                    "pronostico": "Vittoria Como",
+                    "quota": 1.34,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "faa8033e",
+            "modello": "alpha",
+            "data_creazione": "19/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.14,
+            "ritorno_potenziale": 25.68,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "dcee36f9b8a9989972b6d4ddde76c4c7",
+                    "data": "20/11 21:00",
+                    "squadra_casa": "Athletic Bilbao",
+                    "squadra_trasferta": "Espanyol",
+                    "pronostico": "Vittoria Athletic Bilbao",
+                    "quota": 1.53,
+                    "lega": "soccer_spain_la_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "bf921a2780e2a25201da8a3bfece84c4",
+                    "data": "21/11 15:00",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Lecce",
+                    "pronostico": "Vittoria Lazio",
+                    "quota": 1.4,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "cee41348",
+            "modello": "beta",
+            "data_creazione": "19/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "cae480fb1195f0032554a268cb80eb44",
+                    "data": "20/11 20:30",
+                    "squadra_casa": "Bayern Monaco",
+                    "squadra_trasferta": "1. Köln",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_germany_bundesliga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "510b2c76",
+            "modello": "sigma",
+            "data_creazione": "19/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.4,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "66cc3b98e9e67560a34198715ee78d75",
+                    "data": "19/11 20:30",
+                    "squadra_casa": "Alexander Zverev",
+                    "squadra_trasferta": "Arthur Fils",
+                    "pronostico": "Vittoria Alexander Zverev",
+                    "quota": 1.4,
+                    "bookmaker": "888sport",
+                    "lega": "tennis_atp_finals",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
