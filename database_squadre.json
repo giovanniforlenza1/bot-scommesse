@@ -1,8 +1,8 @@
 {
-    "ultimo_aggiornamento": "19/11/2026 11:39",
+    "ultimo_aggiornamento": "20/11/2026 11:19",
     "squadre": {
         "Como": {
-            "prob_stimata": 73.1,
+            "prob_stimata": 73.0,
             "ultimo_match": "21/11 15:00"
         },
         "Cagliari": {
@@ -10,7 +10,7 @@
             "ultimo_match": "21/11 15:00"
         },
         "Lazio": {
-            "prob_stimata": 69.5,
+            "prob_stimata": 69.2,
             "ultimo_match": "21/11 15:00"
         },
         "Lecce": {
@@ -18,7 +18,7 @@
             "ultimo_match": "21/11 15:00"
         },
         "Parma": {
-            "prob_stimata": 9.9,
+            "prob_stimata": 9.8,
             "ultimo_match": "21/11 18:00"
         },
         "Roma": {
@@ -26,39 +26,63 @@
             "ultimo_match": "21/11 18:00"
         },
         "Napoli": {
-            "prob_stimata": 64.2,
+            "prob_stimata": 64.0,
             "ultimo_match": "21/11 20:45"
         },
         "Torino": {
-            "prob_stimata": 15.0,
+            "prob_stimata": 15.1,
             "ultimo_match": "21/11 20:45"
         },
+        "Juventus": {
+            "prob_stimata": 70.0,
+            "ultimo_match": "22/11 12:30"
+        },
+        "Venezia": {
+            "prob_stimata": 11.6,
+            "ultimo_match": "22/11 12:30"
+        },
+        "Bologna": {
+            "prob_stimata": 54.8,
+            "ultimo_match": "22/11 15:00"
+        },
+        "Udinese": {
+            "prob_stimata": 20.1,
+            "ultimo_match": "22/11 15:00"
+        },
+        "Milan": {
+            "prob_stimata": 61.9,
+            "ultimo_match": "22/11 18:00"
+        },
+        "Frosinone": {
+            "prob_stimata": 17.9,
+            "ultimo_match": "22/11 18:00"
+        },
+        "Atalanta BC": {
+            "prob_stimata": 19.5,
+            "ultimo_match": "22/11 20:45"
+        },
+        "Inter": {
+            "prob_stimata": 59.6,
+            "ultimo_match": "22/11 20:45"
+        },
         "Manchester City": {
-            "prob_stimata": 68.1,
+            "prob_stimata": 69.2,
             "ultimo_match": "21/11 13:30"
         },
         "Fulham": {
-            "prob_stimata": 13.5,
+            "prob_stimata": 12.8,
             "ultimo_match": "21/11 13:30"
         },
         "Aston Villa": {
-            "prob_stimata": 52.6,
+            "prob_stimata": 54.0,
             "ultimo_match": "21/11 16:00"
         },
         "Sunderland": {
-            "prob_stimata": 22.3,
-            "ultimo_match": "21/11 16:00"
-        },
-        "Chelsea": {
-            "prob_stimata": 51.2,
-            "ultimo_match": "21/11 16:00"
-        },
-        "Leeds United": {
-            "prob_stimata": 23.8,
+            "prob_stimata": 21.3,
             "ultimo_match": "21/11 16:00"
         },
         "Tottenham Hotspur": {
-            "prob_stimata": 61.6,
+            "prob_stimata": 61.8,
             "ultimo_match": "21/11 16:00"
         },
         "Ipswich Town": {
@@ -66,31 +90,71 @@
             "ultimo_match": "21/11 16:00"
         },
         "Newcastle United": {
-            "prob_stimata": 17.1,
+            "prob_stimata": 16.9,
             "ultimo_match": "21/11 18:30"
         },
         "Arsenal": {
-            "prob_stimata": 60.4,
+            "prob_stimata": 60.5,
             "ultimo_match": "21/11 18:30"
         },
+        "Hull City": {
+            "prob_stimata": 15.4,
+            "ultimo_match": "22/11 15:00"
+        },
+        "Brighton and Hove Albion": {
+            "prob_stimata": 63.3,
+            "ultimo_match": "22/11 15:00"
+        },
+        "Liverpool": {
+            "prob_stimata": 54.5,
+            "ultimo_match": "22/11 17:30"
+        },
+        "Manchester United": {
+            "prob_stimata": 22.7,
+            "ultimo_match": "22/11 17:30"
+        },
         "Athletic Bilbao": {
-            "prob_stimata": 64.5,
+            "prob_stimata": 64.3,
             "ultimo_match": "20/11 21:00"
         },
         "Espanyol": {
-            "prob_stimata": 14.1,
+            "prob_stimata": 14.6,
             "ultimo_match": "20/11 21:00"
         },
         "Real Madrid": {
-            "prob_stimata": 81.1,
+            "prob_stimata": 81.8,
             "ultimo_match": "21/11 21:00"
         },
         "Celta Vigo": {
-            "prob_stimata": 6.5,
+            "prob_stimata": 6.2,
             "ultimo_match": "21/11 21:00"
         },
+        "Barcelona": {
+            "prob_stimata": 79.1,
+            "ultimo_match": "22/11 14:00"
+        },
+        "Villarreal": {
+            "prob_stimata": 8.2,
+            "ultimo_match": "22/11 14:00"
+        },
+        "CA Osasuna": {
+            "prob_stimata": 52.2,
+            "ultimo_match": "22/11 18:30"
+        },
+        "Málaga": {
+            "prob_stimata": 21.4,
+            "ultimo_match": "22/11 18:30"
+        },
+        "Getafe": {
+            "prob_stimata": 15.8,
+            "ultimo_match": "22/11 21:00"
+        },
+        "Atlético Madrid": {
+            "prob_stimata": 60.0,
+            "ultimo_match": "22/11 21:00"
+        },
         "Bayern Monaco": {
-            "prob_stimata": 88.6,
+            "prob_stimata": 88.9,
             "ultimo_match": "20/11 20:30"
         },
         "1. Köln": {
@@ -98,39 +162,47 @@
             "ultimo_match": "20/11 20:30"
         },
         "Bayer Leverkusen": {
-            "prob_stimata": 74.1,
+            "prob_stimata": 74.6,
             "ultimo_match": "21/11 15:30"
         },
         "SC Paderborn": {
-            "prob_stimata": 10.8,
+            "prob_stimata": 10.6,
             "ultimo_match": "21/11 15:30"
         },
         "Borussia Monchengladbach": {
-            "prob_stimata": 18.4,
+            "prob_stimata": 18.6,
             "ultimo_match": "21/11 15:30"
         },
         "Borussia Dortmund": {
-            "prob_stimata": 60.2,
+            "prob_stimata": 60.1,
             "ultimo_match": "21/11 15:30"
         },
         "Union Berlin": {
-            "prob_stimata": 17.5,
+            "prob_stimata": 16.9,
             "ultimo_match": "21/11 15:30"
         },
         "RB Leipzig": {
-            "prob_stimata": 61.9,
+            "prob_stimata": 62.9,
             "ultimo_match": "21/11 15:30"
         },
         "FC Schalke 04": {
-            "prob_stimata": 24.4,
+            "prob_stimata": 24.2,
             "ultimo_match": "21/11 18:30"
         },
         "VfB Stuttgart": {
             "prob_stimata": 52.4,
             "ultimo_match": "21/11 18:30"
         },
+        "Werder Bremen": {
+            "prob_stimata": 56.6,
+            "ultimo_match": "22/11 17:30"
+        },
+        "Hamburger SV": {
+            "prob_stimata": 21.0,
+            "ultimo_match": "22/11 17:30"
+        },
         "Nice": {
-            "prob_stimata": 15.8,
+            "prob_stimata": 16.0,
             "ultimo_match": "21/11 17:15"
         },
         "PSG": {
@@ -145,16 +217,24 @@
             "prob_stimata": 13.8,
             "ultimo_match": "21/11 20:45"
         },
-        "RC Lens": {
-            "prob_stimata": 51.3,
-            "ultimo_match": "21/11 20:45"
+        "Paris": {
+            "prob_stimata": 71.4,
+            "ultimo_match": "22/11 15:00"
         },
-        "Toulouse": {
-            "prob_stimata": 24.5,
-            "ultimo_match": "21/11 20:45"
+        "Angers": {
+            "prob_stimata": 10.8,
+            "ultimo_match": "22/11 15:00"
+        },
+        "Marseille": {
+            "prob_stimata": 64.8,
+            "ultimo_match": "22/11 20:45"
+        },
+        "Le Mans": {
+            "prob_stimata": 15.4,
+            "ultimo_match": "22/11 20:45"
         },
         "NEC Nijmegen": {
-            "prob_stimata": 24.3,
+            "prob_stimata": 24.2,
             "ultimo_match": "21/11 16:30"
         },
         "PSV Eindhoven": {
@@ -162,12 +242,44 @@
             "ultimo_match": "21/11 16:30"
         },
         "Feyenoord": {
-            "prob_stimata": 78.9,
+            "prob_stimata": 79.1,
             "ultimo_match": "21/11 18:45"
         },
         "Excelsior": {
-            "prob_stimata": 8.4,
+            "prob_stimata": 8.3,
             "ultimo_match": "21/11 18:45"
+        },
+        "FC Twente Enschede": {
+            "prob_stimata": 87.5,
+            "ultimo_match": "22/11 12:15"
+        },
+        "Willem II": {
+            "prob_stimata": 4.5,
+            "ultimo_match": "22/11 12:15"
+        },
+        "Ajax": {
+            "prob_stimata": 79.8,
+            "ultimo_match": "22/11 14:30"
+        },
+        "ADO Den Haag": {
+            "prob_stimata": 7.8,
+            "ultimo_match": "22/11 14:30"
+        },
+        "Sparta Rotterdam": {
+            "prob_stimata": 23.1,
+            "ultimo_match": "22/11 14:30"
+        },
+        "AZ Alkmaar": {
+            "prob_stimata": 54.2,
+            "ultimo_match": "22/11 14:30"
+        },
+        "Go Ahead Eagles": {
+            "prob_stimata": 57.2,
+            "ultimo_match": "22/11 16:45"
+        },
+        "Fortuna Sittard": {
+            "prob_stimata": 20.6,
+            "ultimo_match": "22/11 16:45"
         }
     }
 }

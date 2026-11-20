@@ -5143,6 +5143,108 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "3715dd94",
+            "modello": "omega",
+            "data_creazione": "20/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.17,
+            "ritorno_potenziale": 32.55,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "bf921a2780e2a25201da8a3bfece84c4",
+                    "data": "21/11 15:00",
+                    "squadra_casa": "Lazio",
+                    "squadra_trasferta": "Lecce",
+                    "pronostico": "Vittoria Lazio",
+                    "quota": 1.42,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e59809eb38340e3bca323cef070dfd34",
+                    "data": "21/11 20:45",
+                    "squadra_casa": "Napoli",
+                    "squadra_trasferta": "Torino",
+                    "pronostico": "Vittoria Napoli",
+                    "quota": 1.53,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ded052f0",
+            "modello": "alpha",
+            "data_creazione": "20/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.41,
+            "ritorno_potenziale": 28.92,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "cb513fd9869c9aa6ce506bb499bcd48b",
+                    "data": "21/11 18:00",
+                    "squadra_casa": "Parma",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "9881e56a732493272e688663b26cd37f",
+                    "data": "21/11 14:00",
+                    "squadra_casa": "Alavés",
+                    "squadra_trasferta": "Deportivo La Coruña",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_spain_la_liga",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "9130b46991ab991f808daf307f004469",
+                    "data": "21/11 20:45",
+                    "squadra_casa": "AS Monaco",
+                    "squadra_trasferta": "Auxerre",
+                    "pronostico": "Vittoria AS Monaco",
+                    "quota": 1.47,
+                    "lega": "soccer_france_ligue_one",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "bf1b3c14",
+            "modello": "beta",
+            "data_creazione": "20/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "cb513fd9869c9aa6ce506bb499bcd48b",
+                    "data": "21/11 18:00",
+                    "squadra_casa": "Parma",
+                    "squadra_trasferta": "Roma",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
