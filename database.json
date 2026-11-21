@@ -5059,8 +5059,8 @@
                     "quota": 1.34,
                     "bookmaker": "1xBet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -5093,8 +5093,8 @@
                     "pronostico": "Vittoria Lazio",
                     "quota": 1.4,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 }
             ]
         },
@@ -5162,8 +5162,8 @@
                     "quota": 1.42,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-0"
                 },
                 {
                     "id_partita": "e59809eb38340e3bca323cef070dfd34",
@@ -5186,7 +5186,7 @@
             "importo": 12.0,
             "quota_totale": 2.41,
             "ritorno_potenziale": 28.92,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5208,8 +5208,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_spain_la_liga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "9130b46991ab991f808daf307f004469",
@@ -5322,7 +5322,7 @@
             "importo": 12.0,
             "quota_totale": 1.75,
             "ritorno_potenziale": 21.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "ca93df81e976fbe345a6175bb24e3f19",
@@ -5332,8 +5332,8 @@
                     "pronostico": "Under 9.5 Calci d'Angolo",
                     "quota": 1.75,
                     "lega": "soccer_germany_bundesliga",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "12 Angoli"
                 }
             ]
         },
