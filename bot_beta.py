@@ -11,39 +11,24 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID") or os.environ.get("OMEGA_CHAT_ID")
 
 campionati = [
-    'soccer_uefa_nations_league',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
-    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga',
-    'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga'
+    'soccer_italy_serie_a',
+    'soccer_uefa_champs_league',
+    'soccer_uefa_europa_league',
+    'soccer_uefa_nations_league'
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
-    'soccer_uefa_nations_league': 'uefa.nations',
+    'soccer_italy_serie_a': 'ita.1',
     'soccer_uefa_champs_league': 'uefa.champions',
     'soccer_uefa_europa_league': 'uefa.europa',
-    'soccer_uefa_europa_conference_league': 'uefa.europa.conf',
-    'soccer_italy_serie_a': 'ita.1',
-    'soccer_epl': 'eng.1',
-    'soccer_spain_la_liga': 'esp.1',
-    'soccer_germany_bundesliga': 'ger.1',
-    'soccer_france_ligue_one': 'fra.1',
-    'soccer_netherlands_eredivisie': 'ned.1',
-    'soccer_portugal_primeira_liga': 'por.1'
+    'soccer_uefa_nations_league': 'uefa.nations'
 }
 
 BASELINE_LEGA = {
-    'soccer_uefa_nations_league': (9.3, 4.2),
     'soccer_italy_serie_a': (9.6, 4.6),
-    'soccer_spain_la_liga': (9.4, 5.1),
-    'soccer_portugal_primeira_liga': (9.9, 5.0),
-    'soccer_epl': (10.5, 3.8),
-    'soccer_germany_bundesliga': (9.7, 3.8),
-    'soccer_france_ligue_one': (9.2, 4.0),
-    'soccer_netherlands_eredivisie': (10.2, 3.3),
     'soccer_uefa_champs_league': (9.3, 3.9),
     'soccer_uefa_europa_league': (9.6, 4.4),
-    'soccer_uefa_europa_conference_league': (9.5, 4.3)
+    'soccer_uefa_nations_league': (9.3, 4.2)
 }
 
 TRADUZIONI_SQUADRE = {
@@ -76,7 +61,7 @@ TRADUZIONI_SQUADRE = {
 
 def ottieni_pool_chiavi():
     nomi_secrets = [
-        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C",
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
         "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
     ]
@@ -212,14 +197,17 @@ def ottieni_partite_gia_giocate(db, modello_target):
                     match_giocati.add(f"{c} - {t}")
     return id_giocati, match_giocati
 
+def priorita_lega(lega):
+    return 0 if 'italy_serie_a' in lega else 1
+
 def esegui_beta():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    
+
     inizio_finestra = oggi + timedelta(minutes=30)
     limite_temporale = oggi + timedelta(days=3)
-    
+
     db_principale = carica_database_principale()
 
     if any(s.get('modello') == 'beta' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
@@ -276,7 +264,7 @@ def esegui_beta():
             ha_c_trasf = bool(st_trasf and st_trasf['tot_corners'])
             c_casa = (sum(st_casa['tot_corners']) / len(st_casa['tot_corners'])) if ha_c_casa else base_c_lega
             c_trasf = (sum(st_trasf['tot_corners']) / len(st_trasf['tot_corners'])) if ha_c_trasf else base_c_lega
-            
+
             peso_storico_c = 0.75 if (ha_c_casa and ha_c_trasf) else (0.45 if (ha_c_casa or ha_c_trasf) else 0.15)
             lambda_c = (peso_storico_c * ((c_casa + c_trasf) / 2.0)) + ((1.0 - peso_storico_c) * base_c_lega)
 
@@ -345,10 +333,10 @@ def esegui_beta():
                 })
 
     if not candidati_beta:
-        print("[BETA 2.0] Nessuna partita disponibile nei prossimi 3 giorni.")
+        print("[BETA 2.0] Nessuna partita disponibile in Serie A / Coppe UEFA nei prossimi 3 giorni.")
         return
 
-    candidati_beta.sort(key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, -x['edge']))
+    candidati_beta.sort(key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['edge']))
     miglior_operazione = candidati_beta[0]
     p_win = min(0.82, max(0.62, miglior_operazione['prob']))
     q_scelta = miglior_operazione['quota']
