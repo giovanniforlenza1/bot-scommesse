@@ -5253,7 +5253,7 @@
             "importo": 15.0,
             "quota_totale": 2.18,
             "ritorno_potenziale": 32.7,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "be2fcabc408be29ca01ce92ab266f8b7",
@@ -5264,8 +5264,8 @@
                     "quota": 1.39,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-0"
                 },
                 {
                     "id_partita": "5faf836ce6c0fd72af5d1fe258c63bc6",
@@ -5276,8 +5276,8 @@
                     "quota": 1.57,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5-1"
                 }
             ]
         },
@@ -5391,7 +5391,7 @@
             "importo": 12.0,
             "quota_totale": 2.37,
             "ritorno_potenziale": 28.44,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5402,8 +5402,8 @@
                     "pronostico": "Vittoria Juventus",
                     "quota": 1.42,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-0"
                 },
                 {
                     "id_partita": "5faf836ce6c0fd72af5d1fe258c63bc6",
@@ -5413,8 +5413,8 @@
                     "pronostico": "Vittoria Milan",
                     "quota": 1.67,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "5-1"
                 }
             ]
         },
