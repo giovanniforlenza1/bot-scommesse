@@ -10,38 +10,23 @@ TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "chiave_default_sicurezza")
 CHAT_ID = os.environ.get("CHAT_ID")
 
 campionati = [
-    'soccer_uefa_nations_league',
-    'soccer_uefa_champs_league', 'soccer_uefa_europa_league', 'soccer_uefa_europa_conference_league',
-    'soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 
-    'soccer_germany_bundesliga', 'soccer_france_ligue_one',
-    'soccer_netherlands_eredivisie', 'soccer_portugal_primeira_liga'
+    'soccer_italy_serie_a',
+    'soccer_uefa_champs_league',
+    'soccer_uefa_europa_league',
+    'soccer_uefa_nations_league'
 ]
 
 MAPPA_CAMPIONATI_ESPN = {
-    'soccer_uefa_nations_league': 'uefa.nations',
+    'soccer_italy_serie_a': 'ita.1',
     'soccer_uefa_champs_league': 'uefa.champions',
     'soccer_uefa_europa_league': 'uefa.europa',
-    'soccer_uefa_europa_conference_league': 'uefa.europa.conf',
-    'soccer_italy_serie_a': 'ita.1',
-    'soccer_epl': 'eng.1',
-    'soccer_spain_la_liga': 'esp.1',
-    'soccer_germany_bundesliga': 'ger.1',
-    'soccer_france_ligue_one': 'fra.1',
-    'soccer_netherlands_eredivisie': 'ned.1',
-    'soccer_portugal_primeira_liga': 'por.1'
+    'soccer_uefa_nations_league': 'uefa.nations'
 }
 
 PROFILO_GOL_LEGA = {
-    'soccer_germany_bundesliga': 1.12,
-    'soccer_netherlands_eredivisie': 1.14,
-    'soccer_epl': 1.08,
     'soccer_italy_serie_a': 1.02,
     'soccer_uefa_europa_league': 1.03,
-    'soccer_uefa_europa_conference_league': 1.02,
     'soccer_uefa_nations_league': 0.96,
-    'soccer_portugal_primeira_liga': 0.96,
-    'soccer_france_ligue_one': 0.95,
-    'soccer_spain_la_liga': 0.92,
     'soccer_uefa_champs_league': 0.88
 }
 
@@ -72,7 +57,7 @@ TRADUZIONI_SQUADRE = {
 
 def ottieni_pool_chiavi():
     nomi_secrets = [
-        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C", 
+        "CHIAVE_D", "CHIAVE_E", "CHIAVE_A", "CHIAVE_B", "CHIAVE_C",
         "ODDS_API_KEY", "API_KEY_ALPHA", "API_KEY_ARBITRO",
         "API_FOOTBALL_OMEGA_KEY", "API_FOOTBALL_KEY", "FOOTBALL_DATA_KEY"
     ]
@@ -128,7 +113,7 @@ def costruisci_storico_gol_espn():
                     teams = comp.get('competitors', [])
                     if len(teams) < 2:
                         continue
-                    
+
                     nomi_t = []
                     tot_gol_match = 0
                     for t in teams:
@@ -153,14 +138,30 @@ def media_gol_squadra(storico_gol, squadra_ita, default_gol=2.65):
             return sum(lista_g) / len(lista_g)
     return default_gol
 
-def carica_id_omega_oggi():
+def carica_partite_omega_attive(db):
+    """Recupera ID e nomi dei match attualmente giocati da Omega (da omega_oggi.json e da database.json)"""
+    id_omega = set()
+    match_omega = set()
+
     if os.path.exists('omega_oggi.json'):
         try:
             with open('omega_oggi.json', 'r', encoding='utf-8') as f:
-                return set(json.load(f))
+                for mid in json.load(f):
+                    id_omega.add(str(mid))
         except:
             pass
-    return set()
+
+    for s in db.get('schedine', []):
+        if s.get('modello') == 'omega' and s.get('stato_schedina') == 'in attesa':
+            for p in s.get('partite', []):
+                if p.get('id_partita'):
+                    id_omega.add(str(p.get('id_partita')))
+                c = str(p.get('squadra_casa', '')).lower().strip()
+                t = str(p.get('squadra_trasferta', '')).lower().strip()
+                if c and t:
+                    match_omega.add(f"{c} - {t}")
+
+    return id_omega, match_omega
 
 def carica_database_principale():
     if os.path.exists('database.json'):
@@ -187,23 +188,23 @@ def ottieni_partite_gia_giocate(db, modello_target):
     return id_giocati, match_giocati
 
 def priorita_lega(lega):
-    return 0 if ('italy_serie_a' in lega or 'uefa' in lega) else 1
+    return 0 if 'italy_serie_a' in lega else 1
 
 def esegui_alpha():
     fuso_italia = ZoneInfo("Europe/Rome")
     oggi = datetime.now(fuso_italia)
     data_oggi_str = oggi.strftime("%d/%m/%Y")
-    
+
     inizio_finestra = oggi + timedelta(minutes=30)
     limite_temporale = oggi + timedelta(days=3)
-    
+
     db_principale = carica_database_principale()
 
     if any(s.get('modello') == 'alpha' and s.get('data_creazione') == data_oggi_str for s in db_principale.get('schedine', [])):
         print(f"[ALPHA] Giocata del {data_oggi_str} già presente nel database. Salto.")
         return
 
-    id_esclusi_omega = carica_id_omega_oggi()
+    id_omega_attivi, match_omega_attivi = carica_partite_omega_attive(db_principale)
     id_gia_giocati, match_gia_giocati = ottieni_partite_gia_giocate(db_principale, 'alpha')
     storico_gol = costruisci_storico_gol_espn()
     candidati_alpha = []
@@ -217,8 +218,6 @@ def esegui_alpha():
         coeff_lega = PROFILO_GOL_LEGA.get(camp, 1.0)
 
         for p in partite:
-            if p['id'] in id_esclusi_omega:
-                continue
             data_ita = datetime.strptime(p['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(fuso_italia)
             if data_ita < inizio_finestra or data_ita > limite_temporale:
                 continue
@@ -230,6 +229,10 @@ def esegui_alpha():
             if str(p['id']) in id_gia_giocati or match_intero in match_gia_giocati:
                 continue
 
+            # Se Omega gioca già questo match (es. Vittoria Inter), Alpha blocca 1X2 e Doppia Chance
+            # e valuta solo i mercati alternativi sui Gol (Over/Under) se presentano valore reale.
+            match_su_omega = (str(p['id']) in id_omega_attivi) or (match_intero in match_omega_attivi)
+
             q1_list, qx_list, q2_list = [], [], []
             over25_list, under25_list = [], []
 
@@ -238,7 +241,7 @@ def esegui_alpha():
                 key_book = book.get('key', '').lower()
                 if 'exchange' in titolo_book or 'betfair' in key_book or 'matchbook' in key_book:
                     continue
-                
+
                 for m in book.get('markets', []):
                     if m['key'] == 'h2h':
                         for out in m['outcomes']:
@@ -272,30 +275,33 @@ def esegui_alpha():
 
             opzioni_valore = []
 
-            if 1.35 <= max_q1 <= 1.88 and p1_reale >= 0.54:
-                valore_1 = (p1_reale * max_q1) - 1.0
-                score_1 = (p1_reale * 0.75) + (valore_1 * 1.40) + (0.04 if p1_reale >= 0.62 else 0.0)
-                opzioni_valore.append((f"Vittoria {casa_ita}", round(max_q1, 2), score_1, "1X2"))
+            # 1X2 e Doppia Chance ammessi solo se Omega non sta già giocando questo match
+            if not match_su_omega:
+                if 1.35 <= max_q1 <= 1.88 and p1_reale >= 0.54:
+                    valore_1 = (p1_reale * max_q1) - 1.0
+                    score_1 = (p1_reale * 0.75) + (valore_1 * 1.40) + (0.04 if p1_reale >= 0.62 else 0.0)
+                    opzioni_valore.append((f"Vittoria {casa_ita}", round(max_q1, 2), score_1, "1X2"))
 
-            if 1.35 <= max_q2 <= 1.88 and p2_reale >= 0.54:
-                valore_2 = (p2_reale * max_q2) - 1.0
-                score_2 = (p2_reale * 0.75) + (valore_2 * 1.40) + (0.04 if p2_reale >= 0.62 else 0.0)
-                opzioni_valore.append((f"Vittoria {trasf_ita}", round(max_q2, 2), score_2, "1X2"))
+                if 1.35 <= max_q2 <= 1.88 and p2_reale >= 0.54:
+                    valore_2 = (p2_reale * max_q2) - 1.0
+                    score_2 = (p2_reale * 0.75) + (valore_2 * 1.40) + (0.04 if p2_reale >= 0.62 else 0.0)
+                    opzioni_valore.append((f"Vittoria {trasf_ita}", round(max_q2, 2), score_2, "1X2"))
 
-            p_1x = p1_reale + px_reale
-            q_1x_max = round((1.0 / ((1.0 / max_q1) + (1.0 / max(qx_list)))) * 0.96, 2)
-            if 1.30 <= q_1x_max <= 1.65 and p_1x >= 0.72:
-                valore_1x = (p_1x * q_1x_max) - 1.0
-                score_1x = (p_1x * 0.68) + (valore_1x * 1.35)
-                opzioni_valore.append((f"Doppia Chance 1X ({casa_ita})", q_1x_max, score_1x, "DC"))
+                p_1x = p1_reale + px_reale
+                q_1x_max = round((1.0 / ((1.0 / max_q1) + (1.0 / max(qx_list)))) * 0.96, 2)
+                if 1.30 <= q_1x_max <= 1.65 and p_1x >= 0.72:
+                    valore_1x = (p_1x * q_1x_max) - 1.0
+                    score_1x = (p_1x * 0.68) + (valore_1x * 1.35)
+                    opzioni_valore.append((f"Doppia Chance 1X ({casa_ita})", q_1x_max, score_1x, "DC"))
 
-            p_x2 = p2_reale + px_reale
-            q_x2_max = round((1.0 / ((1.0 / max_q2) + (1.0 / max(qx_list)))) * 0.96, 2)
-            if 1.30 <= q_x2_max <= 1.65 and p_x2 >= 0.72:
-                valore_x2 = (p_x2 * q_x2_max) - 1.0
-                score_x2 = (p_x2 * 0.68) + (valore_x2 * 1.35)
-                opzioni_valore.append((f"Doppia Chance X2 ({trasf_ita})", q_x2_max, score_x2, "DC"))
+                p_x2 = p2_reale + px_reale
+                q_x2_max = round((1.0 / ((1.0 / max_q2) + (1.0 / max(qx_list)))) * 0.96, 2)
+                if 1.30 <= q_x2_max <= 1.65 and p_x2 >= 0.72:
+                    valore_x2 = (p_x2 * q_x2_max) - 1.0
+                    score_x2 = (p_x2 * 0.68) + (valore_x2 * 1.35)
+                    opzioni_valore.append((f"Doppia Chance X2 ({trasf_ita})", q_x2_max, score_x2, "DC"))
 
+            # Mercati Gol (sempre valutati, anche sui match presidiati da Omega in 1X2)
             if over25_list and under25_list:
                 mo25 = sum(over25_list) / len(over25_list)
                 mu25 = sum(under25_list) / len(under25_list)
@@ -360,7 +366,7 @@ def esegui_alpha():
             })
 
     if not candidati_alpha:
-        print("[ALPHA] Nessuna partita idonea trovata.")
+        print("[ALPHA] Nessuna partita idonea trovata in Serie A / Coppe UEFA.")
         return
 
     ordinati = sorted(candidati_alpha, key=lambda x: (1 if x['giorni_attesa'] > 1 else 0, priorita_lega(x['lega']), -x['score']))
@@ -396,6 +402,10 @@ def esegui_alpha():
                 if quota_totale >= 1.80 or len(selezionati) == 3:
                     break
 
+    if len(selezionati) == 0:
+        print("[ALPHA] Impossibile comporre la schedina con i filtri attuali.")
+        return
+
     quota_totale = round(quota_totale, 2)
     partite_pulite = [{k: v for k, v in c.items() if k not in ['score', 'giorni_attesa', 'famiglia']} for c in selezionati]
     stake = 12.0
@@ -418,7 +428,7 @@ def esegui_alpha():
     for c in partite_pulite:
         msg += f"⚽ <b>{c['data']} | {html.escape(c['squadra_casa'])} - {html.escape(c['squadra_trasferta'])}</b>\n🛡️ <b>Scelta</b>: {html.escape(c['pronostico'])} (@{c['quota']})\n\n"
     msg += "<b>#ModelloAlpha #ValueBetting #SmartMultipla</b>"
-    
+
     try:
         requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": msg, "parse_mode": "HTML"}, timeout=10)
     except Exception as e:
