@@ -539,25 +539,45 @@ def pubblica_su_instagram(image_public_url, caption):
 
 def fase_2_controlla_ok_e_pubblica():
     if not os.path.exists(STATE_FILE):
+        print("STOP: File pending_social_post.json non trovato.")
         return
     with open(STATE_FILE, "r", encoding="utf-8") as f:
         stato = json.load(f)
+    print(f"Stato attuale in JSON: {stato.get('status')}")
     if stato.get("status") != "WAITING_APPROVAL":
+        print("STOP: Nessuna bozza in attesa di approvazione.")
         return
 
-    updates = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates", timeout=15).json()
+    res = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates", timeout=15).json()
+    updates = res.get("result", [])
+    print(f"Aggiornamenti letti da Telegram: {len(updates)} | ADMIN_CHAT_ID atteso: {ADMIN_CHAT_ID}")
+
     azione_scelta = None
     ultimo_update_id = None
+    callback_id = None
 
-    for u in updates.get("result", []):
+    for u in updates:
         ultimo_update_id = u.get("update_id")
         cb = u.get("callback_query", {})
-        if str(cb.get("from", {}).get("id")) == str(ADMIN_CHAT_ID):
-            if cb.get("data") in ("APPROVA_IG", "SCARTA_IG"):
-                azione_scelta = cb.get("data")
+        if cb:
+            from_id = str(cb.get("from", {}).get("id"))
+            data_cb = cb.get("data")
+            print(f"Trovato clic bottone: data={data_cb} da user_id={from_id}")
+            if from_id == str(ADMIN_CHAT_ID) and data_cb in ("APPROVA_IG", "SCARTA_IG"):
+                azione_scelta = data_cb
+                callback_id = cb.get("id")
+
+    if not azione_scelta:
+        print("STOP: Nessun clic APPROVA_IG/SCARTA_IG valido trovato per questo ADMIN_CHAT_ID.")
+        return
+
+    if callback_id:
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/answerCallbackQuery",
+                      json={"callback_query_id": callback_id, "text": "Comando ricevuto!"}, timeout=10)
 
     if azione_scelta == "APPROVA_IG":
         image_url = f"{GITHUB_RAW_BASE}/{IMAGE_FILE}?v={int(time.time())}"
+        print(f"Pubblicazione su IG in corso con URL: {image_url}")
         try:
             pubblica_su_instagram(image_url, stato["caption"])
             stato["status"] = "PUBLISHED"
@@ -567,7 +587,9 @@ def fase_2_controlla_ok_e_pubblica():
                 requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates?offset={ultimo_update_id + 1}", timeout=10)
             requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
                           json={"chat_id": ADMIN_CHAT_ID, "text": "🚀 Post pubblicato in automatico su Instagram!"})
+            print("SUCCESSO: Pubblicato su Instagram!")
         except Exception as e:
+            print(f"ERRORE META: {e}")
             requests.post(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
                           json={"chat_id": ADMIN_CHAT_ID, "text": f"⚠️ Errore pubblicazione Instagram:\n{e}"})
             raise
