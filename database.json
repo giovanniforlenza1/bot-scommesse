@@ -5463,6 +5463,97 @@
                     "risultato_reale": "Vinta"
                 }
             ]
+        },
+        {
+            "id": "0159d4d1",
+            "modello": "omega",
+            "data_creazione": "23/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.66,
+            "ritorno_potenziale": 24.9,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "8e93849b4c1ccbf1c207836d5c470150",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "ŠK Slovan Bratislava",
+                    "squadra_trasferta": "Betis Siviglia",
+                    "pronostico": "Vittoria Betis Siviglia",
+                    "quota": 1.27,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "b9f00a4d399ec661e733857c9d5fb2dc",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "Manchester City",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Vittoria Manchester City",
+                    "quota": 1.31,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "c55d9bfa",
+            "modello": "alpha",
+            "data_creazione": "23/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.12,
+            "ritorno_potenziale": 25.44,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "aea973c122c91837c15e066c757c747f",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "Lipsia",
+                    "squadra_trasferta": "RC Lens",
+                    "pronostico": "Vittoria Lipsia",
+                    "quota": 1.46,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "aee4e3c225603397ab52de3d066b566b",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "Arsenal",
+                    "squadra_trasferta": "Dortmund",
+                    "pronostico": "Vittoria Arsenal",
+                    "quota": 1.45,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ca27b24d",
+            "modello": "beta",
+            "data_creazione": "23/11/2026",
+            "importo": 10.5,
+            "quota_totale": 1.6,
+            "ritorno_potenziale": 16.8,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "99776445d5a5f4ed008f9a6d6a1495b7",
+                    "data": "23/11 20:45",
+                    "squadra_casa": "Monza",
+                    "squadra_trasferta": "Fiorentina",
+                    "pronostico": "Over 3.5 Cartellini Totali",
+                    "quota": 1.6,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }

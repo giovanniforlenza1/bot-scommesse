@@ -1,13 +1,13 @@
 {
-    "ultimo_aggiornamento": "22/11/2026 11:07",
+    "ultimo_aggiornamento": "23/11/2026 12:04",
     "analisi": [
         {
             "id_partita": "50b80f3ebd38bf63663b11ae0afc575b",
             "data": "24/11 18:45",
             "match": "Bodø/Glimt - LASK",
             "consiglio_algoritmo": "Vittoria Bodø/Glimt",
-            "probabilita_reale": 62.0,
-            "quota_equa": 1.61,
+            "probabilita_reale": 62.3,
+            "quota_equa": 1.6,
             "lega": "soccer_uefa_champs_league"
         },
         {
@@ -15,8 +15,8 @@
             "data": "24/11 21:00",
             "match": "Como - AEK Athens",
             "consiglio_algoritmo": "Vittoria Como",
-            "probabilita_reale": 72.3,
-            "quota_equa": 1.38,
+            "probabilita_reale": 74.6,
+            "quota_equa": 1.34,
             "lega": "soccer_uefa_champs_league"
         },
         {
@@ -24,7 +24,7 @@
             "data": "24/11 21:00",
             "match": "Arsenal - Borussia Dortmund",
             "consiglio_algoritmo": "Vittoria Arsenal",
-            "probabilita_reale": 68.3,
+            "probabilita_reale": 68.7,
             "quota_equa": 1.46,
             "lega": "soccer_uefa_champs_league"
         },
@@ -33,8 +33,8 @@
             "data": "24/11 21:00",
             "match": "Manchester City - Napoli",
             "consiglio_algoritmo": "Vittoria Manchester City",
-            "probabilita_reale": 75.8,
-            "quota_equa": 1.32,
+            "probabilita_reale": 75.4,
+            "quota_equa": 1.33,
             "lega": "soccer_uefa_champs_league"
         },
         {
@@ -42,8 +42,8 @@
             "data": "24/11 21:00",
             "match": "Real Madrid - PSV Eindhoven",
             "consiglio_algoritmo": "Vittoria Real Madrid",
-            "probabilita_reale": 80.5,
-            "quota_equa": 1.24,
+            "probabilita_reale": 81.2,
+            "quota_equa": 1.23,
             "lega": "soccer_uefa_champs_league"
         },
         {
@@ -51,8 +51,8 @@
             "data": "24/11 21:00",
             "match": "RB Leipzig - RC Lens",
             "consiglio_algoritmo": "Vittoria RB Leipzig",
-            "probabilita_reale": 67.9,
-            "quota_equa": 1.47,
+            "probabilita_reale": 68.6,
+            "quota_equa": 1.46,
             "lega": "soccer_uefa_champs_league"
         },
         {
@@ -60,153 +60,63 @@
             "data": "24/11 21:00",
             "match": "ŠK Slovan Bratislava - Betis Siviglia",
             "consiglio_algoritmo": "Vittoria Betis Siviglia",
-            "probabilita_reale": 76.4,
+            "probabilita_reale": 76.6,
             "quota_equa": 1.31,
             "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "be2fcabc408be29ca01ce92ab266f8b7",
-            "data": "22/11 12:30",
-            "match": "Juventus - Venezia",
-            "consiglio_algoritmo": "Vittoria Juventus",
-            "probabilita_reale": 68.6,
-            "quota_equa": 1.46,
-            "lega": "soccer_italy_serie_a"
-        },
-        {
-            "id_partita": "5bc13c44b33981f3185400163388267e",
-            "data": "22/11 15:00",
-            "match": "Bologna - Udinese",
-            "consiglio_algoritmo": "Vittoria Bologna",
-            "probabilita_reale": 54.4,
-            "quota_equa": 1.84,
-            "lega": "soccer_italy_serie_a"
-        },
-        {
-            "id_partita": "5faf836ce6c0fd72af5d1fe258c63bc6",
-            "data": "22/11 18:00",
-            "match": "Milan - Frosinone",
-            "consiglio_algoritmo": "Vittoria Milan",
-            "probabilita_reale": 59.0,
-            "quota_equa": 1.69,
-            "lega": "soccer_italy_serie_a"
-        },
-        {
-            "id_partita": "e22f82b10fe71d230248b88fef87e58f",
-            "data": "22/11 20:45",
-            "match": "Atalanta BC - Inter",
-            "consiglio_algoritmo": "Vittoria Inter",
-            "probabilita_reale": 61.5,
-            "quota_equa": 1.63,
-            "lega": "soccer_italy_serie_a"
-        },
-        {
-            "id_partita": "230a356290e1a358e9dd2f7fa23de3b9",
-            "data": "22/11 15:00",
-            "match": "Hull City - Brighton and Hove Albion",
-            "consiglio_algoritmo": "Vittoria Brighton and Hove Albion",
-            "probabilita_reale": 63.7,
-            "quota_equa": 1.57,
-            "lega": "soccer_epl"
-        },
-        {
-            "id_partita": "4c08b213ed416e8f41e038f42a42b962",
-            "data": "22/11 17:30",
-            "match": "Liverpool - Manchester United",
-            "consiglio_algoritmo": "Vittoria Liverpool",
-            "probabilita_reale": 56.1,
-            "quota_equa": 1.78,
-            "lega": "soccer_epl"
-        },
-        {
-            "id_partita": "214a79b6e08dbe3f508844936158c038",
-            "data": "22/11 14:00",
-            "match": "Barcelona - Villarreal",
+            "id_partita": "e6fa007f93e0cef004be920f96ee95ba",
+            "data": "25/11 18:45",
+            "match": "Sabah FK - Barcelona",
             "consiglio_algoritmo": "Vittoria Barcelona",
-            "probabilita_reale": 80.6,
-            "quota_equa": 1.24,
-            "lega": "soccer_spain_la_liga"
+            "probabilita_reale": 87.2,
+            "quota_equa": 1.15,
+            "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "893268e5503c4e58fbf137e4b5db7e93",
-            "data": "22/11 18:30",
-            "match": "CA Osasuna - Málaga",
-            "consiglio_algoritmo": "Vittoria CA Osasuna",
-            "probabilita_reale": 52.1,
-            "quota_equa": 1.92,
-            "lega": "soccer_spain_la_liga"
+            "id_partita": "14007bc0605bce3bd164b132254ba24c",
+            "data": "25/11 21:00",
+            "match": "PSG - Roma",
+            "consiglio_algoritmo": "Vittoria PSG",
+            "probabilita_reale": 68.2,
+            "quota_equa": 1.47,
+            "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "7a62fe738bd20cfff6027c52fec05d51",
-            "data": "22/11 21:00",
-            "match": "Getafe - Atlético Madrid",
+            "id_partita": "b1af6789fe6db7aab18a2945ce56f035",
+            "data": "25/11 21:00",
+            "match": "Atlético Madrid - Viking FK",
             "consiglio_algoritmo": "Vittoria Atlético Madrid",
-            "probabilita_reale": 61.9,
-            "quota_equa": 1.62,
-            "lega": "soccer_spain_la_liga"
+            "probabilita_reale": 86.3,
+            "quota_equa": 1.16,
+            "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "9a214142c9b31ad8233dccad53f75d6d",
-            "data": "22/11 17:30",
-            "match": "Werder Bremen - Hamburger SV",
-            "consiglio_algoritmo": "Vittoria Werder Bremen",
-            "probabilita_reale": 60.0,
-            "quota_equa": 1.67,
-            "lega": "soccer_germany_bundesliga"
+            "id_partita": "0ee2cfddf20153779cd2cc3e1f1f879f",
+            "data": "25/11 21:00",
+            "match": "Lille - Bayern Monaco",
+            "consiglio_algoritmo": "Vittoria Bayern Monaco",
+            "probabilita_reale": 58.9,
+            "quota_equa": 1.7,
+            "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "9e5d4a91e379ddffa179b02bf9e09530",
-            "data": "22/11 15:00",
-            "match": "Paris - Angers",
-            "consiglio_algoritmo": "Vittoria Paris",
-            "probabilita_reale": 73.2,
-            "quota_equa": 1.37,
-            "lega": "soccer_france_ligue_one"
+            "id_partita": "99459b90f3e732106e09585bf94b36b4",
+            "data": "25/11 21:00",
+            "match": "Club Brugge - Liverpool",
+            "consiglio_algoritmo": "Vittoria Liverpool",
+            "probabilita_reale": 57.2,
+            "quota_equa": 1.75,
+            "lega": "soccer_uefa_champs_league"
         },
         {
-            "id_partita": "98fae24771271c96d5dd364e535405d2",
-            "data": "22/11 20:45",
-            "match": "Marseille - Le Mans",
-            "consiglio_algoritmo": "Vittoria Marseille",
-            "probabilita_reale": 65.1,
-            "quota_equa": 1.54,
-            "lega": "soccer_france_ligue_one"
-        },
-        {
-            "id_partita": "f73ffb41e418d1a67544b0fbf261693a",
-            "data": "22/11 12:15",
-            "match": "FC Twente Enschede - Willem II",
-            "consiglio_algoritmo": "Vittoria FC Twente Enschede",
-            "probabilita_reale": 87.9,
-            "quota_equa": 1.14,
-            "lega": "soccer_netherlands_eredivisie"
-        },
-        {
-            "id_partita": "b192dbcfd675d0ee75492948b7d2a35f",
-            "data": "22/11 14:30",
-            "match": "Ajax - ADO Den Haag",
-            "consiglio_algoritmo": "Vittoria Ajax",
-            "probabilita_reale": 80.2,
-            "quota_equa": 1.25,
-            "lega": "soccer_netherlands_eredivisie"
-        },
-        {
-            "id_partita": "8e33c1a370f9763723426e4f0aa0fdd0",
-            "data": "22/11 14:30",
-            "match": "Sparta Rotterdam - AZ Alkmaar",
-            "consiglio_algoritmo": "Vittoria AZ Alkmaar",
-            "probabilita_reale": 54.6,
-            "quota_equa": 1.83,
-            "lega": "soccer_netherlands_eredivisie"
-        },
-        {
-            "id_partita": "f0c241457472f32fc55b90b2b95b665b",
-            "data": "22/11 16:45",
-            "match": "Go Ahead Eagles - Fortuna Sittard",
-            "consiglio_algoritmo": "Vittoria Go Ahead Eagles",
-            "probabilita_reale": 51.3,
-            "quota_equa": 1.95,
-            "lega": "soccer_netherlands_eredivisie"
+            "id_partita": "e7e64568f6af00d395a3fdfc27de8ae3",
+            "data": "25/11 21:00",
+            "match": "Inter - VfB Stuttgart",
+            "consiglio_algoritmo": "Vittoria Inter",
+            "probabilita_reale": 66.9,
+            "quota_equa": 1.49,
+            "lega": "soccer_uefa_champs_league"
         }
     ]
 }
