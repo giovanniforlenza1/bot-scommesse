@@ -1,15 +1,16 @@
 {
-  "status": "PUBLISHED",
-  "rubrica": "NUMERO_GIORNO",
-  "caption": "📊 Il nome sulla maglia non fa gol da solo. I nostri modelli pesano forma, calendario e ritmo reale.\n\n📲 Tutte le analisi gratuite sul canale Telegram (Link in Bio).\n\n#SBRLab #Calcio #StatisticheCalcio #DataScience #SerieA",
-  "created_at": "22/11/2026",
+  "status": "WAITING_APPROVAL",
+  "rubrica": "MITO_REALTA",
+  "caption": "🆚 Al bar sembra tutto facile, ma i numeri raccontano un'altra storia. Ecco perché in SBR Lab filtriamo ogni gara con i dati.\n\n📲 Entra gratis su Telegram dal Link in Bio.\n\n#SBRLab #Calcio #AnalisiTattica #NumeriDelCalcio #SerieA",
+  "created_at": "23/11/2026",
   "ultimi_titoli": [
     "10.000 PARTITE IN UNA.",
     "RITMO A SENSO UNICO.",
-    "LA TRAPPOLA DELLE FAVORITE."
+    "LA TRAPPOLA DELLE FAVORITE.",
+    "IL MITO DEL FATTORE CAMPO."
   ],
   "ultimi_match": [
     "Marseille - Le Mans"
   ],
-  "indice_rotazione": 32
+  "indice_rotazione": 33
 }
