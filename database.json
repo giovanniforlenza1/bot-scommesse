@@ -5540,7 +5540,7 @@
             "importo": 10.5,
             "quota_totale": 1.6,
             "ritorno_potenziale": 16.8,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "99776445d5a5f4ed008f9a6d6a1495b7",
@@ -5550,8 +5550,8 @@
                     "pronostico": "Over 3.5 Cartellini Totali",
                     "quota": 1.6,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1 Cartellini"
                 }
             ]
         }
