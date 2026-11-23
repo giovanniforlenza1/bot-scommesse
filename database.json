@@ -5288,7 +5288,7 @@
             "importo": 12.0,
             "quota_totale": 2.53,
             "ritorno_potenziale": 30.36,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5310,8 +5310,8 @@
                     "pronostico": "Vittoria Inter",
                     "quota": 1.63,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "4-4"
                 }
             ]
         },
@@ -5368,7 +5368,7 @@
             "importo": 15.0,
             "quota_totale": 1.6,
             "ritorno_potenziale": 24.0,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "e22f82b10fe71d230248b88fef87e58f",
@@ -5379,8 +5379,8 @@
                     "quota": 1.6,
                     "bookmaker": "1xBet",
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "4-4"
                 }
             ]
         },
@@ -5425,7 +5425,7 @@
             "importo": 12.0,
             "quota_totale": 1.8,
             "ritorno_potenziale": 21.6,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "98fae24771271c96d5dd364e535405d2",
@@ -5435,8 +5435,8 @@
                     "pronostico": "Over 9.5 Calci d'Angolo",
                     "quota": 1.8,
                     "lega": "soccer_france_ligue_one",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "7 Angoli"
                 }
             ]
         },
@@ -5447,7 +5447,7 @@
             "importo": 15.0,
             "quota_totale": 1.48,
             "ritorno_potenziale": 22.2,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5459,8 +5459,8 @@
                     "quota": 1.48,
                     "bookmaker": "Smarkets",
                     "lega": "tennis_atp_finals",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "Vinta"
                 }
             ]
         }
