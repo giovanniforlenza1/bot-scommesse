@@ -5608,8 +5608,8 @@
                     "pronostico": "Vittoria Bodø/Glimt",
                     "quota": 1.43,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "e7e64568f6af00d395a3fdfc27de8ae3",
