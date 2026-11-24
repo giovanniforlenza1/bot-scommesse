@@ -1,16 +1,17 @@
 {
   "status": "WAITING_APPROVAL",
-  "rubrica": "MITO_REALTA",
-  "caption": "🆚 Al bar sembra tutto facile, ma i numeri raccontano un'altra storia. Ecco perché in SBR Lab filtriamo ogni gara con i dati.\n\n📲 Entra gratis su Telegram dal Link in Bio.\n\n#SBRLab #Calcio #AnalisiTattica #NumeriDelCalcio #SerieA",
-  "created_at": "23/11/2026",
+  "rubrica": "VERDETTO_CAMPO",
+  "caption": "📊 Zero promesse: ogni operazione resta tracciata a database (123 chiuse, 59% di precisione).\n\n📲 Segui i modelli gratis su Telegram (Link in Bio).\n\n#SBRLab #Trasparenza #Calcio #StatisticheCalcio #SerieA",
+  "created_at": "24/11/2026",
   "ultimi_titoli": [
     "10.000 PARTITE IN UNA.",
     "RITMO A SENSO UNICO.",
     "LA TRAPPOLA DELLE FAVORITE.",
-    "IL MITO DEL FATTORE CAMPO."
+    "IL MITO DEL FATTORE CAMPO.",
+    "IL CAMPO PARLA."
   ],
   "ultimi_match": [
     "Marseille - Le Mans"
   ],
-  "indice_rotazione": 33
+  "indice_rotazione": 34
 }
