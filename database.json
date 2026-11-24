@@ -5554,6 +5554,97 @@
                     "risultato_reale": "1 Cartellini"
                 }
             ]
+        },
+        {
+            "id": "eec3eb06",
+            "modello": "omega",
+            "data_creazione": "24/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.83,
+            "ritorno_potenziale": 27.45,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "ba719e378ac366262013bdb51a06aa6f",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "AEK Athens",
+                    "pronostico": "Vittoria Como",
+                    "quota": 1.31,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "aea973c122c91837c15e066c757c747f",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "RB Leipzig",
+                    "squadra_trasferta": "RC Lens",
+                    "pronostico": "Vittoria RB Leipzig",
+                    "quota": 1.4,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "75d839ec",
+            "modello": "alpha",
+            "data_creazione": "24/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.1,
+            "ritorno_potenziale": 25.2,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "50b80f3ebd38bf63663b11ae0afc575b",
+                    "data": "24/11 18:45",
+                    "squadra_casa": "Bodø/Glimt",
+                    "squadra_trasferta": "LASK",
+                    "pronostico": "Vittoria Bodø/Glimt",
+                    "quota": 1.43,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "e7e64568f6af00d395a3fdfc27de8ae3",
+                    "data": "25/11 21:00",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "VfB Stuttgart",
+                    "pronostico": "Vittoria Inter",
+                    "quota": 1.47,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "84cd7a03",
+            "modello": "beta",
+            "data_creazione": "24/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 18.84,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "ba719e378ac366262013bdb51a06aa6f",
+                    "data": "24/11 21:00",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "AEK Athens",
+                    "pronostico": "Under 4.5 Cartellini Totali",
+                    "quota": 1.57,
+                    "lega": "soccer_uefa_champs_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
