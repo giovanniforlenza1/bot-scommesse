@@ -5645,6 +5645,108 @@
                     "risultato_reale": "5 Cartellini"
                 }
             ]
+        },
+        {
+            "id": "b318f5f4",
+            "modello": "omega",
+            "data_creazione": "25/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.57,
+            "ritorno_potenziale": 23.55,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "a18687d4f17a96a7732fb0c8673ea037",
+                    "data": "26/11 18:45",
+                    "squadra_casa": "Besiktas JK",
+                    "squadra_trasferta": "Hapoel Be'er Sheva",
+                    "pronostico": "Vittoria Besiktas JK",
+                    "quota": 1.25,
+                    "bookmaker": "Eurobet",
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "4f10f55b47b83f7f4f2a8cd745a9e67f",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "Inter Club d'Escaldes",
+                    "squadra_trasferta": "FC Copenhagen",
+                    "pronostico": "Vittoria FC Copenhagen",
+                    "quota": 1.26,
+                    "bookmaker": "Unibet / Eurobet",
+                    "lega": "soccer_uefa_europa_conference_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "a1a9f4c0",
+            "modello": "alpha",
+            "data_creazione": "25/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.51,
+            "ritorno_potenziale": 30.12,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "d6377d30379e5d3053c1076646d83f78",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "Juventus",
+                    "squadra_trasferta": "Omonoia",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "707c513bfa43b45b7813126e09ad08d8",
+                    "data": "26/11 18:45",
+                    "squadra_casa": "Marseille",
+                    "squadra_trasferta": "PFC Levski Sofia",
+                    "pronostico": "Vittoria Marseille",
+                    "quota": 1.42,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3ee2bf8a6fa6add543f64ac3e9813976",
+                    "data": "26/11 18:45",
+                    "squadra_casa": "Union Saint-Gilloise",
+                    "squadra_trasferta": "Lech Poznań",
+                    "pronostico": "Vittoria Union Saint-Gilloise",
+                    "quota": 1.38,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "ee985195",
+            "modello": "beta",
+            "data_creazione": "25/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "5902b4703e9ddc1f573091e14107834c",
+                    "data": "26/11 18:45",
+                    "squadra_casa": "Salzburg",
+                    "squadra_trasferta": "FC Ararat-Armenia",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
