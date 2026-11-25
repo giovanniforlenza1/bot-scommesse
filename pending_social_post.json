@@ -1,17 +1,18 @@
 {
   "status": "WAITING_APPROVAL",
-  "rubrica": "VERDETTO_CAMPO",
-  "caption": "📊 Zero promesse: ogni operazione resta tracciata a database (123 chiuse, 59% di precisione).\n\n📲 Segui i modelli gratis su Telegram (Link in Bio).\n\n#SBRLab #Trasparenza #Calcio #StatisticheCalcio #SerieA",
-  "created_at": "24/11/2026",
+  "rubrica": "PARTITA_TRAPPOLA",
+  "caption": "🛡️ Saper stare fermi vale quanto una lettura perfetta. In SBR Lab si entra solo quando i numeri danno un vantaggio reale.\n\n📲 Scopri il metodo gratis su Telegram (Link in Bio).\n\n#SBRLab #Disciplina #Calcio #AnalisiTattica #DataScience",
+  "created_at": "25/11/2026",
   "ultimi_titoli": [
     "10.000 PARTITE IN UNA.",
     "RITMO A SENSO UNICO.",
     "LA TRAPPOLA DELLE FAVORITE.",
     "IL MITO DEL FATTORE CAMPO.",
-    "IL CAMPO PARLA."
+    "IL CAMPO PARLA.",
+    "LA FORZA DI STARE FERMI."
   ],
   "ultimi_match": [
     "Marseille - Le Mans"
   ],
-  "indice_rotazione": 34
+  "indice_rotazione": 35
 }
