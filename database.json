@@ -5471,7 +5471,7 @@
             "importo": 15.0,
             "quota_totale": 1.66,
             "ritorno_potenziale": 24.9,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "8e93849b4c1ccbf1c207836d5c470150",
@@ -5482,8 +5482,8 @@
                     "quota": 1.27,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-2"
                 },
                 {
                     "id_partita": "b9f00a4d399ec661e733857c9d5fb2dc",
@@ -5494,8 +5494,8 @@
                     "quota": 1.31,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-2"
                 }
             ]
         },
@@ -5506,7 +5506,7 @@
             "importo": 12.0,
             "quota_totale": 2.12,
             "ritorno_potenziale": 25.44,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5517,8 +5517,8 @@
                     "pronostico": "Vittoria Lipsia",
                     "quota": 1.46,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 },
                 {
                     "id_partita": "aee4e3c225603397ab52de3d066b566b",
@@ -5528,8 +5528,8 @@
                     "pronostico": "Vittoria Arsenal",
                     "quota": 1.45,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 }
             ]
         },
@@ -5562,7 +5562,7 @@
             "importo": 15.0,
             "quota_totale": 1.83,
             "ritorno_potenziale": 27.45,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "ba719e378ac366262013bdb51a06aa6f",
@@ -5573,8 +5573,8 @@
                     "quota": 1.31,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "aea973c122c91837c15e066c757c747f",
@@ -5585,8 +5585,8 @@
                     "quota": 1.4,
                     "bookmaker": "1xBet",
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -5631,7 +5631,7 @@
             "importo": 12.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 18.84,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "ba719e378ac366262013bdb51a06aa6f",
@@ -5641,8 +5641,8 @@
                     "pronostico": "Under 4.5 Cartellini Totali",
                     "quota": 1.57,
                     "lega": "soccer_uefa_champs_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "5 Cartellini"
                 }
             ]
         }
