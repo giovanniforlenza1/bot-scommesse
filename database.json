@@ -5790,7 +5790,7 @@
             "importo": 12.0,
             "quota_totale": 2.29,
             "ritorno_potenziale": 27.48,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "telegram_inviato": true,
             "partite": [
                 {
@@ -5812,8 +5812,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-0"
                 },
                 {
                     "id_partita": "0e5553b52ece07115fbdf8145df0c377",
