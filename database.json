@@ -5747,6 +5747,108 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "3e41e8da",
+            "modello": "omega",
+            "data_creazione": "26/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.71,
+            "ritorno_potenziale": 25.65,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "413409b43875d1bdb627a9e7fb6bc3fd",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "Sunderland",
+                    "squadra_trasferta": "Jagiellonia Białystok",
+                    "pronostico": "Vittoria Sunderland",
+                    "quota": 1.27,
+                    "bookmaker": "Smarkets",
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "df4947bbe49057782feacca38c03e790",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "TSG Hoffenheim",
+                    "squadra_trasferta": "SK Sturm Graz",
+                    "pronostico": "Vittoria TSG Hoffenheim",
+                    "quota": 1.35,
+                    "bookmaker": "GoldBet / PlanetWin365",
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "addc8861",
+            "modello": "alpha",
+            "data_creazione": "26/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.29,
+            "ritorno_potenziale": 27.48,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "e9a663f13e7503c0ac20a54804338b60",
+                    "data": "27/11 20:45",
+                    "squadra_casa": "Venezia",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "a24c89b65c5a30fb9473735049589e64",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "Lyon",
+                    "squadra_trasferta": "Lillestrom",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "0e5553b52ece07115fbdf8145df0c377",
+                    "data": "26/11 21:00",
+                    "squadra_casa": "Ferencváros TC",
+                    "squadra_trasferta": "NK Celje",
+                    "pronostico": "Vittoria Ferencváros TC",
+                    "quota": 1.4,
+                    "lega": "soccer_uefa_europa_league",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "25171991",
+            "modello": "beta",
+            "data_creazione": "26/11/2026",
+            "importo": 10.5,
+            "quota_totale": 1.6,
+            "ritorno_potenziale": 16.8,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "e9a663f13e7503c0ac20a54804338b60",
+                    "data": "27/11 20:45",
+                    "squadra_casa": "Venezia",
+                    "squadra_trasferta": "Bologna",
+                    "pronostico": "Over 3.5 Cartellini Totali",
+                    "quota": 1.6,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
