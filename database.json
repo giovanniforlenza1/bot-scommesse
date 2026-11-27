@@ -5849,6 +5849,108 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "e228ad93",
+            "modello": "omega",
+            "data_creazione": "27/11/2026",
+            "importo": 15.0,
+            "quota_totale": 2.07,
+            "ritorno_potenziale": 31.05,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "f128c19fa7af43e30dbe3c373e7bc27e",
+                    "data": "28/11 20:45",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Vittoria Inter",
+                    "quota": 1.35,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "af3432ca724da03d38f0ff4e62045e4c",
+                    "data": "28/11 15:00",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Parma",
+                    "pronostico": "Vittoria Frosinone",
+                    "quota": 1.53,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "b8421e56",
+            "modello": "alpha",
+            "data_creazione": "27/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.8,
+            "ritorno_potenziale": 33.6,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "af3432ca724da03d38f0ff4e62045e4c",
+                    "data": "28/11 15:00",
+                    "squadra_casa": "Frosinone",
+                    "squadra_trasferta": "Parma",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "aec86b479e922f437ba228b9a9d74da1",
+                    "data": "28/11 18:00",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Lazio",
+                    "pronostico": "Under 3.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "dc63586a1b1d938a461d71bf5b36d982",
+                    "data": "29/11 15:00",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Vittoria Napoli",
+                    "quota": 1.71,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "8311cc5a",
+            "modello": "beta",
+            "data_creazione": "27/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.8,
+            "ritorno_potenziale": 21.6,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "aec86b479e922f437ba228b9a9d74da1",
+                    "data": "28/11 18:00",
+                    "squadra_casa": "Torino",
+                    "squadra_trasferta": "Lazio",
+                    "pronostico": "Over 9.5 Calci d'Angolo",
+                    "quota": 1.8,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
