@@ -5653,7 +5653,7 @@
             "importo": 15.0,
             "quota_totale": 1.57,
             "ritorno_potenziale": 23.55,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "a18687d4f17a96a7732fb0c8673ea037",
@@ -5676,8 +5676,8 @@
                     "quota": 1.26,
                     "bookmaker": "Unibet / Eurobet",
                     "lega": "soccer_uefa_europa_conference_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "2-0"
                 }
             ]
         },
@@ -5699,8 +5699,8 @@
                     "pronostico": "Over 1.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "4-1"
                 },
                 {
                     "id_partita": "707c513bfa43b45b7813126e09ad08d8",
@@ -5755,7 +5755,7 @@
             "importo": 15.0,
             "quota_totale": 1.71,
             "ritorno_potenziale": 25.65,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "persa",
             "partite": [
                 {
                     "id_partita": "413409b43875d1bdb627a9e7fb6bc3fd",
@@ -5766,8 +5766,8 @@
                     "quota": 1.27,
                     "bookmaker": "Smarkets",
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "1-1"
                 },
                 {
                     "id_partita": "df4947bbe49057782feacca38c03e790",
@@ -5778,8 +5778,8 @@
                     "quota": 1.35,
                     "bookmaker": "GoldBet / PlanetWin365",
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "3-1"
                 }
             ]
         },
@@ -5823,8 +5823,8 @@
                     "pronostico": "Vittoria Ferencváros TC",
                     "quota": 1.4,
                     "lega": "soccer_uefa_europa_league",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "persa",
+                    "risultato_reale": "0-0"
                 }
             ]
         },
