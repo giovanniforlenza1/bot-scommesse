@@ -5801,8 +5801,8 @@
                     "pronostico": "Under 3.5 Gol",
                     "quota": 1.28,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "0-0"
                 },
                 {
                     "id_partita": "a24c89b65c5a30fb9473735049589e64",
@@ -5835,7 +5835,7 @@
             "importo": 10.5,
             "quota_totale": 1.6,
             "ritorno_potenziale": 16.8,
-            "stato_schedina": "in attesa",
+            "stato_schedina": "vinta",
             "partite": [
                 {
                     "id_partita": "e9a663f13e7503c0ac20a54804338b60",
@@ -5845,8 +5845,8 @@
                     "pronostico": "Over 3.5 Cartellini Totali",
                     "quota": 1.6,
                     "lega": "soccer_italy_serie_a",
-                    "stato": "in attesa",
-                    "risultato_reale": ""
+                    "stato": "vinta",
+                    "risultato_reale": "6 Cartellini"
                 }
             ]
         },
