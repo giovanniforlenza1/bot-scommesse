@@ -1,144 +1,152 @@
 {
-    "ultimo_aggiornamento": "27/11/2026 12:14",
+    "ultimo_aggiornamento": "28/11/2026 11:44",
     "squadre": {
         "Frosinone": {
-            "prob_stimata": 63.9,
+            "prob_stimata": 66.6,
             "ultimo_match": "28/11 15:00"
         },
         "Parma": {
-            "prob_stimata": 16.9,
+            "prob_stimata": 15.0,
             "ultimo_match": "28/11 15:00"
         },
         "Inter": {
-            "prob_stimata": 72.8,
+            "prob_stimata": 73.9,
             "ultimo_match": "28/11 20:45"
         },
         "Genoa": {
-            "prob_stimata": 10.2,
+            "prob_stimata": 9.7,
             "ultimo_match": "28/11 20:45"
         },
         "Sassuolo": {
-            "prob_stimata": 20.5,
+            "prob_stimata": 20.3,
             "ultimo_match": "29/11 15:00"
         },
         "Napoli": {
-            "prob_stimata": 57.0,
+            "prob_stimata": 57.3,
             "ultimo_match": "29/11 15:00"
         },
         "Roma": {
-            "prob_stimata": 79.2,
+            "prob_stimata": 79.8,
             "ultimo_match": "29/11 18:00"
         },
         "Monza": {
-            "prob_stimata": 7.7,
+            "prob_stimata": 7.6,
             "ultimo_match": "29/11 18:00"
         },
+        "Lecce": {
+            "prob_stimata": 24.0,
+            "ultimo_match": "30/11 18:30"
+        },
+        "Atalanta BC": {
+            "prob_stimata": 51.3,
+            "ultimo_match": "30/11 18:30"
+        },
+        "Cagliari": {
+            "prob_stimata": 19.5,
+            "ultimo_match": "30/11 20:45"
+        },
+        "Milan": {
+            "prob_stimata": 55.4,
+            "ultimo_match": "30/11 20:45"
+        },
         "Leeds United": {
-            "prob_stimata": 64.2,
+            "prob_stimata": 64.5,
             "ultimo_match": "28/11 16:00"
         },
         "Coventry City": {
-            "prob_stimata": 14.9,
+            "prob_stimata": 14.6,
             "ultimo_match": "28/11 16:00"
         },
         "Everton": {
-            "prob_stimata": 21.3,
+            "prob_stimata": 21.4,
             "ultimo_match": "29/11 13:00"
         },
         "Liverpool": {
-            "prob_stimata": 53.9,
+            "prob_stimata": 54.1,
             "ultimo_match": "29/11 13:00"
         },
         "Brighton and Hove Albion": {
-            "prob_stimata": 60.9,
+            "prob_stimata": 61.0,
             "ultimo_match": "29/11 15:05"
         },
         "Newcastle United": {
-            "prob_stimata": 17.8,
+            "prob_stimata": 17.9,
             "ultimo_match": "29/11 15:05"
         },
         "Betis Siviglia": {
-            "prob_stimata": 59.7,
+            "prob_stimata": 59.5,
             "ultimo_match": "28/11 14:00"
         },
         "Rayo Vallecano": {
-            "prob_stimata": 18.4,
+            "prob_stimata": 18.3,
             "ultimo_match": "28/11 14:00"
         },
         "Málaga": {
-            "prob_stimata": 20.0,
+            "prob_stimata": 19.8,
             "ultimo_match": "28/11 16:15"
         },
         "Athletic Bilbao": {
-            "prob_stimata": 55.0,
+            "prob_stimata": 55.2,
             "ultimo_match": "28/11 16:15"
         },
         "Elche CF": {
-            "prob_stimata": 15.0,
+            "prob_stimata": 15.1,
             "ultimo_match": "28/11 18:30"
         },
         "Atlético Madrid": {
-            "prob_stimata": 65.0,
+            "prob_stimata": 64.4,
             "ultimo_match": "28/11 18:30"
         },
         "Real Madrid": {
-            "prob_stimata": 84.6,
+            "prob_stimata": 83.4,
             "ultimo_match": "28/11 21:00"
         },
         "Alavés": {
-            "prob_stimata": 5.4,
+            "prob_stimata": 6.0,
             "ultimo_match": "28/11 21:00"
         },
         "Deportivo La Coruña": {
-            "prob_stimata": 9.4,
+            "prob_stimata": 9.2,
             "ultimo_match": "29/11 16:15"
         },
         "Barcelona": {
-            "prob_stimata": 77.3,
+            "prob_stimata": 77.6,
             "ultimo_match": "29/11 16:15"
         },
-        "Werder Bremen": {
-            "prob_stimata": 56.8,
-            "ultimo_match": "27/11 20:30"
-        },
-        "Borussia Monchengladbach": {
-            "prob_stimata": 20.8,
-            "ultimo_match": "27/11 20:30"
-        },
         "Hamburger SV": {
-            "prob_stimata": 10.1,
+            "prob_stimata": 11.9,
             "ultimo_match": "28/11 15:30"
         },
         "Bayern Monaco": {
-            "prob_stimata": 75.5,
+            "prob_stimata": 71.8,
             "ultimo_match": "28/11 15:30"
         },
         "FSV Mainz 05": {
-            "prob_stimata": 64.1,
+            "prob_stimata": 64.5,
             "ultimo_match": "28/11 15:30"
         },
         "Union Berlin": {
-            "prob_stimata": 15.6,
+            "prob_stimata": 15.4,
             "ultimo_match": "28/11 15:30"
         },
         "VfB Stuttgart": {
-            "prob_stimata": 52.4,
+            "prob_stimata": 52.9,
             "ultimo_match": "28/11 18:30"
         },
         "Eintracht Frankfurt": {
-            "prob_stimata": 26.3,
+            "prob_stimata": 25.6,
             "ultimo_match": "28/11 18:30"
         },
         "TSG Hoffenheim": {
-            "prob_stimata": 55.4,
+            "prob_stimata": 55.5,
             "ultimo_match": "29/11 17:30"
         },
         "Augsburg": {
-            "prob_stimata": 23.8,
+            "prob_stimata": 23.5,
             "ultimo_match": "29/11 17:30"
         },
         "Angers": {
-            "prob_stimata": 20.5,
+            "prob_stimata": 20.3,
             "ultimo_match": "28/11 17:15"
         },
         "RC Lens": {
@@ -146,76 +154,84 @@
             "ultimo_match": "28/11 17:15"
         },
         "PSG": {
-            "prob_stimata": 78.6,
+            "prob_stimata": 79.8,
             "ultimo_match": "28/11 20:45"
         },
         "Lorient": {
-            "prob_stimata": 7.8,
+            "prob_stimata": 7.1,
             "ultimo_match": "28/11 20:45"
         },
         "Nice": {
-            "prob_stimata": 56.7,
+            "prob_stimata": 54.5,
             "ultimo_match": "28/11 20:45"
         },
         "Troyes": {
-            "prob_stimata": 19.7,
+            "prob_stimata": 20.8,
             "ultimo_match": "28/11 20:45"
         },
-        "Groningen": {
-            "prob_stimata": 73.3,
-            "ultimo_match": "27/11 20:00"
-        },
-        "Willem II": {
-            "prob_stimata": 10.7,
-            "ultimo_match": "27/11 20:00"
-        },
         "PSV Eindhoven": {
-            "prob_stimata": 76.8,
+            "prob_stimata": 77.8,
             "ultimo_match": "28/11 18:45"
         },
         "Go Ahead Eagles": {
-            "prob_stimata": 9.9,
+            "prob_stimata": 9.3,
             "ultimo_match": "28/11 18:45"
         },
         "FC Zwolle": {
-            "prob_stimata": 18.2,
+            "prob_stimata": 17.8,
             "ultimo_match": "29/11 16:45"
         },
         "AZ Alkmaar": {
-            "prob_stimata": 60.9,
+            "prob_stimata": 61.3,
             "ultimo_match": "29/11 16:45"
         },
         "NEC Nijmegen": {
-            "prob_stimata": 25.5,
+            "prob_stimata": 24.3,
             "ultimo_match": "29/11 20:00"
         },
         "FC Twente Enschede": {
-            "prob_stimata": 51.4,
+            "prob_stimata": 52.9,
             "ultimo_match": "29/11 20:00"
         },
         "Arouca": {
-            "prob_stimata": 55.7,
+            "prob_stimata": 54.5,
             "ultimo_match": "28/11 16:30"
         },
         "Rio Ave": {
-            "prob_stimata": 19.3,
+            "prob_stimata": 20.5,
             "ultimo_match": "28/11 16:30"
         },
         "Vitória SC": {
-            "prob_stimata": 56.0,
+            "prob_stimata": 54.6,
             "ultimo_match": "28/11 21:30"
         },
         "CF Estrela": {
-            "prob_stimata": 19.6,
+            "prob_stimata": 20.7,
             "ultimo_match": "28/11 21:30"
         },
         "Gil Vicente": {
-            "prob_stimata": 51.7,
+            "prob_stimata": 51.6,
             "ultimo_match": "29/11 19:00"
         },
         "Estoril": {
-            "prob_stimata": 22.2,
+            "prob_stimata": 22.3,
             "ultimo_match": "29/11 19:00"
+        },
+        "Benfica": {
+            "prob_stimata": 80.1,
+            "ultimo_match": "30/11 21:15"
+        },
+        "Famalicão": {
+            "prob_stimata": 6.9,
+            "ultimo_match": "30/11 21:15"
+        },
+        "Casa Pia": {
+            "prob_stimata": 13.7,
+            "ultimo_match": "30/11 21:15"
+        },
+        "Braga": {
+            "prob_stimata": 64.3,
+            "ultimo_match": "30/11 21:15"
         }
     }
 }

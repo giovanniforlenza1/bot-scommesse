@@ -5951,6 +5951,85 @@
                     "risultato_reale": ""
                 }
             ]
+        },
+        {
+            "id": "5c85bb4f",
+            "modello": "omega",
+            "data_creazione": "28/11/2026",
+            "importo": 15.0,
+            "quota_totale": 1.71,
+            "ritorno_potenziale": 25.65,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "dc63586a1b1d938a461d71bf5b36d982",
+                    "data": "29/11 15:00",
+                    "squadra_casa": "Sassuolo",
+                    "squadra_trasferta": "Napoli",
+                    "pronostico": "Vittoria Napoli",
+                    "quota": 1.71,
+                    "bookmaker": "1xBet",
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "1613e1ce",
+            "modello": "alpha",
+            "data_creazione": "28/11/2026",
+            "importo": 12.0,
+            "quota_totale": 2.27,
+            "ritorno_potenziale": 27.24,
+            "stato_schedina": "in attesa",
+            "telegram_inviato": true,
+            "partite": [
+                {
+                    "id_partita": "f128c19fa7af43e30dbe3c373e7bc27e",
+                    "data": "28/11 20:45",
+                    "squadra_casa": "Inter",
+                    "squadra_trasferta": "Genoa",
+                    "pronostico": "Over 1.5 Gol",
+                    "quota": 1.28,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                },
+                {
+                    "id_partita": "3d57da6bdb20b65145bc2479ee5f2ae7",
+                    "data": "30/11 20:45",
+                    "squadra_casa": "Cagliari",
+                    "squadra_trasferta": "Milan",
+                    "pronostico": "Vittoria Milan",
+                    "quota": 1.77,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
+        },
+        {
+            "id": "6621200a",
+            "modello": "beta",
+            "data_creazione": "28/11/2026",
+            "importo": 12.0,
+            "quota_totale": 1.75,
+            "ritorno_potenziale": 21.0,
+            "stato_schedina": "in attesa",
+            "partite": [
+                {
+                    "id_partita": "3876ad367184af2f8fc04a544fc894aa",
+                    "data": "29/11 20:45",
+                    "squadra_casa": "Como",
+                    "squadra_trasferta": "Juventus",
+                    "pronostico": "Under 9.5 Calci d'Angolo",
+                    "quota": 1.75,
+                    "lega": "soccer_italy_serie_a",
+                    "stato": "in attesa",
+                    "risultato_reale": ""
+                }
+            ]
         }
     ]
 }
